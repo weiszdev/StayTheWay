@@ -335,7 +335,7 @@ input::placeholder{color:rgba(255,255,255,.25)}
     <div id="writtenWrap" style="display:none">
       <div class="textarea-wrap">
         <textarea id="writtenInput" placeholder="Be honest with yourself. There's no wrong answer here..." oninput="checkWritten()"></textarea>
-        <span class="char-count" id="charCount">0 / 20 min</span>
+        <span class="char-count" id="charCount">Share as much or as little as you'd like</span>
       </div>
     </div>
   </div>
@@ -524,14 +524,17 @@ function renderQuestion(){
     document.getElementById('qType').textContent = 'KNOWLEDGE';
     document.getElementById('optionsWrap').style.display = 'flex';
     document.getElementById('writtenWrap').style.display = 'none';
+    document.getElementById('nextBtn').textContent = 'Continue →';
     renderOptions(q);
   } else {
     document.getElementById('qType').textContent = 'REFLECTION';
     document.getElementById('optionsWrap').style.display = 'none';
     document.getElementById('writtenWrap').style.display = 'block';
     document.getElementById('writtenInput').value = '';
-    document.getElementById('charCount').textContent = '0 / 20 min';
+    document.getElementById('charCount').textContent = 'Share as much or as little as you\'d like';
     document.getElementById('charCount').className = 'char-count';
+    document.getElementById('nextBtn').disabled = false;
+    document.getElementById('nextBtn').textContent = 'Skip →';
   }
 }
 
@@ -583,13 +586,15 @@ function checkWritten(){
   const val = document.getElementById('writtenInput').value;
   const len = val.trim().length;
   const cc = document.getElementById('charCount');
-  cc.textContent = len + ' / 20 min';
-  if(len >= 20){
+  const btn = document.getElementById('nextBtn');
+  if(len > 0){
+    cc.textContent = len + ' characters';
     cc.className = 'char-count met';
-    document.getElementById('nextBtn').disabled = false;
+    btn.textContent = 'Continue →';
   } else {
+    cc.textContent = 'Share as much or as little as you\'d like';
     cc.className = 'char-count';
-    document.getElementById('nextBtn').disabled = true;
+    btn.textContent = 'Skip →';
   }
 }
 
