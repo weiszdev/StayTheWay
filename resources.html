@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Resources | StayTheWay Ministry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #9ca3af;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #3b82f6;
+        }
+
+        .nav-link:hover {
+            color: #60a5fa;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 80px 20px;
+        }
+
+        .resource-card {
+            background-color: #0f0f0f;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-card:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            background-color: rgba(59, 130, 246, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+
+        .badge-adult {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+
+        .badge-children {
+            background-color: rgba(168, 85, 247, 0.2);
+            color: #d8b4fe;
+        }
+
+        .badge-guides {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+        }
+
+        .badge-reading {
+            background-color: rgba(249, 115, 22, 0.2);
+            color: #fb923c;
+        }
+
+        .filter-tab {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-tab.active {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+            color: #ffffff;
+        }
+
+        .filter-tab:hover {
+            border-color: #60a5fa;
+            color: #ffffff;
+        }
+
+        .download-btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .download-btn:hover {
+            background-color: #60a5fa;
+            transform: scale(1.05);
+        }
+
+        .file-badge {
+            display: inline-block;
+            background-color: rgba(156, 163, 175, 0.2);
+            color: #d1d5db;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            margin: 60px 0;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 1rem;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background-color: #0a0a0a;
+            padding: 40px 20px 20px;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background-color: #0f0f0f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            width: 200px;
+            gap: 15px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-section {
+                padding: 60px 20px;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .mobile-menu {
+                width: 100%;
+                right: 0;
+                left: 0;
+                margin: 10px;
+                width: calc(100% - 40px);
+            }
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .subsection-title {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-black border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white font-heading">StayTheWay</div>
+
+            <div class="nav-links hidden md:flex gap-8">
+                <a href="teachings.html" class="nav-link text-gray-400">Teachings</a>
+                <a href="resources.html" class="nav-link active text-white">Resources</a>
+                <a href="bridges.html" class="nav-link text-gray-400">Bridges</a>
+                <a href="beliefs.html" class="nav-link text-gray-400">Beliefs</a>
+                <a href="community.html" class="nav-link text-gray-400">Community</a>
+                <a href="give.html" class="nav-link text-gray-400">Give</a>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="teachings.html" class="text-gray-400 hover:text-white">Teachings</a>
+            <a href="resources.html" class="text-white font-bold">Resources</a>
+            <a href="bridges.html" class="text-gray-400 hover:text-white">Bridges</a>
+            <a href="beliefs.html" class="text-gray-400 hover:text-white">Beliefs</a>
+            <a href="community.html" class="text-gray-400 hover:text-white">Community</a>
+            <a href="give.html" class="text-gray-400 hover:text-white">Give</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">Study Resources</h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                Access downloadable handouts, study guides, and materials to go deeper with every teaching. Perfect for individual study, small groups, and family discussions.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-6 py-20">
+        <!-- Category Filter Tabs -->
+        <div class="flex flex-wrap gap-3 justify-center mb-16">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="adult">Adult Handouts</button>
+            <button class="filter-tab" data-filter="children">Children's Handouts</button>
+            <button class="filter-tab" data-filter="guides">Study Guides</button>
+            <button class="filter-tab" data-filter="reading">Reading List</button>
+        </div>
+
+        <!-- Adult Handouts Section -->
+        <section class="resource-section" data-category="adult">
+            <h2 class="subsection-title">Adult Handouts</h2>
+            <p class="text-gray-400 mb-8">PDF handouts organized by teaching series to deepen your understanding and equip you for growth.</p>
+
+            <div class="resource-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="resource-card" data-category="adult">
+                    <span class="category-badge badge-adult">Adult Handouts</span>
+                    <span class="text-xs text-blue-400 font-semibold mb-3">Series: Spiritual Armor</span>
+                    <h3 class="text-xl font-bold mb-3">Armor of God — Study Notes</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Comprehensive study notes on the armor of God passage with verse references, key themes, and application questions for personal reflection.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="adult">
+                    <span class="category-badge badge-adult">Adult Handouts</span>
+                    <span class="text-xs text-blue-400 font-semibold mb-3">Series: Spiritual Warfare</span>
+                    <h3 class="text-xl font-bold mb-3">Spiritual Warfare — Key Scriptures</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Curated scripture passages on spiritual warfare with commentary and practical insights for understanding and applying these truths in daily life.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="adult">
+                    <span class="category-badge badge-adult">Adult Handouts</span>
+                    <span class="text-xs text-blue-400 font-semibold mb-3">Series: Family & Marriage</span>
+                    <h3 class="text-xl font-bold mb-3">Marriage & Family — Discussion Guide</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Thought-provoking discussion questions and talking points for couples and families to apply biblical principles to relationships and household living.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="adult">
+                    <span class="category-badge badge-adult">Adult Handouts</span>
+                    <span class="text-xs text-blue-400 font-semibold mb-3">Series: End Times</span>
+                    <h3 class="text-xl font-bold mb-3">End Times Overview — Reference Sheet</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Quick-reference guide to end times theology, key biblical passages, timeline perspectives, and resources for further study and understanding.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="adult">
+                    <span class="category-badge badge-adult">Adult Handouts</span>
+                    <span class="text-xs text-blue-400 font-semibold mb-3">Series: Living Your Faith</span>
+                    <h3 class="text-xl font-bold mb-3">Daily Discipleship — Accountability Checklist</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Weekly accountability tool to track your spiritual growth, prayer life, scripture study, and application of biblical truths in daily living.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="adult">
+                    <span class="category-badge badge-adult">Adult Handouts</span>
+                    <span class="text-xs text-blue-400 font-semibold mb-3">Series: Prayer & Fasting</span>
+                    <h3 class="text-xl font-bold mb-3">Prayer & Fasting — Guide & Journal</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Comprehensive guide to prayer and fasting practices with space for journaling your spiritual experiences and insights from your time with God.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Children's Handouts Section -->
+        <section class="resource-section" data-category="children">
+            <h2 class="subsection-title">Children's Handouts</h2>
+            <p class="text-gray-400 mb-8">Age-appropriate materials designed to help children learn, engage, and grow in their faith through fun and interactive activities.</p>
+
+            <div class="resource-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="resource-card" data-category="children">
+                    <span class="category-badge badge-children">Children's Handouts</span>
+                    <span class="text-xs text-purple-300 font-semibold mb-3">Ages 6-12</span>
+                    <h3 class="text-xl font-bold mb-3">Armor of God — Kids Edition</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Colorful, interactive workbook helping children understand the armor of God with illustrations, fun facts, and activities they can do at home.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="children">
+                    <span class="category-badge badge-children">Children's Handouts</span>
+                    <span class="text-xs text-purple-300 font-semibold mb-3">Ages 4-10</span>
+                    <h3 class="text-xl font-bold mb-3">Bible Heroes Coloring Pages</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Beautifully illustrated coloring pages featuring Bible heroes with stories and lessons that teach biblical truths while children enjoy creative activities.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="children">
+                    <span class="category-badge badge-children">Children's Handouts</span>
+                    <span class="text-xs text-purple-300 font-semibold mb-3">Ages 5-12</span>
+                    <h3 class="text-xl font-bold mb-3">Memory Verse Cards — Psalms</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Printable flashcard set of Psalms verses perfect for memorization, with encouraging illustrations and matching activities to help retention.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="children">
+                    <span class="category-badge badge-children">Children's Handouts</span>
+                    <span class="text-xs text-purple-300 font-semibold mb-3">Ages 3-8</span>
+                    <h3 class="text-xl font-bold mb-3">Fruit of the Spirit — Activity Book</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Fun workbook introducing children to the fruit of the Spirit with games, mazes, stickers, and activities that make spiritual concepts relatable.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="children">
+                    <span class="category-badge badge-children">Children's Handouts</span>
+                    <span class="text-xs text-purple-300 font-semibold mb-3">Ages 6-14</span>
+                    <h3 class="text-xl font-bold mb-3">Bible Quest — Weekly Challenges</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Interactive challenge cards encouraging children to explore scripture with guided reading plans, discussion prompts, and fun reward tracking.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="children">
+                    <span class="category-badge badge-children">Children's Handouts</span>
+                    <span class="text-xs text-purple-300 font-semibold mb-3">Ages 7-13</span>
+                    <h3 class="text-xl font-bold mb-3">Ten Commandments — Learning Guide</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Engaging guide teaching the Ten Commandments with illustrations, explanations, and practical examples showing how kids can apply them today.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Study Guides Section -->
+        <section class="resource-section" data-category="guides">
+            <h2 class="subsection-title">Study Guides</h2>
+            <p class="text-gray-400 mb-8">Multi-week study plans and guides designed for home groups, Bible studies, and personal spiritual growth journeys.</p>
+
+            <div class="resource-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="resource-card" data-category="guides">
+                    <span class="category-badge badge-guides">Study Guides</span>
+                    <span class="text-xs text-green-300 font-semibold mb-3">Foundational</span>
+                    <h3 class="text-xl font-bold mb-3">How to Start a Home Bible Study</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Complete guide covering how to gather a group, select materials, lead discussions, and create a welcoming environment for meaningful Bible study together.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="guides">
+                    <span class="category-badge badge-guides">Study Guides</span>
+                    <span class="text-xs text-green-300 font-semibold mb-3">8 Weeks</span>
+                    <h3 class="text-xl font-bold mb-3">8-Week Armor of God Study Plan</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Comprehensive 8-week study diving deep into each piece of the armor of God with daily devotionals, scripture study, and weekly discussion prompts for groups.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="guides">
+                    <span class="category-badge badge-guides">Study Guides</span>
+                    <span class="text-xs text-green-300 font-semibold mb-3">4 Weeks</span>
+                    <h3 class="text-xl font-bold mb-3">Marriage Devotional — 4-Week Series</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">30-day devotional for couples with daily reflections, discussion questions, and practical applications to strengthen marriages biblically.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="guides">
+                    <span class="category-badge badge-guides">Study Guides</span>
+                    <span class="text-xs text-green-300 font-semibold mb-3">12 Weeks</span>
+                    <h3 class="text-xl font-bold mb-3">Book of Romans — In-Depth Study</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">12-week verse-by-verse study of Romans with commentary, prayer guides, and application questions ideal for serious Bible students and discussion groups.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="guides">
+                    <span class="category-badge badge-guides">Study Guides</span>
+                    <span class="text-xs text-green-300 font-semibold mb-3">6 Weeks</span>
+                    <h3 class="text-xl font-bold mb-3">Parenting with Biblical Wisdom</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">6-week study for parents covering biblical parenting principles with discussion guides and practical strategies for raising children in faith.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="guides">
+                    <span class="category-badge badge-guides">Study Guides</span>
+                    <span class="text-xs text-green-300 font-semibold mb-3">10 Weeks</span>
+                    <h3 class="text-xl font-bold mb-3">Christian Leadership Essentials</h3>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">10-week study on biblical leadership principles for small group leaders, ministry volunteers, and those called to lead in the church and community.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">PDF</span>
+                        <button class="download-btn">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Recommended Reading Section -->
+        <section class="resource-section" data-category="reading">
+            <h2 class="subsection-title">Recommended Reading</h2>
+            <p class="text-gray-400 mb-8">Curated selection of books and resources that complement our teachings and help you go deeper in your faith journey.</p>
+
+            <div class="resource-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="resource-card" data-category="reading">
+                    <span class="category-badge badge-reading">Reading List</span>
+                    <span class="text-xs text-orange-300 font-semibold mb-3">Christian Living</span>
+                    <h3 class="text-xl font-bold mb-2">The Attributes of God</h3>
+                    <p class="text-sm text-blue-400 font-semibold mb-3">A.W. Tozer</p>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">A classic exploration of God's nature and character that deepens understanding of who God is and how His attributes relate to our faith and daily living.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">Book</span>
+                        <button class="download-btn">Learn More</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="reading">
+                    <span class="category-badge badge-reading">Reading List</span>
+                    <span class="text-xs text-orange-300 font-semibold mb-3">Bible Study</span>
+                    <h3 class="text-xl font-bold mb-2">The New Inductive Study Bible</h3>
+                    <p class="text-sm text-blue-400 font-semibold mb-3">Kay Arthur & Precept Ministries</p>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">An excellent resource for those wanting to study Scripture using the inductive method, ideal for personal study and small group Bible studies.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">Book</span>
+                        <button class="download-btn">Learn More</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="reading">
+                    <span class="category-badge badge-reading">Reading List</span>
+                    <span class="text-xs text-orange-300 font-semibold mb-3">Christian Living</span>
+                    <h3 class="text-xl font-bold mb-2">Mere Christianity</h3>
+                    <p class="text-sm text-blue-400 font-semibold mb-3">C.S. Lewis</p>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Timeless philosophical defense of Christian faith exploring core Christian beliefs with clarity and wit, perfect for deepening theological understanding.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">Book</span>
+                        <button class="download-btn">Learn More</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="reading">
+                    <span class="category-badge badge-reading">Reading List</span>
+                    <span class="text-xs text-orange-300 font-semibold mb-3">Spiritual Growth</span>
+                    <h3 class="text-xl font-bold mb-2">Practicing the Presence of God</h3>
+                    <p class="text-sm text-blue-400 font-semibold mb-3">Brother Lawrence</p>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Beautiful meditations on living a life aware of God's constant presence, encouraging development of spiritual practices that draw us closer to God.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">Book</span>
+                        <button class="download-btn">Learn More</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="reading">
+                    <span class="category-badge badge-reading">Reading List</span>
+                    <span class="text-xs text-orange-300 font-semibold mb-3">Prayer & Spirituality</span>
+                    <h3 class="text-xl font-bold mb-2">Prayer: Experiencing Awe and Intimacy with God</h3>
+                    <p class="text-sm text-blue-400 font-semibold mb-3">Timothy Keller</p>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Modern exploration of prayer that reconnects believers with prayer's transformative power and teaches practical approaches to developing a vibrant prayer life.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">Book</span>
+                        <button class="download-btn">Learn More</button>
+                    </div>
+                </div>
+
+                <div class="resource-card" data-category="reading">
+                    <span class="category-badge badge-reading">Reading List</span>
+                    <span class="text-xs text-orange-300 font-semibold mb-3">Church History</span>
+                    <h3 class="text-xl font-bold mb-2">Church History in Plain Language</h3>
+                    <p class="text-sm text-blue-400 font-semibold mb-3">Bruce Shelley</p>
+                    <p class="text-gray-400 text-sm mb-6 flex-grow">Accessible overview of Christian history from early church to present day, helping believers understand their heritage and the development of Christian thought.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="file-badge">Book</span>
+                        <button class="download-btn">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- How to Use Resources Section -->
+        <section class="bg-dark-card border border-white/5 rounded-2xl p-8 md:p-12 mb-20">
+            <h2 class="subsection-title text-center mb-12">How to Use These Resources</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">1. Watch the Teaching</h3>
+                    <p class="text-gray-400">Start by watching the full teaching from our Teachings page to get the complete message and foundation.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">2. Download the Handout</h3>
+                    <p class="text-gray-400">Download the corresponding handout, study guide, or resource from this page to enhance your learning.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">3. Discuss with Your Group</h3>
+                    <p class="text-gray-400">Use the discussion guides to have meaningful conversations with your family, small group, or Bible study.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">4. Apply & Grow</h3>
+                    <p class="text-gray-400">Take what you've learned and apply it to your daily life. Test your knowledge and track your spiritual growth.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section mb-20">
+            <h2 class="text-3xl font-bold mb-4">Don't see what you need?</h2>
+            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+                We're always creating new resources to help you grow. Let us know what materials would be most helpful for your journey, and we'll work on creating them.
+            </p>
+            <a href="community.html" class="download-btn inline-block">
+                <span>Join Our Community</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">StayTheWay</h3>
+                    <p class="text-gray-400">Teaching biblical truths and equipping believers to live in faith, purpose, and spiritual power.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="teachings.html" class="text-gray-400 hover:text-white transition">Teachings</a></li>
+                        <li><a href="resources.html" class="text-gray-400 hover:text-white transition">Resources</a></li>
+                        <li><a href="bridges.html" class="text-gray-400 hover:text-white transition">Bridges</a></li>
+                        <li><a href="beliefs.html" class="text-gray-400 hover:text-white transition">Beliefs</a></li>
+                        <li><a href="community.html" class="text-gray-400 hover:text-white transition">Community</a></li>
+                        <li><a href="give.html" class="text-gray-400 hover:text-white transition">Give</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Follow Us</h4>
+                    <div class="flex gap-4">
+                        <a href="https://www.youtube.com/@weStayTheWay" target="_blank" class="text-gray-400 hover:text-blue-400 transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/weStayTheWay" target="_blank" class="text-gray-400 hover:text-blue-400 transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/weStayTheWay" target="_blank" class="text-gray-400 hover:text-blue-400 transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2.225a7.775 7.775 0 1 1 0 15.55 7.775 7.775 0 0 1 0-15.55zm3.882-1.06a1.885 1.885 0 1 1 0 3.77 1.885 1.885 0 0 1 0-3.77zm-3.882 1.885a5.889 5.889 0 1 0 0 11.778 5.889 5.889 0 0 0 0-11.778z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8">
+                <div class="text-center text-gray-400 text-sm mb-4">
+                    <p>StayTheWay Ministry is a 501(c)(3) nonprofit organization.</p>
+                </div>
+                <div class="text-center text-gray-500 text-xs">
+                    <p>Founded by Jonathan C. Weisz &copy; 2024 StayTheWay Ministry. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#000000',
+                        'dark-card': '#0a0a0a',
+                        'blue-500': '#3b82f6',
+                        'blue-400': '#60a5fa',
+                        white: '#ffffff',
+                        'gray-400': '#9ca3af',
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Filter Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-tab');
+            const resourceSections = document.querySelectorAll('.resource-section');
+            const resourceCards = document.querySelectorAll('.resource-card');
+
+            // Mobile menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            hamburger.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+            });
+
+            // Close menu when a link is clicked
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+
+            // Filter functionality
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Filter sections
+                    if (filter === 'all') {
+                        resourceSections.forEach(section => {
+                            section.style.display = 'block';
+                        });
+                    } else {
+                        resourceSections.forEach(section => {
+                            const sectionCategory = section.getAttribute('data-category');
+                            if (sectionCategory === filter) {
+                                section.style.display = 'block';
+                            } else {
+                                section.style.display = 'none';
+                            }
+                        });
+                    }
+
+                    // Smooth scroll to results
+                    setTimeout(() => {
+                        document.querySelector('.filter-tab').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
+                });
+            });
+
+            // Add click handlers to download buttons
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Placeholder for download functionality
+                    alert('Download would begin for: ' + this.closest('.resource-card').querySelector('h3').textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

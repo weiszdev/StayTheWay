@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching Library - StayTheWay Ministry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+        .play-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover .play-icon {
+            background: rgba(96, 165, 250, 0.3);
+            transform: scale(1.1);
+        }
+        .play-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 12px solid rgba(255, 255, 255, 0.8);
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            margin-left: 3px;
+        }
+        .hamburger {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .hamburger span {
+            width: 100%;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .mobile-menu.active {
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Navigation -->
+    <nav class="bg-black border-b border-white/5 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 font-bold text-xl text-blue-400">
+                    STW
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="teachings.html" class="text-white hover:text-blue-400 transition">Teachings</a>
+                    <a href="resources.html" class="text-white hover:text-blue-400 transition">Resources</a>
+                    <a href="bridges.html" class="text-white hover:text-blue-400 transition">Bridges</a>
+                    <a href="beliefs.html" class="text-white hover:text-blue-400 transition">Beliefs</a>
+                    <a href="community.html" class="text-white hover:text-blue-400 transition">Community</a>
+                </div>
+
+                <!-- Give Button (Desktop) -->
+                <div class="hidden md:flex">
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium transition">
+                        Give
+                    </button>
+                </div>
+
+                <!-- Mobile Hamburger -->
+                <div class="md:hidden">
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="flex flex-col space-y-3 pb-4">
+                    <a href="teachings.html" class="text-white hover:text-blue-400 transition">Teachings</a>
+                    <a href="resources.html" class="text-white hover:text-blue-400 transition">Resources</a>
+                    <a href="bridges.html" class="text-white hover:text-blue-400 transition">Bridges</a>
+                    <a href="beliefs.html" class="text-white hover:text-blue-400 transition">Beliefs</a>
+                    <a href="community.html" class="text-white hover:text-blue-400 transition">Community</a>
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium transition w-full">
+                        Give
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-b from-black via-black to-black pt-16 pb-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-4">Teaching Library</h1>
+            <p class="text-lg md:text-xl text-gray-400 mb-8">300+ video teachings — search, filter, and study at your own pace</p>
+        </div>
+    </section>
+
+    <!-- Filter and Search Section -->
+    <section class="bg-black border-b border-white/5 py-8 px-4 sm:px-6 lg:px-8 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto">
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search teachings..."
+                    class="w-full px-4 py-3 rounded-lg bg-[#0f0f0f] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                >
+            </div>
+
+            <!-- Category Filters -->
+            <div class="flex flex-wrap gap-2 sm:gap-3">
+                <button class="filter-btn active px-4 py-2 rounded-full text-sm font-medium transition bg-blue-500 text-white" data-category="all">
+                    All
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="sunday">
+                    Sunday Teachings
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="armor">
+                    Armor of God
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="warfare">
+                    Spiritual Warfare
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="marriage">
+                    Marriage & Family
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="endtimes">
+                    End Times
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="midweek">
+                    Midweek Studies
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="worship">
+                    Worship
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="topical">
+                    Topical Deep Dives
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="faith">
+                    Faith & Health
+                </button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-medium transition border border-white/20 text-white hover:border-blue-500" data-category="getting-started">
+                    Getting Started
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Grid -->
+    <section class="bg-black py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="videoGrid">
+                <!-- Video Card 1 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="sunday" data-title="The Call of God and Betrayal">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">The Call of God and Betrayal</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-medium rounded-full">Sunday Teaching</span>
+                        </div>
+                        <p class="text-sm text-gray-400">March 23, 2025 • 42 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="armor" data-title="Armor of God 7 Ways to Apply">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Armor of God: 7 Ways to Apply</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full">Armor of God</span>
+                        </div>
+                        <p class="text-sm text-gray-400">March 16, 2025 • 38 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="warfare" data-title="What Can a Christian Do to Protect from Spiritual War">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">What Can a Christian Do to Protect from Spiritual War</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-red-500/20 text-red-300 text-xs font-medium rounded-full">Spiritual Warfare</span>
+                        </div>
+                        <p class="text-sm text-gray-400">March 9, 2025 • 45 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 4 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="marriage" data-title="Grace Upon Grace Marriage Devotional">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Grace Upon Grace: Marriage Devotional</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-pink-500/20 text-pink-300 text-xs font-medium rounded-full">Marriage & Family</span>
+                        </div>
+                        <p class="text-sm text-gray-400">March 2, 2025 • 28 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 5 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="endtimes" data-title="Signs of the Times: A Biblical Perspective">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Signs of the Times: A Biblical Perspective</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-orange-500/20 text-orange-300 text-xs font-medium rounded-full">End Times</span>
+                        </div>
+                        <p class="text-sm text-gray-400">February 23, 2025 • 52 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 6 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="midweek" data-title="Midweek Devotion: Faith in Hard Times">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Midweek Devotion: Faith in Hard Times</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full">Midweek Studies</span>
+                        </div>
+                        <p class="text-sm text-gray-400">February 19, 2025 • 22 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 7 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="worship" data-title="Worship in Spirit and Truth">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Worship in Spirit and Truth</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-indigo-500/20 text-indigo-300 text-xs font-medium rounded-full">Worship</span>
+                        </div>
+                        <p class="text-sm text-gray-400">February 16, 2025 • 35 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 8 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="topical" data-title="Understanding the Book of Revelation">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Understanding the Book of Revelation</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-medium rounded-full">Topical Deep Dive</span>
+                        </div>
+                        <p class="text-sm text-gray-400">February 9, 2025 • 58 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 9 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="faith" data-title="Faith and Health: Praying for Healing">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Faith and Health: Praying for Healing</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-green-500/20 text-green-300 text-xs font-medium rounded-full">Faith & Health</span>
+                        </div>
+                        <p class="text-sm text-gray-400">February 2, 2025 • 40 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 10 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="getting-started" data-title="Welcome to StayTheWay: Getting Started">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Welcome to StayTheWay: Getting Started</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-yellow-500/20 text-yellow-300 text-xs font-medium rounded-full">Getting Started</span>
+                        </div>
+                        <p class="text-sm text-gray-400">January 26, 2025 • 18 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 11 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="sunday" data-title="Building an Unshakeable Foundation">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Building an Unshakeable Foundation</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-medium rounded-full">Sunday Teaching</span>
+                        </div>
+                        <p class="text-sm text-gray-400">January 19, 2025 • 44 min</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 12 -->
+                <div class="video-card card-hover rounded-2xl overflow-hidden border border-white/5 bg-[#0f0f0f]" data-category="marriage" data-title="Loving as Christ Loved: A Marriage Study">
+                    <div class="relative h-48 bg-gray-800 flex items-center justify-center group">
+                        <div class="play-icon"></div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold text-white mb-2">Loving as Christ Loved: A Marriage Study</h3>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-block px-3 py-1 bg-pink-500/20 text-pink-300 text-xs font-medium rounded-full">Marriage & Family</span>
+                        </div>
+                        <p class="text-sm text-gray-400">January 12, 2025 • 36 min</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/5 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">StayTheWay Ministry</h3>
+                    <p class="text-gray-400 text-sm">Teaching biblical truth and building faith communities.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-blue-400 transition">Home</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Resources</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Beliefs</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://youtube.com/@weStayTheWay" target="_blank" class="text-gray-400 hover:text-blue-400 transition text-sm">YouTube: @weStayTheWay</a>
+                        <a href="https://facebook.com/weStayTheWay" target="_blank" class="text-gray-400 hover:text-blue-400 transition text-sm">Facebook</a>
+                        <a href="https://instagram.com/weStayTheWay" target="_blank" class="text-gray-400 hover:text-blue-400 transition text-sm">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8">
+                <p class="text-center text-gray-500 text-sm">&copy; 2025 StayTheWay Ministry. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileLinks = mobileMenu.querySelectorAll('a, button');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const videoCards = document.querySelectorAll('.video-card');
+        const searchInput = document.getElementById('searchInput');
+
+        let activeCategory = 'all';
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Update active button
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-blue-500', 'text-white');
+                    b.classList.add('border', 'border-white/20');
+                });
+                e.target.classList.remove('border', 'border-white/20');
+                e.target.classList.add('bg-blue-500', 'text-white');
+
+                // Filter videos
+                activeCategory = e.target.dataset.category;
+                filterVideos();
+            });
+        });
+
+        // Search Functionality
+        searchInput.addEventListener('input', (e) => {
+            filterVideos();
+        });
+
+        function filterVideos() {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            videoCards.forEach(card => {
+                const cardCategory = card.dataset.category;
+                const cardTitle = card.dataset.title.toLowerCase();
+
+                const matchesCategory = activeCategory === 'all' || cardCategory === activeCategory;
+                const matchesSearch = cardTitle.includes(searchTerm);
+
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

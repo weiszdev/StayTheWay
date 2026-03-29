@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What We Believe — StayTheWay</title>
+    <meta name="description" content="StayTheWay's statement of faith — rooted in the Word of God, centered on Jesus Christ, the Way, the Truth, and the Life.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#000000',
+                        'dark-card': '#0a0a0a',
+                        'blue-500': '#3b82f6',
+                        'blue-400': '#60a5fa',
+                        white: '#ffffff',
+                        'gray-400': '#9ca3af',
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-heading { font-family: 'Playfair Display', serif; }
+        .gradient-overlay { background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(10,10,10,0.85) 100%); }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(59,130,246,0.15); }
+        .glow { box-shadow: 0 0 30px rgba(59,130,246,0.15); }
+        .text-gradient { background: linear-gradient(135deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: fadeInUp 0.6s ease forwards; }
+        .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        nav a { position: relative; }
+        nav a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #3b82f6; transition: width 0.3s ease; }
+        nav a:hover::after { width: 100%; }
+        .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.3), transparent); }
+        #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        #mobile-menu.open { max-height: 500px; }
+        .belief-card { border-left: 3px solid rgba(59,130,246,0.4); }
+        .belief-card:hover { border-left-color: #3b82f6; }
+        .verse-ref { font-size: 0.75rem; color: #60a5fa; opacity: 0.7; }
+        .scripture-banner {
+            background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(59,130,246,0.02) 100%);
+            border: 1px solid rgba(59,130,246,0.15);
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                        <span class="text-blue-400 font-bold text-lg">S</span>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold text-white">StayTheWay</span>
+                        <span class="hidden sm:inline text-xs text-gray-400 ml-2">The Word of God</span>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="teachings.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Teachings</a>
+                    <a href="resources.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Resources</a>
+                    <a href="bridges.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Bridges</a>
+                    <a href="beliefs.html" class="text-sm text-white hover:text-blue-400 transition-colors">Beliefs</a>
+                    <a href="community.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Community</a>
+                    <a href="give.html" class="text-sm px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 transition-colors">Give</a>
+                </div>
+                <button id="menu-toggle" class="md:hidden text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="md:hidden">
+                <div class="py-4 space-y-3 border-t border-white/5">
+                    <a href="teachings.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Teachings</a>
+                    <a href="resources.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Resources</a>
+                    <a href="bridges.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Bridges</a>
+                    <a href="beliefs.html" class="block text-white hover:text-blue-400 transition-colors py-2">Beliefs</a>
+                    <a href="community.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Community</a>
+                    <a href="give.html" class="block text-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg mt-2">Give</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero / John 14:6 Header -->
+    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 px-4 overflow-hidden">
+        <!-- Background glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25px 25px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 50px 50px;"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto text-center">
+            <div class="animate-in">
+                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-blue-400 uppercase bg-blue-500/10 rounded-full border border-blue-500/20 mb-8">Statement of Faith</span>
+            </div>
+
+            <!-- John 14:6 — Foundation -->
+            <div class="animate-in animate-delay-1 mb-10">
+                <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-2">
+                    The <span class="text-gradient">Way</span>. The <span class="text-gradient">Truth</span>. The <span class="text-gradient">Life</span>.
+                </h1>
+            </div>
+
+            <div class="animate-in animate-delay-2 scripture-banner rounded-2xl px-6 sm:px-10 py-8 max-w-3xl mx-auto mb-10">
+                <p class="text-lg sm:text-xl md:text-2xl text-gray-300 italic leading-relaxed font-light">
+                    "Jesus said to him, 'I am the way, the truth, and the life. No one comes to the Father except through Me.'"
+                </p>
+                <p class="text-blue-400 font-semibold mt-4 text-sm tracking-wide">— John 14:6 (NKJV)</p>
+            </div>
+
+            <p class="animate-in animate-delay-3 text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                This is the foundation of everything we do at StayTheWay. Jesus didn't say He would <em>show</em> us a way — He said He <em>is</em> the Way. Our beliefs aren't a denominational checklist. They're the anchor that holds everything else in place.
+            </p>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- Intro: Our Approach -->
+    <section class="py-16 sm:py-20 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="font-heading text-2xl sm:text-3xl font-bold mb-6">Before You Read This</h2>
+            <p class="text-gray-400 text-lg leading-relaxed mb-6">
+                StayTheWay is a 501(c)(3) service ministry — not a denomination, not a competing church. We exist to equip believers wherever they are. These beliefs are what ground our teaching. We're not here to argue doctrine with your home church. We're here to point you to the Word and help you think biblically so you can test everything for yourself.
+            </p>
+            <p class="text-gray-400 text-lg leading-relaxed">
+                Like the Bereans in Acts 17:11, we encourage you to search the Scriptures daily to see if what we teach holds up. That's the whole point — <strong class="text-white">learn how to think, not what to think.</strong>
+            </p>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- Beliefs Section -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-4xl mx-auto">
+
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">What We Believe</span>
+                <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold mt-4">Our Statement of Faith</h2>
+            </div>
+
+            <div class="space-y-6">
+
+                <!-- 1. The Bible -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">The Word of God</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe the Scriptures of the Old and New Testaments are the inspired, inerrant Word of God — the final authority on faith and practice. This isn't just a book of good ideas. It's the living, active Word that shapes how we live, how we think, and how we understand everything else. The Word of God supersedes any earthly law or cultural trend that contradicts it. It is the foundation this ministry is built on and the standard by which we measure every teaching.
+                    </p>
+                    <p class="verse-ref">Isaiah 28:13 · John 17:17 · 2 Timothy 3:16-17 · Hebrews 4:12 · 1 Peter 1:23-25 · 2 Peter 1:21</p>
+                </div>
+
+                <!-- 2. God -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">One God — Father, Son & Holy Spirit</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe there is one living and true God, eternally existing in three persons: the Father, the Son, and the Holy Spirit — equal in power and glory. This triune God created all things, upholds all things, and governs all things. He's not a distant force. He's a personal God who hears prayer, who intervenes in the affairs of men, and who saves from sin and death all who come to Him through Jesus Christ.
+                    </p>
+                    <p class="verse-ref">Genesis 1:1 · Deuteronomy 6:4 · Matthew 28:19 · John 10:30 · Hebrews 9:14</p>
+                </div>
+
+                <!-- 3. Jesus Christ -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">Jesus Christ — The Way, The Truth, The Life</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe in the person of Jesus Christ — God's only begotten Son, conceived by the Holy Spirit. We believe in His virgin birth, His sinless life, His miracles and teachings, His substitutionary atoning death on the cross, His bodily resurrection, His ascension into heaven, His perpetual intercession for His people, and His personal, visible return to earth. Jesus is the only way to the Father. Period. No additions, no alternatives, no compromise.
+                    </p>
+                    <p class="verse-ref">Isaiah 7:14 · Matthew 1:23 · John 1:1-2, 8:58, 11:25, 14:6 · 1 Corinthians 15:3-4 · Hebrews 1:8 · Revelation 1:8</p>
+                </div>
+
+                <!-- 4. Holy Spirit -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">The Holy Spirit</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe in the person of the Holy Spirit who came forth from the Father and Son to convict the world of sin, righteousness, and judgment — and to regenerate, sanctify, and empower for ministry all who believe in Christ. The Holy Spirit indwells every believer as an abiding helper, teacher, and guide. We believe in the present ministry of the Holy Spirit and in the exercise of all the biblical gifts of the Spirit. We don't quench the Spirit, and we don't manufacture what isn't there. We stay yielded.
+                    </p>
+                    <p class="verse-ref">John 14:16-17, 16:8-11 · Acts 1:8 · Romans 12, 15:13 · 1 Corinthians 12, 14 · 2 Corinthians 3:18 · Hebrews 9:14</p>
+                </div>
+
+                <!-- 5. Sin & Salvation -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">Sin & Salvation</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe that all people are sinners by nature and therefore under condemnation. But God — rich in mercy — regenerates by the Holy Spirit those who repent of their sins and confess Jesus Christ as Lord. Salvation is by grace through faith. You can't earn it. You can't lose it by accident. And you certainly can't buy it. It's a gift. The most important decision any person will ever make is what they do with Jesus.
+                    </p>
+                    <p class="verse-ref">John 3:16 · Acts 8:15-17 · Romans 3:23, 6:23, 10:9-10 · Ephesians 2:8-9 · Titus 3:5</p>
+                </div>
+
+                <!-- 6. The Church -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">The Church</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe in the universal Church — the living, spiritual body of which Christ is the head and all who are born again are members. The Church is not a building, a denomination, or a brand. It's every believer, everywhere. That's exactly why StayTheWay exists as a service ministry: we don't compete with churches, we strengthen believers within them. The only true basis of Christian fellowship is His agape love — which is greater than any doctrinal difference that divides us.
+                    </p>
+                    <p class="verse-ref">1 Corinthians 12:12-13 · Ephesians 4:15-16</p>
+                </div>
+
+                <!-- 7. Baptism & Communion -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">Baptism & The Lord's Supper</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe that the Lord Jesus Christ committed two ordinances to the Church: full-immersion water baptism and the Lord's Supper. Baptism is the outward declaration of an inward transformation — it's your public statement that you belong to Jesus. The Lord's Supper is our ongoing remembrance of what He did for us on the cross. These aren't rituals for ritual's sake. They're acts of obedience and worship.
+                    </p>
+                    <p class="verse-ref">Matthew 28:19 · Mark 1:9 · Acts 2:38 · 1 Corinthians 11:23-26</p>
+                </div>
+
+                <!-- 8. Laying on of Hands -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">The Laying on of Hands</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe in the laying on of hands for the baptism of the Holy Spirit, the ordination of pastors, elders, and deacons, and for the receiving and perpetuity of the gifts of the Holy Spirit. This is a biblical practice — not a theatrical one. It's how the early church operated, and it's how the Spirit continues to move when the body of Christ comes together in faith.
+                    </p>
+                    <p class="verse-ref">Acts 6:6, 8:17 · 1 Timothy 4:14</p>
+                </div>
+
+                <!-- 9. Second Coming -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">The Second Coming of Jesus Christ</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe in the Second Coming of Jesus Christ — His personal, visible return to earth and the establishment of His millennial kingdom. We believe in the resurrection of the body, the final judgment, the eternal blessing of the righteous, and the endless separation of the wicked. We believe in the pre-tribulation rapture of the Church, where all believers will meet the Lord in the air and be taken out of this world prior to the tribulation. He's coming back. Stay ready.
+                    </p>
+                    <p class="verse-ref">Matthew 16:27, 24:29-31 · Acts 1:11 · 1 Thessalonians 5:9 · Revelation 19:11-16, 20:11-15</p>
+                </div>
+
+                <!-- 10. Heaven & Hell -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">Heaven & Hell</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe in a literal Heaven and a literal Hell. All those who place their faith, hope, and trust in Jesus Christ will spend eternity in Heaven with the Lord. Those who reject His free gift of salvation will spend eternity separated from God. We don't soften this. We don't water it down. The stakes are real, the love is real, and the invitation is open to everyone.
+                    </p>
+                    <p class="verse-ref">Matthew 5:3, 5:22, 18:9, 25:31-34 · Luke 12:5 · Hebrews 12:23 · 1 Peter 1:4</p>
+                </div>
+
+                <!-- 11. Marriage & Creation -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">Marriage & Creation</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe that God created man — male and female — different by design so as to complement and complete each other. Marriage has been ordained by God as the exclusive covenantal union of one man and one woman for a lifetime. God instituted this as the foundation of the family and the basic structure of human society. We hold to what Scripture teaches on this without apology, and with love for all people.
+                    </p>
+                    <p class="verse-ref">Genesis 2:24 · 1 Corinthians 6:9-11, 6:18-20, 7:1-3 · 1 Timothy 1:9-11</p>
+                </div>
+
+                <!-- 12. Worship -->
+                <div class="belief-card card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 sm:p-8 transition-all">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4">Worship</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">
+                        We believe worship of God should be spiritual — flexible and yielded to the leading of the Holy Spirit. We believe worship should be intelligent — rooted in the teaching of His Word so we know <em>how</em> God wants to be worshiped, not just how we feel like worshiping. And we believe worship should be fruitful — His love showing up in our lives as the supreme evidence that we've truly been in His presence. Worship is not a Sunday event. It's a way of life.
+                    </p>
+                    <p class="verse-ref">John 4:23-24 · Romans 12:1-2 · Colossians 3:16</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- Fellowship Foundation -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">Our Foundation</span>
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold mt-4 mb-8">Love Over Division</h2>
+            <div class="scripture-banner rounded-2xl px-6 sm:px-10 py-8 mb-8">
+                <p class="text-gray-300 text-lg leading-relaxed">
+                    We are not a denominational ministry, and we are not opposed to denominations — only to the over-emphasis of doctrinal differences that divide the Body of Christ. The only true basis of Christian fellowship is His agape love, which is greater than any difference we possess. Without that love, we have no right to call ourselves Christians.
+                </p>
+            </div>
+            <p class="text-gray-400 text-lg leading-relaxed">
+                This is why StayTheWay serves <em>every</em> church. We're not building walls — we're building bridges. If you love Jesus, hold to His Word, and want to grow deeper, we're here for you. Denomination doesn't matter. Labels don't matter. The Word matters. The Way matters.
+            </p>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- CTA -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-6">Ready to Go Deeper?</h2>
+            <p class="text-gray-400 text-lg mb-10">
+                These beliefs aren't walls — they're the foundation. Everything we teach, every resource we create, and every bridge we build stands on this ground. Now go study for yourself.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="teachings.html" class="px-8 py-3.5 bg-blue-500 text-white font-semibold rounded-xl hover:bg-blue-400 transition-all text-lg">Start Studying</a>
+                <a href="community.html" class="px-8 py-3.5 border border-blue-500/30 text-blue-400 font-medium rounded-xl hover:bg-blue-500/10 transition-all text-lg">Join the Community</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                            <span class="text-blue-400 font-bold text-lg">S</span>
+                        </div>
+                        <span class="text-lg font-bold text-white">StayTheWay</span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-sm">
+                        A 501(c)(3) faith-based nonprofit equipping believers to grow deeper in the knowledge and grace of God.
+                    </p>
+                    <div class="flex items-center gap-4 mt-6">
+                        <a href="https://www.youtube.com/@weStayTheWay" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#000000" points="9.545,15.568 15.818,12 9.545,8.432"/></svg>
+                        </a>
+                        <a href="https://facebook.com/weStayTheWay" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://instagram.com/weStayTheWay" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-4">Study</h4>
+                    <div class="space-y-3">
+                        <a href="teachings.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Teachings</a>
+                        <a href="resources.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Resources</a>
+                        <a href="beliefs.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Beliefs</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-4">Connect</h4>
+                    <div class="space-y-3">
+                        <a href="bridges.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Bridges</a>
+                        <a href="community.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Community</a>
+                        <a href="give.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Give</a>
+                        <a href="https://staytheway.com" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Main Site</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-gray-600">&copy; 2026 StayTheWay. A 501(c)(3) nonprofit organization. All rights reserved.</p>
+                <p class="text-xs text-gray-600">Founded by Jonathan C. Weisz</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+        toggle.addEventListener('click', () => menu.classList.toggle('open'));
+        menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.remove('open')));
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('animate-in');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.belief-card').forEach(card => observer.observe(card));
+    </script>
+</body>
+</html>

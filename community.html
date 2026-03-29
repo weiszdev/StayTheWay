@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community — StayTheWay Home Fellowship</title>
+    <meta name="description" content="Start or join a Home Fellowship. StayTheWay equips believers to gather in homes for Bible study, worship, prayer, and supportive fellowship — the Acts 2:42 way.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#000000',
+                        'dark-card': '#0a0a0a',
+                        'blue-500': '#3b82f6',
+                        'blue-400': '#60a5fa',
+                        white: '#ffffff',
+                        'gray-400': '#9ca3af',
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-heading { font-family: 'Playfair Display', serif; }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(59,130,246,0.15); }
+        .glow { box-shadow: 0 0 30px rgba(59,130,246,0.15); }
+        .text-gradient { background: linear-gradient(135deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: fadeInUp 0.6s ease forwards; }
+        .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        nav a { position: relative; }
+        nav a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #3b82f6; transition: width 0.3s ease; }
+        nav a:hover::after { width: 100%; }
+        .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.3), transparent); }
+        #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        #mobile-menu.open { max-height: 500px; }
+        .scripture-banner {
+            background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(59,130,246,0.02) 100%);
+            border: 1px solid rgba(59,130,246,0.15);
+        }
+        .timeline-line { position: relative; }
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(59,130,246,0.4), rgba(59,130,246,0.1));
+        }
+        .step-dot {
+            width: 48px; height: 48px; min-width: 48px;
+            border-radius: 50%;
+            background: rgba(59,130,246,0.1);
+            border: 2px solid rgba(59,130,246,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; color: #60a5fa; font-size: 1.1rem;
+            position: relative; z-index: 1;
+        }
+        .one-another-card {
+            background: linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(0,0,0,0) 100%);
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                        <span class="text-blue-400 font-bold text-lg">S</span>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold text-white">StayTheWay</span>
+                        <span class="hidden sm:inline text-xs text-gray-400 ml-2">The Word of God</span>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="teachings.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Teachings</a>
+                    <a href="resources.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Resources</a>
+                    <a href="bridges.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Bridges</a>
+                    <a href="beliefs.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Beliefs</a>
+                    <a href="community.html" class="text-sm text-white hover:text-blue-400 transition-colors">Community</a>
+                    <a href="give.html" class="text-sm px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 transition-colors">Give</a>
+                </div>
+                <button id="menu-toggle" class="md:hidden text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="md:hidden">
+                <div class="py-4 space-y-3 border-t border-white/5">
+                    <a href="teachings.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Teachings</a>
+                    <a href="resources.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Resources</a>
+                    <a href="bridges.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Bridges</a>
+                    <a href="beliefs.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Beliefs</a>
+                    <a href="community.html" class="block text-white hover:text-blue-400 transition-colors py-2">Community</a>
+                    <a href="give.html" class="block text-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg mt-2">Give</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative pt-28 pb-20 sm:pt-36 sm:pb-28 px-4 overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25px 25px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 50px 50px;"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto text-center">
+            <div class="animate-in">
+                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-blue-400 uppercase bg-blue-500/10 rounded-full border border-blue-500/20 mb-8">Home Fellowship</span>
+            </div>
+            <h1 class="animate-in animate-delay-1 font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
+                The Church in <span class="text-gradient">Your Home</span>
+            </h1>
+            <div class="animate-in animate-delay-2 scripture-banner rounded-2xl px-6 sm:px-10 py-8 max-w-3xl mx-auto mb-8">
+                <p class="text-lg sm:text-xl text-gray-300 italic leading-relaxed font-light">
+                    "And they continued steadfastly in the apostles' doctrine and fellowship, in the breaking of bread, and in prayers... breaking bread from house to house, they ate their food with gladness and simplicity of heart."
+                </p>
+                <p class="text-blue-400 font-semibold mt-4 text-sm tracking-wide">— Acts 2:42, 46 (NKJV)</p>
+            </div>
+            <p class="animate-in animate-delay-3 text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                In the New Testament, the church gathered in homes. Christians are God's household and His church whenever we come together. You don't need a building or a program — you need believers, the Word, and a willingness to love one another. That's what Home Fellowship is.
+            </p>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- The Three Goals of Home Fellowship -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">The Vision</span>
+                <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">Three Goals of Home Fellowship</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                    The early church was built on this — the pure teaching of God's Word and the home fellowship of believers. Everything we do flows from these goals.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Goal 1 -->
+                <div class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8">
+                    <div class="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-white mb-3">Study & Apply the Word</h3>
+                    <p class="text-gray-400 leading-relaxed text-sm mb-4">
+                        Share the Word together, discuss its meaning, and apply it to your life. The secret isn't just knowing God's Word — it's obeying it. We must not only be taught, but we must apply the Word to our personal lives and obey His commands.
+                    </p>
+                    <p class="text-xs text-blue-400/70">Ecclesiastes 12:13-14 · John 14:23 · James 1:22</p>
+                </div>
+                <!-- Goal 2 -->
+                <div class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8">
+                    <div class="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-white mb-3">Supportive Fellowship</h3>
+                    <p class="text-gray-400 leading-relaxed text-sm mb-4">
+                        Provide an environment where believers can fellowship in a supportive atmosphere — discipling one another in personal growth, encouraging obedience and servanthood, and equipping each other for the work of ministry.
+                    </p>
+                    <p class="text-xs text-blue-400/70">Matthew 28:19 · Hebrews 10:24 · Ephesians 4:12</p>
+                </div>
+                <!-- Goal 3 -->
+                <div class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8">
+                    <div class="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-white mb-3">Worship & Pray Together</h3>
+                    <p class="text-gray-400 leading-relaxed text-sm mb-4">
+                        Enjoy worshipping together through songs of praise, and breaking bread together — whether a formal communion, a simple snack, or a shared meal. Worship isn't a performance. It's how we prepare our hearts to receive.
+                    </p>
+                    <p class="text-xs text-blue-400/70">Ephesians 5:18-21 · Colossians 3:16 · Acts 2:46</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- How a Home Fellowship Works -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">The Format</span>
+                <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">How a Home Fellowship Works</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                    This isn't rigid — the Holy Spirit may shift things around. But having a plan keeps the time focused and fruitful. Here's a suggested two-hour format.
+                </p>
+            </div>
+
+            <div class="timeline-line space-y-8">
+                <div class="flex gap-6 items-start">
+                    <div class="step-dot">1</div>
+                    <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">7:30 PM</span>
+                            <h3 class="font-heading text-lg font-bold text-white">Opening Prayer & Announcements</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed">Begin by asking God for revelation, light, and application of the Word to your lives. A prayer focused on being encouraged, enriched, and challenged. Set the tone — this is about Him, not us.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="step-dot">2</div>
+                    <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">7:35 PM</span>
+                            <h3 class="font-heading text-lg font-bold text-white">Singing & Praise</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed">Worship prepares our hearts and minds to receive God's Word. Use simple songs people can join in on. This isn't a concert — it's a posture. Even 10 minutes of genuine worship shifts the atmosphere.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="step-dot">3</div>
+                    <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">8:00 PM</span>
+                            <h3 class="font-heading text-lg font-bold text-white">Discussion & Application</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed">This is the heart of the fellowship. Follow along with a teaching from StayTheWay or study a book of the Bible together. The leader isn't the preacher — they're the facilitator. Keep the application of God's Word to daily life front and center. Interactive study holds attention and gets people digging into the Word for themselves.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="step-dot">4</div>
+                    <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">8:50 PM</span>
+                            <h3 class="font-heading text-lg font-bold text-white">Sharing & Prayer in Small Groups</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed">Break into groups of 2-5 people. Share prayer requests, celebrate answered prayers, bear one another's burdens, and pray together. This is where real relationship happens. In a group of 20, you get 2 minutes each. In a group of 4, you get 10 minutes. That's where it becomes real.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="step-dot">5</div>
+                    <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">9:30 PM</span>
+                            <h3 class="font-heading text-lg font-bold text-white">Light Refreshments & Fellowship</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm leading-relaxed">Break bread together. It can be simple — coffee and a snack. This is where the informal conversations happen, where people connect, and where community actually forms. Rotate who brings refreshments so no one feels burdened.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- The "One Another" Commands -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">The Foundation</span>
+                <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">The "One Another" Commands</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                    Scripture is loaded with instructions for how believers are to treat each other. A Home Fellowship is the environment where these become real — not theoretical.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Love one another</p>
+                    <p class="text-xs text-blue-400/70">Romans 13:8 · 1 John 3:11, 4:7, 4:11-12</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Be devoted to one another</p>
+                    <p class="text-xs text-blue-400/70">Romans 12:10</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Bear one another's burdens</p>
+                    <p class="text-xs text-blue-400/70">Galatians 6:2</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Encourage one another daily</p>
+                    <p class="text-xs text-blue-400/70">Hebrews 3:13</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Pray for one another</p>
+                    <p class="text-xs text-blue-400/70">James 5:16</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Serve one another</p>
+                    <p class="text-xs text-blue-400/70">Galatians 5:13</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Be kind to one another</p>
+                    <p class="text-xs text-blue-400/70">Ephesians 4:32</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Forgive each other</p>
+                    <p class="text-xs text-blue-400/70">Colossians 3:12-13</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Comfort one another</p>
+                    <p class="text-xs text-blue-400/70">1 Thessalonians 4:18</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Be hospitable to one another</p>
+                    <p class="text-xs text-blue-400/70">1 Peter 4:9</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Accept one another</p>
+                    <p class="text-xs text-blue-400/70">Romans 15:7</p>
+                </div>
+                <div class="one-another-card border border-white/5 rounded-xl p-5">
+                    <p class="text-white font-medium text-sm mb-1">Spur one another to love & good deeds</p>
+                    <p class="text-xs text-blue-400/70">Hebrews 10:23-25</p>
+                </div>
+            </div>
+            <p class="text-center text-gray-500 text-sm mt-8">These are not suggestions. They're commands. And they can only be lived out in relationship — which is exactly why Home Fellowship exists.</p>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- Servant Leadership -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">The Heart</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold mt-4 mb-6">Servants, Not Leaders</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                    Jesus trained no leaders — only servants. The world says leadership is about being in charge. Jesus flipped it. A Home Fellowship servant is not someone who directs people — they serve God's people, and God will guide them.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6">
+                    <div class="text-blue-400 font-heading text-lg font-bold mb-2">Pray for the Meeting</div>
+                    <p class="text-gray-400 text-sm">Come prepared spiritually. The shepherd prays for the flock during the week — not just at the meeting.</p>
+                </div>
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6">
+                    <div class="text-blue-400 font-heading text-lg font-bold mb-2">Prepare the Study</div>
+                    <p class="text-gray-400 text-sm">Follow a systematic book-by-book study or use a StayTheWay teaching. Everyone can study ahead and come ready to discuss.</p>
+                </div>
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6">
+                    <div class="text-blue-400 font-heading text-lg font-bold mb-2">Facilitate, Don't Dominate</div>
+                    <p class="text-gray-400 text-sm">Sit in a circle, not in a pulpit arrangement. Keep your own comments to 5-10 minutes. Let the group discuss and discover together.</p>
+                </div>
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6">
+                    <div class="text-blue-400 font-heading text-lg font-bold mb-2">Follow Up with People</div>
+                    <p class="text-gray-400 text-sm">If someone hasn't shown up for a while, reach out. Not to pressure them to attend — but because you care. That's what a shepherd does.</p>
+                </div>
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6">
+                    <div class="text-blue-400 font-heading text-lg font-bold mb-2">Multiply by Dividing</div>
+                    <p class="text-gray-400 text-sm">When a group grows beyond 15-20 people, split it. Intimacy is lost in a crowd. The early church multiplied by dividing — and so should we.</p>
+                </div>
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6">
+                    <div class="text-blue-400 font-heading text-lg font-bold mb-2">Use Your Gift</div>
+                    <p class="text-gray-400 text-sm">God has given every believer at least one spiritual gift for the building up of the body. The fellowship is the place to discover it, practice it, and grow in it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- How to Start -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">Get Started</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold mt-4 mb-6">How to Start a Home Fellowship</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    You don't need a seminary degree. You need a heart for God, a willingness to serve, and a living room.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex gap-5 items-start">
+                    <div class="w-10 h-10 min-w-[40px] rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-bold">1</div>
+                    <div>
+                        <h3 class="font-semibold text-white mb-1">Pray About It</h3>
+                        <p class="text-gray-400 text-sm">The first thing necessary is a heart for God. Nothing replaces a genuine desire to serve. Ask God to show you the right people to invite and the right time to begin.</p>
+                    </div>
+                </div>
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex gap-5 items-start">
+                    <div class="w-10 h-10 min-w-[40px] rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-bold">2</div>
+                    <div>
+                        <h3 class="font-semibold text-white mb-1">Pick a Study</h3>
+                        <p class="text-gray-400 text-sm">Choose a book of the Bible to go through together, or use a StayTheWay teaching series. Having a consistent, verse-by-verse plan keeps the group anchored in the Word — not drifting into topical rabbit holes.</p>
+                    </div>
+                </div>
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex gap-5 items-start">
+                    <div class="w-10 h-10 min-w-[40px] rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-bold">3</div>
+                    <div>
+                        <h3 class="font-semibold text-white mb-1">Invite Believers Near You</h3>
+                        <p class="text-gray-400 text-sm">Gather believers as close to home as possible — people who love Jesus and want to grow. Ideally hosted by a committed couple. Ask for a 6-month time commitment upfront so the group can develop real trust.</p>
+                    </div>
+                </div>
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex gap-5 items-start">
+                    <div class="w-10 h-10 min-w-[40px] rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-bold">4</div>
+                    <div>
+                        <h3 class="font-semibold text-white mb-1">Set a Time & Keep It</h3>
+                        <p class="text-gray-400 text-sm">Most groups meet weekly for about two hours. Pick a time, start on time, and end on time. Consistency builds trust and shows respect for people's lives and families.</p>
+                    </div>
+                </div>
+                <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex gap-5 items-start">
+                    <div class="w-10 h-10 min-w-[40px] rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-bold">5</div>
+                    <div>
+                        <h3 class="font-semibold text-white mb-1">Use StayTheWay Resources</h3>
+                        <p class="text-gray-400 text-sm">Watch a teaching together, use the handouts for discussion, take the quiz during the week. Everything you need for a structured, Word-centered Home Fellowship is already here — and it's free.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- Connect Online -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">Stay Connected</span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-bold mt-4 mb-6">Join the StayTheWay Community</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Not everyone has a Home Fellowship nearby yet. Connect with fellow believers online — share prayer requests, ask questions, and walk together.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Facebook -->
+                <a href="https://facebook.com/weStayTheWay" target="_blank" class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 text-center group">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-5">
+                        <svg class="w-8 h-8 text-blue-400" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Private Facebook Group</h3>
+                    <p class="text-gray-400 text-sm">A private space for believers to share prayer requests, encouragement, and testimonies. Request to join.</p>
+                </a>
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@weStayTheWay" target="_blank" class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 text-center group">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-5">
+                        <svg class="w-8 h-8 text-blue-400" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#000000" points="9.545,15.568 15.818,12 9.545,8.432"/></svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">YouTube Channel</h3>
+                    <p class="text-gray-400 text-sm">304 teachings and growing. Subscribe, turn on notifications, and study along with your Home Fellowship.</p>
+                </a>
+                <!-- Instagram -->
+                <a href="https://instagram.com/weStayTheWay" target="_blank" class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 text-center group">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-5">
+                        <svg class="w-8 h-8 text-blue-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Instagram</h3>
+                    <p class="text-gray-400 text-sm">Daily encouragement, verse graphics, and ministry updates. Follow along and share with your community.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-5xl mx-auto"></div>
+
+    <!-- CTA -->
+    <section class="py-16 sm:py-24 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-6">Don't Just Hear It — Do It</h2>
+            <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+                The concept is simple: carefully listen to the teaching of God's Word, then apply it to your life through discussion and close fellowship. First hearing, then doing. Get the teaching, grab the handout, gather your people, and start.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="teachings.html" class="px-8 py-3.5 bg-blue-500 text-white font-semibold rounded-xl hover:bg-blue-400 transition-all text-lg">Browse Teachings</a>
+                <a href="resources.html" class="px-8 py-3.5 border border-blue-500/30 text-blue-400 font-medium rounded-xl hover:bg-blue-500/10 transition-all text-lg">Get the Handouts</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                            <span class="text-blue-400 font-bold text-lg">S</span>
+                        </div>
+                        <span class="text-lg font-bold text-white">StayTheWay</span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-sm">
+                        A 501(c)(3) faith-based nonprofit equipping believers to grow deeper in the knowledge and grace of God.
+                    </p>
+                    <div class="flex items-center gap-4 mt-6">
+                        <a href="https://www.youtube.com/@weStayTheWay" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#000000" points="9.545,15.568 15.818,12 9.545,8.432"/></svg>
+                        </a>
+                        <a href="https://facebook.com/weStayTheWay" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://instagram.com/weStayTheWay" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-4">Study</h4>
+                    <div class="space-y-3">
+                        <a href="teachings.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Teachings</a>
+                        <a href="resources.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Resources</a>
+                        <a href="beliefs.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Beliefs</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-4">Connect</h4>
+                    <div class="space-y-3">
+                        <a href="bridges.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Bridges</a>
+                        <a href="community.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Community</a>
+                        <a href="give.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Give</a>
+                        <a href="https://staytheway.com" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Main Site</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-gray-600">&copy; 2026 StayTheWay. A 501(c)(3) nonprofit organization. All rights reserved.</p>
+                <p class="text-xs text-gray-600">Founded by Jonathan C. Weisz</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+        toggle.addEventListener('click', () => menu.classList.toggle('open'));
+        menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.remove('open')));
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('animate-in');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

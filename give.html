@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Give - StayTheWay Ministry</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#000000',
+                        'dark-card': '#0a0a0a',
+                        'blue-500': '#3b82f6',
+                        'blue-400': '#60a5fa',
+                        white: '#ffffff',
+                        'gray-400': '#9ca3af',
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        body {
+            background-color: #000000;
+            color: #9ca3af;
+        }
+
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(96, 165, 250, 0.02));
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .glow {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-divider {
+            background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.3), transparent);
+            height: 1px;
+        }
+
+        nav a {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: #60a5fa;
+        }
+
+        .pillar-icon {
+            width: 60px;
+            height: 60px;
+            border: 1.5px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.05));
+            color: #60a5fa;
+            font-size: 28px;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        .donate-btn {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            transition: all 0.3s ease;
+            color: white;
+            font-weight: 600;
+        }
+
+        .donate-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .zeffy-card {
+            border: 2px solid #3b82f6;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(96, 165, 250, 0.05));
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-400">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-black/80 backdrop-blur-md border-b border-white/5 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-white text-xl font-bold font-heading">StayTheWay</div>
+
+            <!-- Desktop Menu -->
+            <div class="desktop-menu flex gap-8">
+                <a href="index.html" class="text-gray-400 hover:text-blue-400">Teachings</a>
+                <a href="resources.html" class="text-gray-400 hover:text-blue-400">Resources</a>
+                <a href="bridges.html" class="text-gray-400 hover:text-blue-400">Bridges</a>
+                <a href="beliefs.html" class="text-gray-400 hover:text-blue-400">Beliefs</a>
+                <a href="community.html" class="text-gray-400 hover:text-blue-400">Community</a>
+                <a href="give.html" class="text-blue-400 active">Give</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn text-white" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu bg-black border-t border-white/5">
+            <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4">
+                <a href="index.html" class="text-gray-400 hover:text-blue-400">Teachings</a>
+                <a href="resources.html" class="text-gray-400 hover:text-blue-400">Resources</a>
+                <a href="bridges.html" class="text-gray-400 hover:text-blue-400">Bridges</a>
+                <a href="beliefs.html" class="text-gray-400 hover:text-blue-400">Beliefs</a>
+                <a href="community.html" class="text-gray-400 hover:text-blue-400">Community</a>
+                <a href="give.html" class="text-blue-400 active">Give</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-20 px-6 gradient-overlay relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            <div class="absolute bottom-20 right-20 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto text-center z-10 animate-in">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 font-heading">
+                Support the <span class="text-gradient">Ministry</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                Every gift goes directly to equipping believers with biblical truth and fostering spiritual community. Your generosity fuels our mission to strengthen faith in Christ.
+            </p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <a href="#zeffy" class="donate-btn px-8 py-3 rounded-lg">Give Today</a>
+                <a href="#where-gift-goes" class="px-8 py-3 rounded-lg border border-blue-500 text-blue-400 hover:bg-blue-500/10 transition">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="max-w-6xl mx-auto px-6 my-20">
+        <div class="section-divider"></div>
+    </div>
+
+    <!-- Primary Donation: Zeffy -->
+    <section id="zeffy" class="max-w-6xl mx-auto px-6 py-16">
+        <div class="text-center mb-12 animate-in">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 font-heading">Donate via Zeffy</h2>
+            <p class="text-lg text-gray-400">Our recommended giving platform</p>
+        </div>
+
+        <div class="zeffy-card rounded-2xl p-8 md:p-12 max-w-3xl mx-auto card-hover animate-in">
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex-1">
+                    <div class="pillar-icon mx-0 md:mx-auto mb-6">
+                        💳
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-3xl font-bold text-white mb-4 font-heading">Why Zeffy?</h3>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex gap-3 text-gray-400">
+                            <span class="text-blue-400">✓</span>
+                            <span><strong class="text-white">100% free platform</strong> — zero platform fees</span>
+                        </li>
+                        <li class="flex gap-3 text-gray-400">
+                            <span class="text-blue-400">✓</span>
+                            <span><strong class="text-white">Tax-deductible receipts</strong> — automatic for all donations</span>
+                        </li>
+                        <li class="flex gap-3 text-gray-400">
+                            <span class="text-blue-400">✓</span>
+                            <span><strong class="text-white">Your full gift</strong> goes directly to the ministry</span>
+                        </li>
+                        <li class="flex gap-3 text-gray-400">
+                            <span class="text-blue-400">✓</span>
+                            <span><strong class="text-white">Secure & trusted</strong> by thousands of nonprofits</span>
+                        </li>
+                    </ul>
+                    <a href="https://www.zeffy.com" class="donate-btn px-8 py-3 rounded-lg inline-block">
+                        Donate via Zeffy
+                    </a>
+                    <!-- TODO: Update href to actual Zeffy donation page once account is created -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="max-w-6xl mx-auto px-6 my-20">
+        <div class="section-divider"></div>
+    </div>
+
+    <!-- Alternative Giving Options -->
+    <section class="max-w-6xl mx-auto px-6 py-16">
+        <div class="text-center mb-12 animate-in">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 font-heading">Other Ways to Give</h2>
+            <p class="text-lg text-gray-400">Choose your preferred payment method</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- PayPal -->
+            <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 card-hover animate-in">
+                <div class="pillar-icon mb-6 mx-auto">
+                    💰
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4 text-center font-heading">PayPal</h3>
+                <p class="text-gray-400 mb-6 text-center">Secure and widely trusted payment platform</p>
+                <a href="#" class="block text-center donate-btn px-6 py-2 rounded-lg">
+                    Give via PayPal
+                </a>
+            </div>
+
+            <!-- Venmo -->
+            <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 card-hover animate-in">
+                <div class="pillar-icon mb-6 mx-auto">
+                    📱
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4 text-center font-heading">Venmo</h3>
+                <p class="text-gray-400 mb-6 text-center">Quick and easy peer-to-peer payments</p>
+                <a href="#" class="block text-center donate-btn px-6 py-2 rounded-lg">
+                    Give via Venmo
+                </a>
+            </div>
+
+            <!-- Cash App -->
+            <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 card-hover animate-in">
+                <div class="pillar-icon mb-6 mx-auto">
+                    💵
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4 text-center font-heading">Cash App</h3>
+                <p class="text-gray-400 mb-6 text-center">Fast mobile payments for your convenience</p>
+                <a href="#" class="block text-center donate-btn px-6 py-2 rounded-lg">
+                    Give via Cash App
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="max-w-6xl mx-auto px-6 my-20">
+        <div class="section-divider"></div>
+    </div>
+
+    <!-- Where Your Gift Goes -->
+    <section id="where-gift-goes" class="max-w-6xl mx-auto px-6 py-16">
+        <div class="text-center mb-12 animate-in">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 font-heading">Where Your Gift Goes</h2>
+            <p class="text-lg text-gray-400">Complete transparency about how we use your generous support</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Teaching Production -->
+            <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 card-hover animate-in">
+                <div class="pillar-icon mb-6 mx-auto">
+                    🎬
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4 text-center font-heading">Teaching Production</h3>
+                <p class="text-gray-400 mb-4">
+                    Filming, professional equipment, studio resources, and content creation tools that enable us to deliver high-quality biblical teachings.
+                </p>
+                <p class="text-blue-400 font-semibold text-center">Reaching believers digitally</p>
+            </div>
+
+            <!-- Resource Development -->
+            <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 card-hover animate-in">
+                <div class="pillar-icon mb-6 mx-auto">
+                    📚
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4 text-center font-heading">Resource Development</h3>
+                <p class="text-gray-400 mb-4">
+                    Creating handouts, study guides, children's materials, and discipleship resources to strengthen individual and family Bible study.
+                </p>
+                <p class="text-blue-400 font-semibold text-center">Equipping personal growth</p>
+            </div>
+
+            <!-- Community Outreach -->
+            <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 card-hover animate-in">
+                <div class="pillar-icon mb-6 mx-auto">
+                    🤝
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4 text-center font-heading">Community Outreach</h3>
+                <p class="text-gray-400 mb-4">
+                    Supporting home Bible study groups, empowering bridge leaders, and funding community outreach initiatives that bring people together.
+                </p>
+                <p class="text-blue-400 font-semibold text-center">Building faith communities</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="max-w-6xl mx-auto px-6 my-20">
+        <div class="section-divider"></div>
+    </div>
+
+    <!-- Tax Information -->
+    <section class="max-w-4xl mx-auto px-6 py-16">
+        <div class="bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 md:p-12 gradient-overlay animate-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 font-heading">Tax Information</h2>
+
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">501(c)(3) Status</h3>
+                    <p class="text-gray-400">
+                        StayTheWay Ministry is a registered 501(c)(3) nonprofit organization. All contributions are tax-deductible to the extent allowed by law.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">Automatic Tax Receipts</h3>
+                    <p class="text-gray-400">
+                        When you give through Zeffy, you automatically receive a tax-deductible receipt via email. No additional paperwork needed—your gift is instantly documented for your records.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">EIN</h3>
+                    <p class="text-gray-400">
+                        Our Employer Identification Number (EIN) is available upon request. Please contact us for documentation needed for your tax records.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="max-w-6xl mx-auto px-6 my-20">
+        <div class="section-divider"></div>
+    </div>
+
+    <!-- Final CTA -->
+    <section class="max-w-4xl mx-auto px-6 py-16 text-center">
+        <div class="animate-in">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 font-heading">
+                Make an Impact Today
+            </h2>
+            <p class="text-xl text-gray-400 mb-8">
+                Your generosity directly strengthens believers and builds thriving faith communities. Every gift, regardless of size, makes a meaningful difference in spreading biblical truth.
+            </p>
+            <a href="#zeffy" class="donate-btn px-10 py-4 rounded-lg inline-block text-lg">
+                Give Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="max-w-6xl mx-auto px-6 my-20">
+        <div class="section-divider"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#0a0a0a] border-t border-white/5 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="text-white font-bold font-heading mb-4">StayTheWay</div>
+                    <p class="text-gray-400 text-sm">Building a strong foundation in Christ through biblical teaching and community.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Navigate</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="text-gray-400 hover:text-blue-400">Teachings</a></li>
+                        <li><a href="resources.html" class="text-gray-400 hover:text-blue-400">Resources</a></li>
+                        <li><a href="bridges.html" class="text-gray-400 hover:text-blue-400">Bridges</a></li>
+                        <li><a href="beliefs.html" class="text-gray-400 hover:text-blue-400">Beliefs</a></li>
+                        <li><a href="community.html" class="text-gray-400 hover:text-blue-400">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Connect</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://www.youtube.com/@weStayTheWay" class="text-gray-400 hover:text-blue-400">YouTube @weStayTheWay</a></li>
+                        <li><a href="https://www.facebook.com/weStayTheWay" class="text-gray-400 hover:text-blue-400">Facebook weStayTheWay</a></li>
+                        <li><a href="https://www.instagram.com/weStayTheWay" class="text-gray-400 hover:text-blue-400">Instagram weStayTheWay</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="give.html" class="text-gray-400 hover:text-blue-400">Give</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-divider mb-8"></div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                <p>StayTheWay Ministry is a 501(c)(3) nonprofit organization.</p>
+                <p class="mt-4 md:mt-0">Founded by Jonathan C. Weisz</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
