@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a1a2e">
+<meta name="description" content="NotDrWise — Holy Spirit Lead Health Ministry. Think Through It.">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- iOS PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NotDrWise">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='36' fill='%231a1a2e'/%3E%3Ctext x='90' y='75' text-anchor='middle' font-family='Georgia,serif' font-size='44' font-weight='bold' fill='%23c9a84c'%3ENOT%3C/text%3E%3Ctext x='90' y='120' text-anchor='middle' font-family='Georgia,serif' font-size='34' font-weight='bold' fill='%23fff'%3EDrWise%3C/text%3E%3C/svg%3E">
+
+<title>NotDrWise</title>
+
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #1a1a2e;
+  --navy-light: #232345;
+  --navy-mid: #2a2a4a;
+  --gold: #c9a84c;
+  --gold-dim: rgba(201,168,76,0.15);
+  --gold-border: rgba(201,168,76,0.3);
+  --white: #ffffff;
+  --white-dim: rgba(255,255,255,0.7);
+  --white-faint: rgba(255,255,255,0.12);
+  --tab-height: 72px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; }
+a { color: var(--gold); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===== APP SHELL ===== */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.screen-container {
+  flex: 1;
+  padding-bottom: calc(var(--tab-height) + var(--safe-bottom) + 8px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.screen {
+  display: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  padding: 24px 20px 32px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.screen.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== TAB BAR ===== */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--tab-height) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: var(--navy-light);
+  border-top: 1px solid var(--white-faint);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--white-dim);
+  font-size: 10px;
+  font-family: inherit;
+  padding: 8px 12px;
+  min-width: 56px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab-btn.active { color: var(--gold); }
+.tab-btn svg { width: 24px; height: 24px; }
+
+/* ===== COMMON COMPONENTS ===== */
+.card {
+  background: var(--navy-light);
+  border: 1px solid var(--white-faint);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: transform 0.15s;
+}
+
+.card:active { transform: scale(0.98); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 24px;
+  min-height: 48px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  font-family: inherit;
+  text-align: center;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active { transform: scale(0.97); opacity: 0.9; }
+
+.btn-outline {
+  background: transparent;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+}
+
+.btn-sm {
+  padding: 10px 18px;
+  font-size: 14px;
+  min-height: 44px;
+}
+
+.section-title {
+  font-size: 22px;
+  margin-bottom: 16px;
+  color: var(--white);
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--white-dim);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.gold-text { color: var(--gold); }
+
+.tag {
+  display: inline-block;
+  background: var(--gold-dim);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===== FORM ELEMENTS ===== */
+.form-group { margin-bottom: 16px; }
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--white-dim);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.form-group textarea,
+.form-group input,
+.form-group select {
+  width: 100%;
+  background: var(--navy-mid);
+  border: 1px solid var(--white-faint);
+  border-radius: 10px;
+  color: var(--white);
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 44px;
+}
+
+.form-group textarea:focus,
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.form-group textarea { min-height: 80px; }
+
+.form-response {
+  background: var(--gold-dim);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  display: none;
+}
+
+.form-response.show { display: block; }
+
+/* ===== EXPANDABLE CARDS ===== */
+.expand-card { cursor: pointer; }
+
+.expand-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expand-arrow {
+  transition: transform 0.3s;
+  color: var(--gold);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.expand-card.open .expand-arrow { transform: rotate(180deg); }
+
+.expand-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.expand-card.open .expand-body { max-height: 2000px; }
+
+/* ===== SCREEN: HOME ===== */
+.hero-logo {
+  text-align: center;
+  padding: 32px 0 8px;
+}
+
+.hero-logo h1 {
+  font-size: 38px;
+  letter-spacing: -0.5px;
+}
+
+.hero-logo h1 span { color: var(--gold); }
+
+.hero-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: var(--white-dim);
+  margin-bottom: 4px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.hero-tagline {
+  text-align: center;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+
+.quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.devotional-card {
+  background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
+  border: 1px solid var(--gold-border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.devotional-card .verse {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 12px;
+  color: var(--white);
+}
+
+.devotional-card .reference {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.footer-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--white-dim);
+  line-height: 1.5;
+  padding-top: 8px;
+  border-top: 1px solid var(--white-faint);
+}
+
+/* ===== SCREEN: COACHING ===== */
+.tier-card {
+  border-left: 3px solid var(--gold);
+}
+
+.tier-price {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: var(--gold);
+  margin: 8px 0 4px;
+}
+
+.tier-note {
+  font-size: 13px;
+  color: var(--white-dim);
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+.donate-card {
+  background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
+  border: 1px solid var(--gold-border);
+  text-align: center;
+}
+
+.donate-card .heart-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.donate-result {
+  background: var(--gold-dim);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  display: none;
+  text-align: center;
+}
+
+.donate-result.show { display: block; }
+
+.donate-result .amount {
+  font-family: Georgia, serif;
+  font-size: 32px;
+  color: var(--gold);
+  margin: 8px 0;
+}
+
+.tax-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--white-dim);
+  margin-top: 20px;
+  line-height: 1.5;
+}
+
+/* ===== SCREEN: PODCAST ===== */
+.episode-card {
+  border-left: 3px solid var(--gold);
+}
+
+.platform-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.platform-link {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+  padding: 14px 12px;
+  background: var(--navy-light);
+  border: 1px solid var(--white-faint);
+  border-radius: 12px;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 14px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
+}
+
+.platform-link:hover { border-color: var(--gold); text-decoration: none; }
+
+/* ===== SCREEN: ABOUT ===== */
+.about-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--navy-mid);
+  border: 3px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-family: Georgia, serif;
+  font-size: 32px;
+  color: var(--gold);
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: var(--navy-light);
+  border: 1px solid var(--white-faint);
+  border-radius: 10px;
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 44px;
+  transition: border-color 0.2s;
+}
+
+.social-link:hover { border-color: var(--gold); text-decoration: none; }
+
+/* ===== GUIDED STEPS ===== */
+.step-indicator {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--white-faint);
+  transition: background 0.3s;
+}
+
+.step-dot.active { background: var(--gold); }
+
+.step-content { display: none; }
+.step-content.active { display: block; }
+
+/* ===== DECISION TREE ===== */
+.decision-option {
+  background: var(--navy-mid);
+  border: 1px solid var(--white-faint);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--white);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.decision-option:hover { border-color: var(--gold); background: var(--navy-light); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up { animation: fadeUp 0.4s ease forwards; }
+
+/* ===== INSTALL BANNER ===== */
+.install-banner {
+  display: none;
+  position: fixed;
+  bottom: calc(var(--tab-height) + var(--safe-bottom) + 12px);
+  left: 16px;
+  right: 16px;
+  max-width: 460px;
+  margin: 0 auto;
+  background: var(--navy-light);
+  border: 1px solid var(--gold-border);
+  border-radius: 16px;
+  padding: 16px 20px;
+  z-index: 99;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.install-banner.show { display: flex; }
+
+.install-banner p { flex: 1; font-size: 14px; }
+
+.install-banner .btn { width: auto; }
+
+.install-close {
+  background: none;
+  border: none;
+  color: var(--white-dim);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 600px) {
+  .screen { padding: 32px 28px 40px; }
+  .hero-logo h1 { font-size: 46px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+<div class="screen-container">
+
+<!-- ==================== HOME ==================== -->
+<div class="screen active" id="screen-home">
+  <div class="hero-logo fade-up">
+    <h1><span>Not</span>DrWise</h1>
+  </div>
+  <p class="hero-subtitle fade-up">Holy Spirit Lead Health Ministry</p>
+  <p class="hero-tagline fade-up">Think Through It.</p>
+
+  <div class="quick-actions">
+    <a href="https://calendly.com/notdrwise/free-15" target="_blank" rel="noopener" class="btn">Book a Session</a>
+    <button class="btn btn-outline" onclick="switchTab('frameworks')">Explore Frameworks</button>
+    <button class="btn btn-outline" onclick="switchTab('podcast')">Listen to Podcast</button>
+  </div>
+
+  <div class="devotional-card" id="devotionalCard">
+    <div class="tag" style="margin-bottom:12px">Daily Reflection</div>
+    <p class="verse" id="devVerse"></p>
+    <p class="reference" id="devRef"></p>
+  </div>
+
+  <p class="footer-note">This ministry is a program of <strong>Stay The Way</strong>, a registered 501(c)(3) nonprofit organization.</p>
+</div>
+
+<!-- ==================== FRAMEWORKS ==================== -->
+<div class="screen" id="screen-frameworks">
+  <h2 class="section-title">Frameworks</h2>
+  <p class="subtitle">Tools for thinking through pain, patterns, and purpose.</p>
+
+  <!-- R3 Framework -->
+  <div class="card expand-card" id="r3Card">
+    <div class="expand-header" onclick="toggleExpand('r3Card')">
+      <div>
+        <div class="tag" style="margin-bottom:8px">Framework</div>
+        <h3 style="font-size:18px;">R3 Framework</h3>
+        <p style="font-size:13px;color:var(--white-dim);margin-top:4px;">Recognize. Reframe. Respond.</p>
+      </div>
+      <span class="expand-arrow">&#9662;</span>
+    </div>
+    <div class="expand-body">
+      <div style="padding-top:16px;">
+        <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:6px;"><strong style="color:var(--gold)">Recognize</strong> — Name what's happening. What triggered you? What are you feeling?</p>
+        <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:6px;"><strong style="color:var(--gold)">Reframe</strong> — Challenge the narrative. What's actually true? What would the Holy Spirit say?</p>
+        <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:16px;"><strong style="color:var(--gold)">Respond</strong> — Choose your next move with intention, not reaction.</p>
+        <button class="btn btn-sm" onclick="startR3()">Try R3 Now</button>
+
+        <div id="r3Form" style="display:none;margin-top:16px;">
+          <div class="step-indicator">
+            <div class="step-dot active" id="r3dot1"></div>
+            <div class="step-dot" id="r3dot2"></div>
+            <div class="step-dot" id="r3dot3"></div>
+          </div>
+
+          <div class="step-content active" id="r3step1">
+            <div class="form-group">
+              <label>Step 1: Recognize — What's happening right now?</label>
+              <textarea id="r3input1" placeholder="Describe the situation or trigger..."></textarea>
+            </div>
+            <button class="btn btn-sm" onclick="r3Next(2)">Next: Reframe &rarr;</button>
+          </div>
+
+          <div class="step-content" id="r3step2">
+            <div class="form-group">
+              <label>Step 2: Reframe — What's actually true here?</label>
+              <textarea id="r3input2" placeholder="Challenge the narrative. What would the Holy Spirit say about this?"></textarea>
+            </div>
+            <button class="btn btn-sm" onclick="r3Next(3)">Next: Respond &rarr;</button>
+          </div>
+
+          <div class="step-content" id="r3step3">
+            <div class="form-group">
+              <label>Step 3: Respond — What will you do now?</label>
+              <textarea id="r3input3" placeholder="Choose an intentional response..."></textarea>
+            </div>
+            <button class="btn btn-sm" onclick="r3Complete()">Complete R3</button>
+            <div class="form-response" id="r3response"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BENR Model -->
+  <div class="card expand-card" id="benrCard">
+    <div class="expand-header" onclick="toggleExpand('benrCard')">
+      <div>
+        <div class="tag" style="margin-bottom:8px">Model</div>
+        <h3 style="font-size:18px;">BENR Model</h3>
+        <p style="font-size:13px;color:var(--white-dim);margin-top:4px;">Beliefs. Emotions. Narratives. Responses.</p>
+      </div>
+      <span class="expand-arrow">&#9662;</span>
+    </div>
+    <div class="expand-body">
+      <div style="padding-top:16px;">
+        <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:6px;"><strong style="color:var(--gold)">Beliefs</strong> — What do you believe about yourself, God, and your situation?</p>
+        <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:6px;"><strong style="color:var(--gold)">Emotions</strong> — What are you feeling? Name it without judgment.</p>
+        <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:6px;"><strong style="color:var(--gold)">Narratives</strong> — What story are you telling yourself? Is it true?</p>
+        <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:16px;"><strong style="color:var(--gold)">Responses</strong> — How have you been responding? How could you respond differently?</p>
+        <button class="btn btn-sm" onclick="startBENR()">Map Your BENR</button>
+
+        <div id="benrForm" style="display:none;margin-top:16px;">
+          <div class="form-group">
+            <label>Beliefs — What do you believe about this situation?</label>
+            <textarea id="benrB" placeholder="I believe that..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Emotions — What are you feeling?</label>
+            <textarea id="benrE" placeholder="I feel..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Narratives — What story are you telling yourself?</label>
+            <textarea id="benrN" placeholder="The story I'm telling myself is..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Responses — How will you respond with intention?</label>
+            <textarea id="benrR" placeholder="I will respond by..."></textarea>
+          </div>
+          <button class="btn btn-sm" onclick="benrComplete()">See My BENR Map</button>
+          <div class="form-response" id="benrResponse"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crisis Clarity -->
+  <div class="card expand-card" id="crisisCard">
+    <div class="expand-header" onclick="toggleExpand('crisisCard')">
+      <div>
+        <div class="tag" style="margin-bottom:8px">Tool</div>
+        <h3 style="font-size:18px;">Crisis Clarity</h3>
+        <p style="font-size:13px;color:var(--white-dim);margin-top:4px;">Decision-making in chaos.</p>
+      </div>
+      <span class="expand-arrow">&#9662;</span>
+    </div>
+    <div class="expand-body">
+      <div style="padding-top:16px;">
+        <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:16px;">When everything feels urgent and overwhelming, Crisis Clarity helps you slow down and decide what actually needs your attention right now.</p>
+        <button class="btn btn-sm" onclick="startCrisis()">Start Crisis Clarity</button>
+
+        <div id="crisisFlow" style="display:none;margin-top:16px;">
+          <div id="crisisQ1" class="step-content active">
+            <p style="font-size:14px;color:var(--white-dim);margin-bottom:12px;"><strong style="color:var(--gold)">Is anyone in immediate physical danger?</strong></p>
+            <div class="decision-option" onclick="crisisAnswer(1,'yes')">Yes — Someone is at risk right now</div>
+            <div class="decision-option" onclick="crisisAnswer(1,'no')">No — It's emotional/situational, not physical</div>
+          </div>
+
+          <div id="crisisQ2" class="step-content">
+            <p style="font-size:14px;color:var(--white-dim);margin-bottom:12px;"><strong style="color:var(--gold)">Does this need to be resolved today?</strong></p>
+            <div class="decision-option" onclick="crisisAnswer(2,'yes')">Yes — There's a real deadline</div>
+            <div class="decision-option" onclick="crisisAnswer(2,'no')">No — It feels urgent but can wait</div>
+          </div>
+
+          <div id="crisisQ3" class="step-content">
+            <p style="font-size:14px;color:var(--white-dim);margin-bottom:12px;"><strong style="color:var(--gold)">Is this your decision to make?</strong></p>
+            <div class="decision-option" onclick="crisisAnswer(3,'yes')">Yes — This is mine to own</div>
+            <div class="decision-option" onclick="crisisAnswer(3,'no')">No — I'm carrying someone else's burden</div>
+          </div>
+
+          <div class="form-response" id="crisisResult"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trauma Bond -->
+  <div class="card expand-card" id="traumaCard">
+    <div class="expand-header" onclick="toggleExpand('traumaCard')">
+      <div>
+        <div class="tag" style="margin-bottom:8px">Education</div>
+        <h3 style="font-size:18px;">Trauma Bond</h3>
+        <p style="font-size:13px;color:var(--white-dim);margin-top:4px;">Understanding relational patterns.</p>
+      </div>
+      <span class="expand-arrow">&#9662;</span>
+    </div>
+    <div class="expand-body">
+      <div style="padding-top:16px;">
+        <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:16px;">Trauma bonds are deep emotional attachments formed through cycles of abuse and intermittent reinforcement. Understanding these patterns is the first step to breaking free.</p>
+        <a href="https://www.amazon.com" target="_blank" rel="noopener" class="btn btn-sm">Get the Book on Amazon</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== COACHING ==================== -->
+<div class="screen" id="screen-coaching">
+  <h2 class="section-title">Work With Jonathan</h2>
+  <p class="subtitle">Faith-grounded coaching rooted in real experience. This is donation-based ministry — no one is turned away for inability to pay.</p>
+
+  <div class="card tier-card">
+    <div class="tag" style="margin-bottom:8px">Free</div>
+    <h3 style="font-size:18px;">Discovery Call</h3>
+    <p class="tier-price">Free</p>
+    <p class="tier-note">15 minutes — Let's see if this is right for you.</p>
+    <a href="https://calendly.com/notdrwise/free-15" target="_blank" rel="noopener" class="btn btn-sm">Book Discovery Call</a>
+  </div>
+
+  <div class="card tier-card">
+    <div class="tag" style="margin-bottom:8px">Single Session</div>
+    <h3 style="font-size:18px;">Single Session</h3>
+    <p class="tier-price">$49 <span style="font-size:14px;color:var(--white-dim)">suggested</span></p>
+    <p class="tier-note">60 minutes — Give what you can. No one is turned away.</p>
+    <a href="https://calendly.com/notdrwise/free-15" target="_blank" rel="noopener" class="btn btn-sm">Book a Session</a>
+  </div>
+
+  <div class="card tier-card">
+    <div class="tag" style="margin-bottom:8px">Journey</div>
+    <h3 style="font-size:18px;">4-Session Journey</h3>
+    <p class="tier-price">$175 <span style="font-size:14px;color:var(--white-dim)">suggested</span></p>
+    <p class="tier-note">Commit to the process. Four sessions of intentional growth.</p>
+    <a href="https://calendly.com/notdrwise/free-15" target="_blank" rel="noopener" class="btn btn-sm">Start Your Journey</a>
+  </div>
+
+  <div class="card donate-card">
+    <div class="heart-icon">&#10084;&#65039;</div>
+    <h3 style="font-size:18px;margin-bottom:8px;">Support This Ministry</h3>
+    <p style="font-size:14px;color:var(--white-dim);line-height:1.6;margin-bottom:16px;">This ministry changed my life. I'd like to donate 1% of my monthly income to support others who can't afford this.</p>
+
+    <div class="form-group" style="text-align:left;">
+      <label>Select your monthly income range</label>
+      <select id="incomeSelect" onchange="calcDonation()">
+        <option value="">Choose a range...</option>
+        <option value="1500">Under $2,000</option>
+        <option value="3000">$2,000 – $4,000</option>
+        <option value="5000">$4,000 – $6,000</option>
+        <option value="7000">$6,000 – $8,000</option>
+        <option value="9000">$8,000 – $10,000</option>
+        <option value="12000">$10,000+</option>
+      </select>
+    </div>
+
+    <div class="donate-result" id="donateResult">
+      <p style="font-size:13px;color:var(--white-dim);">Your monthly gift of</p>
+      <p class="amount" id="donateAmount">$0</p>
+      <p style="font-size:13px;color:var(--white-dim);margin-bottom:14px;">would help fund <strong id="donateSessions">0</strong> free sessions for those in need.</p>
+      <a href="mailto:dakotasky.nd@gmail.com?subject=Monthly%201%25%20Donation%20—%20NotDrWise&body=I'd%20like%20to%20set%20up%20a%20monthly%20gift%20to%20support%20the%20NotDrWise%20ministry." class="btn btn-sm">Set Up Monthly Gift</a>
+    </div>
+  </div>
+
+  <p class="tax-note">All donations support <strong>Stay The Way</strong>, a registered 501(c)(3) nonprofit ministry. Your gift may be tax-deductible.</p>
+</div>
+
+<!-- ==================== PODCAST ==================== -->
+<div class="screen" id="screen-podcast">
+  <h2 class="section-title">The Podcast</h2>
+  <p class="subtitle">Real conversations about faith, health, and thinking through the hard stuff.</p>
+
+  <div class="card episode-card">
+    <div class="tag" style="margin-bottom:8px">Latest Episode</div>
+    <h3 style="font-size:18px;margin-bottom:6px;">Think Through It — Episode 1</h3>
+    <p style="font-size:13px;color:var(--white-dim);margin-bottom:14px;">What it means to stop reacting and start responding — the foundation of everything we teach.</p>
+    <button class="btn btn-sm btn-outline" onclick="alert('Podcast player coming soon! Check the links below to listen now.')">&#9654;&nbsp; Play Episode</button>
+  </div>
+
+  <h3 style="font-size:16px;margin-bottom:12px;">Listen & Subscribe</h3>
+  <div class="platform-links">
+    <a href="https://podcasts.apple.com" target="_blank" rel="noopener" class="platform-link">&#127911; Apple Podcasts</a>
+    <a href="https://spotify.com" target="_blank" rel="noopener" class="platform-link">&#127925; Spotify</a>
+    <a href="https://youtube.com" target="_blank" rel="noopener" class="platform-link">&#9654; YouTube</a>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <h3 style="font-size:18px;margin-bottom:8px;">Never Miss an Episode</h3>
+    <p style="font-size:14px;color:var(--white-dim);margin-bottom:14px;">Subscribe on your favorite platform and share with someone who needs to hear it.</p>
+    <a href="https://calendly.com/notdrwise/free-15" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Book a Session to Talk About It</a>
+  </div>
+</div>
+
+<!-- ==================== ABOUT ==================== -->
+<div class="screen" id="screen-about">
+  <div class="about-photo">JW</div>
+
+  <h2 class="section-title" style="text-align:center;">About Jonathan</h2>
+
+  <div class="card">
+    <p style="font-size:14px;color:var(--white-dim);line-height:1.8;margin-bottom:12px;">I'm not a therapist. I'm not a pastor. I'm a husband and father who learned to think through pain.</p>
+    <p style="font-size:14px;color:var(--white-dim);line-height:1.8;margin-bottom:12px;">After surviving cancer, recovering from a traumatic brain injury, and navigating a faith journey that broke everything I thought I knew — I found a way through. Not around. Through.</p>
+    <p style="font-size:14px;color:var(--white-dim);line-height:1.8;">Now I help others do the same. Not with clinical advice, but with frameworks, faith, and the kind of honesty that only comes from lived experience.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:18px;margin-bottom:10px;">Stay The Way</h3>
+    <p style="font-size:14px;color:var(--white-dim);line-height:1.7;">Stay The Way is a 501(c)(3) nonprofit ministry dedicated to helping people think through pain, rebuild identity, and walk in purpose — led by the Holy Spirit, grounded in faith, and open to all.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:18px;margin-bottom:10px;">Get In Touch</h3>
+    <p style="font-size:14px;color:var(--white-dim);margin-bottom:6px;">&#9993; <a href="mailto:dakotasky.nd@gmail.com">dakotasky.nd@gmail.com</a></p>
+
+    <div class="social-links" style="margin-top:16px;">
+      <a href="https://youtube.com" target="_blank" rel="noopener" class="social-link">&#9654; YouTube</a>
+      <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link">&#128247; Instagram</a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link">&#128188; LinkedIn</a>
+      <a href="#" class="social-link" onclick="switchTab('podcast');return false;">&#127911; Podcast</a>
+    </div>
+  </div>
+</div>
+
+</div><!-- /screen-container -->
+
+<!-- ===== TAB BAR ===== -->
+<nav class="tab-bar" role="tablist">
+  <button class="tab-btn active" data-tab="home" onclick="switchTab('home')" role="tab" aria-selected="true" aria-label="Home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </button>
+  <button class="tab-btn" data-tab="frameworks" onclick="switchTab('frameworks')" role="tab" aria-selected="false" aria-label="Frameworks">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    Frameworks
+  </button>
+  <button class="tab-btn" data-tab="coaching" onclick="switchTab('coaching')" role="tab" aria-selected="false" aria-label="Coach">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Coach
+  </button>
+  <button class="tab-btn" data-tab="podcast" onclick="switchTab('podcast')" role="tab" aria-selected="false" aria-label="Podcast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+    Podcast
+  </button>
+  <button class="tab-btn" data-tab="about" onclick="switchTab('about')" role="tab" aria-selected="false" aria-label="About">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    About
+  </button>
+</nav>
+
+<!-- ===== INSTALL BANNER ===== -->
+<div class="install-banner" id="installBanner">
+  <p>Add <strong>NotDrWise</strong> to your home screen for the full experience.</p>
+  <button class="btn btn-sm" style="width:auto;white-space:nowrap;" id="installBtn" onclick="installApp()">Install</button>
+  <button class="install-close" onclick="dismissInstall()">&times;</button>
+</div>
+
+</div><!-- /app -->
+
+<script>
+/* ===== TAB NAVIGATION ===== */
+function switchTab(tab) {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+
+  const screen = document.getElementById('screen-' + tab);
+  const btn = document.querySelector('[data-tab="' + tab + '"]');
+
+  if (screen) {
+    screen.classList.add('active');
+    screen.scrollTop = 0;
+  }
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+  }
+
+  // Scroll to top of container
+  document.querySelector('.screen-container').scrollTop = 0;
+}
+
+/* ===== EXPANDABLE CARDS ===== */
+function toggleExpand(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+/* ===== DEVOTIONALS ===== */
+const devotionals = [
+  { verse: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.", ref: "Proverbs 3:5-6" },
+  { verse: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.", ref: "Jeremiah 29:11" },
+  { verse: "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.", ref: "Joshua 1:9" },
+  { verse: "Come to me, all you who are weary and burdened, and I will give you rest.", ref: "Matthew 11:28" },
+  { verse: "He heals the brokenhearted and binds up their wounds.", ref: "Psalm 147:3" }
+];
+
+function showDevotional() {
+  const today = new Date().getDate() % devotionals.length;
+  const d = devotionals[today];
+  document.getElementById('devVerse').textContent = '"' + d.verse + '"';
+  document.getElementById('devRef').textContent = '— ' + d.ref;
+}
+showDevotional();
+
+/* ===== R3 FRAMEWORK ===== */
+function startR3() {
+  document.getElementById('r3Form').style.display = 'block';
+}
+
+function r3Next(step) {
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('r3step' + i).classList.remove('active');
+    document.getElementById('r3dot' + i).classList.remove('active');
+  }
+  document.getElementById('r3step' + step).classList.add('active');
+  document.getElementById('r3dot' + step).classList.add('active');
+}
+
+function r3Complete() {
+  const recognize = document.getElementById('r3input1').value.trim();
+  const reframe = document.getElementById('r3input2').value.trim();
+  const respond = document.getElementById('r3input3').value.trim();
+
+  if (!respond) return;
+
+  const el = document.getElementById('r3response');
+  el.innerHTML = '<strong style="color:var(--gold)">Your R3 Reflection:</strong><br><br>' +
+    '<strong>Recognized:</strong> ' + escHtml(recognize || '(not entered)') + '<br><br>' +
+    '<strong>Reframed:</strong> ' + escHtml(reframe || '(not entered)') + '<br><br>' +
+    '<strong>Response:</strong> ' + escHtml(respond) + '<br><br>' +
+    '<em style="color:var(--gold)">You just thought through it. That\'s the work. Keep going.</em>';
+  el.classList.add('show');
+}
+
+/* ===== BENR MODEL ===== */
+function startBENR() {
+  document.getElementById('benrForm').style.display = 'block';
+}
+
+function benrComplete() {
+  const b = document.getElementById('benrB').value.trim();
+  const e = document.getElementById('benrE').value.trim();
+  const n = document.getElementById('benrN').value.trim();
+  const r = document.getElementById('benrR').value.trim();
+
+  if (!b && !e && !n && !r) return;
+
+  const el = document.getElementById('benrResponse');
+  el.innerHTML = '<strong style="color:var(--gold)">Your BENR Map:</strong><br><br>' +
+    '<strong>Belief:</strong> ' + escHtml(b || '(not entered)') + '<br><br>' +
+    '<strong>Emotion:</strong> ' + escHtml(e || '(not entered)') + '<br><br>' +
+    '<strong>Narrative:</strong> ' + escHtml(n || '(not entered)') + '<br><br>' +
+    '<strong>Response:</strong> ' + escHtml(r || '(not entered)') + '<br><br>' +
+    '<em style="color:var(--gold)">Awareness is the first step. You\'re doing the work.</em>';
+  el.classList.add('show');
+}
+
+/* ===== CRISIS CLARITY ===== */
+let crisisAnswers = {};
+
+function startCrisis() {
+  document.getElementById('crisisFlow').style.display = 'block';
+  crisisAnswers = {};
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('crisisQ' + i).classList.remove('active');
+  }
+  document.getElementById('crisisQ1').classList.add('active');
+  document.getElementById('crisisResult').classList.remove('show');
+}
+
+function crisisAnswer(q, answer) {
+  crisisAnswers[q] = answer;
+
+  document.getElementById('crisisQ' + q).classList.remove('active');
+
+  if (q === 1 && answer === 'yes') {
+    showCrisisResult('This is a real emergency. Please call 911 or your local emergency services immediately. Your safety and the safety of others comes first. Once everyone is safe, we can think through what comes next.');
+    return;
+  }
+
+  if (q < 3) {
+    document.getElementById('crisisQ' + (q + 1)).classList.add('active');
+    return;
+  }
+
+  // Final results based on answers
+  if (crisisAnswers[2] === 'yes' && answer === 'yes') {
+    showCrisisResult('This is yours, and it needs attention today. Take one step right now — not ten. Ask yourself: "What is the single most important thing I can do in the next hour?" Do that. Then breathe. Then decide the next step.');
+  } else if (crisisAnswers[2] === 'yes' && answer === 'no') {
+    showCrisisResult('This feels urgent, but it may not be yours to carry. Before you act, ask: "Whose responsibility is this really?" You can support without owning. Set one boundary today.');
+  } else if (crisisAnswers[2] === 'no' && answer === 'yes') {
+    showCrisisResult('Good news — you have time. The urgency you feel is real, but it\'s emotional, not situational. Write down what\'s bothering you. Schedule 30 minutes tomorrow to think through it with intention. For now, rest.');
+  } else {
+    showCrisisResult('This is neither urgent nor yours to own right now. Release it. Pray over it. Journal about it if you need to. But do not let someone else\'s crisis become your emergency. Protect your peace.');
+  }
+}
+
+function showCrisisResult(text) {
+  const el = document.getElementById('crisisResult');
+  el.innerHTML = '<strong style="color:var(--gold)">Crisis Clarity Result:</strong><br><br>' + text;
+  el.classList.add('show');
+}
+
+/* ===== DONATION CALCULATOR ===== */
+function calcDonation() {
+  const val = parseInt(document.getElementById('incomeSelect').value);
+  const resultEl = document.getElementById('donateResult');
+
+  if (!val) {
+    resultEl.classList.remove('show');
+    return;
+  }
+
+  const monthly = Math.round(val * 0.01);
+  const sessions = Math.max(1, Math.floor(monthly / 49));
+
+  document.getElementById('donateAmount').textContent = '$' + monthly;
+  document.getElementById('donateSessions').textContent = sessions;
+  resultEl.classList.add('show');
+}
+
+/* ===== UTILITIES ===== */
+function escHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ===== SERVICE WORKER ===== */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW registration failed:', err));
+  });
+}
+
+/* ===== PWA INSTALL ===== */
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBanner').classList.add('show');
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(result => {
+      deferredPrompt = null;
+      document.getElementById('installBanner').classList.remove('show');
+    });
+  }
+}
+
+function dismissInstall() {
+  document.getElementById('installBanner').classList.remove('show');
+}
+
+window.addEventListener('appinstalled', () => {
+  document.getElementById('installBanner').classList.remove('show');
+});
+</script>
+
+</body>
+</html>
