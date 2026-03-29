@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>7 Pillars of Freedom — Obedience &amp; Distraction Quiz</title>
+<style>
+/* ===== GOOGLE SHEETS INTEGRATION =====
+   To connect this quiz to a Google Sheet:
+   1. Create a new Google Sheet
+   2. Go to Extensions → Apps Script
+   3. Paste this code:
+
+   function doPost(e) {
+     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+     var data = JSON.parse(e.postData.contents);
+     sheet.appendRow([
+       data.timestamp,
+       data.name,
+       data.email,
+       data.score,
+       data.response1,
+       data.response2,
+       data.response3,
+       data.response4,
+       data.response5,
+       data.response6,
+       data.response7
+     ]);
+     return ContentService.createTextOutput(
+       JSON.stringify({status: 'success'})
+     ).setMimeType(ContentService.MimeType.JSON);
+   }
+
+   4. Deploy → New deployment → Web app
+   5. Execute as: Me, Who has access: Anyone
+   6. Copy the URL and paste it below as SHEET_URL
+   ===================================== */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;
+  --blue:#2563eb;
+  --black:#0a0a0a;
+  --white:#ffffff;
+  --green:#22c55e;
+  --red:#ef4444;
+  --gray:#94a3b8;
+  --light:#f1f5f9;
+  --radius:16px;
+}
+html{font-size:16px;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--black);
+  color:var(--white);
+  min-height:100dvh;
+  overflow-x:hidden;
+}
+
+/* Progress Bar */
+.progress-wrap{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(10,10,10,.92);
+  backdrop-filter:blur(8px);
+  padding:12px 20px 10px;
+}
+.progress-label{
+  font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gray);margin-bottom:6px;display:flex;justify-content:space-between;
+}
+.progress-track{
+  height:6px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),#60a5fa);
+  transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;
+}
+
+/* Screens */
+.screen{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100dvh;padding:80px 20px 40px;
+  animation:fadeUp .45s ease-out;
+}
+.screen.active{display:flex}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Start Screen */
+.hero-icon{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--navy));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;margin-bottom:24px;
+  box-shadow:0 0 40px rgba(37,99,235,.35);
+}
+h1{
+  font-size:clamp(1.6rem,5vw,2.2rem);font-weight:800;
+  text-align:center;line-height:1.2;margin-bottom:8px;
+}
+h1 span{color:var(--blue)}
+.subtitle{
+  color:var(--gray);font-size:1rem;text-align:center;
+  max-width:380px;line-height:1.5;margin-bottom:32px;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 36px;border:none;border-radius:60px;cursor:pointer;
+  font-size:1.05rem;font-weight:700;
+  background:linear-gradient(135deg,var(--blue),#3b82f6);
+  color:var(--white);transition:all .2s;
+  box-shadow:0 4px 20px rgba(37,99,235,.4);
+  -webkit-user-select:none;user-select:none;
+}
+.btn:active{transform:scale(.96);box-shadow:0 2px 10px rgba(37,99,235,.3)}
+.btn:disabled{opacity:.4;pointer-events:none}
+.btn-outline{
+  background:transparent;border:2px solid var(--blue);color:var(--blue);
+  box-shadow:none;
+}
+.btn-sm{padding:12px 24px;font-size:.9rem}
+
+/* Question Card */
+.card{
+  background:linear-gradient(145deg,rgba(26,39,68,.6),rgba(26,39,68,.25));
+  border:1px solid rgba(37,99,235,.15);
+  border-radius:var(--radius);padding:28px 24px;
+  max-width:560px;width:100%;
+}
+.person-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);
+  border-radius:40px;padding:6px 16px 6px 10px;
+  font-size:.8rem;font-weight:700;color:var(--blue);
+  letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px;
+}
+.person-badge .emoji{font-size:1.1rem}
+.scripture{
+  font-size:.8rem;color:var(--gray);margin-bottom:14px;
+  font-style:italic;
+}
+.question-text{
+  font-size:1.1rem;font-weight:600;line-height:1.45;margin-bottom:24px;
+}
+.q-type{
+  font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gray);margin-bottom:6px;
+}
+
+/* Multiple Choice Options */
+.options{display:flex;flex-direction:column;gap:10px}
+.option{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;border-radius:12px;cursor:pointer;
+  border:2px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  transition:all .2s;font-size:.95rem;line-height:1.4;
+  -webkit-user-select:none;user-select:none;
+}
+.option:hover{border-color:rgba(37,99,235,.4);background:rgba(37,99,235,.06)}
+.option .letter{
+  flex-shrink:0;width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85rem;
+  background:rgba(255,255,255,.06);
+  transition:all .2s;
+}
+.option.selected{border-color:var(--blue);background:rgba(37,99,235,.1)}
+.option.selected .letter{background:var(--blue);color:var(--white)}
+.option.correct{border-color:var(--green);background:rgba(34,197,94,.1)}
+.option.correct .letter{background:var(--green);color:var(--white)}
+.option.incorrect{border-color:var(--red);background:rgba(239,68,68,.08)}
+.option.incorrect .letter{background:var(--red);color:var(--white)}
+.option.disabled{pointer-events:none;opacity:.55}
+.option.correct.disabled{opacity:1}
+
+/* Feedback */
+.feedback{
+  margin-top:16px;padding:14px 16px;border-radius:12px;
+  font-size:.9rem;line-height:1.5;display:none;
+  animation:fadeUp .3s ease-out;
+}
+.feedback.show{display:block}
+.feedback.correct-fb{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#86efac}
+.feedback.incorrect-fb{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5}
+
+/* Written Response */
+.textarea-wrap{position:relative}
+textarea{
+  width:100%;min-height:120px;padding:16px;border-radius:12px;
+  border:2px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);color:var(--white);
+  font-family:inherit;font-size:1rem;line-height:1.5;
+  resize:vertical;outline:none;transition:border-color .2s;
+}
+textarea:focus{border-color:var(--blue)}
+textarea::placeholder{color:rgba(255,255,255,.25)}
+.char-count{
+  position:absolute;bottom:10px;right:14px;
+  font-size:.7rem;color:var(--gray);
+}
+.char-count.met{color:var(--green)}
+
+/* Navigation */
+.nav-row{
+  display:flex;justify-content:center;margin-top:24px;gap:12px;width:100%;max-width:560px;
+}
+
+/* Results Screen */
+.results-wrap{max-width:600px;width:100%;text-align:left}
+.score-ring{
+  width:120px;height:120px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--navy),rgba(37,99,235,.2));
+  border:3px solid var(--blue);
+  margin:0 auto 24px;
+  box-shadow:0 0 30px rgba(37,99,235,.3);
+}
+.score-ring .num{font-size:2.4rem;font-weight:800;line-height:1}
+.score-ring .of{font-size:.8rem;color:var(--gray)}
+
+.response-block{
+  background:rgba(26,39,68,.3);border:1px solid rgba(37,99,235,.12);
+  border-radius:12px;padding:16px;margin-bottom:12px;
+}
+.response-block .rb-name{
+  font-size:.75rem;font-weight:700;color:var(--blue);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;
+}
+.response-block .rb-q{font-size:.85rem;color:var(--gray);margin-bottom:6px}
+.response-block .rb-a{font-size:.95rem;line-height:1.5}
+
+.guard-box{
+  background:linear-gradient(145deg,rgba(26,39,68,.5),rgba(26,39,68,.2));
+  border:1px solid rgba(37,99,235,.2);
+  border-radius:var(--radius);padding:24px;margin:28px 0;
+}
+.guard-box h3{font-size:1.1rem;margin-bottom:14px;text-align:center}
+.guard-item{
+  display:flex;gap:12px;align-items:flex-start;
+  margin-bottom:10px;font-size:.9rem;line-height:1.5;
+}
+.guard-letter{
+  flex-shrink:0;width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.85rem;
+  background:var(--blue);color:var(--white);
+}
+
+/* Email Form */
+.email-section{margin-top:28px;width:100%}
+.email-section h3{font-size:1rem;margin-bottom:14px;text-align:center}
+.input-row{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+input[type="text"],input[type="email"]{
+  width:100%;padding:14px 16px;border-radius:12px;
+  border:2px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);color:var(--white);
+  font-family:inherit;font-size:1rem;outline:none;
+  transition:border-color .2s;
+}
+input:focus{border-color:var(--blue)}
+input::placeholder{color:rgba(255,255,255,.25)}
+
+/* Animations */
+@keyframes pop{
+  0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)}
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)}
+}
+.anim-pop{animation:pop .35s ease-out}
+.anim-shake{animation:shake .4s ease-out}
+
+/* Confetti canvas */
+#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200}
+
+/* Responsive tweaks */
+@media(min-width:640px){
+  .card{padding:36px 32px}
+  .input-row{flex-direction:row}
+  input[type="text"],input[type="email"]{flex:1}
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- Progress Bar -->
+<div class="progress-wrap" id="progressWrap" style="display:none">
+  <div class="progress-label">
+    <span id="progressText">Question 1 of 14</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<!-- START SCREEN -->
+<div class="screen active" id="startScreen">
+  <div class="hero-icon">⚔️</div>
+  <h1>7 Pillars of <span>Freedom</span></h1>
+  <p class="subtitle">
+    An interactive journey through obedience blessed and distractions denied.
+    Test your knowledge. Reflect on your life. Walk in freedom.
+  </p>
+  <p style="font-size:.8rem;color:var(--gray);margin-bottom:24px;text-align:center">
+    Stay The Way Ministry — 14 Questions · ~10 minutes
+  </p>
+  <button class="btn" onclick="startQuiz()">Begin Quiz →</button>
+</div>
+
+<!-- QUESTION SCREEN -->
+<div class="screen" id="questionScreen">
+  <div class="card" id="questionCard">
+    <div class="person-badge">
+      <span class="emoji" id="personEmoji">⚔️</span>
+      <span id="personName">JOSHUA</span>
+    </div>
+    <div class="scripture" id="scripture"></div>
+    <div class="q-type" id="qType">KNOWLEDGE</div>
+    <div class="question-text" id="questionText"></div>
+
+    <!-- MC Options (shown for mc questions) -->
+    <div class="options" id="optionsWrap"></div>
+
+    <!-- Feedback -->
+    <div class="feedback" id="feedback"></div>
+
+    <!-- Written (shown for written questions) -->
+    <div id="writtenWrap" style="display:none">
+      <div class="textarea-wrap">
+        <textarea id="writtenInput" placeholder="Be honest with yourself. There's no wrong answer here..." oninput="checkWritten()"></textarea>
+        <span class="char-count" id="charCount">0 / 20 min</span>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div class="screen" id="resultsScreen">
+  <div class="results-wrap">
+    <div style="text-align:center;margin-bottom:8px">
+      <h1 style="font-size:1.6rem;margin-bottom:4px">Your Results</h1>
+      <p style="color:var(--gray);font-size:.9rem">Knowledge Score</p>
+    </div>
+    <div class="score-ring">
+      <span class="num" id="finalScore">0</span>
+      <span class="of">of 7</span>
+    </div>
+
+    <h3 style="font-size:1rem;margin:28px 0 14px;color:var(--gray)">Your Reflections</h3>
+    <div id="responsesWrap"></div>
+
+    <div class="guard-box">
+      <h3>🛡️ The G.U.A.R.D. Protocol</h3>
+      <div class="guard-item"><div class="guard-letter">G</div><div><strong>Go to God first</strong> — Before decisions, seek His counsel (Joshua's lesson)</div></div>
+      <div class="guard-item"><div class="guard-letter">U</div><div><strong>Understand your position</strong> — Stay where God placed you (David's lesson)</div></div>
+      <div class="guard-item"><div class="guard-letter">A</div><div><strong>Avoid gradual compromise</strong> — Small turns lead far off course (Solomon's lesson)</div></div>
+      <div class="guard-item"><div class="guard-letter">R</div><div><strong>Respond with obedience, not emotion</strong> — Follow God's way, not your frustration (Moses' lesson)</div></div>
+      <div class="guard-item"><div class="guard-letter">D</div><div><strong>Don't shift your focus</strong> — Keep your eyes on Jesus, not the storm (Peter, Samson, Elijah)</div></div>
+    </div>
+
+    <div class="email-section">
+      <h3>📧 Save Your Results</h3>
+      <div class="input-row">
+        <input type="text" id="userName" placeholder="Your name">
+        <input type="email" id="userEmail" placeholder="Your email">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+        <button class="btn" onclick="sendResults()" style="width:100%;max-width:360px">Send My Results</button>
+        <p style="font-size:.75rem;color:var(--gray);text-align:center">Opens your email app with results pre-filled</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ====== GOOGLE SHEETS URL ====== */
+// Replace with your deployed Google Apps Script Web App URL
+const SHEET_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+
+/* ====== QUIZ DATA ====== */
+const people = [
+  { name:'JOSHUA', emoji:'⚔️', scripture:'Joshua 9:14' },
+  { name:'DAVID', emoji:'👑', scripture:'2 Samuel 11:1-4' },
+  { name:'SOLOMON', emoji:'💍', scripture:'1 Kings 11:3-4' },
+  { name:'MOSES', emoji:'🪨', scripture:'Numbers 20:11-12' },
+  { name:'PETER', emoji:'🌊', scripture:'Matthew 14:29-31' },
+  { name:'SAMSON', emoji:'💪', scripture:'Judges 16:17' },
+  { name:'ELIJAH', emoji:'🔥', scripture:'1 Kings 19:3-4' },
+];
+
+const questions = [
+  // JOSHUA
+  { person:0, type:'mc',
+    text:'What critical step did Joshua skip before making the treaty with the Gibeonites?',
+    options:["He didn't consult his generals","He didn't inquire of the LORD","He didn't check their documents","He didn't send scouts"],
+    correct:1,
+    explanationCorrect:'Exactly right! Joshua relied on his own judgment instead of seeking God\'s direction — a costly mistake.',
+    explanationWrong:'The answer is B — He didn\'t inquire of the LORD. Joshua relied on what he could see instead of asking God.'
+  },
+  { person:0, type:'written',
+    text:'Describe a time you made a decision based on instinct without seeking God\'s direction first. What happened?'
+  },
+  // DAVID
+  { person:1, type:'mc',
+    text:'Where was David when kings were supposed to be at war?',
+    options:['In the temple praying','Visiting another kingdom','On his rooftop at home','Training soldiers'],
+    correct:2,
+    explanationCorrect:'That\'s right. David was idle at home when he should have been leading — and it opened the door to temptation.',
+    explanationWrong:'The answer is C — On his rooftop at home. David was out of position, idle when he should have been at war.'
+  },
+  { person:1, type:'written',
+    text:'What does "idleness" look like in your life? Where are you most vulnerable when you have unstructured time?'
+  },
+  // SOLOMON
+  { person:2, type:'mc',
+    text:'How did Solomon\'s heart turn from God?',
+    options:['He stopped praying suddenly','His wives gradually turned his heart to other gods','He lost a battle and lost faith','A prophet deceived him'],
+    correct:1,
+    explanationCorrect:'Correct! It was gradual compromise — not a sudden fall. That\'s what makes it so dangerous.',
+    explanationWrong:'The answer is B — His wives gradually turned his heart to other gods. It wasn\'t sudden; it was a slow drift.'
+  },
+  { person:2, type:'written',
+    text:'What small compromise in your life could become a pattern if left unchecked?'
+  },
+  // MOSES
+  { person:3, type:'mc',
+    text:'What did God tell Moses to do to bring water from the rock?',
+    options:['Strike it twice','Pray over it','Speak to it','Touch it with his staff'],
+    correct:2,
+    explanationCorrect:'Yes! God said speak to it, but Moses struck it in frustration — obedience requires following God\'s method, not just getting results.',
+    explanationWrong:'The answer is C — Speak to it. God gave a specific instruction, but Moses let frustration override obedience.'
+  },
+  { person:3, type:'written',
+    text:'When has frustration caused you to act outside of what you knew God wanted? What was the cost?'
+  },
+  // PETER
+  { person:4, type:'mc',
+    text:'What caused Peter to start sinking while walking on water?',
+    options:['He got tired','A wave hit him','He saw the wind and was afraid','Jesus told him to come back'],
+    correct:2,
+    explanationCorrect:'Right! Peter shifted his focus from Jesus to the storm. The moment he looked away, he sank.',
+    explanationWrong:'The answer is C — He saw the wind and was afraid. His focus shifted from Jesus to the circumstances around him.'
+  },
+  { person:4, type:'written',
+    text:'What "waves" in your life pull your focus away from where God is leading you?'
+  },
+  // SAMSON
+  { person:5, type:'mc',
+    text:'What was the core pattern in Samson\'s downfall?',
+    options:['He was physically weak','He repeatedly returned to the same type of compromise','He didn\'t believe in God','His parents failed him'],
+    correct:1,
+    explanationCorrect:'Exactly. Samson kept going back to the same source of compromise. The pattern was the problem.',
+    explanationWrong:'The answer is B — He repeatedly returned to the same type of compromise. It wasn\'t one failure; it was a pattern.'
+  },
+  { person:5, type:'written',
+    text:'Is there a pattern of compromise you keep returning to? What would it take to break it?'
+  },
+  // ELIJAH
+  { person:6, type:'mc',
+    text:'What did Elijah do immediately after his greatest victory on Mount Carmel?',
+    options:['He celebrated with the people','He built an altar','He ran in fear from Jezebel\'s threat','He went to the temple'],
+    correct:2,
+    explanationCorrect:'Correct. Right after an incredible victory, Elijah ran in fear. Spiritual highs can be followed by deep lows.',
+    explanationWrong:'The answer is C — He ran in fear from Jezebel\'s threat. Even after the greatest victory, fear took over.'
+  },
+  { person:6, type:'written',
+    text:'After a personal victory or high point, do you crash? What does that look like for you?'
+  },
+];
+
+/* ====== STATE ====== */
+let current = 0;
+let score = 0;
+let writtenResponses = [];
+let answered = false;
+
+/* ====== FUNCTIONS ====== */
+function startQuiz(){
+  document.getElementById('startScreen').classList.remove('active');
+  document.getElementById('questionScreen').classList.add('active');
+  document.getElementById('progressWrap').style.display='block';
+  current = 0; score = 0; writtenResponses = []; answered = false;
+  renderQuestion();
+}
+
+function updateProgress(){
+  const pct = Math.round((current / questions.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `Question ${current + 1} of ${questions.length}`;
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+function renderQuestion(){
+  answered = false;
+  const q = questions[current];
+  const p = people[q.person];
+  updateProgress();
+
+  document.getElementById('personEmoji').textContent = p.emoji;
+  document.getElementById('personName').textContent = p.name;
+  document.getElementById('scripture').textContent = p.scripture;
+  document.getElementById('questionText').textContent = q.text;
+  document.getElementById('nextBtn').disabled = true;
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback'; fb.style.display = 'none';
+
+  const card = document.getElementById('questionCard');
+  card.classList.remove('anim-pop','anim-shake');
+  void card.offsetWidth; // reflow
+  card.classList.add('anim-pop');
+
+  if(q.type === 'mc'){
+    document.getElementById('qType').textContent = 'KNOWLEDGE';
+    document.getElementById('optionsWrap').style.display = 'flex';
+    document.getElementById('writtenWrap').style.display = 'none';
+    renderOptions(q);
+  } else {
+    document.getElementById('qType').textContent = 'REFLECTION';
+    document.getElementById('optionsWrap').style.display = 'none';
+    document.getElementById('writtenWrap').style.display = 'block';
+    document.getElementById('writtenInput').value = '';
+    document.getElementById('charCount').textContent = '0 / 20 min';
+    document.getElementById('charCount').className = 'char-count';
+  }
+}
+
+function renderOptions(q){
+  const wrap = document.getElementById('optionsWrap');
+  const letters = ['A','B','C','D'];
+  wrap.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `<div class="letter">${letters[i]}</div><div>${opt}</div>`;
+    div.addEventListener('click', () => selectOption(i, q));
+    wrap.appendChild(div);
+  });
+}
+
+function selectOption(idx, q){
+  if(answered) return;
+  answered = true;
+  const opts = document.querySelectorAll('.option');
+  const fb = document.getElementById('feedback');
+  const card = document.getElementById('questionCard');
+
+  opts.forEach((o,i) => {
+    if(i === q.correct) o.classList.add('correct');
+    if(i === idx && i !== q.correct) o.classList.add('incorrect');
+    if(i !== idx && i !== q.correct) o.classList.add('disabled');
+  });
+
+  if(idx === q.correct){
+    score++;
+    fb.className = 'feedback correct-fb show';
+    fb.textContent = '✅ ' + q.explanationCorrect;
+    card.classList.remove('anim-pop','anim-shake');
+    void card.offsetWidth;
+    card.classList.add('anim-pop');
+  } else {
+    fb.className = 'feedback incorrect-fb show';
+    fb.textContent = '❌ ' + q.explanationWrong;
+    card.classList.remove('anim-pop','anim-shake');
+    void card.offsetWidth;
+    card.classList.add('anim-shake');
+  }
+
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function checkWritten(){
+  const val = document.getElementById('writtenInput').value;
+  const len = val.trim().length;
+  const cc = document.getElementById('charCount');
+  cc.textContent = len + ' / 20 min';
+  if(len >= 20){
+    cc.className = 'char-count met';
+    document.getElementById('nextBtn').disabled = false;
+  } else {
+    cc.className = 'char-count';
+    document.getElementById('nextBtn').disabled = true;
+  }
+}
+
+function nextQuestion(){
+  const q = questions[current];
+  if(q.type === 'written'){
+    writtenResponses.push(document.getElementById('writtenInput').value.trim());
+  }
+  current++;
+  if(current >= questions.length){
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResults(){
+  document.getElementById('questionScreen').classList.remove('active');
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressText').textContent = 'Complete!';
+  document.getElementById('progressPct').textContent = '100%';
+
+  document.getElementById('finalScore').textContent = score;
+
+  const wrap = document.getElementById('responsesWrap');
+  wrap.innerHTML = '';
+  const writtenQs = questions.filter(q => q.type === 'written');
+  writtenQs.forEach((q, i) => {
+    const p = people[q.person];
+    const div = document.createElement('div');
+    div.className = 'response-block';
+    div.innerHTML = `
+      <div class="rb-name">${p.emoji} ${p.name}</div>
+      <div class="rb-q">${q.text}</div>
+      <div class="rb-a">${writtenResponses[i] || '(no response)'}</div>
+    `;
+    wrap.appendChild(div);
+  });
+
+  launchConfetti();
+}
+
+function sendResults(){
+  const name = document.getElementById('userName').value.trim() || 'Anonymous';
+  const email = document.getElementById('userEmail').value.trim();
+
+  const writtenQs = questions.filter(q => q.type === 'written');
+  let body = `7 PILLARS OF FREEDOM — QUIZ RESULTS\n`;
+  body += `${'='.repeat(42)}\n\n`;
+  body += `Name: ${name}\n`;
+  body += `Score: ${score}/7 knowledge questions correct\n\n`;
+  body += `${'—'.repeat(42)}\n`;
+  body += `MY REFLECTIONS\n`;
+  body += `${'—'.repeat(42)}\n\n`;
+
+  writtenQs.forEach((q, i) => {
+    const p = people[q.person];
+    body += `${p.emoji} ${p.name} (${p.scripture})\n`;
+    body += `Q: ${q.text}\n`;
+    body += `A: ${writtenResponses[i] || '(no response)'}\n\n`;
+  });
+
+  body += `${'—'.repeat(42)}\n`;
+  body += `THE G.U.A.R.D. PROTOCOL\n`;
+  body += `${'—'.repeat(42)}\n\n`;
+  body += `G — Go to God first (Joshua)\n`;
+  body += `U — Understand your position (David)\n`;
+  body += `A — Avoid gradual compromise (Solomon)\n`;
+  body += `R — Respond with obedience, not emotion (Moses)\n`;
+  body += `D — Don't shift your focus (Peter, Samson, Elijah)\n\n`;
+  body += `Stay The Way Ministry — Obedience Blessed & Distractions Denied`;
+
+  const subject = 'My 7 Pillars of Freedom — Obedience & Distraction Quiz Results';
+
+  // Attempt Google Sheets POST
+  if(SHEET_URL && SHEET_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE'){
+    const payload = {
+      timestamp: new Date().toISOString(),
+      name: name,
+      email: email,
+      score: score + '/7',
+      response1: writtenResponses[0] || '',
+      response2: writtenResponses[1] || '',
+      response3: writtenResponses[2] || '',
+      response4: writtenResponses[3] || '',
+      response5: writtenResponses[4] || '',
+      response6: writtenResponses[5] || '',
+      response7: writtenResponses[6] || '',
+    };
+    fetch(SHEET_URL, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+  }
+
+  // Open mailto
+  const mailto = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailto;
+}
+
+/* ====== CONFETTI ====== */
+function launchConfetti(){
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const colors = ['#2563eb','#3b82f6','#60a5fa','#ffffff','#22c55e','#fbbf24'];
+  const pieces = [];
+  for(let i = 0; i < 100; i++){
+    pieces.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height - canvas.height,
+      w: Math.random()*8+4,
+      h: Math.random()*6+3,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      vy: Math.random()*3+2,
+      vx: (Math.random()-0.5)*2,
+      rot: Math.random()*360,
+      rv: (Math.random()-0.5)*8,
+      opacity: 1,
+    });
+  }
+  let frame = 0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    let alive = false;
+    pieces.forEach(p => {
+      if(p.opacity <= 0) return;
+      alive = true;
+      p.y += p.vy;
+      p.x += p.vx;
+      p.rot += p.rv;
+      if(frame > 80) p.opacity -= 0.015;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI/180);
+      ctx.globalAlpha = Math.max(0,p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if(alive) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+</script>
+</body>
+</html>
