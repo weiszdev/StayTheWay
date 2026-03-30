@@ -4,388 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bridges Ministry - StayTheWay</title>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        black: '#000000',
-                        'dark-card': '#0a0a0a',
-                        'blue-500': '#3b82f6',
-                        'blue-400': '#60a5fa',
-                        white: '#ffffff',
-                        'gray-400': '#9ca3af',
-                    },
-                    fontFamily: {
-                        heading: ['Playfair Display', 'serif'],
-                        body: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
-        }
-
-        body {
-            background-color: #000000;
-            color: #ffffff;
-        }
-
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #3b82f6;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .nav-link.active {
-            color: #3b82f6;
-        }
-
-        .nav-link.active::after {
-            width: 100%;
-        }
-
-        .card-hover {
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .card-hover:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
-        }
-
-        .bridge-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .explore-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #60a5fa;
-            transition: color 0.3s ease;
-        }
-
-        .explore-link:hover {
-            color: #3b82f6;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background-color: #ffffff;
-            margin: 5px 0;
-            transition: 0.3s;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-8px, 8px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-8px, -8px);
-        }
-
-        .mobile-menu {
-            display: none;
-        }
-
-        .mobile-menu.active {
-            display: flex;
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu {
-                position: absolute;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background-color: #0f0f0f;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                flex-direction: column;
-                padding: 2rem 1rem;
-                gap: 1rem;
-            }
-        }
+*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#d4d4d4;font-family:'Inter',sans-serif;line-height:1.6}a{color:#2563eb;text-decoration:none;transition:color .2s}a:hover{color:#60a5fa}h1,h2,h3,h4,h5,h6{color:#fff}header{position:sticky;top:0;z-index:100;background:#0a0a0a;border-bottom:1px solid #222;padding:1rem 2rem}header .container{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}.logo{display:flex;flex-direction:column;gap:.25rem}.logo-main{font-size:1.5rem;font-weight:700;color:#fff}@media(max-width:640px){.logo-main{font-size:1.25rem}}.logo-sub{font-size:.75rem;color:#2563eb;font-weight:500}nav{display:none;gap:2rem}@media(min-width:768px){nav{display:flex}}.nav-link{color:#d4d4d4;font-size:.95rem;transition:color .2s}.nav-link:hover{color:#60a5fa}.nav-link.active{color:#2563eb}.hamburger{display:flex;flex-direction:column;gap:.35rem;cursor:pointer;border:none;background:none;padding:0.5rem;margin-right:-0.5rem}@media(min-width:768px){.hamburger{display:none}}.hamburger span{display:block;width:24px;height:2px;background:#fff;transition:all .3s}.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(8px,8px)}.hamburger.open span:nth-child(2){opacity:0}.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}.mobile-menu{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a0a;z-index:99;transform:translateX(-100%);transition:transform .3s;display:flex;flex-direction:column;padding:4rem 2rem;gap:2rem;overflow-y:auto}@media(min-width:768px){.mobile-menu{display:none}}.mobile-menu.open{transform:translateX(0)}.mobile-menu a{color:#fff;font-size:1.25rem;font-weight:500;display:block;padding:.5rem 0;border-bottom:1px solid #222}.mobile-menu a:hover{color:#60a5fa}.container{max-width:1200px;margin:0 auto;padding:2rem}.hero{background:linear-gradient(135deg,#1e293b 0%,#0a0a0a 100%);padding:4rem 2rem;border-bottom:1px solid #222;margin-bottom:3rem}@media(max-width:768px){.hero{padding:3rem 1.5rem;margin-bottom:2rem}}.hero-content{max-width:1200px;margin:0 auto}.hero h1{font-size:3rem;margin-bottom:1rem;color:#fff}@media(max-width:768px){.hero h1{font-size:2rem}}.hero p{font-size:1.15rem;color:#d4d4d4;max-width:600px;line-height:1.8}.section-title{font-size:2rem;color:#fff;margin-bottom:1rem;margin-top:2rem}@media(max-width:768px){.section-title{font-size:1.5rem}}.section-intro{color:#d4d4d4;margin-bottom:2rem;line-height:1.8;max-width:800px}@media(max-width:768px){.section-intro{font-size:.95rem}}.bridges-grid{display:flex;flex-direction:column;gap:2rem;margin:2rem 0}@media(max-width:768px){.bridges-grid{gap:1.5rem}}.bridge-card{background:#111;border:1px solid #222;border-radius:12px;padding:2rem;display:flex;gap:2rem;align-items:flex-start;transition:all .3s;cursor:pointer}@media(max-width:768px){.bridge-card{flex-direction:column;gap:1.5rem;padding:1.5rem}}.bridge-card:hover{background:#1a1a1a;border-color:#2563eb;transform:translateY(-2px)}.bridge-icon{font-size:3rem;flex-shrink:0;min-width:60px;text-align:center}@media(max-width:768px){.bridge-icon{font-size:2.5rem}}.bridge-content h3{color:#fff;font-size:1.5rem;margin-bottom:.75rem}@media(max-width:768px){.bridge-content h3{font-size:1.25rem}}.bridge-content p{color:#d4d4d4;margin-bottom:1.25rem;line-height:1.8}.bridge-arrow{display:inline-flex;align-items:center;gap:.5rem;color:#2563eb;font-weight:600;font-size:.95rem;transition:gap .2s}.bridge-arrow:hover{gap:1rem;color:#60a5fa}.cta-section{background:#111;border:1px solid #222;border-radius:12px;padding:3rem 2rem;margin:3rem 0 2rem;text-align:center}@media(max-width:768px){.cta-section{padding:2rem 1.5rem}}.cta-section h2{font-size:1.75rem;margin-bottom:1.5rem}@media(max-width:768px){.cta-section h2{font-size:1.5rem}}.cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}@media(max-width:768px){.cta-buttons{flex-direction:column}}.btn{display:inline-block;padding:0.75rem 1.5rem;border-radius:6px;font-weight:600;font-size:.95rem;transition:all .2s;border:none;cursor:pointer;text-align:center}.btn-primary{background:#2563eb;color:#fff}.btn-primary:hover{background:#1d4ed8;color:#fff}.btn-secondary{background:transparent;color:#2563eb;border:1px solid #2563eb}.btn-secondary:hover{background:#2563eb;color:#fff}footer{background:#111;border-top:1px solid #222;padding:2rem;margin-top:3rem}@media(max-width:768px){footer{padding:1.5rem}}.footer-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem}@media(max-width:768px){.footer-content{grid-template-columns:1fr;gap:1.5rem}}.footer-col h4{color:#fff;font-size:.95rem;margin-bottom:1rem}.footer-col ul{list-style:none}.footer-col ul li{margin-bottom:.5rem}.footer-col a{color:#d4d4d4;font-size:.9rem}.footer-col a:hover{color:#60a5fa}.footer-bottom{border-top:1px solid #222;padding-top:1rem;text-align:center;color:#666;font-size:.85rem}
     </style>
 </head>
-<body class="bg-black">
-    <!-- Navigation -->
-    <nav class="bg-black border-b border-gray-700 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex-shrink-0">
-                    <a href="index.html" class="text-white text-2xl font-bold font-heading">StayTheWay</a>
+<body>
+    <header>
+        <div class="container" style="padding:0;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;width:100%;">
+            <div class="logo">
+                <div class="logo-main">StayTheWay</div>
+                <div class="logo-sub">501(c)(3) Service Ministry</div>
+            </div>
+            <nav>
+                <a href="teachings.html" class="nav-link">Teachings</a>
+                <a href="resources.html" class="nav-link">Resources</a>
+                <a href="bridges.html" class="nav-link active">Bridges</a>
+                <a href="beliefs.html" class="nav-link">Beliefs</a>
+                <a href="community.html" class="nav-link">Community</a>
+                <a href="give.html" class="nav-link">Give</a>
+            </nav>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="index.html">Teachings</a>
+        <a href="resources.html">Resources</a>
+        <a href="bridges.html">Bridges</a>
+        <a href="beliefs.html">Beliefs</a>
+        <a href="community.html">Community</a>
+        <a href="give.html">Give</a>
+    </div>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Bridges Ministry</h1>
+            <p>StayTheWay bridges biblical wisdom into every practical area of life. We connect faith to real-world impact.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div>
+            <h2 class="section-title">What Are The Bridges?</h2>
+            <p class="section-intro">The Bible speaks to every area of life—relationships, health, work, family, finances, and community. Yet many believers struggle to see how Scripture applies beyond Sunday morning. Our Bridges connect scriptural truth to practical application, helping you live out your faith in every dimension of your daily experience.</p>
+
+            <div class="bridges-grid">
+                <div class="bridge-card">
+                    <div class="bridge-icon">🌉</div>
+                    <div class="bridge-content">
+                        <h3>Trauma Bond</h3>
+                        <p>A comprehensive resource helping people understand and heal from trauma bonds through biblical principles. Discover freedom through Scripture's answers to relational trauma.</p>
+                        <a href="#" class="bridge-arrow">Explore <span>→</span></a>
+                    </div>
                 </div>
 
-                <!-- Desktop Navigation -->
-                <div class="nav-links hidden md:flex space-x-8">
-                    <a href="teachings.html" class="nav-link text-gray-400 hover:text-white">Teachings</a>
-                    <a href="resources.html" class="nav-link text-gray-400 hover:text-white">Resources</a>
-                    <a href="bridges.html" class="nav-link active text-blue-500">Bridges</a>
-                    <a href="beliefs.html" class="nav-link text-gray-400 hover:text-white">Beliefs</a>
-                    <a href="community.html" class="nav-link text-gray-400 hover:text-white">Community</a>
-                    <a href="give.html" class="nav-link text-gray-400 hover:text-white">Give</a>
+                <div class="bridge-card">
+                    <div class="bridge-icon">⚕️</div>
+                    <div class="bridge-content">
+                        <h3>NotDrWise</h3>
+                        <p>A platform bridging biblical wisdom to functional health and complex case management. Learn to think critically about health through a biblical lens and unlock whole-person wellness.</p>
+                        <a href="#" class="bridge-arrow">Explore <span>→</span></a>
+                    </div>
                 </div>
 
-                <!-- Hamburger Menu -->
-                <div class="hamburger md:hidden" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <div class="bridge-card">
+                    <div class="bridge-icon">💪</div>
+                    <div class="bridge-content">
+                        <h3>Faith & Functional Health</h3>
+                        <p>The intersection of Scripture and whole-person wellness. Explore Levitical health principles, Daniel's diet, and the biblical mandate to steward your body as God's temple.</p>
+                        <a href="#" class="bridge-arrow">Explore <span>→</span></a>
+                    </div>
+                </div>
+
+                <div class="bridge-card">
+                    <div class="bridge-icon">📖</div>
+                    <div class="bridge-content">
+                        <h3>Home Bible Studies</h3>
+                        <p>Equipping believers to lead Acts 2:42 studies in their homes. Transform your living room into a place of biblical discipleship and community growth.</p>
+                        <a href="#" class="bridge-arrow">Explore <span>→</span></a>
+                    </div>
+                </div>
+
+                <div class="bridge-card">
+                    <div class="bridge-icon">🏘️</div>
+                    <div class="bridge-content">
+                        <h3>Community Pillars</h3>
+                        <p>Building strong believers who serve their neighborhoods and become pillars of support. Be the salt and light that transforms your community.</p>
+                        <a href="#" class="bridge-arrow">Explore <span>→</span></a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Mobile Navigation -->
-            <div class="mobile-menu" id="mobileMenu">
-                <a href="teachings.html" class="text-gray-400 hover:text-white">Teachings</a>
-                <a href="resources.html" class="text-gray-400 hover:text-white">Resources</a>
-                <a href="bridges.html" class="text-blue-500">Bridges</a>
-                <a href="beliefs.html" class="text-gray-400 hover:text-white">Beliefs</a>
-                <a href="community.html" class="text-gray-400 hover:text-white">Community</a>
-                <a href="give.html" class="text-gray-400 hover:text-white">Give</a>
+            <div class="cta-section">
+                <h2>Ready to Cross a Bridge?</h2>
+                <div class="cta-buttons">
+                    <a href="community.html" class="btn btn-primary">Join Community</a>
+                    <a href="resources.html" class="btn btn-secondary">Explore Resources</a>
+                </div>
             </div>
         </div>
-    </nav>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-black">
-        <div class="max-w-7xl mx-auto text-center">
-            <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold font-heading text-white mb-6">Bridges Ministry</h1>
-            <p class="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-                StayTheWay bridges biblical wisdom into every practical area of life. We connect faith to real-world impact,
-                demonstrating that Scripture holds answers for physical health, emotional healing, community transformation,
-                and spiritual growth. The Bible bridges into everything.
-            </p>
-        </div>
-    </section>
-
-    <!-- Bridge Concept Section -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-black border-t border-gray-700">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold font-heading text-white mb-6">What Are The Bridges?</h2>
-            <p class="text-lg text-gray-400 leading-relaxed">
-                We believe the Bible speaks to every area of life. Our bridges connect scriptural truth to practical application —
-                from physical health to emotional healing to community building. Each bridge represents a distinct outreach ministry,
-                united by our conviction that faith transforms everything it touches.
-            </p>
-        </div>
-    </section>
-
-    <!-- Bridge Cards -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-black">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                <!-- Card 1: Trauma Bond -->
-                <div class="bg-[#0f0f0f] rounded-2xl p-8 card-hover">
-                    <div class="bridge-icon">💔</div>
-                    <h3 class="text-2xl font-bold font-heading text-white mb-4">Trauma Bond</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">
-                        A comprehensive resource helping people understand and heal from trauma bonds through biblical principles.
-                        Discover freedom through Scripture's answers to relational trauma.
-                    </p>
-                    <!-- TODO: Update href with actual Trauma Bond resource link -->
-                    <a href="#" class="explore-link">
-                        Explore
-                        <span>→</span>
-                    </a>
-                </div>
-
-                <!-- Card 2: NotDrWise -->
-                <div class="bg-[#0f0f0f] rounded-2xl p-8 card-hover">
-                    <div class="bridge-icon">🧠</div>
-                    <h3 class="text-2xl font-bold font-heading text-white mb-4">NotDrWise</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">
-                        A platform bridging biblical wisdom to functional health and complex case management. Learn to think
-                        critically about health through a biblical lens and unlock whole-person wellness.
-                    </p>
-                    <!-- TODO: Update href with actual NotDrWise platform link -->
-                    <a href="#" class="explore-link">
-                        Explore
-                        <span>→</span>
-                    </a>
-                </div>
-
-                <!-- Card 3: Faith & Functional Health -->
-                <div class="bg-[#0f0f0f] rounded-2xl p-8 card-hover">
-                    <div class="bridge-icon">✝️</div>
-                    <h3 class="text-2xl font-bold font-heading text-white mb-4">Faith & Functional Health</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">
-                        The intersection of Scripture and whole-person wellness. Explore Levitical health principles, Daniel's diet,
-                        and the biblical mandate to steward your body as God's temple.
-                    </p>
-                    <a href="#" class="explore-link">
-                        Explore
-                        <span>→</span>
-                    </a>
-                </div>
-
-                <!-- Card 4: Home Bible Studies -->
-                <div class="bg-[#0f0f0f] rounded-2xl p-8 card-hover">
-                    <div class="bridge-icon">🏠</div>
-                    <h3 class="text-2xl font-bold font-heading text-white mb-4">Home Bible Studies</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">
-                        Equipping believers to lead Acts 2:42 studies in their homes. Transform your living room into a place
-                        of biblical discipleship and community growth.
-                    </p>
-                    <a href="community.html" class="explore-link">
-                        Explore
-                        <span>→</span>
-                    </a>
-                </div>
-
-                <!-- Card 5: Community Pillars -->
-                <div class="bg-[#0f0f0f] rounded-2xl p-8 card-hover">
-                    <div class="bridge-icon">🏛️</div>
-                    <h3 class="text-2xl font-bold font-heading text-white mb-4">Community Pillars</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">
-                        Building strong believers who serve their neighborhoods and become pillars of support. Be the salt and
-                        light that transforms your community.
-                    </p>
-                    <a href="community.html" class="explore-link">
-                        Explore
-                        <span>→</span>
-                    </a>
-                </div>
-
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Study</h4>
+                <ul>
+                    <li><a href="index.html">Teachings</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="beliefs.html">Beliefs</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="bridges.html">Bridges</a></li>
+                    <li><a href="give.html">Give</a></li>
+                </ul>
             </div>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-black border-t border-gray-700">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold font-heading text-white mb-6">Ready to Cross a Bridge?</h2>
-            <p class="text-xl text-gray-400 mb-10">
-                Explore our ministries and discover how biblical truth applies to your life. Whether you're seeking healing,
-                health, community, or spiritual growth, there's a bridge waiting for you.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="community.html" class="bg-blue-500 hover:bg-blue-400 text-black font-bold py-3 px-8 rounded-lg transition ease-in-out duration-300">
-                    Join Our Community
-                </a>
-                <a href="resources.html" class="border border-blue-500 hover:bg-blue-500 hover:text-black text-blue-500 font-bold py-3 px-8 rounded-lg transition ease-in-out duration-300">
-                    Explore Resources
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-black border-t border-gray-700 py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <!-- Brand -->
-                <div>
-                    <h3 class="text-2xl font-bold font-heading text-white mb-2">StayTheWay</h3>
-                    <p class="text-gray-400">Bridging biblical wisdom into every area of life.</p>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="text-lg font-bold font-heading text-white mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="teachings.html" class="text-gray-400 hover:text-blue-400 transition">Teachings</a></li>
-                        <li><a href="resources.html" class="text-gray-400 hover:text-blue-400 transition">Resources</a></li>
-                        <li><a href="bridges.html" class="text-gray-400 hover:text-blue-400 transition">Bridges</a></li>
-                        <li><a href="beliefs.html" class="text-gray-400 hover:text-blue-400 transition">Beliefs</a></li>
-                        <li><a href="community.html" class="text-gray-400 hover:text-blue-400 transition">Community</a></li>
-                        <li><a href="give.html" class="text-gray-400 hover:text-blue-400 transition">Give</a></li>
-                    </ul>
-                </div>
-
-                <!-- Social Links -->
-                <div>
-                    <h4 class="text-lg font-bold font-heading text-white mb-4">Follow Us</h4>
-                    <ul class="space-y-2">
-                        <li><a href="https://www.youtube.com/@weStayTheWay" target="_blank" class="text-gray-400 hover:text-blue-400 transition">YouTube @weStayTheWay</a></li>
-                        <li><a href="https://www.facebook.com/weStayTheWay" target="_blank" class="text-gray-400 hover:text-blue-400 transition">Facebook weStayTheWay</a></li>
-                        <li><a href="https://www.instagram.com/weStayTheWay" target="_blank" class="text-gray-400 hover:text-blue-400 transition">Instagram @weStayTheWay</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Bottom Footer -->
-            <div class="border-t border-gray-700 pt-8">
-                <p class="text-gray-400 text-center mb-4">
-                    StayTheWay is a 501(c)(3) nonprofit organization dedicated to bridging biblical wisdom into every area of life.
-                </p>
-                <p class="text-gray-400 text-center">
-                    Founded by Jonathan C. Weisz
-                </p>
-            </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 StayTheWay. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Hamburger Menu Toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
-
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
         });
-
-        // Close mobile menu when a link is clicked
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                mobileMenu.classList.remove('active');
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.remove('open');
             });
         });
     </script>

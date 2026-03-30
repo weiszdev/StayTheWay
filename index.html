@@ -1,387 +1,565 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StayTheWay — Equipping Believers to Grow Deep</title>
-    <meta name="description" content="StayTheWay is a 501(c)(3) service ministry equipping believers to grow deeper in faith, start home Bible studies, and become pillars in their communities.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        black: '#000000',
-                        'dark-card': '#0a0a0a',
-                        'blue-500': '#3b82f6',
-                        'blue-400': '#60a5fa',
-                        white: '#ffffff',
-                        'gray-400': '#9ca3af',
-                    },
-                    fontFamily: {
-                        heading: ['Playfair Display', 'serif'],
-                        body: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        h1, h2, h3, .font-heading { font-family: 'Playfair Display', serif; }
-        .gradient-overlay { background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(10,10,10,0.85) 100%); }
-        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(59,130,246,0.2); }
-        .glow { box-shadow: 0 0 30px rgba(59,130,246,0.15); }
-        .text-gradient { background: linear-gradient(135deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-in { animation: fadeInUp 0.6s ease forwards; }
-        .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
-        .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
-        .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
-        .animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
-        nav a { position: relative; }
-        nav a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #3b82f6; transition: width 0.3s ease; }
-        nav a:hover::after { width: 100%; }
-        .pillar-icon { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); }
-        .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.3), transparent); }
-        /* Mobile menu */
-        #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        #mobile-menu.open { max-height: 400px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StayTheWay — Equipping Believers to Grow Deep</title>
+<meta name="description" content="StayTheWay is a 501(c)(3) service ministry equipping believers to study God's Word, strengthen their faith, and build community.">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #0a0a0a;
+  color: #d4d4d4;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+a { color: #60a5fa; text-decoration: none; transition: color 0.2s; }
+a:hover { color: #93bbfd; }
+img { max-width: 100%; display: block; }
+h1, h2, h3, h4 { color: #ffffff; font-weight: 700; line-height: 1.3; }
+h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+h3 { font-size: clamp(1.15rem, 2.5vw, 1.5rem); }
+p { margin-bottom: 1rem; }
+
+/* ========== LAYOUT ========== */
+.container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+section { padding: 56px 0; }
+@media (min-width: 768px) { section { padding: 72px 0; } }
+
+/* ========== HEADER ========== */
+.site-header {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #1a1a1a;
+  padding: 0 20px;
+}
+.header-inner {
+  max-width: 960px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.logo { display: flex; flex-direction: column; }
+.logo-text {
+  font-size: 1.3rem; font-weight: 800; color: #fff;
+  letter-spacing: -0.02em;
+}
+.logo-sub { font-size: 0.65rem; color: #888; font-weight: 500; letter-spacing: 0.04em; }
+
+/* Desktop nav */
+.desktop-nav { display: none; gap: 8px; }
+.desktop-nav a {
+  color: #d4d4d4; font-size: 0.875rem; font-weight: 500;
+  padding: 8px 14px; border-radius: 8px; transition: all 0.2s;
+}
+.desktop-nav a:hover { color: #fff; background: #1a1a1a; }
+.desktop-nav a.active { color: #60a5fa; }
+@media (min-width: 768px) { .desktop-nav { display: flex; } }
+
+/* Hamburger */
+.hamburger {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 5px; width: 28px; height: 28px;
+  cursor: pointer; z-index: 1100; background: none; border: none; padding: 0;
+}
+.hamburger span {
+  display: block; height: 2px; width: 100%; background: #fff;
+  border-radius: 2px; transition: all 0.3s ease;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media (min-width: 768px) { .hamburger { display: none; } }
+
+/* Mobile menu overlay */
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 1050;
+  background: rgba(10, 10, 10, 0.98);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.mobile-menu.open { opacity: 1; pointer-events: auto; }
+.mobile-menu a {
+  color: #fff; font-size: 1.5rem; font-weight: 600;
+  padding: 16px 40px; min-height: 56px;
+  display: flex; align-items: center;
+  border-radius: 12px; transition: background 0.2s;
+  width: 80%; max-width: 320px; justify-content: center;
+}
+.mobile-menu a:hover { background: #1a1a1a; }
+
+/* ========== HERO ========== */
+.hero {
+  padding: 80px 0 60px; text-align: center;
+  background: linear-gradient(180deg, #0a0a0a 0%, #0f1420 50%, #0a0a0a 100%);
+}
+.hero-label {
+  display: inline-block; font-size: 0.75rem; font-weight: 600;
+  color: #60a5fa; background: rgba(37, 99, 235, 0.12);
+  padding: 6px 16px; border-radius: 100px; margin-bottom: 24px;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.hero h1 { margin-bottom: 20px; }
+.hero p { font-size: 1.1rem; color: #a3a3a3; max-width: 600px; margin: 0 auto 32px; }
+.hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 10px; font-weight: 600;
+  font-size: 0.95rem; transition: all 0.2s; border: none; cursor: pointer;
+  text-decoration: none;
+}
+.btn-primary { background: #2563eb; color: #fff; }
+.btn-primary:hover { background: #3b82f6; color: #fff; transform: translateY(-1px); }
+.btn-secondary {
+  background: transparent; color: #d4d4d4;
+  border: 1px solid #333;
+}
+.btn-secondary:hover { border-color: #555; color: #fff; }
+
+/* Stats row */
+.stats {
+  display: flex; gap: 32px; justify-content: center;
+  margin-top: 48px; flex-wrap: wrap;
+}
+.stat { text-align: center; }
+.stat-num { font-size: 1.8rem; font-weight: 800; color: #fff; }
+.stat-label { font-size: 0.8rem; color: #888; margin-top: 2px; }
+
+/* ========== CARDS ========== */
+.card {
+  background: #111; border: 1px solid #222; border-radius: 14px;
+  padding: 28px; transition: border-color 0.3s, transform 0.3s;
+}
+.card:hover { border-color: #333; transform: translateY(-2px); }
+.card-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin-bottom: 16px;
+  background: rgba(37, 99, 235, 0.1);
+}
+.card h3 { margin-bottom: 10px; font-size: 1.15rem; }
+.card p { color: #a3a3a3; font-size: 0.93rem; margin-bottom: 0; }
+
+/* Grid layouts */
+.grid-2 {
+  display: grid; gap: 20px;
+  grid-template-columns: 1fr;
+}
+.grid-3 {
+  display: grid; gap: 20px;
+  grid-template-columns: 1fr;
+}
+.grid-4 {
+  display: grid; gap: 20px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 600px) {
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ========== SECTION HEADERS ========== */
+.section-label {
+  font-size: 0.75rem; font-weight: 600; color: #2563eb;
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px;
+}
+.section-title { margin-bottom: 12px; }
+.section-desc { color: #a3a3a3; max-width: 600px; margin-bottom: 40px; }
+.section-center { text-align: center; }
+.section-center .section-desc { margin-left: auto; margin-right: auto; }
+
+/* ========== VIDEO EMBED ========== */
+.video-wrap {
+  position: relative; width: 100%; padding-top: 56.25%;
+  border-radius: 14px; overflow: hidden; background: #111;
+  border: 1px solid #222; margin-bottom: 24px;
+}
+.video-wrap iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; border: 0;
+}
+
+/* ========== LINK CARDS (quick links grid) ========== */
+.link-card {
+  background: #111; border: 1px solid #222; border-radius: 12px;
+  padding: 20px 24px; display: flex; align-items: center; gap: 14px;
+  transition: border-color 0.2s, transform 0.2s;
+  text-decoration: none; color: #d4d4d4;
+}
+.link-card:hover { border-color: #2563eb; transform: translateY(-2px); color: #fff; }
+.link-card .lc-icon { font-size: 1.4rem; flex-shrink: 0; }
+.link-card .lc-text { font-weight: 600; font-size: 0.95rem; color: #fff; }
+.link-card .lc-desc { font-size: 0.82rem; color: #888; margin-top: 2px; }
+
+/* ========== CTA SECTION ========== */
+.cta-section {
+  text-align: center;
+  background: linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.05) 50%, transparent 100%);
+  padding: 64px 0;
+}
+.cta-section h2 { margin-bottom: 16px; }
+.cta-section p { color: #a3a3a3; max-width: 560px; margin: 0 auto 32px; }
+.cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+/* ========== FOOTER ========== */
+.site-footer {
+  border-top: 1px solid #1a1a1a; padding: 48px 0 32px;
+  background: #0a0a0a;
+}
+.footer-inner {
+  max-width: 960px; margin: 0 auto; padding: 0 20px;
+}
+.footer-grid {
+  display: grid; gap: 32px;
+  grid-template-columns: 1fr;
+  margin-bottom: 32px;
+}
+@media (min-width: 600px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+.footer-brand .logo-text { font-size: 1.2rem; margin-bottom: 8px; }
+.footer-brand p { font-size: 0.85rem; color: #888; margin-bottom: 0; }
+.footer-col h4 { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+.footer-col a { display: block; color: #a3a3a3; font-size: 0.9rem; padding: 4px 0; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom {
+  border-top: 1px solid #1a1a1a; padding-top: 24px;
+  font-size: 0.8rem; color: #555; text-align: center;
+}
+
+/* ========== ANIMATIONS ========== */
+.fade-up {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ========== PAGE HERO (inner pages) ========== */
+.page-hero {
+  padding: 100px 0 48px; text-align: center;
+  background: linear-gradient(180deg, #0a0a0a 0%, #0f1420 100%);
+}
+.page-hero h1 { margin-bottom: 16px; }
+.page-hero p { color: #a3a3a3; font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+
+/* ========== QUOTE BLOCK ========== */
+.quote-block {
+  background: #111; border-left: 3px solid #2563eb;
+  padding: 24px 28px; border-radius: 0 12px 12px 0;
+  margin: 32px 0; font-style: italic; color: #d4d4d4;
+}
+.quote-block cite { display: block; margin-top: 12px; font-style: normal; color: #888; font-size: 0.9rem; }
+
+/* ========== FILTER BUTTONS ========== */
+.filters {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 32px; justify-content: center;
+}
+.filter-btn {
+  padding: 8px 18px; border-radius: 100px; font-size: 0.85rem;
+  font-weight: 500; border: 1px solid #333; background: transparent;
+  color: #d4d4d4; cursor: pointer; transition: all 0.2s;
+}
+.filter-btn:hover { border-color: #555; color: #fff; }
+.filter-btn.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+
+/* ========== SEARCH INPUT ========== */
+.search-input {
+  width: 100%; max-width: 400px; padding: 12px 20px;
+  background: #111; border: 1px solid #333; border-radius: 10px;
+  color: #fff; font-size: 0.95rem; margin-bottom: 24px;
+  font-family: inherit;
+}
+.search-input::placeholder { color: #666; }
+.search-input:focus { outline: none; border-color: #2563eb; }
+
+/* ========== BELIEF CARDS ========== */
+.belief-card {
+  background: #111; border: 1px solid #222; border-radius: 14px;
+  padding: 32px; margin-bottom: 24px;
+}
+.belief-card h3 { color: #fff; margin-bottom: 12px; }
+.belief-card p { color: #a3a3a3; }
+.belief-card .verses { font-size: 0.85rem; color: #60a5fa; margin-top: 12px; }
+
+/* ========== TIMELINE ========== */
+.timeline-item {
+  display: flex; gap: 20px; margin-bottom: 32px;
+}
+.timeline-num {
+  flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(37,99,235,0.15); color: #60a5fa;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.95rem;
+}
+.timeline-content h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.timeline-content p { color: #a3a3a3; font-size: 0.93rem; margin-bottom: 0; }
+
+/* ========== ONE-ANOTHER GRID ========== */
+.oa-grid {
+  display: grid; gap: 12px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 600px) { .oa-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 768px) { .oa-grid { grid-template-columns: repeat(3, 1fr); } }
+.oa-item {
+  background: #111; border: 1px solid #222; border-radius: 10px;
+  padding: 16px 20px;
+}
+.oa-item strong { color: #fff; display: block; margin-bottom: 4px; font-size: 0.95rem; }
+.oa-item span { color: #60a5fa; font-size: 0.82rem; }
+
+/* ========== GIVE CARDS ========== */
+.give-card {
+  background: #111; border: 1px solid #222; border-radius: 14px;
+  padding: 28px; text-align: center;
+}
+.give-card h3 { margin-bottom: 8px; }
+.give-card p { color: #a3a3a3; font-size: 0.9rem; margin-bottom: 16px; }
+.give-primary {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  border-color: #2563eb;
+}
+
+/* ========== RESOURCE CARDS ========== */
+.resource-card {
+  background: #111; border: 1px solid #222; border-radius: 14px;
+  padding: 24px; display: flex; flex-direction: column;
+}
+.resource-meta {
+  font-size: 0.75rem; color: #2563eb; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
+}
+.resource-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.resource-card p { color: #a3a3a3; font-size: 0.88rem; flex-grow: 1; }
+.resource-card .btn { margin-top: 12px; align-self: flex-start; font-size: 0.85rem; padding: 10px 20px; }
+</style>
 </head>
-<body class="bg-black text-white">
+<body>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <a href="index.html" class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                        <span class="text-blue-400 font-bold text-lg">S</span>
-                    </div>
-                    <div>
-                        <span class="text-lg font-bold text-white">StayTheWay</span>
-                        <span class="hidden sm:inline text-xs text-gray-400 ml-2">The Word of God</span>
-                    </div>
-                </a>
-                <!-- Desktop Nav -->
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="teachings.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Teachings</a>
-                    <a href="resources.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Resources</a>
-                    <a href="bridges.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Bridges</a>
-                    <a href="beliefs.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Beliefs</a>
-                    <a href="community.html" class="text-sm text-gray-400 hover:text-blue-400 transition-colors">Community</a>
-                    <a href="give.html" class="text-sm px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400 transition-colors">Give</a>
-                </div>
-                <!-- Mobile Hamburger -->
-                <button id="menu-toggle" class="md:hidden text-gray-400 hover:text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-            </div>
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="md:hidden">
-                <div class="py-4 space-y-3 border-t border-white/5">
-                    <a href="teachings.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Teachings</a>
-                    <a href="resources.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Resources</a>
-                    <a href="bridges.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Bridges</a>
-                    <a href="beliefs.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Beliefs</a>
-                    <a href="community.html" class="block text-gray-400 hover:text-blue-400 transition-colors py-2">Community</a>
-                    <a href="give.html" class="block text-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg mt-2">Give</a>
-                </div>
-            </div>
-        </div>
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo" style="text-decoration:none">
+      <span class="logo-text">StayTheWay</span>
+      <span class="logo-sub">501(c)(3) Service Ministry</span>
+    </a>
+    <nav class="desktop-nav">
+      <a href="teachings.html">Teachings</a>
+      <a href="resources.html">Resources</a>
+      <a href="bridges.html">Bridges</a>
+      <a href="beliefs.html">Beliefs</a>
+      <a href="community.html">Community</a>
+      <a href="give.html">Give</a>
     </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
 
-    <!-- Hero Section -->
-    <section class="relative min-h-[90vh] flex items-center justify-center pt-16 overflow-hidden">
-        <!-- Background pattern -->
-        <div class="absolute inset-0 opacity-5">
-            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25px 25px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 50px 50px;"></div>
-        </div>
-        <!-- Blue glow -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-3xl"></div>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="teachings.html">Teachings</a>
+  <a href="resources.html">Resources</a>
+  <a href="bridges.html">Bridges</a>
+  <a href="beliefs.html">Beliefs</a>
+  <a href="community.html">Community</a>
+  <a href="give.html">Give</a>
+</div>
 
-        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-            <div class="animate-in">
-                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-widest text-blue-400 uppercase bg-blue-500/10 rounded-full border border-blue-500/20 mb-8">501(c)(3) Service Ministry</span>
-            </div>
-            <h1 class="animate-in animate-delay-1 font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-                Grow Deep.<br>
-                <span class="text-gradient">Think Biblically.</span><br>
-                Build Community.
-            </h1>
-            <p class="animate-in animate-delay-2 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                We equip believers to study God's Word at home, strengthen their faith, and become pillars of support in their communities. Not a church — a resource for <em>every</em> church.
-            </p>
-            <div class="animate-in animate-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="teachings.html" class="px-8 py-3.5 bg-blue-500 text-white font-semibold rounded-xl hover:bg-blue-400 transition-all hover:shadow-lg hover:shadow-blue-500/20 text-lg">
-                    Start Learning
-                </a>
-                <a href="https://www.youtube.com/@weStayTheWay" target="_blank" class="px-8 py-3.5 border border-white/10 text-gray-400 font-medium rounded-xl hover:border-blue-500/30 hover:text-blue-400 transition-all text-lg flex items-center gap-2">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#000000" points="9.545,15.568 15.818,12 9.545,8.432"/></svg>
-                    Watch on YouTube
-                </a>
-            </div>
-            <!-- Stats -->
-            <div class="animate-in animate-delay-4 flex items-center justify-center gap-8 sm:gap-12 mt-16 pt-8 border-t border-white/5">
-                <div class="text-center">
-                    <div class="text-2xl sm:text-3xl font-bold text-blue-400">304</div>
-                    <div class="text-xs sm:text-sm text-gray-500 mt-1">Teachings</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl sm:text-3xl font-bold text-blue-400">10+</div>
-                    <div class="text-xs sm:text-sm text-gray-500 mt-1">Series</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl sm:text-3xl font-bold text-blue-400">Free</div>
-                    <div class="text-xs sm:text-sm text-gray-500 mt-1">Always</div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-label">501(c)(3) Service Ministry</span>
+    <h1>Grow Deep. Think Biblically.<br>Build Community.</h1>
+    <p>We equip believers to study God's Word at home, strengthen their faith, and become pillars of support in their communities. Not a church — a resource for every church.</p>
+    <div class="hero-buttons">
+      <a href="teachings.html" class="btn btn-primary">Start Learning</a>
+      <a href="https://www.youtube.com/@weStayTheWay" target="_blank" rel="noopener" class="btn btn-secondary">Watch on YouTube</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">304</div><div class="stat-label">Teachings</div></div>
+      <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Series</div></div>
+      <div class="stat"><div class="stat-num">Free</div><div class="stat-label">Always</div></div>
+    </div>
+  </div>
+</section>
 
-    <!-- Section Divider -->
-    <div class="section-divider max-w-5xl mx-auto"></div>
+<!-- FOUNDATION -->
+<section>
+  <div class="container section-center">
+    <div class="section-label">Our Foundation</div>
+    <h2 class="section-title">The Acts 2:42 Model</h2>
+  </div>
+  <div class="container">
+    <div class="quote-block">
+      "They devoted themselves to the apostles' teaching and to fellowship, to the breaking of bread and to prayer."
+      <cite>— Acts 2:42</cite>
+    </div>
+    <p style="text-align:center;color:#a3a3a3;max-width:600px;margin:0 auto 40px">We help you build this in your home and community.</p>
+    <div class="grid-4">
+      <div class="card">
+        <div class="card-icon">📖</div>
+        <h3>Teaching</h3>
+        <p>Deep, verse-by-verse Bible study that teaches you how to think biblically — not what to think.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤝</div>
+        <h3>Fellowship</h3>
+        <p>Build real relationships through home Bible studies and a private community of believers who walk together.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎵</div>
+        <h3>Worship</h3>
+        <p>Worship isn't just Sunday morning — it's a lifestyle. Bring worship into your home and daily walk.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🙏</div>
+        <h3>Prayer</h3>
+        <p>A community anchored in prayer. Share requests, encourage one another, and grow closer to God together.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Acts 2:42 — The Model -->
-    <section class="py-20 sm:py-28 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">Our Foundation</span>
-                <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">The Acts 2:42 Model</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
-                    "They devoted themselves to the apostles' teaching and to fellowship, to the breaking of bread and to prayer." We help you build this in your home and community.
-                </p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Pillar 1 -->
-                <div class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 text-center">
-                    <div class="pillar-icon mx-auto mb-5">
-                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    </div>
-                    <h3 class="font-heading text-xl font-semibold mb-3 text-white">Teaching</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Deep, verse-by-verse Bible study that teaches you how to think biblically — not what to think.</p>
-                </div>
-                <!-- Pillar 2 -->
-                <div class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 text-center">
-                    <div class="pillar-icon mx-auto mb-5">
-                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                    </div>
-                    <h3 class="font-heading text-xl font-semibold mb-3 text-white">Fellowship</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Build real relationships through home Bible studies and a private community of believers who walk together.</p>
-                </div>
-                <!-- Pillar 3 -->
-                <div class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 text-center">
-                    <div class="pillar-icon mx-auto mb-5">
-                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                    </div>
-                    <h3 class="font-heading text-xl font-semibold mb-3 text-white">Worship</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Worship isn't just Sunday morning — it's a lifestyle. Bring worship into your home and daily walk.</p>
-                </div>
-                <!-- Pillar 4 -->
-                <div class="card-hover bg-[#0f0f0f] border border-white/5 rounded-2xl p-8 text-center">
-                    <div class="pillar-icon mx-auto mb-5">
-                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                    </div>
-                    <h3 class="font-heading text-xl font-semibold mb-3 text-white">Prayer</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">A community anchored in prayer. Share requests, encourage one another, and grow closer to God together.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- LATEST TEACHING -->
+<section style="background:linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.04) 50%, transparent 100%)">
+  <div class="container">
+    <div class="section-label">Latest Teaching</div>
+    <h2 class="section-title">Watch & Study</h2>
+    <p class="section-desc">Catch the latest teaching and explore our growing library of over 300 video studies.</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=weStayTheWay" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="grid-4">
+      <a href="teachings.html" class="link-card">
+        <span class="lc-icon">📚</span>
+        <div><div class="lc-text">All Teachings</div><div class="lc-desc">Browse 304 video studies</div></div>
+      </a>
+      <a href="resources.html" class="link-card">
+        <span class="lc-icon">📝</span>
+        <div><div class="lc-text">Handouts & Guides</div><div class="lc-desc">Study materials & downloads</div></div>
+      </a>
+      <a href="resources.html#quizzes" class="link-card">
+        <span class="lc-icon">✅</span>
+        <div><div class="lc-text">Test Your Knowledge</div><div class="lc-desc">Interactive Bible quizzes</div></div>
+      </a>
+      <a href="community.html" class="link-card">
+        <span class="lc-icon">💬</span>
+        <div><div class="lc-text">Join the Community</div><div class="lc-desc">Private group & prayer</div></div>
+      </a>
+    </div>
+  </div>
+</section>
 
-    <!-- Section Divider -->
-    <div class="section-divider max-w-5xl mx-auto"></div>
+<!-- OUR APPROACH -->
+<section>
+  <div class="container section-center">
+    <div class="section-label">Our Approach</div>
+    <h2 class="section-title">A Service to Every Church</h2>
+    <p class="section-desc">We're not building a congregation — we're building equipped believers. Whether you attend a mega-church, a house church, or anything in between, StayTheWay exists to help you go deeper.</p>
+  </div>
+  <div class="container">
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">💡</div>
+        <h3>Think</h3>
+        <p>Learn how to study Scripture for yourself. We teach methods, not just conclusions.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏠</div>
+        <h3>Gather</h3>
+        <p>Start a home Bible study. Use our handouts and video teachings to lead discussions in your living room.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h3>Serve</h3>
+        <p>Become a pillar in your community. Bridge faith and practical health for whole-person wellness.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Featured Series / Latest Teaching -->
-    <section class="py-20 sm:py-28 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">Latest Teaching</span>
-                <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-4">Watch & Study</h2>
-                <p class="text-gray-400 max-w-xl mx-auto">Catch the latest teaching and explore our growing library of over 300 video studies.</p>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Main Video -->
-                <div class="lg:col-span-2">
-                    <div class="relative rounded-2xl overflow-hidden bg-[#111111] border border-white/5 glow">
-                        <div class="aspect-video">
-                            <iframe class="w-full h-full" src="https://www.youtube.com/embed?listType=user_uploads&list=weStayTheWay" title="Latest StayTheWay Teaching" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-                <!-- Quick Links -->
-                <div class="space-y-4">
-                    <a href="teachings.html" class="card-hover block bg-[#111111] border border-white/5 rounded-2xl p-6 group">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-white group-hover:text-blue-400 transition-colors">All Teachings</h3>
-                                <p class="text-sm text-gray-500">Browse 304 video studies</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="resources.html" class="card-hover block bg-[#111111] border border-white/5 rounded-2xl p-6 group">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-white group-hover:text-blue-400 transition-colors">Handouts & Guides</h3>
-                                <p class="text-sm text-gray-500">Study materials & downloads</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="quizzes.html" class="card-hover block bg-[#111111] border border-white/5 rounded-2xl p-6 group">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-white group-hover:text-blue-400 transition-colors">Test Your Knowledge</h3>
-                                <p class="text-sm text-gray-500">Interactive Bible quizzes</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="community.html" class="card-hover block bg-[#111111] border border-white/5 rounded-2xl p-6 group">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-white group-hover:text-blue-400 transition-colors">Join the Community</h3>
-                                <p class="text-sm text-gray-500">Private group & prayer</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to Go Deeper?</h2>
+    <p>Start with a teaching, grab the handout, take the quiz, and bring it to your home group. Everything you need is here — and it's all free.</p>
+    <div class="cta-buttons">
+      <a href="teachings.html" class="btn btn-primary">Browse Teachings</a>
+      <a href="give.html" class="btn btn-secondary">Support the Ministry</a>
+    </div>
+  </div>
+</section>
 
-    <!-- Section Divider -->
-    <div class="section-divider max-w-5xl mx-auto"></div>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text">StayTheWay</div>
+        <p>A 501(c)(3) faith-based nonprofit equipping believers to grow deeper in the knowledge and grace of God.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Study</h4>
+        <a href="teachings.html">Teachings</a>
+        <a href="resources.html">Resources</a>
+        <a href="beliefs.html">Beliefs</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="community.html">Community</a>
+        <a href="bridges.html">Bridges</a>
+        <a href="give.html">Give</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 StayTheWay. A 501(c)(3) nonprofit organization. All rights reserved. Founded by Jonathan C. Weisz
+    </div>
+  </div>
+</footer>
 
-    <!-- What Makes Us Different -->
-    <section class="py-20 sm:py-28 px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <span class="text-xs font-semibold tracking-widest text-blue-400 uppercase">Our Approach</span>
-            <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-8">A Service to Every Church</h2>
-            <p class="text-gray-400 text-lg leading-relaxed max-w-3xl mx-auto mb-12">
-                We're not building a congregation — we're building <strong class="text-white">equipped believers</strong>. Whether you attend a mega-church, a house church, or anything in between, StayTheWay exists to help you go deeper. We provide the teachings, handouts, and community so you can bring the Word into your home, your family, and your neighborhood.
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-left">
-                <div class="bg-[#111111] border border-white/5 rounded-2xl p-6">
-                    <div class="text-blue-400 font-heading text-2xl font-bold mb-2">Think</div>
-                    <p class="text-gray-400 text-sm">Learn how to study Scripture for yourself. We teach methods, not just conclusions.</p>
-                </div>
-                <div class="bg-[#111111] border border-white/5 rounded-2xl p-6">
-                    <div class="text-blue-400 font-heading text-2xl font-bold mb-2">Gather</div>
-                    <p class="text-gray-400 text-sm">Start a home Bible study. Use our handouts and video teachings to lead discussions in your living room.</p>
-                </div>
-                <div class="bg-[#111111] border border-white/5 rounded-2xl p-6">
-                    <div class="text-blue-400 font-heading text-2xl font-bold mb-2">Serve</div>
-                    <p class="text-gray-400 text-sm">Become a pillar in your community. Bridge faith and practical health for whole-person wellness.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<script>
+// Hamburger menu toggle
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
 
-    <!-- Section Divider -->
-    <div class="section-divider max-w-5xl mx-auto"></div>
-
-    <!-- CTA Section -->
-    <section class="py-20 sm:py-28 px-4">
-        <div class="max-w-3xl mx-auto text-center">
-            <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-6">Ready to Go Deeper?</h2>
-            <p class="text-gray-400 text-lg mb-10">
-                Start with a teaching, grab the handout, take the quiz, and bring it to your home group. Everything you need is here — and it's all free.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="teachings.html" class="px-8 py-3.5 bg-blue-500 text-white font-semibold rounded-xl hover:bg-blue-400 transition-all text-lg">Browse Teachings</a>
-                <a href="give.html" class="px-8 py-3.5 border border-blue-500/30 text-blue-400 font-medium rounded-xl hover:bg-blue-500/10 transition-all text-lg">Support the Ministry</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="border-t border-white/5 py-12 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
-                <!-- Brand -->
-                <div class="md:col-span-2">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                            <span class="text-blue-400 font-bold text-lg">S</span>
-                        </div>
-                        <span class="text-lg font-bold text-white">StayTheWay</span>
-                    </div>
-                    <p class="text-gray-500 text-sm leading-relaxed max-w-sm">
-                        A 501(c)(3) faith-based nonprofit equipping believers to grow deeper in the knowledge and grace of God.
-                    </p>
-                    <!-- Social Icons -->
-                    <div class="flex items-center gap-4 mt-6">
-                        <a href="https://www.youtube.com/@weStayTheWay" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/><polygon fill="#000000" points="9.545,15.568 15.818,12 9.545,8.432"/></svg>
-                        </a>
-                        <a href="https://facebook.com/weStayTheWay" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                        </a>
-                        <a href="https://instagram.com/weStayTheWay" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-all">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        </a>
-                    </div>
-                </div>
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="text-sm font-semibold text-white mb-4">Study</h4>
-                    <div class="space-y-3">
-                        <a href="teachings.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Teachings</a>
-                        <a href="resources.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Resources</a>
-                        <a href="beliefs.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Beliefs</a>
-                        <a href="quizzes.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Quizzes</a>
-                    </div>
-                </div>
-                <!-- Connect -->
-                <div>
-                    <h4 class="text-sm font-semibold text-white mb-4">Connect</h4>
-                    <div class="space-y-3">
-                        <a href="community.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Community</a>
-                        <a href="give.html" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Give</a>
-                        <a href="https://staytheway.com" class="block text-sm text-gray-500 hover:text-blue-400 transition-colors">Main Site</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Bottom -->
-            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-gray-600">&copy; 2026 StayTheWay. A 501(c)(3) nonprofit organization. All rights reserved.</p>
-                <p class="text-xs text-gray-600">Founded by Jonathan C. Weisz</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const toggle = document.getElementById('menu-toggle');
-        const menu = document.getElementById('mobile-menu');
-        toggle.addEventListener('click', () => menu.classList.toggle('open'));
-        // Close menu on link click
-        menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.remove('open')));
-        // Intersection Observer for scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('section').forEach(section => observer.observe(section));
-    </script>
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
