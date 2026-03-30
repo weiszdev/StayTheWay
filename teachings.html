@@ -22,7 +22,7 @@
 .site-footer{border-top:1px solid #1a1a1a;padding:48px 0 32px;background:#0a0a0a}.footer-inner{max-width:960px;margin:0 auto;padding:0 20px}.footer-grid{display:grid;gap:32px;grid-template-columns:1fr;margin-bottom:32px}@media(min-width:600px){.footer-grid{grid-template-columns:2fr 1fr 1fr}}.footer-brand .logo-text{font-size:1.2rem;margin-bottom:8px}.footer-brand p{font-size:.85rem;color:#888;margin-bottom:0}.footer-col h4{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}.footer-col a{display:block;color:#a3a3a3;font-size:.9rem;padding:4px 0}.footer-col a:hover{color:#fff}.footer-bottom{border-top:1px solid #1a1a1a;padding-top:24px;font-size:.8rem;color:#555;text-align:center}
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;justify-content:center}.filter-btn{padding:8px 18px;border-radius:100px;font-size:.85rem;font-weight:500;border:1px solid #333;background:transparent;color:#d4d4d4;cursor:pointer;transition:all .2s;font-family:inherit}.filter-btn:hover{border-color:#555;color:#fff}.filter-btn.active{background:#2563eb;border-color:#2563eb;color:#fff}
 .search-input{width:100%;max-width:400px;padding:12px 20px;background:#111;border:1px solid #333;border-radius:10px;color:#fff;font-size:.95rem;margin-bottom:24px;font-family:inherit;display:block;margin-left:auto;margin-right:auto}.search-input::placeholder{color:#666}.search-input:focus{outline:none;border-color:#2563eb}
-.video-card{background:#111;border:1px solid #222;border-radius:14px;overflow:hidden;transition:border-color .3s,transform .3s}.video-card:hover{border-color:#333;transform:translateY(-2px)}.video-thumb{position:relative;width:100%;padding-top:56.25%;background:#1a1a1a;overflow:hidden}.video-thumb .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;background:rgba(37,99,235,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s}.video-card:hover .play-btn{transform:translate(-50%,-50%) scale(1.1)}.play-btn::after{content:'';display:block;width:0;height:0;border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent #fff;margin-left:3px}.video-info{padding:16px 20px}.video-info h3{font-size:1rem;margin-bottom:6px}.video-meta{font-size:.8rem;color:#888;display:flex;gap:12px}.video-meta .tag{color:#60a5fa}
+.video-card{background:#111;border:1px solid #222;border-radius:14px;overflow:hidden;transition:border-color .3s,transform .3s}.video-card:hover{border-color:#333;transform:translateY(-2px)}.video-thumb{position:relative;cursor:pointer;overflow:hidden;border-radius:8px 8px 0 0;line-height:0}.video-thumb img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px 8px 0 0;display:block}.video-thumb .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;background:rgba(37,99,235,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s;pointer-events:none}.video-card:hover .play-btn{transform:translate(-50%,-50%) scale(1.1)}.play-btn::after{content:'';display:block;width:0;height:0;border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent #fff;margin-left:3px}.video-thumb iframe{width:100%;aspect-ratio:16/9;border:0;display:block;border-radius:8px 8px 0 0}.video-info{padding:16px 20px}.video-info h3{font-size:1rem;margin-bottom:6px}.video-meta{font-size:.8rem;color:#888;display:flex;gap:12px;flex-wrap:wrap}.video-meta .tag{color:#60a5fa}
 .grid-teachings{display:grid;gap:20px;grid-template-columns:1fr}@media(min-width:500px){.grid-teachings{grid-template-columns:repeat(2,1fr)}}@media(min-width:768px){.grid-teachings{grid-template-columns:repeat(3,1fr)}}
 .cta-section{text-align:center;background:linear-gradient(180deg,transparent 0%,rgba(37,99,235,.05) 50%,transparent 100%);padding:64px 0}.cta-section h2{margin-bottom:16px}.cta-section p{color:#a3a3a3;max-width:560px;margin:0 auto 32px}
 </style>
@@ -67,53 +67,68 @@
     </div>
 
     <div class="grid-teachings" id="videoGrid">
-      <div class="video-card" data-category="sunday" data-title="The Call of God and Betrayal">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>The Call of God and Betrayal</h3><div class="video-meta"><span class="tag">Sunday Teaching</span><span>March 23, 2025</span><span>42 min</span></div></div>
+      <div class="video-card" data-category="topical" data-title="Lifting Blindness and Ignorance with Truth FREE #livefree">
+        <div class="video-thumb" onclick="playVideo(this,'WedtmC71FrE')">
+          <img src="https://img.youtube.com/vi/WedtmC71FrE/hqdefault.jpg" alt="Lifting Blindness and Ignorance with Truth FREE #livefree">
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-info"><h3>Lifting Blindness and Ignorance with Truth FREE</h3><div class="video-meta"><span class="tag">Topical Deep Dive</span></div></div>
       </div>
-      <div class="video-card" data-category="armor" data-title="Armor of God: 7 Ways to Apply">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Armor of God: 7 Ways to Apply</h3><div class="video-meta"><span class="tag">Armor of God</span><span>March 16, 2025</span><span>38 min</span></div></div>
+      <div class="video-card" data-category="sunday" data-title="Bible Conference Session 1 - Jeff Solwold">
+        <div class="video-thumb" onclick="playVideo(this,'MYdDJVZOQ0g')">
+          <img src="https://img.youtube.com/vi/MYdDJVZOQ0g/hqdefault.jpg" alt="Bible Conference Session 1 - Jeff Solwold">
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-info"><h3>Bible Conference Session 1 — Jeff Solwold</h3><div class="video-meta"><span class="tag">Sunday Teaching</span></div></div>
       </div>
-      <div class="video-card" data-category="warfare" data-title="What Can a Christian Do to Protect from Spiritual War">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>What Can a Christian Do to Protect from Spiritual War</h3><div class="video-meta"><span class="tag">Spiritual Warfare</span><span>March 9, 2025</span><span>45 min</span></div></div>
+      <div class="video-card" data-category="warfare" data-title="Unity Demons Aliens and What to Do about them">
+        <div class="video-thumb" onclick="playVideo(this,'bOnLbiC7mxc')">
+          <img src="https://img.youtube.com/vi/bOnLbiC7mxc/hqdefault.jpg" alt="Unity Demons Aliens and What to Do about them">
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-info"><h3>Unity, Demons, Aliens and What to Do about Them</h3><div class="video-meta"><span class="tag">Spiritual Warfare</span></div></div>
       </div>
-      <div class="video-card" data-category="marriage" data-title="Grace Upon Grace: Marriage Devotional">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Grace Upon Grace: Marriage Devotional</h3><div class="video-meta"><span class="tag">Marriage & Family</span><span>March 2, 2025</span><span>28 min</span></div></div>
+      <div class="video-card" data-category="topical" data-title="Let's Talk About a Mountain Top Experience">
+        <div class="video-thumb" onclick="playVideo(this,'eBGMzBXJbiM')">
+          <img src="https://img.youtube.com/vi/eBGMzBXJbiM/hqdefault.jpg" alt="Let's Talk About a Mountain Top Experience">
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-info"><h3>Let's Talk About a Mountain Top Experience</h3><div class="video-meta"><span class="tag">Topical Deep Dive</span></div></div>
       </div>
-      <div class="video-card" data-category="endtimes" data-title="Signs of the Times: A Biblical Perspective">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Signs of the Times: A Biblical Perspective</h3><div class="video-meta"><span class="tag">End Times</span><span>Feb 23, 2025</span><span>52 min</span></div></div>
+      <div class="video-card" data-category="started" data-title="Can the BIBLE really have all the answers? Let's find out!">
+        <div class="video-thumb" onclick="playVideo(this,'vz38miRCuZA')">
+          <img src="https://img.youtube.com/vi/vz38miRCuZA/hqdefault.jpg" alt="Can the BIBLE really have all the answers?">
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-info"><h3>Can the BIBLE Really Have All the Answers?</h3><div class="video-meta"><span class="tag">Getting Started</span></div></div>
       </div>
-      <div class="video-card" data-category="midweek" data-title="Midweek Devotion: Faith in Hard Times">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Midweek Devotion: Faith in Hard Times</h3><div class="video-meta"><span class="tag">Midweek Studies</span><span>Feb 19, 2025</span><span>22 min</span></div></div>
+      <div class="video-card" data-category="worship" data-title="Holy Fire - Worship">
+        <div class="video-thumb" onclick="playVideo(this,'nJK3gVxsbUc')">
+          <img src="https://img.youtube.com/vi/nJK3gVxsbUc/hqdefault.jpg" alt="Holy Fire - Worship">
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-info"><h3>Holy Fire — Worship</h3><div class="video-meta"><span class="tag">Worship</span></div></div>
       </div>
-      <div class="video-card" data-category="worship" data-title="Worship in Spirit and Truth">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Worship in Spirit and Truth</h3><div class="video-meta"><span class="tag">Worship</span><span>Feb 16, 2025</span><span>35 min</span></div></div>
+      <div class="video-card" data-category="topical" data-title="Lifting Blindness and Ignorance with Truth FREE - Vertical">
+        <div class="video-thumb" onclick="playVideo(this,'4r44NRyZ25c')">
+          <img src="https://img.youtube.com/vi/4r44NRyZ25c/hqdefault.jpg" alt="Lifting Blindness and Ignorance with Truth FREE - Vertical">
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-info"><h3>Lifting Blindness and Ignorance with Truth FREE — Vertical</h3><div class="video-meta"><span class="tag">Topical Deep Dive</span></div></div>
       </div>
-      <div class="video-card" data-category="topical" data-title="Understanding the Book of Revelation">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Understanding the Book of Revelation</h3><div class="video-meta"><span class="tag">Topical Deep Dive</span><span>Feb 9, 2025</span><span>58 min</span></div></div>
+      <div class="video-card" data-category="topical" data-title="Lifting Blindness and Ignorance with Truth - Vertical">
+        <div class="video-thumb" onclick="playVideo(this,'GkF59AVV5WA')">
+          <img src="https://img.youtube.com/vi/GkF59AVV5WA/hqdefault.jpg" alt="Lifting Blindness and Ignorance with Truth - Vertical">
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-info"><h3>Lifting Blindness and Ignorance with Truth — Vertical</h3><div class="video-meta"><span class="tag">Topical Deep Dive</span></div></div>
       </div>
-      <div class="video-card" data-category="health" data-title="Faith and Health: Praying for Healing">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Faith and Health: Praying for Healing</h3><div class="video-meta"><span class="tag">Faith & Health</span><span>Feb 2, 2025</span><span>40 min</span></div></div>
-      </div>
-      <div class="video-card" data-category="started" data-title="Welcome to StayTheWay: Getting Started">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Welcome to StayTheWay: Getting Started</h3><div class="video-meta"><span class="tag">Getting Started</span><span>Jan 26, 2025</span><span>18 min</span></div></div>
-      </div>
-      <div class="video-card" data-category="sunday" data-title="Building an Unshakeable Foundation">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Building an Unshakeable Foundation</h3><div class="video-meta"><span class="tag">Sunday Teaching</span><span>Jan 19, 2025</span><span>44 min</span></div></div>
-      </div>
-      <div class="video-card" data-category="marriage" data-title="Loving as Christ Loved: A Marriage Study">
-        <div class="video-thumb"><div class="play-btn"></div></div>
-        <div class="video-info"><h3>Loving as Christ Loved: A Marriage Study</h3><div class="video-meta"><span class="tag">Marriage & Family</span><span>Jan 12, 2025</span><span>36 min</span></div></div>
+      <div class="video-card" data-category="warfare" data-title="Unity Demons Aliens and What to Do about them">
+        <div class="video-thumb" onclick="playVideo(this,'2VzMI50ed9Q')">
+          <img src="https://img.youtube.com/vi/2VzMI50ed9Q/hqdefault.jpg" alt="Unity Demons Aliens and What to Do about them">
+          <div class="play-btn"></div>
+        </div>
+        <div class="video-info"><h3>Unity, Demons, Aliens and What to Do about Them</h3><div class="video-meta"><span class="tag">Spiritual Warfare</span></div></div>
       </div>
     </div>
   </div>
@@ -134,6 +149,11 @@
 const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobileMenu');
 hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';});
 mobileMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{hamburger.classList.remove('open');mobileMenu.classList.remove('open');document.body.style.overflow='';}));
+
+// Click-to-play: replace thumbnail with embedded iframe
+function playVideo(thumbEl, videoId) {
+  thumbEl.innerHTML = '<iframe src="https://www.youtube.com/embed/'+videoId+'?autoplay=1" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+}
 
 // Filter & Search
 const filterBtns=document.querySelectorAll('.filter-btn');
