@@ -1,690 +1,404 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beliefs | StayTheWay</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #d4d4d4;
-            line-height: 1.6;
-        }
-
-        /* Header */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: #0a0a0a;
-            border-bottom: 1px solid #222;
-            padding: 1rem 2rem;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .logo-text {
-            color: #fff;
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-subtitle {
-            color: #808080;
-            font-size: 0.65rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        nav {
-            display: none;
-        }
-
-        nav.desktop {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        nav a {
-            color: #d4d4d4;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover {
-            color: #60a5fa;
-        }
-
-        nav a.active {
-            color: #2563eb;
-            border-bottom: 2px solid #2563eb;
-            padding-bottom: 0.25rem;
-        }
-
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            width: 28px;
-        }
-
-        .hamburger span {
-            width: 100%;
-            height: 2px;
-            background-color: #fff;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .hamburger.open span:nth-child(1) {
-            transform: rotate(45deg) translate(10px, 10px);
-        }
-
-        .hamburger.open span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.open span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            list-style: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 999;
-        }
-
-        .mobile-menu.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .mobile-menu a:hover {
-            color: #60a5fa;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, #111 0%, #0a0a0a 100%);
-            border-bottom: 1px solid #222;
-        }
-
-        .hero-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            color: #fff;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: #2563eb;
-            margin-bottom: 2rem;
-            font-weight: 600;
-        }
-
-        .quote-block {
-            background-color: #111;
-            border-left: 4px solid #2563eb;
-            padding: 2rem;
-            margin: 2rem 0;
-            border-radius: 4px;
-            text-align: left;
-        }
-
-        .quote-block p {
-            font-size: 1.1rem;
-            color: #fff;
-            margin-bottom: 1rem;
-            line-height: 1.8;
-            font-style: italic;
-        }
-
-        .quote-block .citation {
-            color: #60a5fa;
-            font-size: 0.9rem;
-            font-style: normal;
-            font-weight: 600;
-        }
-
-        /* Main Content */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .intro-section {
-            max-width: 800px;
-            margin: 0 auto 4rem;
-        }
-
-        .intro-section p {
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: #d4d4d4;
-        }
-
-        .before-you-read {
-            background-color: #111;
-            border: 1px solid #222;
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .before-you-read h3 {
-            color: #2563eb;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .before-you-read p {
-            color: #d4d4d4;
-            line-height: 1.8;
-        }
-
-        /* Belief Cards Grid */
-        .beliefs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .belief-card {
-            background-color: #111;
-            border: 1px solid #222;
-            border-radius: 8px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .belief-card:hover {
-            border-color: #60a5fa;
-            transform: translateY(-4px);
-        }
-
-        .belief-card h3 {
-            color: #fff;
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .belief-card p {
-            color: #d4d4d4;
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .verses {
-            color: #60a5fa;
-            font-size: 0.85rem;
-            font-weight: 500;
-            line-height: 1.6;
-        }
-
-        /* Love Over Division Section */
-        .love-section {
-            background-color: #111;
-            border: 1px solid #222;
-            border-radius: 8px;
-            padding: 3rem 2rem;
-            margin-bottom: 4rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-        }
-
-        .love-section h2 {
-            color: #2563eb;
-            font-size: 1.75rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-
-        .love-section p {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: #d4d4d4;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, #111 0%, #0a0a0a 100%);
-            border: 1px solid #222;
-            border-radius: 8px;
-            margin-bottom: 4rem;
-        }
-
-        .cta-section h2 {
-            color: #fff;
-            font-size: 1.75rem;
-            margin-bottom: 2rem;
-            font-weight: 700;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.75rem 2rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background-color: #2563eb;
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background-color: #1d4ed8;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: #2563eb;
-            border: 2px solid #2563eb;
-        }
-
-        .btn-secondary:hover {
-            background-color: #2563eb;
-            color: #fff;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #111;
-            border-top: 1px solid #222;
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-col h4 {
-            color: #fff;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col a {
-            color: #d4d4d4;
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
-            display: block;
-            transition: color 0.3s ease;
-        }
-
-        .footer-col a:hover {
-            color: #60a5fa;
-        }
-
-        .footer-copyright {
-            text-align: center;
-            color: #666;
-            font-size: 0.85rem;
-            padding-top: 2rem;
-            border-top: 1px solid #222;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-
-            .quote-block {
-                padding: 1.5rem;
-            }
-
-            .quote-block p {
-                font-size: 1rem;
-            }
-
-            .beliefs-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            nav.desktop {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            main {
-                padding: 2rem 1rem;
-            }
-
-            .hero {
-                padding: 2.5rem 1rem;
-            }
-
-            .love-section {
-                padding: 2rem 1rem;
-            }
-
-            .cta-section {
-                padding: 2rem 1rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statement of Faith — StayTheWay</title>
+<meta name="description" content="What we believe — the biblical foundation behind everything StayTheWay teaches.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#0a0a0a;color:#d4d4d4;line-height:1.7;overflow-x:hidden}
+a{color:#60a5fa;text-decoration:none;transition:color .2s}a:hover{color:#93bbfd}
+h1,h2,h3,h4{color:#fff;font-weight:700;line-height:1.3}
+h1{font-size:clamp(2rem,5vw,3.2rem)}h2{font-size:clamp(1.5rem,3.5vw,2.2rem)}
+h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+
+/* ========== HEADER ========== */
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(10,10,10,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #1a1a1a;padding:0 20px}
+.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;flex-direction:column;text-decoration:none}.logo-text{font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.02em}.logo-sub{font-size:.65rem;color:#888;font-weight:500;letter-spacing:.04em}
+.desktop-nav{display:none;gap:8px}.desktop-nav a{color:#d4d4d4;font-size:.875rem;font-weight:500;padding:8px 14px;border-radius:8px;transition:all .2s}.desktop-nav a:hover{color:#fff;background:#1a1a1a}.desktop-nav a.active{color:#60a5fa}@media(min-width:768px){.desktop-nav{display:flex}}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:28px;height:28px;cursor:pointer;z-index:1100;background:none;border:none;padding:0}.hamburger span{display:block;height:2px;width:100%;background:#fff;border-radius:2px;transition:all .3s ease;transform-origin:center}.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}@media(min-width:768px){.hamburger{display:none}}
+.mobile-menu{position:fixed;inset:0;z-index:1050;background:rgba(10,10,10,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .3s ease}.mobile-menu.open{opacity:1;pointer-events:auto}.mobile-menu a{color:#fff;font-size:1.5rem;font-weight:600;padding:16px 40px;min-height:56px;display:flex;align-items:center;border-radius:12px;transition:background .2s;width:80%;max-width:320px;justify-content:center}.mobile-menu a:hover{background:#1a1a1a}
+
+/* ========== BUTTONS ========== */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;font-weight:600;font-size:.95rem;transition:all .2s;border:none;cursor:pointer;text-decoration:none;font-family:inherit}
+.btn-primary{background:#2563eb;color:#fff}.btn-primary:hover{background:#3b82f6;color:#fff;transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:#d4d4d4;border:1px solid #333}.btn-secondary:hover{border-color:#555;color:#fff}
+
+/* ========== HERO ========== */
+.hero{
+  padding:100px 20px 80px;text-align:center;
+  background:linear-gradient(180deg,rgba(37,99,235,.06) 0%,transparent 60%);
+}
+.hero .eyebrow{font-size:.75rem;font-weight:600;color:#2563eb;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{margin-bottom:16px}
+.hero p{color:#a3a3a3;max-width:560px;margin:0 auto 0;font-size:1.05rem}
+
+/* ========== SCRIPTURE BANNER ========== */
+.scripture-banner{
+  padding:56px 20px;text-align:center;
+  border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;
+  background:#0d0d0d;
+}
+.scripture-banner blockquote{
+  font-size:clamp(1.05rem,2.5vw,1.3rem);color:#e5e5e5;font-style:italic;
+  max-width:720px;margin:0 auto 12px;line-height:1.8;
+}
+.scripture-banner cite{font-size:.85rem;color:#60a5fa;font-weight:600;font-style:normal}
+
+/* ========== INTRO ========== */
+.intro-section{padding:80px 20px;max-width:720px;margin:0 auto;text-align:center}
+.intro-section p{font-size:1.05rem;color:#a3a3a3;line-height:1.8}
+.callout-box{
+  background:#111;border:1px solid #1a1a1a;border-radius:12px;
+  padding:28px 32px;margin-top:32px;text-align:left;
+}
+.callout-box h3{font-size:1rem;color:#2563eb;margin-bottom:8px}
+.callout-box p{color:#a3a3a3;margin-bottom:0;font-size:.95rem}
+
+/* ========== BELIEF SECTIONS ========== */
+.belief-section{
+  padding:72px 20px;
+  border-top:1px solid #1a1a1a;
+}
+.belief-section:nth-child(even){background:#0d0d0d}
+.belief-inner{max-width:960px;margin:0 auto}
+
+/* Split layout — alternating */
+.belief-split{
+  display:grid;grid-template-columns:1fr;gap:40px;align-items:start;
+}
+@media(min-width:768px){
+  .belief-split{grid-template-columns:1fr 1fr;gap:64px}
+  .belief-section:nth-child(odd) .belief-split .belief-body{order:1}
+  .belief-section:nth-child(odd) .belief-split .belief-aside{order:2}
+  .belief-section:nth-child(even) .belief-split .belief-body{order:2}
+  .belief-section:nth-child(even) .belief-split .belief-aside{order:1}
+}
+
+.belief-body h2{margin-bottom:16px}
+.belief-body p{color:#d4d4d4;line-height:1.8;font-size:.98rem}
+
+.belief-aside{
+  background:#111;border:1px solid #1a1a1a;border-radius:12px;
+  padding:24px 28px;
+}
+.belief-aside h4{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.verse-list{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.verse-list li{
+  padding:4px 12px;border-radius:100px;font-size:.8rem;font-weight:500;
+  background:rgba(37,99,235,.1);color:#60a5fa;border:1px solid rgba(37,99,235,.2);
+}
+
+/* Full-width belief (no split) */
+.belief-full{max-width:720px;margin:0 auto;text-align:center}
+.belief-full h2{margin-bottom:16px}
+.belief-full p{color:#d4d4d4;line-height:1.8;font-size:.98rem}
+.belief-full .verses-inline{color:#60a5fa;font-size:.85rem;font-weight:500;margin-top:8px}
+
+/* ========== LOVE INTERLUDE ========== */
+.love-interlude{
+  padding:100px 20px;text-align:center;
+  background:linear-gradient(180deg,transparent 0%,rgba(37,99,235,.04) 50%,transparent 100%);
+  border-top:1px solid #1a1a1a;
+}
+.love-interlude h2{margin-bottom:16px;color:#60a5fa}
+.love-interlude p{max-width:640px;margin:0 auto;color:#a3a3a3;font-size:1.05rem;line-height:1.8}
+
+/* ========== CTA ========== */
+.cta-section{
+  text-align:center;padding:80px 20px;
+  border-top:1px solid #1a1a1a;
+}
+.cta-section h2{margin-bottom:12px}
+.cta-section p{color:#a3a3a3;max-width:500px;margin:0 auto 28px}
+
+/* ========== FOOTER ========== */
+.site-footer{border-top:1px solid #1a1a1a;padding:48px 0 32px;background:#0a0a0a}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 20px}
+.footer-grid{display:grid;gap:32px;grid-template-columns:1fr;margin-bottom:32px}
+@media(min-width:600px){.footer-grid{grid-template-columns:2fr 1fr 1fr}}
+.footer-brand .logo-text{font-size:1.2rem;margin-bottom:8px}.footer-brand p{font-size:.85rem;color:#888;margin-bottom:0}
+.footer-col h4{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}.footer-col a{display:block;color:#a3a3a3;font-size:.9rem;padding:4px 0}.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid #1a1a1a;padding-top:24px;font-size:.8rem;color:#555;text-align:center}
+
+/* ========== SCROLL REVEAL ========== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <a href="index.html" class="logo" style="text-decoration:none">
-                <div class="logo-text">StayTheWay</div>
-                <div class="logo-subtitle">501(c)(3) Service Ministry</div>
-            </a>
-            <nav class="desktop">
-                <a href="teachings.html">Teachings</a>
-                <a href="resources.html">Resources</a>
-                <a href="bridges.html">Bridges</a>
-                <a href="beliefs.html" class="active">Beliefs</a>
-                <a href="community.html">Community</a>
-                <a href="give.html">Give</a>
-            </nav>
-            <button class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </header>
 
-    <nav class="mobile-menu" id="mobileMenu">
-        <a href="index.html">Home</a>
-        <a href="teachings.html">Teachings</a>
-        <a href="resources.html">Resources</a>
-        <a href="bridges.html">Bridges</a>
-        <a href="beliefs.html">Beliefs</a>
-        <a href="community.html">Community</a>
-        <a href="give.html">Give</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-text">StayTheWay</span><span class="logo-sub">501(c)(3) Service Ministry</span></a>
+    <nav class="desktop-nav">
+      <a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="bridges.html">Bridges</a><a href="beliefs.html" class="active">Beliefs</a><a href="community.html">Community</a><a href="give.html">Give</a>
     </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="bridges.html">Bridges</a><a href="beliefs.html">Beliefs</a><a href="community.html">Community</a><a href="give.html">Give</a>
+</div>
 
-    <section class="hero">
-        <div class="hero-container">
-            <h1>Statement of Faith</h1>
-            <div class="hero-subtitle">The Way. The Truth. The Life.</div>
-            <div class="quote-block">
-                <p>"Jesus said to him, 'I am the way, the truth, and the life. No one comes to the Father except through Me.'"</p>
-                <div class="citation">John 14:6 (NKJV)</div>
-            </div>
-        </div>
-    </section>
+<!-- ========== HERO ========== -->
+<section class="hero reveal">
+  <div class="eyebrow">Statement of Faith</div>
+  <h1>The Way. The Truth. The Life.</h1>
+  <p>These aren't a denominational checklist. They're the anchor that holds everything else in place.</p>
+</section>
 
-    <main>
-        <section class="intro-section">
-            <p>This is the foundation of everything we do at StayTheWay. Jesus didn't say He would show us a way — He said He is the Way. Our beliefs aren't a denominational checklist. They're the anchor that holds everything else in place.</p>
-        </section>
+<!-- ========== SCRIPTURE BANNER ========== -->
+<div class="scripture-banner reveal">
+  <blockquote>"Jesus said to him, 'I am the way, the truth, and the life. No one comes to the Father except through Me.'"</blockquote>
+  <cite>John 14:6 (NKJV)</cite>
+</div>
 
-        <div class="before-you-read">
-            <h3>Before You Read This</h3>
-            <p>StayTheWay is a 501(c)(3) service ministry — not a denomination, not a competing church. We exist to equip believers wherever they are. These beliefs are what ground our teaching.</p>
-        </div>
+<!-- ========== INTRO ========== -->
+<section class="intro-section reveal">
+  <p>Jesus didn't say He would show us a way — He said He <em>is</em> the Way. This is the foundation of everything we do at StayTheWay.</p>
+  <div class="callout-box">
+    <h3>Before You Read This</h3>
+    <p>StayTheWay is a 501(c)(3) service ministry — not a denomination, not a competing church. We exist to equip believers wherever they are. These beliefs are what ground our teaching.</p>
+  </div>
+</section>
 
-        <section class="beliefs-grid">
-            <div class="belief-card">
-                <h3>The Word of God</h3>
-                <p>We believe the Scriptures of the Old and New Testaments are the inspired, inerrant Word of God — the final authority on faith and practice.</p>
-                <div class="verses">Isaiah 28:13 · John 17:17 · 2 Timothy 3:16-17 · Hebrews 4:12 · 1 Peter 1:23-25 · 2 Peter 1:21</div>
-            </div>
+<!-- ========== BELIEFS ========== -->
+<div id="beliefs">
 
-            <div class="belief-card">
-                <h3>One God — Father, Son & Holy Spirit</h3>
-                <p>We believe there is one living and true God, eternally existing in three persons: the Father, the Son, and the Holy Spirit — equal in power and glory.</p>
-                <div class="verses">Genesis 1:1 · Deuteronomy 6:4 · Matthew 28:19 · John 10:30 · Hebrews 9:14</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>The Word of God</h2>
+        <p>We believe the Scriptures of the Old and New Testaments are the inspired, inerrant Word of God — the final authority on faith and practice.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>Isaiah 28:13</li><li>John 17:17</li><li>2 Timothy 3:16-17</li><li>Hebrews 4:12</li><li>1 Peter 1:23-25</li><li>2 Peter 1:21</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>Jesus Christ — The Way, The Truth, The Life</h3>
-                <p>We believe in the person of Jesus Christ — God's only begotten Son, conceived by the Holy Spirit. We believe in His virgin birth, His sinless life, His miracles and teachings, His substitutionary atoning death on the cross, His bodily resurrection, His ascension into heaven, His perpetual intercession for His people, and His personal, visible return to earth. Jesus is the only way to the Father. Period.</p>
-                <div class="verses">Isaiah 7:14 · Matthew 1:23 · John 1:1-2, 8:58, 11:25, 14:6 · 1 Corinthians 15:3-4 · Hebrews 1:8 · Revelation 1:8</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>One God — Father, Son & Holy Spirit</h2>
+        <p>We believe there is one living and true God, eternally existing in three persons: the Father, the Son, and the Holy Spirit — equal in power and glory.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>Genesis 1:1</li><li>Deuteronomy 6:4</li><li>Matthew 28:19</li><li>John 10:30</li><li>Hebrews 9:14</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>The Holy Spirit</h3>
-                <p>We believe in the person of the Holy Spirit who came forth from the Father and Son to convict the world of sin, righteousness, and judgment — and to regenerate, sanctify, and empower for ministry all who believe in Christ. The Holy Spirit indwells every believer as an abiding helper, teacher, and guide. We believe in the present ministry of the Holy Spirit and in the exercise of all the biblical gifts of the Spirit.</p>
-                <div class="verses">John 14:16-17, 16:8-11 · Acts 1:8 · Romans 12, 15:13 · 1 Corinthians 12, 14 · 2 Corinthians 3:18 · Hebrews 9:14</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>Jesus Christ — The Way, The Truth, The Life</h2>
+        <p>We believe in the person of Jesus Christ — God's only begotten Son, conceived by the Holy Spirit. We believe in His virgin birth, His sinless life, His miracles and teachings, His substitutionary atoning death on the cross, His bodily resurrection, His ascension into heaven, His perpetual intercession for His people, and His personal, visible return to earth. Jesus is the only way to the Father. Period.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>Isaiah 7:14</li><li>Matthew 1:23</li><li>John 1:1-2</li><li>John 8:58</li><li>John 11:25</li><li>John 14:6</li><li>1 Corinthians 15:3-4</li><li>Hebrews 1:8</li><li>Revelation 1:8</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>Sin & Salvation</h3>
-                <p>We believe that all people are sinners by nature and therefore under condemnation. But God — rich in mercy — regenerates by the Holy Spirit those who repent of their sins and confess Jesus Christ as Lord. Salvation is by grace through faith.</p>
-                <div class="verses">John 3:16 · Acts 8:15-17 · Romans 3:23, 6:23, 10:9-10 · Ephesians 2:8-9 · Titus 3:5</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>The Holy Spirit</h2>
+        <p>We believe in the person of the Holy Spirit who came forth from the Father and Son to convict the world of sin, righteousness, and judgment — and to regenerate, sanctify, and empower for ministry all who believe in Christ. The Holy Spirit indwells every believer as an abiding helper, teacher, and guide. We believe in the present ministry of the Holy Spirit and in the exercise of all the biblical gifts of the Spirit.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>John 14:16-17</li><li>John 16:8-11</li><li>Acts 1:8</li><li>Romans 12</li><li>Romans 15:13</li><li>1 Corinthians 12</li><li>1 Corinthians 14</li><li>2 Corinthians 3:18</li><li>Hebrews 9:14</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>The Church</h3>
-                <p>We believe in the universal Church — the living, spiritual body of which Christ is the head and all who are born again are members. The Church is not a building, a denomination, or a brand. It's every believer, everywhere.</p>
-                <div class="verses">1 Corinthians 12:12-13 · Ephesians 4:15-16</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>Sin & Salvation</h2>
+        <p>We believe that all people are sinners by nature and therefore under condemnation. But God — rich in mercy — regenerates by the Holy Spirit those who repent of their sins and confess Jesus Christ as Lord. Salvation is by grace through faith.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>John 3:16</li><li>Acts 8:15-17</li><li>Romans 3:23</li><li>Romans 6:23</li><li>Romans 10:9-10</li><li>Ephesians 2:8-9</li><li>Titus 3:5</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>Baptism & The Lord's Supper</h3>
-                <p>We believe that the Lord Jesus Christ committed two ordinances to the Church: full-immersion water baptism and the Lord's Supper. Baptism is the outward declaration of an inward transformation. The Lord's Supper is our ongoing remembrance.</p>
-                <div class="verses">Matthew 28:19 · Mark 1:9 · Acts 2:38 · 1 Corinthians 11:23-26</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>The Church</h2>
+        <p>We believe in the universal Church — the living, spiritual body of which Christ is the head and all who are born again are members. The Church is not a building, a denomination, or a brand. It's every believer, everywhere.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>1 Corinthians 12:12-13</li><li>Ephesians 4:15-16</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>The Laying on of Hands</h3>
-                <p>We believe in the laying on of hands for the baptism of the Holy Spirit, the ordination of pastors, elders, and deacons, and for the receiving and perpetuity of the gifts of the Holy Spirit.</p>
-                <div class="verses">Acts 6:6, 8:17 · 1 Timothy 4:14</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>Baptism & The Lord's Supper</h2>
+        <p>We believe that the Lord Jesus Christ committed two ordinances to the Church: full-immersion water baptism and the Lord's Supper. Baptism is the outward declaration of an inward transformation. The Lord's Supper is our ongoing remembrance.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>Matthew 28:19</li><li>Mark 1:9</li><li>Acts 2:38</li><li>1 Corinthians 11:23-26</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>The Second Coming of Jesus Christ</h3>
-                <p>We believe in the Second Coming of Jesus Christ — His personal, visible return to earth and the establishment of His millennial kingdom. We believe in the pre-tribulation rapture of the Church. He's coming back. Stay ready.</p>
-                <div class="verses">Matthew 16:27, 24:29-31 · Acts 1:11 · 1 Thessalonians 5:9 · Revelation 19:11-16, 20:11-15</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>The Laying on of Hands</h2>
+        <p>We believe in the laying on of hands for the baptism of the Holy Spirit, the ordination of pastors, elders, and deacons, and for the receiving and perpetuity of the gifts of the Holy Spirit.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>Acts 6:6</li><li>Acts 8:17</li><li>1 Timothy 4:14</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>Heaven & Hell</h3>
-                <p>We believe in a literal Heaven and a literal Hell. All those who place their faith in Jesus Christ will spend eternity in Heaven. Those who reject His free gift will spend eternity separated from God.</p>
-                <div class="verses">Matthew 5:3, 5:22, 18:9, 25:31-34 · Luke 12:5 · Hebrews 12:23 · 1 Peter 1:4</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>The Second Coming of Jesus Christ</h2>
+        <p>We believe in the Second Coming of Jesus Christ — His personal, visible return to earth and the establishment of His millennial kingdom. We believe in the pre-tribulation rapture of the Church. He's coming back. Stay ready.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>Matthew 16:27</li><li>Matthew 24:29-31</li><li>Acts 1:11</li><li>1 Thessalonians 5:9</li><li>Revelation 19:11-16</li><li>Revelation 20:11-15</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>Marriage & Creation</h3>
-                <p>We believe that God created man — male and female — different by design so as to complement and complete each other. Marriage has been ordained by God as the exclusive covenantal union of one man and one woman for a lifetime.</p>
-                <div class="verses">Genesis 2:24 · 1 Corinthians 6:9-11, 6:18-20, 7:1-3 · 1 Timothy 1:9-11</div>
-            </div>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>Heaven & Hell</h2>
+        <p>We believe in a literal Heaven and a literal Hell. All those who place their faith in Jesus Christ will spend eternity in Heaven. Those who reject His free gift will spend eternity separated from God.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>Matthew 5:3</li><li>Matthew 5:22</li><li>Matthew 18:9</li><li>Matthew 25:31-34</li><li>Luke 12:5</li><li>Hebrews 12:23</li><li>1 Peter 1:4</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <div class="belief-card">
-                <h3>Worship</h3>
-                <p>We believe worship of God should be spiritual, intelligent, and fruitful. Worship is not a Sunday event. It's a way of life.</p>
-                <div class="verses">John 4:23-24 · Romans 12:1-2 · Colossians 3:16</div>
-            </div>
-        </section>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-split">
+      <div class="belief-body">
+        <h2>Marriage & Creation</h2>
+        <p>We believe that God created man — male and female — different by design so as to complement and complete each other. Marriage has been ordained by God as the exclusive covenantal union of one man and one woman for a lifetime.</p>
+      </div>
+      <div class="belief-aside">
+        <h4>Scripture References</h4>
+        <ul class="verse-list">
+          <li>Genesis 2:24</li><li>1 Corinthians 6:9-11</li><li>1 Corinthians 6:18-20</li><li>1 Corinthians 7:1-3</li><li>1 Timothy 1:9-11</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-        <section class="love-section">
-            <h2>Love Over Division</h2>
-            <p>We are not a denominational ministry, and we are not opposed to denominations — only to the over-emphasis of doctrinal differences that divide the Body of Christ. The only true basis of Christian fellowship is His agape love.</p>
-        </section>
+  <section class="belief-section reveal">
+    <div class="belief-inner belief-full">
+      <h2>Worship</h2>
+      <p>We believe worship of God should be spiritual, intelligent, and fruitful. Worship is not a Sunday event. It's a way of life.</p>
+      <div class="verses-inline">John 4:23-24 · Romans 12:1-2 · Colossians 3:16</div>
+    </div>
+  </section>
 
-        <section class="cta-section">
-            <h2>Ready to Go Deeper?</h2>
-            <div class="cta-buttons">
-                <a href="teachings.html" class="btn btn-primary">Explore Teachings</a>
-                <a href="community.html" class="btn btn-secondary">Join Community</a>
-            </div>
-        </section>
-    </main>
+</div>
 
-    <footer>
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>StayTheWay</h4>
-                    <p style="color: #d4d4d4; font-size: 0.9rem; line-height: 1.6;">A 501(c)(3) service ministry equipping believers with biblical truth and timeless wisdom.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Study</h4>
-                    <ul>
-                        <li><a href="teachings.html">Teachings</a></li>
-                        <li><a href="resources.html">Resources</a></li>
-                        <li><a href="beliefs.html">Beliefs</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li><a href="bridges.html">Bridges</a></li>
-                        <li><a href="community.html">Community</a></li>
-                        <li><a href="give.html">Give</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-copyright">
-                <p>&copy; 2026 StayTheWay. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+<!-- ========== LOVE INTERLUDE ========== -->
+<section class="love-interlude reveal">
+  <h2>Love Over Division</h2>
+  <p>We are not a denominational ministry, and we are not opposed to denominations — only to the over-emphasis of doctrinal differences that divide the Body of Christ. The only true basis of Christian fellowship is His agape love.</p>
+</section>
 
-    <script>
-        // Mobile Menu Toggle
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
+<!-- ========== CTA ========== -->
+<section class="cta-section reveal">
+  <h2>Ready to Go Deeper?</h2>
+  <p>Explore our teachings or join a home fellowship to study the Word together.</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="teachings.html" class="btn btn-primary">Explore Teachings</a>
+    <a href="community.html" class="btn btn-secondary">Join Community</a>
+  </div>
+</section>
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            mobileMenu.classList.toggle('open');
-        });
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-text">StayTheWay</div><p>A 501(c)(3) faith-based nonprofit equipping believers to grow deeper in the knowledge and grace of God.</p></div>
+      <div class="footer-col"><h4>Study</h4><a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="beliefs.html">Beliefs</a></div>
+      <div class="footer-col"><h4>Connect</h4><a href="community.html">Community</a><a href="bridges.html">Bridges</a><a href="give.html">Give</a></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 StayTheWay. A 501(c)(3) nonprofit organization. All rights reserved. Founded by Jonathan C. Weisz</div>
+  </div>
+</footer>
 
-        // Close mobile menu when link is clicked
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('open');
-                mobileMenu.classList.remove('open');
-            });
-        });
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}));
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('header') && !e.target.closest('.mobile-menu')) {
-                hamburger.classList.remove('open');
-                mobileMenu.classList.remove('open');
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const href = this.getAttribute('href');
-                if (href !== '#' && document.querySelector(href)) {
-                    e.preventDefault();
-                    document.querySelector(href).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '-40px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
 </body>
 </html>

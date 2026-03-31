@@ -1,754 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Give & Donate - StayTheWay Ministry</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #d4d4d4;
-            line-height: 1.6;
-        }
-
-        /* Header Styles */
-        header {
-            position: sticky;
-            top: 0;
-            background-color: #0a0a0a;
-            border-bottom: 1px solid #222;
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .logo-text {
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.3rem;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-subtitle {
-            color: #60a5fa;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        nav {
-            display: none;
-        }
-
-        nav.open {
-            display: flex;
-        }
-
-        @media (min-width: 768px) {
-            nav {
-                display: flex;
-                gap: 2rem;
-                list-style: none;
-            }
-
-            nav a {
-                color: #d4d4d4;
-                text-decoration: none;
-                font-size: 0.95rem;
-                font-weight: 500;
-                transition: color 0.3s ease;
-                position: relative;
-            }
-
-            nav a:hover {
-                color: #60a5fa;
-            }
-
-            nav a.active {
-                color: #2563eb;
-                font-weight: 600;
-            }
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(10, 10, 10, 0.98);
-            display: none;
-            flex-direction: column;
-            padding: 5rem 1.5rem 2rem;
-            gap: 1.5rem;
-            z-index: 999;
-        }
-
-        .mobile-menu.open {
-            display: flex;
-        }
-
-        .mobile-menu a {
-            color: #d4d4d4;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .mobile-menu a:hover {
-            color: #60a5fa;
-        }
-
-        .mobile-menu a.active {
-            color: #2563eb;
-            font-weight: 600;
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            border: none;
-            background: none;
-            padding: 0;
-        }
-
-        .hamburger span {
-            width: 24px;
-            height: 2px;
-            background-color: #fff;
-            transition: all 0.3s ease;
-            display: block;
-        }
-
-        .hamburger.open span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-
-        .hamburger.open span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.open span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        @media (min-width: 768px) {
-            .hamburger {
-                display: none;
-            }
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
-            padding: 4rem 1.5rem;
-            text-align: center;
-            border-bottom: 1px solid #222;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            color: #fff;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            color: #d4d4d4;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 2.5rem 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-        }
-
-        /* Main Content */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 1.5rem;
-        }
-
-        /* Featured Zeffy Card */
-        .featured-card {
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
-            border: 1px solid #3b82f6;
-            border-radius: 0.75rem;
-            padding: 2.5rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.2);
-        }
-
-        .featured-card h2 {
-            color: #fff;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-
-        .featured-card p {
-            color: #e0e7ff;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        .why-zeffy {
-            text-align: left;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .why-zeffy h3 {
-            color: #fff;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .why-zeffy ul {
-            list-style: none;
-        }
-
-        .why-zeffy li {
-            color: #e0e7ff;
-            margin-bottom: 0.75rem;
-            padding-left: 1.5rem;
-            position: relative;
-            font-size: 0.95rem;
-        }
-
-        .why-zeffy li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #60a5fa;
-            font-weight: 700;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.875rem 2.5rem;
-            border-radius: 0.5rem;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background-color: #fff;
-            color: #2563eb;
-        }
-
-        .btn-primary:hover {
-            background-color: #f0f0f0;
-            transform: translateY(-2px);
-        }
-
-        .featured-card .btn-primary {
-            margin-top: 0.5rem;
-        }
-
-        /* Other Payment Methods */
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .payment-card {
-            background-color: #111;
-            border: 1px solid #222;
-            border-radius: 0.75rem;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .payment-card:hover {
-            border-color: #2563eb;
-            background-color: #1a1a1a;
-            transform: translateY(-4px);
-        }
-
-        .payment-card h3 {
-            color: #fff;
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-        }
-
-        .payment-card p {
-            color: #d4d4d4;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .payment-card .btn {
-            background-color: #2563eb;
-            color: #fff;
-        }
-
-        .payment-card .btn:hover {
-            background-color: #60a5fa;
-            transform: translateY(-2px);
-        }
-
-        /* Where Your Gift Goes */
-        .section-title {
-            color: #fff;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .impact-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .impact-card {
-            background-color: #111;
-            border: 1px solid #222;
-            border-radius: 0.75rem;
-            padding: 2rem;
-        }
-
-        .impact-card h3 {
-            color: #60a5fa;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .impact-card p {
-            color: #d4d4d4;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        /* Tax Information */
-        .tax-info {
-            background-color: #111;
-            border: 1px solid #222;
-            border-radius: 0.75rem;
-            padding: 2.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .tax-info h2 {
-            color: #fff;
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            font-weight: 700;
-        }
-
-        .tax-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .tax-item h3 {
-            color: #60a5fa;
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-        }
-
-        .tax-item p {
-            color: #d4d4d4;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* Final CTA */
-        .final-cta {
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
-            border-radius: 0.75rem;
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .final-cta h2 {
-            color: #fff;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .final-cta p {
-            color: #e0e7ff;
-            font-size: 1.05rem;
-            margin-bottom: 2rem;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #111;
-            border-top: 1px solid #222;
-            padding: 3rem 1.5rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-top {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            color: #fff;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section a {
-            color: #d4d4d4;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-            line-height: 1.8;
-        }
-
-        .footer-section a:hover {
-            color: #60a5fa;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #222;
-            border-radius: 50%;
-            color: #fff;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background-color: #2563eb;
-            transform: translateY(-2px);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #222;
-            padding-top: 2rem;
-            text-align: center;
-            color: #666;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 768px) {
-            .featured-card {
-                padding: 1.5rem;
-            }
-
-            .featured-card h2 {
-                font-size: 1.4rem;
-            }
-
-            .payment-methods {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .final-cta {
-                padding: 2rem 1.5rem;
-            }
-
-            .final-cta h2 {
-                font-size: 1.4rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Give — StayTheWay</title>
+<meta name="description" content="Support StayTheWay ministry — 100% of your gift goes to equipping believers with biblical truth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#0a0a0a;color:#d4d4d4;line-height:1.7;overflow-x:hidden}
+a{color:#60a5fa;text-decoration:none;transition:color .2s}a:hover{color:#93bbfd}
+h1,h2,h3,h4{color:#fff;font-weight:700;line-height:1.3}
+h1{font-size:clamp(2rem,5vw,3.2rem)}h2{font-size:clamp(1.5rem,3.5vw,2.2rem)}
+h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+
+/* ========== HEADER ========== */
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(10,10,10,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #1a1a1a;padding:0 20px}
+.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;flex-direction:column;text-decoration:none}.logo-text{font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.02em}.logo-sub{font-size:.65rem;color:#888;font-weight:500;letter-spacing:.04em}
+.desktop-nav{display:none;gap:8px}.desktop-nav a{color:#d4d4d4;font-size:.875rem;font-weight:500;padding:8px 14px;border-radius:8px;transition:all .2s}.desktop-nav a:hover{color:#fff;background:#1a1a1a}.desktop-nav a.active{color:#60a5fa}@media(min-width:768px){.desktop-nav{display:flex}}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:28px;height:28px;cursor:pointer;z-index:1100;background:none;border:none;padding:0}.hamburger span{display:block;height:2px;width:100%;background:#fff;border-radius:2px;transition:all .3s ease;transform-origin:center}.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}@media(min-width:768px){.hamburger{display:none}}
+.mobile-menu{position:fixed;inset:0;z-index:1050;background:rgba(10,10,10,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .3s ease}.mobile-menu.open{opacity:1;pointer-events:auto}.mobile-menu a{color:#fff;font-size:1.5rem;font-weight:600;padding:16px 40px;min-height:56px;display:flex;align-items:center;border-radius:12px;transition:background .2s;width:80%;max-width:320px;justify-content:center}.mobile-menu a:hover{background:#1a1a1a}
+
+/* ========== BUTTONS ========== */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;font-weight:600;font-size:.95rem;transition:all .2s;border:none;cursor:pointer;text-decoration:none;font-family:inherit}
+.btn-primary{background:#2563eb;color:#fff}.btn-primary:hover{background:#3b82f6;color:#fff;transform:translateY(-1px)}
+.btn-white{background:#fff;color:#1e3a8a}.btn-white:hover{background:#f0f0f0;color:#1e3a8a;transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:#d4d4d4;border:1px solid #333}.btn-secondary:hover{border-color:#555;color:#fff}
+
+/* ========== HERO ========== */
+.hero{
+  padding:100px 20px 80px;text-align:center;
+  background:linear-gradient(180deg,rgba(37,99,235,.06) 0%,transparent 60%);
+}
+.hero .eyebrow{font-size:.75rem;font-weight:600;color:#2563eb;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{margin-bottom:16px}
+.hero p{color:#a3a3a3;max-width:560px;margin:0 auto;font-size:1.05rem;line-height:1.8}
+
+/* ========== ZEFFY FEATURED ========== */
+.zeffy-section{
+  padding:80px 20px;text-align:center;
+  background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 100%);
+}
+.zeffy-inner{max-width:640px;margin:0 auto}
+.zeffy-inner h2{margin-bottom:16px;font-size:clamp(1.5rem,3.5vw,2rem)}
+.zeffy-inner>p{color:#c7d2fe;margin-bottom:32px;font-size:1.05rem}
+.zeffy-features{
+  background:rgba(0,0,0,.2);border-radius:12px;padding:28px 32px;
+  text-align:left;margin-bottom:32px;
+}
+.zeffy-features h3{font-size:.95rem;margin-bottom:16px;color:#fff}
+.zeffy-features ul{list-style:none}
+.zeffy-features li{
+  color:#c7d2fe;font-size:.95rem;padding:6px 0 6px 28px;
+  position:relative;
+}
+.zeffy-features li::before{
+  content:'✓';position:absolute;left:0;color:#60a5fa;font-weight:700;
+}
+
+/* ========== OTHER METHODS ========== */
+.methods-section{
+  padding:80px 20px;border-bottom:1px solid #1a1a1a;
+}
+.methods-section h2{text-align:center;margin-bottom:48px}
+.methods-grid{
+  display:grid;grid-template-columns:1fr;gap:20px;
+  max-width:720px;margin:0 auto;
+}
+@media(min-width:640px){.methods-grid{grid-template-columns:repeat(3,1fr)}}
+.method-card{
+  background:#111;border:1px solid #1a1a1a;border-radius:14px;
+  padding:28px 24px;text-align:center;transition:border-color .3s;
+}
+.method-card:hover{border-color:#333}
+.method-card h3{font-size:1.1rem;margin-bottom:8px}
+.method-card p{color:#a3a3a3;font-size:.9rem;margin-bottom:16px}
+.method-card .btn{padding:10px 24px;font-size:.875rem}
+
+/* ========== IMPACT ========== */
+.impact-section{
+  padding:80px 20px;background:#0d0d0d;
+  border-bottom:1px solid #1a1a1a;
+}
+.impact-section h2{text-align:center;margin-bottom:48px}
+.impact-grid{
+  display:grid;grid-template-columns:1fr;gap:20px;
+  max-width:720px;margin:0 auto;
+}
+@media(min-width:640px){.impact-grid{grid-template-columns:repeat(3,1fr)}}
+.impact-card{
+  background:#111;border:1px solid #1a1a1a;border-radius:14px;
+  padding:28px 24px;
+}
+.impact-card h3{font-size:1rem;color:#60a5fa;margin-bottom:8px}
+.impact-card p{color:#a3a3a3;font-size:.9rem;margin-bottom:0}
+
+/* ========== TAX INFO ========== */
+.tax-section{
+  padding:80px 20px;border-bottom:1px solid #1a1a1a;
+}
+.tax-inner{max-width:720px;margin:0 auto}
+.tax-inner h2{text-align:center;margin-bottom:48px}
+.tax-grid{
+  display:grid;grid-template-columns:1fr;gap:20px;
+}
+@media(min-width:640px){.tax-grid{grid-template-columns:repeat(3,1fr)}}
+.tax-item h3{font-size:.95rem;color:#60a5fa;margin-bottom:8px}
+.tax-item p{color:#a3a3a3;font-size:.9rem;margin-bottom:0}
+
+/* ========== FINAL CTA ========== */
+.final-cta{
+  text-align:center;padding:100px 20px;
+  background:linear-gradient(180deg,transparent 0%,rgba(37,99,235,.04) 50%,transparent 100%);
+}
+.final-cta h2{margin-bottom:12px}
+.final-cta p{color:#a3a3a3;max-width:480px;margin:0 auto 28px;font-size:1.05rem}
+
+/* ========== FOOTER ========== */
+.site-footer{border-top:1px solid #1a1a1a;padding:48px 0 32px;background:#0a0a0a}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 20px}
+.footer-grid{display:grid;gap:32px;grid-template-columns:1fr;margin-bottom:32px}
+@media(min-width:600px){.footer-grid{grid-template-columns:2fr 1fr 1fr}}
+.footer-brand .logo-text{font-size:1.2rem;margin-bottom:8px}.footer-brand p{font-size:.85rem;color:#888;margin-bottom:0}
+.footer-col h4{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}.footer-col a{display:block;color:#a3a3a3;font-size:.9rem;padding:4px 0}.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid #1a1a1a;padding-top:24px;font-size:.8rem;color:#555;text-align:center}
+
+/* ========== SCROLL REVEAL ========== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <span class="logo-text">StayTheWay</span>
-                <span class="logo-subtitle">501(c)(3) Service Ministry</span>
-            </div>
-            <nav>
-                <a href="index.html">Home</a>
-                <a href="teachings.html">Teachings</a>
-                <a href="resources.html">Resources</a>
-                <a href="bridges.html">Bridges</a>
-                <a href="beliefs.html">Beliefs</a>
-                <a href="community.html">Community</a>
-                <a href="give.html" class="active">Give</a>
-            </nav>
-            <button class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-        <div class="mobile-menu" id="mobileMenu">
-            <a href="index.html">Home</a>
-            <a href="teachings.html">Teachings</a>
-            <a href="resources.html">Resources</a>
-            <a href="bridges.html">Bridges</a>
-            <a href="beliefs.html">Beliefs</a>
-            <a href="community.html">Community</a>
-            <a href="give.html" class="active">Give</a>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Support the Ministry</h1>
-            <p>Every gift goes directly to equipping believers with biblical truth and fostering spiritual community. Your generosity fuels our mission to strengthen faith in Christ.</p>
-        </div>
-    </section>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-text">StayTheWay</span><span class="logo-sub">501(c)(3) Service Ministry</span></a>
+    <nav class="desktop-nav">
+      <a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="bridges.html">Bridges</a><a href="beliefs.html">Beliefs</a><a href="community.html">Community</a><a href="give.html" class="active">Give</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="bridges.html">Bridges</a><a href="beliefs.html">Beliefs</a><a href="community.html">Community</a><a href="give.html">Give</a>
+</div>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Featured Zeffy Card -->
-        <div class="featured-card">
-            <h2>Donate via Zeffy</h2>
-            <p>Our recommended giving platform</p>
-            <div class="why-zeffy">
-                <h3>Why Zeffy?</h3>
-                <ul>
-                    <li>100% free platform — zero platform fees</li>
-                    <li>Tax-deductible receipts — automatic</li>
-                    <li>Your full gift goes directly to the ministry</li>
-                    <li>Secure & trusted by thousands of nonprofits</li>
-                </ul>
-            </div>
-            <a href="https://www.zeffy.com/" target="_blank" class="btn btn-primary">Donate via Zeffy</a>
-        </div>
+<!-- ========== HERO ========== -->
+<section class="hero reveal">
+  <div class="eyebrow">Support the Ministry</div>
+  <h1>Give</h1>
+  <p>Every gift goes directly to equipping believers with biblical truth and fostering spiritual community. Your generosity fuels our mission to strengthen faith in Christ.</p>
+</section>
 
-        <!-- Other Payment Methods -->
-        <h2 class="section-title">Other Ways to Give</h2>
-        <div class="payment-methods">
-            <div class="payment-card">
-                <h3>PayPal</h3>
-                <p>Secure and widely trusted payment platform</p>
-                <a href="#" class="btn">Give via PayPal</a>
-            </div>
-            <div class="payment-card">
-                <h3>Venmo</h3>
-                <p>Quick and easy peer-to-peer payments</p>
-                <a href="#" class="btn">Give via Venmo</a>
-            </div>
-            <div class="payment-card">
-                <h3>Cash App</h3>
-                <p>Fast mobile payments for your convenience</p>
-                <a href="#" class="btn">Give via Cash App</a>
-            </div>
-        </div>
+<!-- ========== ZEFFY ========== -->
+<section class="zeffy-section reveal">
+  <div class="zeffy-inner">
+    <h2>Donate via Zeffy</h2>
+    <p>Our recommended giving platform — every dollar goes to the ministry.</p>
+    <div class="zeffy-features">
+      <h3>Why Zeffy?</h3>
+      <ul>
+        <li>100% free platform — zero platform fees</li>
+        <li>Tax-deductible receipts — automatic</li>
+        <li>Your full gift goes directly to the ministry</li>
+        <li>Secure & trusted by thousands of nonprofits</li>
+      </ul>
+    </div>
+    <a href="https://www.zeffy.com/" target="_blank" class="btn btn-white">Donate via Zeffy</a>
+  </div>
+</section>
 
-        <!-- Where Your Gift Goes -->
-        <h2 class="section-title">Where Your Gift Goes</h2>
-        <div class="impact-cards">
-            <div class="impact-card">
-                <h3>Teaching Production</h3>
-                <p>Filming, professional equipment, studio resources, and content creation tools that enable us to deliver high-quality biblical teachings.</p>
-            </div>
-            <div class="impact-card">
-                <h3>Resource Development</h3>
-                <p>Creating handouts, study guides, children's materials, and discipleship resources to strengthen individual and family Bible study.</p>
-            </div>
-            <div class="impact-card">
-                <h3>Community Outreach</h3>
-                <p>Supporting home Bible study groups, empowering bridge leaders, and funding community outreach initiatives.</p>
-            </div>
-        </div>
+<!-- ========== OTHER METHODS ========== -->
+<section class="methods-section reveal">
+  <h2>Other Ways to Give</h2>
+  <div class="methods-grid">
+    <div class="method-card">
+      <h3>PayPal</h3>
+      <p>Secure and widely trusted payment platform.</p>
+      <a href="#" class="btn btn-secondary">Give via PayPal</a>
+    </div>
+    <div class="method-card">
+      <h3>Venmo</h3>
+      <p>Quick and easy peer-to-peer payments.</p>
+      <a href="#" class="btn btn-secondary">Give via Venmo</a>
+    </div>
+    <div class="method-card">
+      <h3>Cash App</h3>
+      <p>Fast mobile payments for your convenience.</p>
+      <a href="#" class="btn btn-secondary">Give via Cash App</a>
+    </div>
+  </div>
+</section>
 
-        <!-- Tax Information -->
-        <section class="tax-info">
-            <h2>Tax Information</h2>
-            <div class="tax-items">
-                <div class="tax-item">
-                    <h3>501(c)(3) Status</h3>
-                    <p>StayTheWay Ministry is a registered 501(c)(3) nonprofit organization. All contributions are tax-deductible.</p>
-                </div>
-                <div class="tax-item">
-                    <h3>Automatic Tax Receipts</h3>
-                    <p>When you give through Zeffy, you automatically receive a tax-deductible receipt via email.</p>
-                </div>
-                <div class="tax-item">
-                    <h3>EIN</h3>
-                    <p>Our Employer Identification Number (EIN) is available upon request.</p>
-                </div>
-            </div>
-        </section>
+<!-- ========== WHERE YOUR GIFT GOES ========== -->
+<section class="impact-section reveal">
+  <h2>Where Your Gift Goes</h2>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <h3>Teaching Production</h3>
+      <p>Filming, professional equipment, studio resources, and content creation tools that enable high-quality biblical teachings.</p>
+    </div>
+    <div class="impact-card">
+      <h3>Resource Development</h3>
+      <p>Creating handouts, study guides, children's materials, and discipleship resources to strengthen Bible study.</p>
+    </div>
+    <div class="impact-card">
+      <h3>Community Outreach</h3>
+      <p>Supporting home Bible study groups, empowering bridge leaders, and funding community outreach initiatives.</p>
+    </div>
+  </div>
+</section>
 
-        <!-- Final CTA -->
-        <div class="final-cta">
-            <h2>Make an Impact Today</h2>
-            <p>Your generosity directly strengthens believers and builds thriving faith communities.</p>
-            <a href="https://www.zeffy.com/" target="_blank" class="btn btn-primary">Give Now</a>
-        </div>
-    </main>
+<!-- ========== TAX INFO ========== -->
+<section class="tax-section reveal">
+  <div class="tax-inner">
+    <h2>Tax Information</h2>
+    <div class="tax-grid">
+      <div class="tax-item">
+        <h3>501(c)(3) Status</h3>
+        <p>StayTheWay Ministry is a registered 501(c)(3) nonprofit organization. All contributions are tax-deductible.</p>
+      </div>
+      <div class="tax-item">
+        <h3>Automatic Receipts</h3>
+        <p>When you give through Zeffy, you automatically receive a tax-deductible receipt via email.</p>
+      </div>
+      <div class="tax-item">
+        <h3>EIN</h3>
+        <p>Our Employer Identification Number (EIN) is available upon request.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-top">
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="teachings.html">Teachings</a></li>
-                        <li><a href="resources.html">Resources</a></li>
-                        <li><a href="bridges.html">Bridges</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>More</h3>
-                    <ul>
-                        <li><a href="beliefs.html">Beliefs</a></li>
-                        <li><a href="community.html">Community</a></li>
-                        <li><a href="give.html">Give</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Connect With Us</h3>
-                    <div class="social-links">
-                        <a href="https://youtube.com/@weStayTheWay" target="_blank" title="YouTube">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                            </svg>
-                        </a>
-                        <a href="https://facebook.com/weStayTheWay" target="_blank" title="Facebook">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
-                        <a href="https://instagram.com/weStayTheWay" target="_blank" title="Instagram">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2.25c2.693 0 3.019.01 4.082.059 1.063.049 1.79.216 2.427.46.637.246 1.179.576 1.72 1.117.541.541.871 1.083 1.117 1.72.244.637.411 1.364.46 2.427.049 1.063.059 1.389.059 4.082s-.01 3.019-.059 4.082c-.049 1.063-.216 1.79-.46 2.427-.246.637-.576 1.179-1.117 1.72-.541.541-1.083.871-1.72 1.117-.637.244-1.364.411-2.427.46-1.063.049-1.389.059-4.082.059s-3.019-.01-4.082-.059c-1.063-.049-1.79-.216-2.427-.46-.637-.246-1.179-.576-1.72-1.117-.541-.541-.871-1.083-1.117-1.72-.244-.637-.411-1.364-.46-2.427-.049-1.063-.059-1.389-.059-4.082s.01-3.019.059-4.082c.049-1.063.216-1.79.46-2.427.246-.637.576-1.179 1.117-1.72.541-.541 1.083-.871 1.72-1.117.637-.244 1.364-.411 2.427-.46 1.063-.049 1.389-.059 4.082-.059z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 StayTheWay Ministry. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+<!-- ========== FINAL CTA ========== -->
+<section class="final-cta reveal">
+  <h2>Make an Impact Today</h2>
+  <p>Your generosity directly strengthens believers and builds thriving faith communities.</p>
+  <a href="https://www.zeffy.com/" target="_blank" class="btn btn-primary">Give Now</a>
+</section>
 
-    <script>
-        // Mobile menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-text">StayTheWay</div><p>A 501(c)(3) faith-based nonprofit equipping believers to grow deeper in the knowledge and grace of God.</p></div>
+      <div class="footer-col"><h4>Study</h4><a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="beliefs.html">Beliefs</a></div>
+      <div class="footer-col"><h4>Connect</h4><a href="community.html">Community</a><a href="bridges.html">Bridges</a><a href="give.html">Give</a></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 StayTheWay. A 501(c)(3) nonprofit organization. All rights reserved. Founded by Jonathan C. Weisz</div>
+  </div>
+</footer>
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            mobileMenu.classList.toggle('open');
-        });
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}));
 
-        // Close mobile menu when a link is clicked
-        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('open');
-                mobileMenu.classList.remove('open');
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (event) => {
-            const isClickInsideMenu = mobileMenu.contains(event.target);
-            const isClickOnHamburger = hamburger.contains(event.target);
-
-            if (!isClickInsideMenu && !isClickOnHamburger && mobileMenu.classList.contains('open')) {
-                hamburger.classList.remove('open');
-                mobileMenu.classList.remove('open');
-            }
-        });
-    </script>
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '-40px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
 </body>
 </html>

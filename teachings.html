@@ -128,36 +128,44 @@ h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
 .filter-btn:hover{border-color:#444;color:#d4d4d4}
 .filter-btn.active{background:#2563eb;border-color:#2563eb;color:#fff}
 
-/* ========== VIDEO GRID ========== */
-.grid-teachings{
-  display:grid;gap:24px;grid-template-columns:1fr;
+/* ========== VIDEO LIST ========== */
+.video-list{
+  display:flex;flex-direction:column;gap:0;
   padding-bottom:40px;
 }
-@media(min-width:500px){.grid-teachings{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:900px){.grid-teachings{grid-template-columns:repeat(3,1fr)}}
-
-.video-card{
-  background:#111;border:1px solid #1a1a1a;border-radius:14px;
-  overflow:hidden;transition:all .4s ease;opacity:0;transform:translateY(24px);
+.video-row{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 16px;border-bottom:1px solid #1a1a1a;
+  cursor:pointer;transition:all .25s ease;
+  opacity:0;transform:translateY(12px);
 }
-.video-card.revealed{opacity:1;transform:translateY(0)}
-.video-card:hover{border-color:#333;transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
-.video-thumb{position:relative;cursor:pointer;overflow:hidden;aspect-ratio:16/9}
-.video-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
-.video-card:hover .video-thumb img{transform:scale(1.05)}
-.video-thumb .play-btn{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:48px;height:48px;background:rgba(37,99,235,.85);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .2s;opacity:0;
+.video-row.revealed{opacity:1;transform:translateY(0)}
+.video-row:hover{background:#151515}
+.video-row:first-child{border-top:1px solid #1a1a1a}
+.video-row .row-play{
+  flex-shrink:0;width:36px;height:36px;border-radius:50%;
+  background:rgba(37,99,235,.15);display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
 }
-.video-card:hover .play-btn{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.play-btn::after{content:'';width:0;height:0;border-style:solid;border-width:7px 0 7px 12px;border-color:transparent transparent transparent #fff;margin-left:2px}
-.video-info{padding:16px 18px}
-.video-info h3{font-size:.92rem;margin-bottom:6px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.video-meta{font-size:.75rem;color:#666;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.video-meta .tag{color:#60a5fa;font-weight:500}
-.video-meta .date{color:#555}
+.video-row:hover .row-play{background:rgba(37,99,235,.35)}
+.row-play::after{content:'';width:0;height:0;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent #60a5fa;margin-left:2px}
+.video-row .row-title{
+  flex:1;min-width:0;font-size:.92rem;font-weight:500;color:#e5e5e5;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4;
+}
+.video-row:hover .row-title{color:#fff}
+.video-row .row-tag{
+  flex-shrink:0;font-size:.75rem;font-weight:500;color:#60a5fa;
+  min-width:90px;text-align:right;
+}
+.video-row .row-date{
+  flex-shrink:0;font-size:.75rem;color:#555;
+  min-width:90px;text-align:right;
+}
+@media(max-width:640px){
+  .video-row{gap:10px;padding:12px 12px}
+  .video-row .row-tag,.video-row .row-date{display:none}
+}
 
 /* ========== LOAD MORE ========== */
 .load-more-wrap{text-align:center;padding:24px 0 64px}
@@ -277,7 +285,7 @@ h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
 <!-- ========== VIDEO GRID ========== -->
 <section style="padding-top:0">
   <div class="container-wide">
-    <div class="grid-teachings" id="videoGrid"></div>
+    <div class="video-list" id="videoGrid"></div>
     <div class="no-results" id="noResults" style="display:none">
       <h3>No teachings found</h3>
       <p>Try a different search term or clear your filters.</p>
@@ -328,7 +336,7 @@ h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
 const API_KEY = 'AIzaSyDroXdYqCxQDBXOzp1Ha9wIHJhg36iPUbw';
 const CHANNEL_HANDLE = 'weStayTheWay';
 const UPLOADS_PLAYLIST = 'UUmL874CrrKEa6l7fXWdePUQ';
-const BATCH_SIZE = 12;
+const BATCH_SIZE = 10;
 
 /* ========== STATE ========== */
 let allVideos = [];
@@ -470,9 +478,9 @@ function renderFeatured(video) {
 }
 
 function createVideoCard(video) {
-  const card = document.createElement('div');
-  card.className = 'video-card';
-  card.dataset.category = video.category;
+  const row = document.createElement('div');
+  row.className = 'video-row';
+  row.dataset.category = video.category;
 
   const catLabels = {
     sunday:'Sunday', warfare:'Spiritual Warfare', armor:'Armor of God',
@@ -480,27 +488,20 @@ function createVideoCard(video) {
     worship:'Worship', health:'Faith & Health', topical:'Topical', shorts:'Short'
   };
 
-  card.innerHTML = `
-    <div class="video-thumb">
-      <img src="${video.thumbMed}" alt="${video.title.replace(/"/g,'&quot;')}" loading="lazy">
-      <div class="play-btn"></div>
-    </div>
-    <div class="video-info">
-      <h3>${video.title}</h3>
-      <div class="video-meta">
-        <span class="tag">${catLabels[video.category] || 'Teaching'}</span>
-        <span class="date">${formatDate(video.date)}</span>
-      </div>
-    </div>
+  row.innerHTML = `
+    <div class="row-play"></div>
+    <span class="row-title">${video.title}</span>
+    <span class="row-tag">${catLabels[video.category] || 'Teaching'}</span>
+    <span class="row-date">${formatDate(video.date)}</span>
   `;
-  card.querySelector('.video-thumb').addEventListener('click', () => openLightbox(video.id));
+  row.addEventListener('click', () => openLightbox(video.id));
 
   // Staggered reveal
   requestAnimationFrame(() => {
-    setTimeout(() => card.classList.add('revealed'), 50);
+    setTimeout(() => row.classList.add('revealed'), 50);
   });
 
-  return card;
+  return row;
 }
 
 function renderNextBatch() {
@@ -651,14 +652,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-/* ========== INFINITE SCROLL ========== */
-const gridObserver = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting && renderedCount < filteredVideos.length && !isLoading) {
-    renderNextBatch();
-  }
-}, { rootMargin: '200px' });
-
-gridObserver.observe(document.getElementById('loadMoreWrap'));
+/* Infinite scroll removed — explicit Load More button only */
 
 })();
 </script>

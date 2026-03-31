@@ -1,964 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community - StayTheWay</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0a;
-            color: #d4d4d4;
-            line-height: 1.6;
-        }
-
-        /* Header */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: #0a0a0a;
-            border-bottom: 1px solid #222;
-            padding: 1rem 2rem;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-section h1 {
-            color: #fff;
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .logo-section p {
-            color: #60a5fa;
-            font-size: 0.75rem;
-            margin-top: 0.25rem;
-            font-weight: 500;
-        }
-
-        nav {
-            display: flex;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: #d4d4d4;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #60a5fa;
-        }
-
-        nav a.active {
-            color: #2563eb;
-            font-weight: 600;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 0.35rem;
-        }
-
-        .hamburger span {
-            width: 24px;
-            height: 3px;
-            background: #fff;
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-
-        .hamburger.open span:nth-child(1) {
-            transform: rotate(45deg) translate(10px, 10px);
-        }
-
-        .hamburger.open span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.open span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            padding: 6rem 2rem 2rem;
-            z-index: 99;
-        }
-
-        .mobile-menu.open {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .mobile-menu a {
-            color: #d4d4d4;
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s;
-        }
-
-        .mobile-menu a:hover {
-            color: #60a5fa;
-        }
-
-        .mobile-menu a.active {
-            color: #2563eb;
-            font-weight: 600;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(10, 10, 10, 0.5) 100%);
-            border-bottom: 1px solid #222;
-            padding: 5rem 2rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            color: #fff;
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero p {
-            color: #60a5fa;
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-
-        /* Main Container */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        h2 {
-            color: #fff;
-            font-size: 2rem;
-            margin: 3rem 0 2rem;
-            text-align: center;
-        }
-
-        h3 {
-            color: #fff;
-            font-size: 1.3rem;
-            margin: 0 0 1rem;
-        }
-
-        /* Quote Block */
-        .quote-block {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border-left: 4px solid #2563eb;
-        }
-
-        .quote-block p {
-            color: #fff;
-            font-style: italic;
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
-
-        .quote-block .reference {
-            color: #60a5fa;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-align: right;
-        }
-
-        /* Intro Text */
-        .intro-text {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-            color: #d4d4d4;
-            font-size: 1.05rem;
-            line-height: 1.8;
-        }
-
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .card {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 12px;
-            padding: 2rem;
-            transition: all 0.3s;
-        }
-
-        .card:hover {
-            border-color: #2563eb;
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.1);
-        }
-
-        .card h3 {
-            color: #fff;
-            margin-bottom: 1rem;
-        }
-
-        .card p {
-            color: #d4d4d4;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-        }
-
-        .card-refs {
-            color: #60a5fa;
-            font-size: 0.85rem;
-            border-top: 1px solid #222;
-            padding-top: 1rem;
-            margin-top: 1rem;
-        }
-
-        /* Timeline */
-        .timeline {
-            margin: 2rem 0;
-        }
-
-        .timeline-item {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            align-items: flex-start;
-        }
-
-        .timeline-number {
-            min-width: 60px;
-            width: 60px;
-            height: 60px;
-            background: #2563eb;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .timeline-content {
-            flex: 1;
-            padding-top: 0.5rem;
-        }
-
-        .timeline-content h4 {
-            color: #fff;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .timeline-content p {
-            color: #d4d4d4;
-            line-height: 1.6;
-        }
-
-        /* One Another Commands Grid */
-        .one-another-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .one-another-item {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .one-another-item h4 {
-            color: #fff;
-            margin-bottom: 0.75rem;
-            font-size: 1rem;
-        }
-
-        .one-another-item .ref {
-            color: #60a5fa;
-            font-size: 0.8rem;
-        }
-
-        /* Servants Section */
-        .servants-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .servant-tip {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .servant-tip::before {
-            content: '';
-            min-width: 4px;
-            width: 4px;
-            height: 100%;
-            background: #2563eb;
-            border-radius: 2px;
-        }
-
-        .servant-tip h4 {
-            color: #fff;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .servant-tip p {
-            color: #d4d4d4;
-            font-size: 0.95rem;
-        }
-
-        /* Buttons */
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.75rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background: #60a5fa;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #2563eb;
-            border: 2px solid #2563eb;
-        }
-
-        .btn-secondary:hover {
-            background: #2563eb;
-            color: #fff;
-        }
-
-        /* Connected Section */
-        .connected-section {
-            margin: 3rem 0;
-        }
-
-        .connect-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .connect-card {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .connect-card:hover {
-            border-color: #2563eb;
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.1);
-        }
-
-        .connect-card h3 {
-            color: #fff;
-            margin-bottom: 1rem;
-        }
-
-        .connect-card p {
-            color: #d4d4d4;
-            margin-bottom: 1.5rem;
-        }
-
-        .connect-card a {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .connect-card a:hover {
-            color: #60a5fa;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 12px;
-            padding: 3rem 2rem;
-            margin: 3rem 0;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            margin-top: 0;
-        }
-
-        .cta-section p {
-            color: #d4d4d4;
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #111;
-            border-top: 1px solid #222;
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h4 {
-            color: #fff;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .footer-section a {
-            color: #d4d4d4;
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: block;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: #60a5fa;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #222;
-            padding-top: 2rem;
-            text-align: center;
-            color: #666;
-            font-size: 0.85rem;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .footer-social a {
-            color: #60a5fa;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .footer-social a:hover {
-            color: #fff;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .one-another-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .servants-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .connect-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header {
-                padding: 1rem;
-            }
-
-            .hero {
-                padding: 3rem 1rem;
-            }
-
-            .hero h1 {
-                font-size: 1.5rem;
-            }
-
-            main {
-                padding: 2rem 1rem;
-            }
-
-            h2 {
-                font-size: 1.3rem;
-            }
-
-            .one-another-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .quote-block,
-            .intro-text,
-            .card,
-            .connect-card {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Fellowship — StayTheWay</title>
+<meta name="description" content="The church in your home — start or join an Acts 2:42 home fellowship with StayTheWay.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#0a0a0a;color:#d4d4d4;line-height:1.7;overflow-x:hidden}
+a{color:#60a5fa;text-decoration:none;transition:color .2s}a:hover{color:#93bbfd}
+h1,h2,h3,h4{color:#fff;font-weight:700;line-height:1.3}
+h1{font-size:clamp(2rem,5vw,3.2rem)}h2{font-size:clamp(1.5rem,3.5vw,2.2rem)}
+h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+
+/* ========== HEADER ========== */
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(10,10,10,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #1a1a1a;padding:0 20px}
+.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;flex-direction:column;text-decoration:none}.logo-text{font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.02em}.logo-sub{font-size:.65rem;color:#888;font-weight:500;letter-spacing:.04em}
+.desktop-nav{display:none;gap:8px}.desktop-nav a{color:#d4d4d4;font-size:.875rem;font-weight:500;padding:8px 14px;border-radius:8px;transition:all .2s}.desktop-nav a:hover{color:#fff;background:#1a1a1a}.desktop-nav a.active{color:#60a5fa}@media(min-width:768px){.desktop-nav{display:flex}}
+.hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:28px;height:28px;cursor:pointer;z-index:1100;background:none;border:none;padding:0}.hamburger span{display:block;height:2px;width:100%;background:#fff;border-radius:2px;transition:all .3s ease;transform-origin:center}.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}@media(min-width:768px){.hamburger{display:none}}
+.mobile-menu{position:fixed;inset:0;z-index:1050;background:rgba(10,10,10,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .3s ease}.mobile-menu.open{opacity:1;pointer-events:auto}.mobile-menu a{color:#fff;font-size:1.5rem;font-weight:600;padding:16px 40px;min-height:56px;display:flex;align-items:center;border-radius:12px;transition:background .2s;width:80%;max-width:320px;justify-content:center}.mobile-menu a:hover{background:#1a1a1a}
+
+/* ========== BUTTONS ========== */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;font-weight:600;font-size:.95rem;transition:all .2s;border:none;cursor:pointer;text-decoration:none;font-family:inherit}
+.btn-primary{background:#2563eb;color:#fff}.btn-primary:hover{background:#3b82f6;color:#fff;transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:#d4d4d4;border:1px solid #333}.btn-secondary:hover{border-color:#555;color:#fff}
+
+/* ========== HERO ========== */
+.hero{
+  padding:100px 20px 80px;text-align:center;
+  background:linear-gradient(180deg,rgba(37,99,235,.06) 0%,transparent 60%);
+}
+.hero .eyebrow{font-size:.75rem;font-weight:600;color:#2563eb;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.hero h1{margin-bottom:16px}
+.hero p{color:#a3a3a3;max-width:560px;margin:0 auto;font-size:1.05rem}
+
+/* ========== SCRIPTURE BANNER ========== */
+.scripture-banner{
+  padding:56px 20px;text-align:center;
+  border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;
+  background:#0d0d0d;
+}
+.scripture-banner blockquote{
+  font-size:clamp(1.05rem,2.5vw,1.3rem);color:#e5e5e5;font-style:italic;
+  max-width:760px;margin:0 auto 12px;line-height:1.8;
+}
+.scripture-banner cite{font-size:.85rem;color:#60a5fa;font-weight:600;font-style:normal}
+
+/* ========== INTRO ========== */
+.intro-section{padding:72px 20px;max-width:720px;margin:0 auto;text-align:center}
+.intro-section p{font-size:1.05rem;color:#a3a3a3;line-height:1.8;margin-bottom:0}
+
+/* ========== THREE GOALS ========== */
+.goals-section{
+  padding:80px 20px;border-top:1px solid #1a1a1a;
+}
+.goals-section h2{text-align:center;margin-bottom:48px}
+.goals-grid{
+  display:grid;grid-template-columns:1fr;gap:24px;
+  max-width:960px;margin:0 auto;
+}
+@media(min-width:768px){.goals-grid{grid-template-columns:repeat(3,1fr)}}
+.goal-card{
+  background:#111;border:1px solid #1a1a1a;border-radius:14px;
+  padding:32px 28px;transition:border-color .3s;
+}
+.goal-card:hover{border-color:#333}
+.goal-card h3{margin-bottom:12px;font-size:1.1rem}
+.goal-card p{color:#a3a3a3;font-size:.95rem;line-height:1.7;margin-bottom:12px}
+.goal-card .refs{color:#60a5fa;font-size:.8rem;font-weight:500}
+
+/* ========== TIMELINE SECTIONS ========== */
+.timeline-section{
+  padding:80px 20px;border-top:1px solid #1a1a1a;
+}
+.timeline-section:nth-child(even){background:#0d0d0d}
+.timeline-section h2{text-align:center;margin-bottom:48px}
+.timeline{max-width:640px;margin:0 auto}
+.timeline-item{
+  display:flex;gap:20px;align-items:flex-start;
+  padding-bottom:32px;margin-bottom:32px;
+  border-bottom:1px solid #1a1a1a;
+}
+.timeline-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.timeline-num{
+  flex-shrink:0;width:44px;height:44px;border-radius:50%;
+  background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);
+  display:flex;align-items:center;justify-content:center;
+  color:#60a5fa;font-weight:700;font-size:1.1rem;
+}
+.timeline-body h3{font-size:1rem;margin-bottom:4px}
+.timeline-body p{color:#a3a3a3;font-size:.95rem;margin-bottom:0}
+
+/* ========== ONE ANOTHER GRID ========== */
+.one-another-section{
+  padding:80px 20px;border-top:1px solid #1a1a1a;
+}
+.one-another-section h2{text-align:center;margin-bottom:48px}
+.one-another-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+  max-width:720px;margin:0 auto;
+}
+@media(min-width:640px){.one-another-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.one-another-grid{grid-template-columns:repeat(4,1fr)}}
+.oa-item{
+  background:#111;border:1px solid #1a1a1a;border-radius:10px;
+  padding:16px 14px;text-align:center;transition:border-color .3s;
+}
+.oa-item:hover{border-color:#333}
+.oa-item h4{font-size:.9rem;margin-bottom:4px;font-weight:600}
+.oa-item span{font-size:.75rem;color:#60a5fa;font-weight:500}
+
+/* ========== SERVANTS SECTION ========== */
+.servants-section{
+  padding:80px 20px;border-top:1px solid #1a1a1a;background:#0d0d0d;
+}
+.servants-section h2{text-align:center;margin-bottom:12px}
+.servants-section .subtitle{text-align:center;color:#a3a3a3;margin-bottom:48px;font-size:.95rem}
+.servants-grid{
+  display:grid;grid-template-columns:1fr;gap:16px;
+  max-width:720px;margin:0 auto;
+}
+@media(min-width:640px){.servants-grid{grid-template-columns:repeat(2,1fr)}}
+.servant-card{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:20px 24px;background:#111;border:1px solid #1a1a1a;
+  border-radius:12px;transition:border-color .3s;
+}
+.servant-card:hover{border-color:#333}
+.servant-bar{width:3px;min-height:100%;background:#2563eb;border-radius:2px;flex-shrink:0}
+.servant-card h4{font-size:.95rem;margin-bottom:4px}
+.servant-card p{color:#a3a3a3;font-size:.9rem;margin-bottom:0}
+
+/* ========== CONNECT SECTION ========== */
+.connect-section{
+  padding:80px 20px;border-top:1px solid #1a1a1a;
+}
+.connect-section h2{text-align:center;margin-bottom:48px}
+.connect-grid{
+  display:grid;grid-template-columns:1fr;gap:20px;
+  max-width:720px;margin:0 auto;
+}
+@media(min-width:640px){.connect-grid{grid-template-columns:repeat(3,1fr)}}
+.connect-card{
+  background:#111;border:1px solid #1a1a1a;border-radius:14px;
+  padding:28px 24px;text-align:center;transition:border-color .3s;
+}
+.connect-card:hover{border-color:#333}
+.connect-card h3{font-size:1rem;margin-bottom:8px}
+.connect-card p{color:#a3a3a3;font-size:.9rem;margin-bottom:14px}
+.connect-card a{font-weight:600;font-size:.9rem}
+
+/* ========== CTA ========== */
+.cta-section{
+  text-align:center;padding:100px 20px;
+  background:linear-gradient(180deg,transparent 0%,rgba(37,99,235,.04) 50%,transparent 100%);
+  border-top:1px solid #1a1a1a;
+}
+.cta-section h2{margin-bottom:12px}
+.cta-section p{color:#a3a3a3;max-width:520px;margin:0 auto 28px;font-size:1.05rem}
+
+/* ========== FOOTER ========== */
+.site-footer{border-top:1px solid #1a1a1a;padding:48px 0 32px;background:#0a0a0a}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 20px}
+.footer-grid{display:grid;gap:32px;grid-template-columns:1fr;margin-bottom:32px}
+@media(min-width:600px){.footer-grid{grid-template-columns:2fr 1fr 1fr}}
+.footer-brand .logo-text{font-size:1.2rem;margin-bottom:8px}.footer-brand p{font-size:.85rem;color:#888;margin-bottom:0}
+.footer-col h4{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}.footer-col a{display:block;color:#a3a3a3;font-size:.9rem;padding:4px 0}.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid #1a1a1a;padding-top:24px;font-size:.8rem;color:#555;text-align:center}
+
+/* ========== SCROLL REVEAL ========== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo-section">
-                <h1>StayTheWay</h1>
-                <p>501(c)(3) Service Ministry</p>
-            </div>
-            <nav>
-                <a href="index.html">Teachings</a>
-                <a href="resources.html">Resources</a>
-                <a href="bridges.html">Bridges</a>
-                <a href="beliefs.html">Beliefs</a>
-                <a href="community.html" class="active">Community</a>
-                <a href="give.html">Give</a>
-            </nav>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html">Home</a>
-        <a href="index.html">Teachings</a>
-        <a href="resources.html">Resources</a>
-        <a href="bridges.html">Bridges</a>
-        <a href="beliefs.html">Beliefs</a>
-        <a href="community.html" class="active">Community</a>
-        <a href="give.html">Give</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo"><span class="logo-text">StayTheWay</span><span class="logo-sub">501(c)(3) Service Ministry</span></a>
+    <nav class="desktop-nav">
+      <a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="bridges.html">Bridges</a><a href="beliefs.html">Beliefs</a><a href="community.html" class="active">Community</a><a href="give.html">Give</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="bridges.html">Bridges</a><a href="beliefs.html">Beliefs</a><a href="community.html">Community</a><a href="give.html">Give</a>
+</div>
+
+<!-- ========== HERO ========== -->
+<section class="hero reveal">
+  <div class="eyebrow">Community</div>
+  <h1>Home Fellowship</h1>
+  <p>The Church in Your Home</p>
+</section>
+
+<!-- ========== SCRIPTURE BANNER ========== -->
+<div class="scripture-banner reveal">
+  <blockquote>"And they continued steadfastly in the apostles' doctrine and fellowship, in the breaking of bread, and in prayers... breaking bread from house to house, they ate their food with gladness and simplicity of heart."</blockquote>
+  <cite>Acts 2:42, 46 (NKJV)</cite>
+</div>
+
+<!-- ========== INTRO ========== -->
+<section class="intro-section reveal">
+  <p>In the New Testament, the church gathered in homes. Christians are God's household and His church whenever we come together. You don't need a building or a program — you need believers, the Word, and a willingness to love one another.</p>
+</section>
+
+<!-- ========== THREE GOALS ========== -->
+<section class="goals-section reveal">
+  <h2>Three Goals of Home Fellowship</h2>
+  <div class="goals-grid">
+    <div class="goal-card">
+      <h3>Study & Apply the Word</h3>
+      <p>Share the Word together, discuss its meaning, and apply it. The secret isn't just knowing God's Word — it's obeying it.</p>
+      <div class="refs">Ecclesiastes 12:13-14 · John 14:23 · James 1:22</div>
     </div>
+    <div class="goal-card">
+      <h3>Supportive Fellowship</h3>
+      <p>Provide an environment where believers can fellowship in a supportive atmosphere — discipling one another in personal growth.</p>
+      <div class="refs">Matthew 28:19 · Hebrews 10:24 · Ephesians 4:12</div>
+    </div>
+    <div class="goal-card">
+      <h3>Worship & Pray Together</h3>
+      <p>Enjoy worshipping together through songs of praise, and breaking bread together.</p>
+      <div class="refs">Ephesians 5:18-21 · Colossians 3:16 · Acts 2:46</div>
+    </div>
+  </div>
+</section>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Home Fellowship</h1>
-        <p>The Church in Your Home</p>
-    </section>
+<!-- ========== FORMAT TIMELINE ========== -->
+<section class="timeline-section reveal">
+  <h2>Home Fellowship Format</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-num">1</div>
+      <div class="timeline-body">
+        <h3>7:30 PM — Opening Prayer & Announcements</h3>
+        <p>Begin with prayer and share relevant information with the group.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">2</div>
+      <div class="timeline-body">
+        <h3>7:35 PM — Singing & Praise</h3>
+        <p>Lift your voices in worship and praise to the Lord.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">3</div>
+      <div class="timeline-body">
+        <h3>8:00 PM — Discussion & Application</h3>
+        <p>The heart of the fellowship — explore Scripture together and discuss how to live it out.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">4</div>
+      <div class="timeline-body">
+        <h3>8:50 PM — Sharing & Prayer in Small Groups</h3>
+        <p>Break into smaller groups for deeper sharing and intercession.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">5</div>
+      <div class="timeline-body">
+        <h3>9:30 PM — Light Refreshments & Fellowship</h3>
+        <p>Enjoy fellowship and refreshments as the meeting concludes.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Quote Block -->
-        <div class="quote-block">
-            <p>"And they continued steadfastly in the apostles' doctrine and fellowship, in the breaking of bread, and in prayers... breaking bread from house to house, they ate their food with gladness and simplicity of heart."</p>
-            <div class="reference">Acts 2:42, 46 (NKJV)</div>
-        </div>
+<!-- ========== ONE ANOTHER ========== -->
+<section class="one-another-section reveal">
+  <h2>"One Another" Commands from Scripture</h2>
+  <div class="one-another-grid">
+    <div class="oa-item"><h4>Love one another</h4><span>Romans 13:8</span></div>
+    <div class="oa-item"><h4>Be devoted</h4><span>Romans 12:10</span></div>
+    <div class="oa-item"><h4>Bear burdens</h4><span>Galatians 6:2</span></div>
+    <div class="oa-item"><h4>Encourage daily</h4><span>Hebrews 3:13</span></div>
+    <div class="oa-item"><h4>Pray for one another</h4><span>James 5:16</span></div>
+    <div class="oa-item"><h4>Serve</h4><span>Galatians 5:13</span></div>
+    <div class="oa-item"><h4>Be kind</h4><span>Ephesians 4:32</span></div>
+    <div class="oa-item"><h4>Forgive</h4><span>Colossians 3:12-13</span></div>
+    <div class="oa-item"><h4>Comfort</h4><span>1 Thessalonians 4:18</span></div>
+    <div class="oa-item"><h4>Be hospitable</h4><span>1 Peter 4:9</span></div>
+    <div class="oa-item"><h4>Accept</h4><span>Romans 15:7</span></div>
+    <div class="oa-item"><h4>Spur to love</h4><span>Hebrews 10:23-25</span></div>
+  </div>
+</section>
 
-        <!-- Intro Text -->
-        <div class="intro-text">
-            <p>In the New Testament, the church gathered in homes. Christians are God's household and His church whenever we come together. You don't need a building or a program — you need believers, the Word, and a willingness to love one another.</p>
-        </div>
+<!-- ========== SERVANTS ========== -->
+<section class="servants-section reveal">
+  <h2>Servants, Not Leaders</h2>
+  <p class="subtitle">The facilitator's role is to serve, not to lead. Six essential tips:</p>
+  <div class="servants-grid">
+    <div class="servant-card"><div class="servant-bar"></div><div><h4>Pray for the Meeting</h4><p>Intercede for those attending and the Holy Spirit's guidance throughout.</p></div></div>
+    <div class="servant-card"><div class="servant-bar"></div><div><h4>Prepare the Study</h4><p>Know the material intimately so you can guide discussion effectively.</p></div></div>
+    <div class="servant-card"><div class="servant-bar"></div><div><h4>Facilitate Don't Dominate</h4><p>Ask questions, listen to others, and let the group discover insights together.</p></div></div>
+    <div class="servant-card"><div class="servant-bar"></div><div><h4>Follow Up with People</h4><p>Connect with members between meetings to encourage and support them.</p></div></div>
+    <div class="servant-card"><div class="servant-bar"></div><div><h4>Multiply by Dividing</h4><p>When your group grows, help establish new groups to keep them relational.</p></div></div>
+    <div class="servant-card"><div class="servant-bar"></div><div><h4>Use Your Gift</h4><p>Let your unique abilities shape how you serve the fellowship.</p></div></div>
+  </div>
+</section>
 
-        <!-- Three Goals -->
-        <h2>Three Goals of Home Fellowship</h2>
-        <div class="cards-grid">
-            <div class="card">
-                <h3>Study & Apply the Word</h3>
-                <p>Share the Word together, discuss its meaning, and apply it. The secret isn't just knowing God's Word — it's obeying it.</p>
-                <div class="card-refs">Ecclesiastes 12:13-14 · John 14:23 · James 1:22</div>
-            </div>
-            <div class="card">
-                <h3>Supportive Fellowship</h3>
-                <p>Provide an environment where believers can fellowship in a supportive atmosphere — discipling one another in personal growth.</p>
-                <div class="card-refs">Matthew 28:19 · Hebrews 10:24 · Ephesians 4:12</div>
-            </div>
-            <div class="card">
-                <h3>Worship & Pray Together</h3>
-                <p>Enjoy worshipping together through songs of praise, and breaking bread together.</p>
-                <div class="card-refs">Ephesians 5:18-21 · Colossians 3:16 · Acts 2:46</div>
-            </div>
-        </div>
+<!-- ========== HOW TO START ========== -->
+<section class="timeline-section reveal">
+  <h2>How to Start</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-num">1</div>
+      <div class="timeline-body">
+        <h3>Pray About It</h3>
+        <p>Seek God's guidance and ask Him to lay on your heart who to invite.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">2</div>
+      <div class="timeline-body">
+        <h3>Pick a Study</h3>
+        <p>Choose a StayTheWay resource or Scripture passage to study together.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">3</div>
+      <div class="timeline-body">
+        <h3>Invite Believers Near You</h3>
+        <p>Reach out to other Christians who share your desire to study God's Word.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">4</div>
+      <div class="timeline-body">
+        <h3>Set a Time & Keep It</h3>
+        <p>Choose a regular time and stick to it. Consistency builds community.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-num">5</div>
+      <div class="timeline-body">
+        <h3>Use StayTheWay Resources</h3>
+        <p>Leverage our Teachings and Resources to guide your discussion.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <!-- Home Fellowship Format -->
-        <h2>Home Fellowship Format</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-number">1</div>
-                <div class="timeline-content">
-                    <h4>7:30 PM — Opening Prayer & Announcements</h4>
-                    <p>Begin with prayer and share relevant information with the group.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-number">2</div>
-                <div class="timeline-content">
-                    <h4>7:35 PM — Singing & Praise</h4>
-                    <p>Lift your voices in worship and praise to the Lord.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-number">3</div>
-                <div class="timeline-content">
-                    <h4>8:00 PM — Discussion & Application</h4>
-                    <p>The heart of the fellowship — explore Scripture together and discuss how to live it out.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-number">4</div>
-                <div class="timeline-content">
-                    <h4>8:50 PM — Sharing & Prayer in Small Groups</h4>
-                    <p>Break into smaller groups for deeper sharing and intercession.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-number">5</div>
-                <div class="timeline-content">
-                    <h4>9:30 PM — Light Refreshments & Fellowship</h4>
-                    <p>Enjoy fellowship and refreshments as the meeting concludes.</p>
-                </div>
-            </div>
-        </div>
+<!-- ========== STAY CONNECTED ========== -->
+<section class="connect-section reveal">
+  <h2>Stay Connected</h2>
+  <div class="connect-grid">
+    <div class="connect-card">
+      <h3>Facebook Group</h3>
+      <p>Join our community, share updates, and encourage one another.</p>
+      <a href="https://www.facebook.com/weStayTheWay" target="_blank">Visit Group →</a>
+    </div>
+    <div class="connect-card">
+      <h3>YouTube Channel</h3>
+      <p>Watch teachings, worship, and inspirational content.</p>
+      <a href="https://www.youtube.com/@weStayTheWay" target="_blank">Visit Channel →</a>
+    </div>
+    <div class="connect-card">
+      <h3>Instagram</h3>
+      <p>Follow for daily encouragement and ministry updates.</p>
+      <a href="https://www.instagram.com/weStayTheWay" target="_blank">Follow Us →</a>
+    </div>
+  </div>
+</section>
 
-        <!-- One Another Commands -->
-        <h2>"One Another" Commands from Scripture</h2>
-        <div class="one-another-grid">
-            <div class="one-another-item">
-                <h4>Love one another</h4>
-                <div class="ref">Romans 13:8</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Be devoted</h4>
-                <div class="ref">Romans 12:10</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Bear burdens</h4>
-                <div class="ref">Galatians 6:2</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Encourage daily</h4>
-                <div class="ref">Hebrews 3:13</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Pray for one another</h4>
-                <div class="ref">James 5:16</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Serve</h4>
-                <div class="ref">Galatians 5:13</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Be kind</h4>
-                <div class="ref">Ephesians 4:32</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Forgive</h4>
-                <div class="ref">Colossians 3:12-13</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Comfort</h4>
-                <div class="ref">1 Thessalonians 4:18</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Be hospitable</h4>
-                <div class="ref">1 Peter 4:9</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Accept</h4>
-                <div class="ref">Romans 15:7</div>
-            </div>
-            <div class="one-another-item">
-                <h4>Spur to love</h4>
-                <div class="ref">Hebrews 10:23-25</div>
-            </div>
-        </div>
+<!-- ========== CTA ========== -->
+<section class="cta-section reveal">
+  <h2>Don't Just Hear It — Do It</h2>
+  <p>Start your home fellowship today or deepen the one you already have. Explore our teachings and resources to guide your group.</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="teachings.html" class="btn btn-primary">Explore Teachings</a>
+    <a href="resources.html" class="btn btn-secondary">View Resources</a>
+  </div>
+</section>
 
-        <!-- Servants Not Leaders -->
-        <h2>Servants, Not Leaders</h2>
-        <p style="text-align: center; color: #d4d4d4; margin-bottom: 2rem;">The facilitator's role is to serve, not to lead. Here are six essential tips:</p>
-        <div class="servants-grid">
-            <div class="servant-tip">
-                <div>
-                    <h4>Pray for the Meeting</h4>
-                    <p>Intercede for those attending and the Holy Spirit's guidance throughout.</p>
-                </div>
-            </div>
-            <div class="servant-tip">
-                <div>
-                    <h4>Prepare the Study</h4>
-                    <p>Know the material intimately so you can guide discussion effectively.</p>
-                </div>
-            </div>
-            <div class="servant-tip">
-                <div>
-                    <h4>Facilitate Don't Dominate</h4>
-                    <p>Ask questions, listen to others, and let the group discover insights together.</p>
-                </div>
-            </div>
-            <div class="servant-tip">
-                <div>
-                    <h4>Follow Up with People</h4>
-                    <p>Connect with members between meetings to encourage and support them.</p>
-                </div>
-            </div>
-            <div class="servant-tip">
-                <div>
-                    <h4>Multiply by Dividing</h4>
-                    <p>When your group grows, help establish new groups to keep them relational.</p>
-                </div>
-            </div>
-            <div class="servant-tip">
-                <div>
-                    <h4>Use Your Gift</h4>
-                    <p>Let your unique abilities shape how you serve the fellowship.</p>
-                </div>
-            </div>
-        </div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-text">StayTheWay</div><p>A 501(c)(3) faith-based nonprofit equipping believers to grow deeper in the knowledge and grace of God.</p></div>
+      <div class="footer-col"><h4>Study</h4><a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="beliefs.html">Beliefs</a></div>
+      <div class="footer-col"><h4>Connect</h4><a href="community.html">Community</a><a href="bridges.html">Bridges</a><a href="give.html">Give</a></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 StayTheWay. A 501(c)(3) nonprofit organization. All rights reserved. Founded by Jonathan C. Weisz</div>
+  </div>
+</footer>
 
-        <!-- How to Start -->
-        <h2>How to Start</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-number">1</div>
-                <div class="timeline-content">
-                    <h4>Pray About It</h4>
-                    <p>Seek God's guidance and ask Him to lay on your heart who to invite.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-number">2</div>
-                <div class="timeline-content">
-                    <h4>Pick a Study</h4>
-                    <p>Choose a StayTheWay resource or Scripture passage to study together.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-number">3</div>
-                <div class="timeline-content">
-                    <h4>Invite Believers Near You</h4>
-                    <p>Reach out to other Christians who share your desire to study God's Word.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-number">4</div>
-                <div class="timeline-content">
-                    <h4>Set a Time & Keep It</h4>
-                    <p>Choose a regular time and stick to it. Consistency builds community.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-number">5</div>
-                <div class="timeline-content">
-                    <h4>Use StayTheWay Resources</h4>
-                    <p>Leverage our Teachings and Resources to guide your discussion.</p>
-                </div>
-            </div>
-        </div>
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}));
 
-        <!-- Stay Connected -->
-        <section class="connected-section">
-            <h2>Stay Connected</h2>
-            <div class="connect-grid">
-                <div class="connect-card">
-                    <h3>Private Facebook Group</h3>
-                    <p>Join our community, share updates, and encourage one another.</p>
-                    <a href="https://www.facebook.com/weStayTheWay" target="_blank">Visit Group →</a>
-                </div>
-                <div class="connect-card">
-                    <h3>YouTube Channel</h3>
-                    <p>Watch teachings, worship, and inspirational content from StayTheWay.</p>
-                    <a href="https://www.youtube.com/@weStayTheWay" target="_blank">Visit Channel →</a>
-                </div>
-                <div class="connect-card">
-                    <h3>Instagram</h3>
-                    <p>Follow us for daily encouragement and ministry updates.</p>
-                    <a href="https://www.instagram.com/weStayTheWay" target="_blank">Follow Us →</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <h2>Don't Just Hear It — Do It</h2>
-            <p>Start your home fellowship today or deepen the one you already have. Explore our teachings and resources to guide your group.</p>
-            <div class="button-group">
-                <a href="index.html" class="btn btn-primary">Explore Teachings</a>
-                <a href="resources.html" class="btn btn-secondary">View Resources</a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4>STAYTHEWAY</h4>
-                    <a href="index.html">Home</a>
-                    <a href="community.html">Community</a>
-                    <a href="index.html">About</a>
-                    <a href="community.html">Contact</a>
-                </div>
-                <div class="footer-section">
-                    <h4>RESOURCES</h4>
-                    <a href="teachings.html">Teachings</a>
-                    <a href="resources.html">Study Materials</a>
-                    <a href="beliefs.html">Our Beliefs</a>
-                    <a href="bridges.html">Bridges</a>
-                </div>
-                <div class="footer-section">
-                    <h4>COMMUNITY</h4>
-                    <a href="https://www.facebook.com/weStayTheWay" target="_blank">Facebook</a>
-                    <a href="https://www.youtube.com/@weStayTheWay" target="_blank">YouTube</a>
-                    <a href="https://www.instagram.com/weStayTheWay" target="_blank">Instagram</a>
-                </div>
-                <div class="footer-section">
-                    <h4>SUPPORT</h4>
-                    <a href="give.html">Give</a>
-                    <a href="index.html">Privacy</a>
-                    <a href="index.html">Terms</a>
-                </div>
-            </div>
-            <div class="footer-social">
-                <a href="https://www.facebook.com/weStayTheWay" target="_blank">Facebook</a>
-                <a href="https://www.youtube.com/@weStayTheWay" target="_blank">YouTube</a>
-                <a href="https://www.instagram.com/weStayTheWay" target="_blank">Instagram</a>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 StayTheWay. A 501(c)(3) Service Ministry. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('open');
-            mobileMenu.classList.toggle('open');
-        });
-
-        // Close menu when a link is clicked
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('open');
-                mobileMenu.classList.remove('open');
-            });
-        });
-    </script>
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '-40px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
 </body>
 </html>
