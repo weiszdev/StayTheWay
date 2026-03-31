@@ -10,21 +10,188 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#0a0a0a;color:#d4d4d4;line-height:1.7;overflow-x:hidden}a{color:#60a5fa;text-decoration:none;transition:color .2s}a:hover{color:#93bbfd}h1,h2,h3,h4{color:#fff;font-weight:700;line-height:1.3}h1{font-size:clamp(2rem,5vw,3.2rem)}h2{font-size:clamp(1.5rem,3.5vw,2.2rem)}h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}.container{max-width:960px;margin:0 auto;padding:0 20px}section{padding:56px 0}@media(min-width:768px){section{padding:72px 0}}
-.site-header{position:sticky;top:0;z-index:1000;background:rgba(10,10,10,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #1a1a1a;padding:0 20px}.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}.logo{display:flex;flex-direction:column;text-decoration:none}.logo-text{font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.02em}.logo-sub{font-size:.65rem;color:#888;font-weight:500;letter-spacing:.04em}
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:#0a0a0a;color:#d4d4d4;line-height:1.7;overflow-x:hidden}
+a{color:#60a5fa;text-decoration:none;transition:color .2s}a:hover{color:#93bbfd}
+h1,h2,h3,h4{color:#fff;font-weight:700;line-height:1.3}
+h1{font-size:clamp(2rem,5vw,3.2rem)}h2{font-size:clamp(1.5rem,3.5vw,2.2rem)}
+h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+.container-wide{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* ========== HEADER ========== */
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(10,10,10,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #1a1a1a;padding:0 20px}
+.header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;flex-direction:column;text-decoration:none}.logo-text{font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:-.02em}.logo-sub{font-size:.65rem;color:#888;font-weight:500;letter-spacing:.04em}
 .desktop-nav{display:none;gap:8px}.desktop-nav a{color:#d4d4d4;font-size:.875rem;font-weight:500;padding:8px 14px;border-radius:8px;transition:all .2s}.desktop-nav a:hover{color:#fff;background:#1a1a1a}.desktop-nav a.active{color:#60a5fa}@media(min-width:768px){.desktop-nav{display:flex}}
 .hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:28px;height:28px;cursor:pointer;z-index:1100;background:none;border:none;padding:0}.hamburger span{display:block;height:2px;width:100%;background:#fff;border-radius:2px;transition:all .3s ease;transform-origin:center}.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}@media(min-width:768px){.hamburger{display:none}}
 .mobile-menu{position:fixed;inset:0;z-index:1050;background:rgba(10,10,10,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .3s ease}.mobile-menu.open{opacity:1;pointer-events:auto}.mobile-menu a{color:#fff;font-size:1.5rem;font-weight:600;padding:16px 40px;min-height:56px;display:flex;align-items:center;border-radius:12px;transition:background .2s;width:80%;max-width:320px;justify-content:center}.mobile-menu a:hover{background:#1a1a1a}
-.page-hero{padding:100px 0 48px;text-align:center;background:linear-gradient(180deg,#0a0a0a 0%,#0f1420 100%)}.page-hero h1{margin-bottom:16px}.page-hero p{color:#a3a3a3;font-size:1.05rem;max-width:600px;margin:0 auto}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;font-weight:600;font-size:.95rem;transition:all .2s;border:none;cursor:pointer;text-decoration:none}.btn-primary{background:#2563eb;color:#fff}.btn-primary:hover{background:#3b82f6;color:#fff;transform:translateY(-1px)}.btn-secondary{background:transparent;color:#d4d4d4;border:1px solid #333}.btn-secondary:hover{border-color:#555;color:#fff}
-.section-label{font-size:.75rem;font-weight:600;color:#2563eb;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}.section-center{text-align:center}
-.card{background:#111;border:1px solid #222;border-radius:14px;padding:28px;transition:border-color .3s,transform .3s}.card:hover{border-color:#333;transform:translateY(-2px)}
-.site-footer{border-top:1px solid #1a1a1a;padding:48px 0 32px;background:#0a0a0a}.footer-inner{max-width:960px;margin:0 auto;padding:0 20px}.footer-grid{display:grid;gap:32px;grid-template-columns:1fr;margin-bottom:32px}@media(min-width:600px){.footer-grid{grid-template-columns:2fr 1fr 1fr}}.footer-brand .logo-text{font-size:1.2rem;margin-bottom:8px}.footer-brand p{font-size:.85rem;color:#888;margin-bottom:0}.footer-col h4{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}.footer-col a{display:block;color:#a3a3a3;font-size:.9rem;padding:4px 0}.footer-col a:hover{color:#fff}.footer-bottom{border-top:1px solid #1a1a1a;padding-top:24px;font-size:.8rem;color:#555;text-align:center}
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;justify-content:center}.filter-btn{padding:8px 18px;border-radius:100px;font-size:.85rem;font-weight:500;border:1px solid #333;background:transparent;color:#d4d4d4;cursor:pointer;transition:all .2s;font-family:inherit}.filter-btn:hover{border-color:#555;color:#fff}.filter-btn.active{background:#2563eb;border-color:#2563eb;color:#fff}
-.search-input{width:100%;max-width:400px;padding:12px 20px;background:#111;border:1px solid #333;border-radius:10px;color:#fff;font-size:.95rem;margin-bottom:24px;font-family:inherit;display:block;margin-left:auto;margin-right:auto}.search-input::placeholder{color:#666}.search-input:focus{outline:none;border-color:#2563eb}
-.video-card{background:#111;border:1px solid #222;border-radius:14px;overflow:hidden;transition:border-color .3s,transform .3s}.video-card:hover{border-color:#333;transform:translateY(-2px)}.video-thumb{position:relative;cursor:pointer;overflow:hidden;border-radius:8px 8px 0 0;line-height:0}.video-thumb img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px 8px 0 0;display:block}.video-thumb .play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;background:rgba(37,99,235,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s;pointer-events:none}.video-card:hover .play-btn{transform:translate(-50%,-50%) scale(1.1)}.play-btn::after{content:'';display:block;width:0;height:0;border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent #fff;margin-left:3px}.video-thumb iframe{width:100%;aspect-ratio:16/9;border:0;display:block;border-radius:8px 8px 0 0}.video-info{padding:16px 20px}.video-info h3{font-size:1rem;margin-bottom:6px}.video-meta{font-size:.8rem;color:#888;display:flex;gap:12px;flex-wrap:wrap}.video-meta .tag{color:#60a5fa}
-.grid-teachings{display:grid;gap:20px;grid-template-columns:1fr}@media(min-width:500px){.grid-teachings{grid-template-columns:repeat(2,1fr)}}@media(min-width:768px){.grid-teachings{grid-template-columns:repeat(3,1fr)}}
-.cta-section{text-align:center;background:linear-gradient(180deg,transparent 0%,rgba(37,99,235,.05) 50%,transparent 100%);padding:64px 0}.cta-section h2{margin-bottom:16px}.cta-section p{color:#a3a3a3;max-width:560px;margin:0 auto 32px}
+
+/* ========== BUTTONS ========== */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;font-weight:600;font-size:.95rem;transition:all .2s;border:none;cursor:pointer;text-decoration:none;font-family:inherit}
+.btn-primary{background:#2563eb;color:#fff}.btn-primary:hover{background:#3b82f6;color:#fff;transform:translateY(-1px)}
+.btn-secondary{background:transparent;color:#d4d4d4;border:1px solid #333}.btn-secondary:hover{border-color:#555;color:#fff}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15)}.btn-ghost:hover{background:rgba(255,255,255,.2)}
+
+/* ========== FEATURED HERO ========== */
+.featured-hero{
+  position:relative;width:100%;min-height:70vh;
+  display:flex;align-items:flex-end;
+  overflow:hidden;
+}
+.featured-hero .hero-bg{
+  position:absolute;inset:-5%;
+  background-size:cover;background-position:center;
+  filter:blur(20px) brightness(.3);
+  transform:scale(1.1);
+}
+.featured-hero .hero-content{
+  position:relative;z-index:2;width:100%;
+  padding:60px 0 80px;
+  background:linear-gradient(0deg,rgba(10,10,10,1) 0%,rgba(10,10,10,.7) 50%,transparent 100%);
+}
+.featured-inner{
+  display:grid;grid-template-columns:1fr;gap:32px;
+  max-width:1100px;margin:0 auto;padding:0 20px;align-items:end;
+}
+@media(min-width:768px){.featured-inner{grid-template-columns:1.4fr 1fr}}
+.featured-thumb{
+  position:relative;border-radius:12px;overflow:hidden;cursor:pointer;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  aspect-ratio:16/9;
+}
+.featured-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.featured-thumb .play-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.2);transition:background .3s;
+}
+.featured-thumb:hover .play-overlay{background:rgba(0,0,0,.4)}
+.play-circle{
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(37,99,235,.9);display:flex;align-items:center;justify-content:center;
+  transition:transform .2s;box-shadow:0 8px 30px rgba(37,99,235,.4);
+}
+.featured-thumb:hover .play-circle{transform:scale(1.1)}
+.play-circle::after{content:'';width:0;height:0;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #fff;margin-left:4px}
+.featured-text{padding-bottom:12px}
+.featured-text .label{font-size:.75rem;font-weight:600;color:#2563eb;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
+.featured-text h2{font-size:clamp(1.5rem,3.5vw,2.4rem);margin-bottom:12px;line-height:1.25}
+.featured-text .desc{color:#a3a3a3;font-size:.95rem;line-height:1.6;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.featured-text .date{color:#666;font-size:.8rem;margin-top:12px}
+
+/* ========== STATS INTERLUDE ========== */
+.stats-strip{
+  padding:48px 0;text-align:center;
+  border-bottom:1px solid #1a1a1a;
+}
+.stats-row{display:flex;justify-content:center;gap:48px;flex-wrap:wrap}
+.stat-item .stat-num{font-size:2.2rem;font-weight:800;color:#fff}
+.stat-item .stat-label{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+
+/* ========== SEARCH & FILTER ========== */
+.search-section{padding:56px 0 32px}
+@media(min-width:768px){.search-section{padding:72px 0 40px}}
+.search-bar{
+  display:flex;gap:12px;max-width:600px;margin:0 auto 28px;
+}
+.search-input{
+  flex:1;padding:14px 20px;background:#111;border:1px solid #222;
+  border-radius:12px;color:#fff;font-size:.95rem;font-family:inherit;
+  transition:border-color .2s;
+}
+.search-input::placeholder{color:#555}
+.search-input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.search-count{text-align:center;font-size:.85rem;color:#666;margin-bottom:8px}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:12px}
+.filter-btn{
+  padding:8px 18px;border-radius:100px;font-size:.82rem;font-weight:500;
+  border:1px solid #222;background:transparent;color:#888;cursor:pointer;
+  transition:all .2s;font-family:inherit;
+}
+.filter-btn:hover{border-color:#444;color:#d4d4d4}
+.filter-btn.active{background:#2563eb;border-color:#2563eb;color:#fff}
+
+/* ========== VIDEO GRID ========== */
+.grid-teachings{
+  display:grid;gap:24px;grid-template-columns:1fr;
+  padding-bottom:40px;
+}
+@media(min-width:500px){.grid-teachings{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){.grid-teachings{grid-template-columns:repeat(3,1fr)}}
+
+.video-card{
+  background:#111;border:1px solid #1a1a1a;border-radius:14px;
+  overflow:hidden;transition:all .4s ease;opacity:0;transform:translateY(24px);
+}
+.video-card.revealed{opacity:1;transform:translateY(0)}
+.video-card:hover{border-color:#333;transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.video-thumb{position:relative;cursor:pointer;overflow:hidden;aspect-ratio:16/9}
+.video-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.video-card:hover .video-thumb img{transform:scale(1.05)}
+.video-thumb .play-btn{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:48px;height:48px;background:rgba(37,99,235,.85);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;opacity:0;
+}
+.video-card:hover .play-btn{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.play-btn::after{content:'';width:0;height:0;border-style:solid;border-width:7px 0 7px 12px;border-color:transparent transparent transparent #fff;margin-left:2px}
+.video-info{padding:16px 18px}
+.video-info h3{font-size:.92rem;margin-bottom:6px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.video-meta{font-size:.75rem;color:#666;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.video-meta .tag{color:#60a5fa;font-weight:500}
+.video-meta .date{color:#555}
+
+/* ========== LOAD MORE ========== */
+.load-more-wrap{text-align:center;padding:24px 0 64px}
+.loading-spinner{display:inline-block;width:24px;height:24px;border:3px solid #222;border-top-color:#2563eb;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.no-results{text-align:center;padding:60px 20px;color:#666;font-size:1rem}
+.no-results h3{color:#888;margin-bottom:8px}
+
+/* ========== VIDEO LIGHTBOX ========== */
+.lightbox{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(0,0,0,.92);backdrop-filter:blur(12px);
+  display:none;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .3s;
+}
+.lightbox.open{display:flex;opacity:1}
+.lightbox-inner{width:90%;max-width:960px;aspect-ratio:16/9;position:relative}
+.lightbox-inner iframe{width:100%;height:100%;border:0;border-radius:12px}
+.lightbox-close{
+  position:absolute;top:-48px;right:0;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-size:1.4rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.lightbox-close:hover{background:rgba(255,255,255,.2)}
+
+/* ========== SCROLL REVEAL ========== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ========== CTA ========== */
+.cta-section{
+  text-align:center;padding:100px 0;
+  background:linear-gradient(180deg,transparent 0%,rgba(37,99,235,.04) 50%,transparent 100%);
+}
+.cta-section h2{margin-bottom:12px}
+.cta-section p{color:#a3a3a3;max-width:560px;margin:0 auto 28px}
+
+/* ========== FOOTER ========== */
+.site-footer{border-top:1px solid #1a1a1a;padding:48px 0 32px;background:#0a0a0a}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 20px}
+.footer-grid{display:grid;gap:32px;grid-template-columns:1fr;margin-bottom:32px}
+@media(min-width:600px){.footer-grid{grid-template-columns:2fr 1fr 1fr}}
+.footer-brand .logo-text{font-size:1.2rem;margin-bottom:8px}.footer-brand p{font-size:.85rem;color:#888;margin-bottom:0}
+.footer-col h4{font-size:.8rem;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}.footer-col a{display:block;color:#a3a3a3;font-size:.9rem;padding:4px 0}.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid #1a1a1a;padding-top:24px;font-size:.8rem;color:#555;text-align:center}
 </style>
 </head>
 <body>
@@ -42,94 +209,80 @@
   <a href="index.html">Home</a><a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="bridges.html">Bridges</a><a href="beliefs.html">Beliefs</a><a href="community.html">Community</a><a href="give.html">Give</a>
 </div>
 
-<section class="page-hero">
-  <div class="container">
-    <h1>Teaching Library</h1>
-    <p>300+ video teachings — search, filter, and study at your own pace</p>
+<!-- ========== FEATURED HERO ========== -->
+<section class="featured-hero" id="featuredHero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-content">
+    <div class="featured-inner">
+      <div class="featured-thumb" id="featuredThumb">
+        <img id="featuredImg" src="" alt="">
+        <div class="play-overlay"><div class="play-circle"></div></div>
+      </div>
+      <div class="featured-text">
+        <div class="label">Latest Teaching</div>
+        <h2 id="featuredTitle"></h2>
+        <p class="desc" id="featuredDesc"></p>
+        <div class="date" id="featuredDate"></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section style="padding-top:32px">
-  <div class="container">
-    <input type="text" class="search-input" id="searchInput" placeholder="Search teachings...">
-    <div class="filters">
+<!-- ========== STATS STRIP ========== -->
+<div class="stats-strip reveal">
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num" id="statVideos">—</div><div class="stat-label">Teachings</div></div>
+    <div class="stat-item"><div class="stat-num" id="statViews">—</div><div class="stat-label">Total Views</div></div>
+    <div class="stat-item"><div class="stat-num" id="statSubs">—</div><div class="stat-label">Subscribers</div></div>
+  </div>
+</div>
+
+<!-- ========== SEARCH & FILTER ========== -->
+<section class="search-section">
+  <div class="container-wide">
+    <div class="search-bar">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search teachings by title or topic...">
+    </div>
+    <div class="search-count" id="searchCount"></div>
+    <div class="filters" id="filterWrap">
       <button class="filter-btn active" data-category="all">All</button>
-      <button class="filter-btn" data-category="sunday">Sunday Teachings</button>
-      <button class="filter-btn" data-category="armor">Armor of God</button>
+      <button class="filter-btn" data-category="sunday">Sunday</button>
       <button class="filter-btn" data-category="warfare">Spiritual Warfare</button>
+      <button class="filter-btn" data-category="armor">Armor of God</button>
       <button class="filter-btn" data-category="marriage">Marriage & Family</button>
       <button class="filter-btn" data-category="endtimes">End Times</button>
-      <button class="filter-btn" data-category="midweek">Midweek Studies</button>
+      <button class="filter-btn" data-category="pillars">7 Pillars</button>
       <button class="filter-btn" data-category="worship">Worship</button>
-      <button class="filter-btn" data-category="topical">Topical Deep Dives</button>
       <button class="filter-btn" data-category="health">Faith & Health</button>
-      <button class="filter-btn" data-category="started">Getting Started</button>
+      <button class="filter-btn" data-category="topical">Topical</button>
+      <button class="filter-btn" data-category="shorts">Shorts</button>
     </div>
+  </div>
+</section>
 
-    <div class="grid-teachings" id="videoGrid">
-      <div class="video-card" data-category="topical" data-title="Lifting Blindness and Ignorance with Truth FREE #livefree">
-        <div class="video-thumb" onclick="playVideo(this,'WedtmC71FrE')">
-          <img src="https://img.youtube.com/vi/WedtmC71FrE/hqdefault.jpg" alt="Lifting Blindness and Ignorance with Truth FREE #livefree">
-          <div class="play-btn"></div>
-        </div>
-        <div class="video-info"><h3>Lifting Blindness and Ignorance with Truth FREE</h3><div class="video-meta"><span class="tag">Topical Deep Dive</span></div></div>
-      </div>
-      <div class="video-card" data-category="sunday" data-title="Bible Conference Session 1 - Jeff Solwold">
-        <div class="video-thumb" onclick="playVideo(this,'MYdDJVZOQ0g')">
-          <img src="https://img.youtube.com/vi/MYdDJVZOQ0g/hqdefault.jpg" alt="Bible Conference Session 1 - Jeff Solwold">
-          <div class="play-btn"></div>
-        </div>
-        <div class="video-info"><h3>Bible Conference Session 1 — Jeff Solwold</h3><div class="video-meta"><span class="tag">Sunday Teaching</span></div></div>
-      </div>
-      <div class="video-card" data-category="warfare" data-title="Unity Demons Aliens and What to Do about them">
-        <div class="video-thumb" onclick="playVideo(this,'bOnLbiC7mxc')">
-          <img src="https://img.youtube.com/vi/bOnLbiC7mxc/hqdefault.jpg" alt="Unity Demons Aliens and What to Do about them">
-          <div class="play-btn"></div>
-        </div>
-        <div class="video-info"><h3>Unity, Demons, Aliens and What to Do about Them</h3><div class="video-meta"><span class="tag">Spiritual Warfare</span></div></div>
-      </div>
-      <div class="video-card" data-category="topical" data-title="Let's Talk About a Mountain Top Experience">
-        <div class="video-thumb" onclick="playVideo(this,'eBGMzBXJbiM')">
-          <img src="https://img.youtube.com/vi/eBGMzBXJbiM/hqdefault.jpg" alt="Let's Talk About a Mountain Top Experience">
-          <div class="play-btn"></div>
-        </div>
-        <div class="video-info"><h3>Let's Talk About a Mountain Top Experience</h3><div class="video-meta"><span class="tag">Topical Deep Dive</span></div></div>
-      </div>
-      <div class="video-card" data-category="started" data-title="Can the BIBLE really have all the answers? Let's find out!">
-        <div class="video-thumb" onclick="playVideo(this,'vz38miRCuZA')">
-          <img src="https://img.youtube.com/vi/vz38miRCuZA/hqdefault.jpg" alt="Can the BIBLE really have all the answers?">
-          <div class="play-btn"></div>
-        </div>
-        <div class="video-info"><h3>Can the BIBLE Really Have All the Answers?</h3><div class="video-meta"><span class="tag">Getting Started</span></div></div>
-      </div>
-      <div class="video-card" data-category="worship" data-title="Holy Fire - Worship">
-        <div class="video-thumb" onclick="playVideo(this,'nJK3gVxsbUc')">
-          <img src="https://img.youtube.com/vi/nJK3gVxsbUc/hqdefault.jpg" alt="Holy Fire - Worship">
-          <div class="play-btn"></div>
-        </div>
-        <div class="video-info"><h3>Holy Fire — Worship</h3><div class="video-meta"><span class="tag">Worship</span></div></div>
-      </div>
-      <div class="video-card" data-category="topical" data-title="Lifting Blindness and Ignorance with Truth FREE - Vertical">
-        <div class="video-thumb" onclick="playVideo(this,'4r44NRyZ25c')">
-          <img src="https://img.youtube.com/vi/4r44NRyZ25c/hqdefault.jpg" alt="Lifting Blindness and Ignorance with Truth FREE - Vertical">
-          <div class="play-btn"></div>
-        </div>
-        <div class="video-info"><h3>Lifting Blindness and Ignorance with Truth FREE — Vertical</h3><div class="video-meta"><span class="tag">Topical Deep Dive</span></div></div>
-      </div>
-      <div class="video-card" data-category="topical" data-title="Lifting Blindness and Ignorance with Truth - Vertical">
-        <div class="video-thumb" onclick="playVideo(this,'GkF59AVV5WA')">
-          <img src="https://img.youtube.com/vi/GkF59AVV5WA/hqdefault.jpg" alt="Lifting Blindness and Ignorance with Truth - Vertical">
-          <div class="play-btn"></div>
-        </div>
-        <div class="video-info"><h3>Lifting Blindness and Ignorance with Truth — Vertical</h3><div class="video-meta"><span class="tag">Topical Deep Dive</span></div></div>
-      </div>
-      <div class="video-card" data-category="warfare" data-title="Unity Demons Aliens and What to Do about them">
-        <div class="video-thumb" onclick="playVideo(this,'2VzMI50ed9Q')">
-          <img src="https://img.youtube.com/vi/2VzMI50ed9Q/hqdefault.jpg" alt="Unity Demons Aliens and What to Do about them">
-          <div class="play-btn"></div>
-        </div>
-        <div class="video-info"><h3>Unity, Demons, Aliens and What to Do about Them</h3><div class="video-meta"><span class="tag">Spiritual Warfare</span></div></div>
-      </div>
+<!-- ========== VIDEO GRID ========== -->
+<section style="padding-top:0">
+  <div class="container-wide">
+    <div class="grid-teachings" id="videoGrid"></div>
+    <div class="no-results" id="noResults" style="display:none">
+      <h3>No teachings found</h3>
+      <p>Try a different search term or clear your filters.</p>
+    </div>
+    <div class="load-more-wrap" id="loadMoreWrap">
+      <button class="btn btn-secondary" id="loadMoreBtn" style="display:none" onclick="renderNextBatch()">Load More Teachings</button>
+      <div class="loading-spinner" id="loadingSpinner"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta-section reveal">
+  <div class="container">
+    <h2>Want to Go Deeper?</h2>
+    <p>Join a home fellowship, download study guides, or start the 7 Pillars of Freedom series.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="community.html" class="btn btn-primary">Join Community</a>
+      <a href="resources.html" class="btn btn-secondary">Study Resources</a>
     </div>
   </div>
 </section>
@@ -145,42 +298,312 @@
   </div>
 </footer>
 
+<!-- ========== VIDEO LIGHTBOX ========== -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <iframe id="lightboxIframe" src="" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+
 <script>
-const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobileMenu');
-hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';});
-mobileMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{hamburger.classList.remove('open');mobileMenu.classList.remove('open');document.body.style.overflow='';}));
+(function(){
+"use strict";
 
-// Click-to-play: replace thumbnail with embedded iframe
-function playVideo(thumbEl, videoId) {
-  thumbEl.innerHTML = '<iframe src="https://www.youtube.com/embed/'+videoId+'?autoplay=1" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+/* ========== CONFIG ========== */
+const API_KEY = 'AIzaSyDroXdYqCxQDBXOzp1Ha9wIHJhg36iPUbw';
+const CHANNEL_HANDLE = 'weStayTheWay';
+const UPLOADS_PLAYLIST = 'UUmL874CrrKEa6l7fXWdePUQ';
+const BATCH_SIZE = 12;
+
+/* ========== STATE ========== */
+let allVideos = [];
+let filteredVideos = [];
+let renderedCount = 0;
+let activeCategory = 'all';
+let searchTerm = '';
+let isLoading = false;
+
+/* ========== CATEGORY DETECTION ========== */
+const CATEGORY_RULES = [
+  { key: 'shorts', test: v => v.title.includes('#shorts') || v.title.includes('#short') || v.title.toLowerCase().includes('#shorts') || (v.title.length < 60 && v.desc.length < 50) },
+  { key: 'pillars', test: v => /7\s*pillar/i.test(v.title) || /7\s*pillar/i.test(v.desc) },
+  { key: 'armor', test: v => /armor\s*(of|god)/i.test(v.title) || /armor\s*(of|god)/i.test(v.desc) },
+  { key: 'warfare', test: v => /spiritual\s*warfare|demon|deliverance|enemy|battle/i.test(v.title) },
+  { key: 'marriage', test: v => /marriage|family|husband|wife|parenting/i.test(v.title) },
+  { key: 'endtimes', test: v => /end\s*times|revelation|rapture|prophecy|antichrist|tribulation/i.test(v.title) },
+  { key: 'worship', test: v => /worship|praise|sing/i.test(v.title) || /worship/i.test(v.desc.slice(0,100)) },
+  { key: 'health', test: v => /health|functional|nutrition|wellness|brain|gut/i.test(v.title) },
+  { key: 'sunday', test: v => /sunday|sermon|service/i.test(v.title) || /sunday/i.test(v.desc.slice(0,150)) },
+  { key: 'topical', test: v => true } // fallback
+];
+
+function detectCategory(video) {
+  for (const rule of CATEGORY_RULES) {
+    if (rule.test(video)) return rule.key;
+  }
+  return 'topical';
 }
 
-// Filter & Search
-const filterBtns=document.querySelectorAll('.filter-btn');
-const videoCards=document.querySelectorAll('.video-card');
-const searchInput=document.getElementById('searchInput');
-let activeCategory='all';
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
 
-filterBtns.forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    filterBtns.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    activeCategory=btn.dataset.category;
-    filterVideos();
+function formatCount(n) {
+  n = parseInt(n);
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(n >= 10000 ? 0 : 1) + 'K';
+  return n.toLocaleString();
+}
+
+/* ========== FETCH ALL VIDEOS ========== */
+async function fetchAllVideos() {
+  let videos = [];
+  let pageToken = '';
+
+  while (true) {
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${UPLOADS_PLAYLIST}&maxResults=50&key=${API_KEY}` + (pageToken ? `&pageToken=${pageToken}` : '');
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      if (!data.items) break;
+
+      for (const item of data.items) {
+        const s = item.snippet;
+        if (!s.thumbnails || !s.resourceId) continue;
+        const vid = {
+          id: s.resourceId.videoId,
+          title: s.title,
+          desc: s.description || '',
+          date: s.publishedAt,
+          thumb: (s.thumbnails.maxres || s.thumbnails.high || s.thumbnails.medium).url,
+          thumbMed: (s.thumbnails.medium || s.thumbnails.high).url,
+          category: null
+        };
+        vid.category = detectCategory(vid);
+        videos.push(vid);
+      }
+
+      pageToken = data.nextPageToken;
+      if (!pageToken) break;
+    } catch (e) {
+      console.error('Fetch error:', e);
+      break;
+    }
+  }
+
+  return videos;
+}
+
+async function fetchChannelStats() {
+  try {
+    const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.items && data.items[0]) {
+      const s = data.items[0].statistics;
+      document.getElementById('statVideos').textContent = formatCount(s.videoCount);
+      document.getElementById('statViews').textContent = formatCount(s.viewCount);
+      document.getElementById('statSubs').textContent = formatCount(s.subscriberCount);
+    }
+  } catch (e) { console.warn('Stats fetch failed:', e); }
+}
+
+/* ========== RENDER ========== */
+function renderFeatured(video) {
+  document.getElementById('featuredImg').src = video.thumb;
+  document.getElementById('featuredImg').alt = video.title;
+  document.getElementById('heroBg').style.backgroundImage = `url(${video.thumb})`;
+  document.getElementById('featuredTitle').textContent = video.title;
+  document.getElementById('featuredDesc').textContent = video.desc.split('\n').slice(0,3).join(' ').slice(0,300);
+  document.getElementById('featuredDate').textContent = formatDate(video.date);
+  document.getElementById('featuredThumb').onclick = () => openLightbox(video.id);
+}
+
+function createVideoCard(video) {
+  const card = document.createElement('div');
+  card.className = 'video-card';
+  card.dataset.category = video.category;
+
+  const catLabels = {
+    sunday:'Sunday', warfare:'Spiritual Warfare', armor:'Armor of God',
+    marriage:'Marriage & Family', endtimes:'End Times', pillars:'7 Pillars',
+    worship:'Worship', health:'Faith & Health', topical:'Topical', shorts:'Short'
+  };
+
+  card.innerHTML = `
+    <div class="video-thumb">
+      <img src="${video.thumbMed}" alt="${video.title.replace(/"/g,'&quot;')}" loading="lazy">
+      <div class="play-btn"></div>
+    </div>
+    <div class="video-info">
+      <h3>${video.title}</h3>
+      <div class="video-meta">
+        <span class="tag">${catLabels[video.category] || 'Teaching'}</span>
+        <span class="date">${formatDate(video.date)}</span>
+      </div>
+    </div>
+  `;
+  card.querySelector('.video-thumb').addEventListener('click', () => openLightbox(video.id));
+
+  // Staggered reveal
+  requestAnimationFrame(() => {
+    setTimeout(() => card.classList.add('revealed'), 50);
   });
+
+  return card;
+}
+
+function renderNextBatch() {
+  const grid = document.getElementById('videoGrid');
+  const end = Math.min(renderedCount + BATCH_SIZE, filteredVideos.length);
+
+  for (let i = renderedCount; i < end; i++) {
+    const card = createVideoCard(filteredVideos[i]);
+    grid.appendChild(card);
+    // Stagger reveal animation
+    setTimeout(() => card.classList.add('revealed'), (i - renderedCount) * 60);
+  }
+
+  renderedCount = end;
+  updateLoadMore();
+}
+
+function updateLoadMore() {
+  const btn = document.getElementById('loadMoreBtn');
+  const spinner = document.getElementById('loadingSpinner');
+  spinner.style.display = 'none';
+
+  if (renderedCount < filteredVideos.length) {
+    btn.style.display = 'inline-flex';
+    btn.textContent = `Load More (${filteredVideos.length - renderedCount} remaining)`;
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
+function applyFilters() {
+  searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+
+  filteredVideos = allVideos.filter(v => {
+    const matchCat = activeCategory === 'all' || v.category === activeCategory;
+    const matchSearch = !searchTerm || v.title.toLowerCase().includes(searchTerm) || v.desc.toLowerCase().includes(searchTerm);
+    return matchCat && matchSearch;
+  });
+
+  // Reset grid
+  const grid = document.getElementById('videoGrid');
+  grid.innerHTML = '';
+  renderedCount = 0;
+
+  // Update count
+  document.getElementById('searchCount').textContent =
+    filteredVideos.length === allVideos.length
+      ? `${allVideos.length} teachings`
+      : `${filteredVideos.length} of ${allVideos.length} teachings`;
+
+  // Show/hide no results
+  document.getElementById('noResults').style.display = filteredVideos.length === 0 ? 'block' : 'none';
+
+  if (filteredVideos.length > 0) renderNextBatch();
+  else updateLoadMore();
+}
+
+/* ========== LIGHTBOX ========== */
+window.openLightbox = function(videoId) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightboxIframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeLightbox = function() {
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('open');
+  document.getElementById('lightboxIframe').src = '';
+  document.body.style.overflow = '';
+};
+
+// Close on backdrop click
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
 });
-searchInput.addEventListener('input',filterVideos);
 
-function filterVideos(){
-  const term=searchInput.value.toLowerCase();
-  videoCards.forEach(card=>{
-    const cat=card.dataset.category;
-    const title=card.dataset.title.toLowerCase();
-    const matchCat=activeCategory==='all'||cat===activeCategory;
-    const matchSearch=title.includes(term);
-    card.style.display=(matchCat&&matchSearch)?'':'none';
+// Close on Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+/* ========== INIT ========== */
+async function init() {
+  // Fetch stats and videos in parallel
+  fetchChannelStats();
+
+  allVideos = await fetchAllVideos();
+
+  // Set featured to latest
+  if (allVideos.length > 0) renderFeatured(allVideos[0]);
+
+  // Initial render
+  filteredVideos = [...allVideos];
+  document.getElementById('searchCount').textContent = `${allVideos.length} teachings`;
+  renderNextBatch();
+
+  // Wire up search
+  let searchTimer;
+  document.getElementById('searchInput').addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(applyFilters, 250);
+  });
+
+  // Wire up filters
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCategory = btn.dataset.category;
+      applyFilters();
+    });
   });
 }
+
+init();
+
+/* ========== HAMBURGER ========== */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}));
+
+/* ========== SCROLL REVEAL ========== */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '-40px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ========== INFINITE SCROLL ========== */
+const gridObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && renderedCount < filteredVideos.length && !isLoading) {
+    renderNextBatch();
+  }
+}, { rootMargin: '200px' });
+
+gridObserver.observe(document.getElementById('loadMoreWrap'));
+
+})();
 </script>
 </body>
 </html>
