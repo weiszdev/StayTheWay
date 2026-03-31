@@ -81,6 +81,20 @@ h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
 .featured-text .desc{color:#a3a3a3;font-size:.95rem;line-height:1.6;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .featured-text .date{color:#666;font-size:.8rem;margin-top:12px}
 
+/* Live indicator */
+.live-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);
+  color:#ef4444;font-size:.75rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;padding:4px 12px;border-radius:20px;
+}
+.live-dot{
+  width:8px;height:8px;border-radius:50%;background:#ef4444;
+  animation:livePulse 1.5s ease-in-out infinite;
+  box-shadow:0 0 6px #ef4444;
+}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
 /* ========== STATS INTERLUDE ========== */
 .stats-strip{
   padding:48px 0;text-align:center;
@@ -357,6 +371,40 @@ function formatCount(n) {
   return n.toLocaleString();
 }
 
+/* ========== LIVE STREAM DETECTION ========== */
+const CHANNEL_ID = 'UCmL874CrrKEa6l7fXWdePUQ';
+
+async function checkLiveStream() {
+  try {
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.items && data.items.length > 0) {
+      const live = data.items[0];
+      return {
+        id: live.id.videoId,
+        title: live.snippet.title,
+        desc: live.snippet.description || '',
+        thumb: (live.snippet.thumbnails.maxres || live.snippet.thumbnails.high || live.snippet.thumbnails.medium).url,
+        isLive: true
+      };
+    }
+  } catch (e) { console.warn('Live check failed:', e); }
+  return null;
+}
+
+function renderLiveFeatured(live) {
+  document.getElementById('featuredImg').src = live.thumb;
+  document.getElementById('featuredImg').alt = live.title;
+  document.getElementById('heroBg').style.backgroundImage = `url(${live.thumb})`;
+  document.getElementById('featuredTitle').textContent = live.title;
+  document.getElementById('featuredDesc').textContent = live.desc.split('\n').slice(0,3).join(' ').slice(0,300);
+  const label = document.querySelector('.featured-text .label');
+  label.innerHTML = '<span class="live-badge"><span class="live-dot"></span>LIVE NOW</span>';
+  document.getElementById('featuredDate').textContent = 'Streaming live — join now';
+  document.getElementById('featuredThumb').onclick = () => openLightbox(live.id);
+}
+
 /* ========== FETCH ALL VIDEOS ========== */
 async function fetchAllVideos() {
   let videos = [];
@@ -535,13 +583,22 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
 
 /* ========== INIT ========== */
 async function init() {
-  // Fetch stats and videos in parallel
+  // Fetch stats, live check, and videos in parallel
+  const [liveStream, videos] = await Promise.all([
+    checkLiveStream(),
+    fetchAllVideos()
+  ]);
   fetchChannelStats();
 
-  allVideos = await fetchAllVideos();
+  allVideos = videos;
 
-  // Set featured to latest
-  if (allVideos.length > 0) renderFeatured(allVideos[0]);
+  // Featured: live stream takes priority, otherwise latest non-short horizontal video
+  if (liveStream) {
+    renderLiveFeatured(liveStream);
+  } else {
+    const featured = allVideos.find(v => v.category !== 'shorts');
+    if (featured) renderFeatured(featured);
+  }
 
   // Initial render
   filteredVideos = [...allVideos];

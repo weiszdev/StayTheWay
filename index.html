@@ -196,6 +196,18 @@ section { padding: 56px 0; }
   position: absolute; top: 0; left: 0;
   width: 100%; height: 100%; border: 0;
 }
+.live-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);
+  color:#ef4444;font-size:.75rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;padding:4px 12px;border-radius:20px;
+}
+.live-dot{
+  width:8px;height:8px;border-radius:50%;background:#ef4444;
+  animation:livePulse 1.5s ease-in-out infinite;
+  box-shadow:0 0 6px #ef4444;
+}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 
 /* ========== LINK CARDS (quick links grid) ========== */
 .link-card {
@@ -442,12 +454,12 @@ section { padding: 56px 0; }
 <!-- LATEST TEACHING -->
 <section style="background:linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.04) 50%, transparent 100%)">
   <div class="container">
-    <div class="section-label">Latest Teaching</div>
-    <h2 class="section-title">Watch & Study</h2>
-    <p class="section-desc">Catch the latest teaching and explore our growing library of over 300 video studies.</p>
-    <div class="video-wrap" id="latestVideoWrap" style="cursor:pointer" onclick="playLatestVideo()" title="Play video">
-      <img src="https://img.youtube.com/vi/WedtmC71FrE/hqdefault.jpg" alt="Lifting Blindness and Ignorance with Truth FREE" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
-      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(37,99,235,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:transform .2s">
+    <div class="section-label" id="homeVideoLabel">Latest Teaching</div>
+    <h2 class="section-title" id="homeVideoTitle">Watch & Study</h2>
+    <p class="section-desc" id="homeVideoDesc">Catch the latest teaching and explore our growing library of over 300 video studies.</p>
+    <div class="video-wrap" id="latestVideoWrap" style="cursor:pointer" title="Play video">
+      <img id="homeVideoThumb" src="" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
+      <div id="homePlayBtn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(37,99,235,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:transform .2s">
         <div style="width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:4px"></div>
       </div>
     </div>
@@ -540,13 +552,69 @@ section { padding: 56px 0; }
 </footer>
 
 <script>
-// Click-to-play latest video
-function playLatestVideo() {
-  var wrap = document.getElementById('latestVideoWrap');
+// ========== DYNAMIC LATEST / LIVE VIDEO ==========
+const STW_API_KEY = 'AIzaSyDroXdYqCxQDBXOzp1Ha9wIHJhg36iPUbw';
+const STW_CHANNEL_ID = 'UCmL874CrrKEa6l7fXWdePUQ';
+const STW_UPLOADS = 'UUmL874CrrKEa6l7fXWdePUQ';
+
+let homeVideoId = null;
+
+function playHomeVideo() {
+  if (!homeVideoId) return;
+  const wrap = document.getElementById('latestVideoWrap');
   wrap.style.cursor = 'default';
   wrap.onclick = null;
-  wrap.innerHTML = '<iframe src="https://www.youtube.com/embed/WedtmC71FrE?autoplay=1" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>';
+  wrap.innerHTML = '<iframe src="https://www.youtube.com/embed/' + homeVideoId + '?autoplay=1&rel=0" allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>';
 }
+
+(async function loadHomeVideo() {
+  try {
+    // Check for live stream first
+    const liveRes = await fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=' + STW_CHANNEL_ID + '&eventType=live&type=video&key=' + STW_API_KEY);
+    const liveData = await liveRes.json();
+
+    if (liveData.items && liveData.items.length > 0) {
+      // LIVE — show live stream
+      const live = liveData.items[0];
+      homeVideoId = live.id.videoId;
+      const thumb = (live.snippet.thumbnails.maxres || live.snippet.thumbnails.high || live.snippet.thumbnails.medium).url;
+      document.getElementById('homeVideoThumb').src = thumb;
+      document.getElementById('homeVideoThumb').alt = live.snippet.title;
+      document.getElementById('homeVideoLabel').innerHTML = '<span class="live-badge"><span class="live-dot"></span>LIVE NOW</span>';
+      document.getElementById('homeVideoTitle').textContent = live.snippet.title;
+      document.getElementById('homeVideoDesc').textContent = 'We are streaming live — join us now!';
+      document.getElementById('latestVideoWrap').onclick = playHomeVideo;
+      return;
+    }
+
+    // Not live — fetch latest non-short horizontal video
+    const res = await fetch('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + STW_UPLOADS + '&maxResults=10&key=' + STW_API_KEY);
+    const data = await res.json();
+    if (data.items) {
+      // Find first non-short video (shorts have #shorts in title or very short descriptions)
+      const video = data.items.find(function(item) {
+        const t = item.snippet.title || '';
+        return !/#shorts?/i.test(t);
+      }) || data.items[0];
+
+      const s = video.snippet;
+      homeVideoId = s.resourceId.videoId;
+      const thumb = (s.thumbnails.maxres || s.thumbnails.high || s.thumbnails.medium).url;
+      document.getElementById('homeVideoThumb').src = thumb;
+      document.getElementById('homeVideoThumb').alt = s.title;
+      document.getElementById('homeVideoTitle').textContent = s.title;
+      const desc = (s.description || '').split('\n').slice(0, 2).join(' ').slice(0, 200);
+      if (desc) document.getElementById('homeVideoDesc').textContent = desc;
+      document.getElementById('latestVideoWrap').onclick = playHomeVideo;
+    }
+  } catch (e) {
+    // Fallback to a static video if API fails
+    console.warn('Home video fetch failed:', e);
+    homeVideoId = 'WedtmC71FrE';
+    document.getElementById('homeVideoThumb').src = 'https://img.youtube.com/vi/WedtmC71FrE/hqdefault.jpg';
+    document.getElementById('latestVideoWrap').onclick = playHomeVideo;
+  }
+})();
 
 // Hamburger menu toggle
 const hamburger = document.getElementById('hamburger');
