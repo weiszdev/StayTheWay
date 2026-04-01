@@ -28,7 +28,7 @@ h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
 .mobile-menu{position:fixed;inset:0;z-index:1050;background:rgba(10,10,10,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .3s ease}.mobile-menu.open{opacity:1;pointer-events:auto}.mobile-menu a{color:#fff;font-size:1.5rem;font-weight:600;padding:16px 40px;min-height:56px;display:flex;align-items:center;border-radius:12px;transition:background .2s;width:80%;max-width:320px;justify-content:center}.mobile-menu a:hover{background:#1a1a1a}
 
 /* ========== BUTTONS ========== */
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;font-weight:600;font-size:.95rem;transition:all .2s;border:none;cursor:pointer;text-decoration:none;font-family:inherit}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:10px;font-weight:600;font-size:.95rem;transition:all .2s;border:none;cursor:pointer;text-decoration:none;font-family:inherit}
 .btn-primary{background:#2563eb;color:#fff}.btn-primary:hover{background:#3b82f6;color:#fff;transform:translateY(-1px)}
 .btn-white{background:#fff;color:#1e3a8a}.btn-white:hover{background:#f0f0f0;color:#1e3a8a;transform:translateY(-1px)}
 .btn-secondary{background:transparent;color:#d4d4d4;border:1px solid #333}.btn-secondary:hover{border-color:#555;color:#fff}
@@ -142,7 +142,7 @@ h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
   <div class="header-inner">
     <a href="index.html" class="logo"><span class="logo-text">StayTheWay</span><span class="logo-sub">501(c)(3) Service Ministry</span></a>
     <nav class="desktop-nav">
-      <a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="bridges.html">Bridges</a><a href="beliefs.html">Beliefs</a><a href="community.html">Community</a><a href="give.html" class="active">Give</a>
+      <a href="index.html">Home</a><a href="teachings.html">Teachings</a><a href="resources.html">Resources</a><a href="bridges.html">Bridges</a><a href="beliefs.html">Beliefs</a><a href="community.html">Community</a><a href="give.html" class="active">Give</a>
     </nav>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </div>
@@ -257,19 +257,30 @@ h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}p{margin-bottom:1rem}
 </footer>
 
 <script>
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  mobileMenu.classList.toggle('open');
-  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-});
-mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
-  hamburger.classList.remove('open');
-  mobileMenu.classList.remove('open');
-  document.body.style.overflow = '';
-}));
-
+// Hamburger — isolated script so API errors cannot block it
+(function(){
+  var btn = document.getElementById('hamburger');
+  var menu = document.getElementById('mobileMenu');
+  if (!btn || !menu) return;
+  function toggle(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  }
+  btn.addEventListener('click', toggle);
+  btn.addEventListener('touchend', toggle);
+  menu.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+<script>
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
