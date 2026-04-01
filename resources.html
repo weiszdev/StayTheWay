@@ -545,15 +545,14 @@ section { padding: 56px 0; }
     e.stopPropagation();
     btn.classList.toggle('open');
     menu.classList.toggle('open');
-    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    document.body.style.overflowY = menu.classList.contains('open') ? 'hidden' : '';
   }
   btn.addEventListener('click', toggle);
-  btn.addEventListener('touchend', toggle);
   menu.querySelectorAll('a').forEach(function(link) {
     link.addEventListener('click', function() {
       btn.classList.remove('open');
       menu.classList.remove('open');
-      document.body.style.overflow = '';
+      document.body.style.overflowY = '';
     });
   });
 })();
