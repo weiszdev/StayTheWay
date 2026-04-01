@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Which Man of God Are You? — Stay The Way</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;
+  --blue:#2563eb;
+  --black:#0a0a0a;
+  --white:#ffffff;
+  --green:#22c55e;
+  --gold:#fbbf24;
+  --gray:#94a3b8;
+  --light:#f1f5f9;
+  --radius:16px;
+}
+html{font-size:16px;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--black);
+  color:var(--white);
+  min-height:100dvh;
+  overflow-x:hidden;
+}
+
+/* Progress Bar */
+.progress-wrap{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(10,10,10,.92);
+  backdrop-filter:blur(8px);
+  padding:12px 20px 10px;
+}
+.progress-label{
+  font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gray);margin-bottom:6px;display:flex;justify-content:space-between;
+}
+.progress-track{
+  height:6px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),#60a5fa);
+  transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;
+}
+
+/* Screens */
+.screen{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100dvh;padding:80px 20px 40px;
+  animation:fadeUp .45s ease-out;
+}
+.screen.active{display:flex}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Start Screen */
+.hero-icon{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--navy));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;margin-bottom:24px;
+  box-shadow:0 0 40px rgba(37,99,235,.35);
+}
+h1{
+  font-size:clamp(1.6rem,5vw,2.2rem);font-weight:800;
+  text-align:center;line-height:1.2;margin-bottom:8px;
+}
+h1 span{color:var(--blue)}
+.subtitle{
+  color:var(--gray);font-size:1rem;text-align:center;
+  max-width:420px;line-height:1.5;margin-bottom:32px;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 36px;border:none;border-radius:60px;cursor:pointer;
+  font-size:1.05rem;font-weight:700;
+  background:linear-gradient(135deg,var(--blue),#3b82f6);
+  color:var(--white);transition:all .2s;
+  box-shadow:0 4px 20px rgba(37,99,235,.4);
+  -webkit-user-select:none;user-select:none;
+}
+.btn:active{transform:scale(.96);box-shadow:0 2px 10px rgba(37,99,235,.3)}
+.btn:disabled{opacity:.4;pointer-events:none}
+.btn-outline{
+  background:transparent;border:2px solid var(--blue);color:var(--blue);
+  box-shadow:none;
+}
+.btn-sm{padding:12px 24px;font-size:.9rem}
+
+/* Question Card */
+.card{
+  background:linear-gradient(145deg,rgba(26,39,68,.6),rgba(26,39,68,.25));
+  border:1px solid rgba(37,99,235,.15);
+  border-radius:var(--radius);padding:28px 24px;
+  max-width:560px;width:100%;
+}
+.q-number{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);
+  border-radius:40px;padding:6px 16px 6px 10px;
+  font-size:.8rem;font-weight:700;color:var(--blue);
+  letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px;
+}
+.question-text{
+  font-size:1.1rem;font-weight:600;line-height:1.45;margin-bottom:24px;
+}
+
+/* Options */
+.options{display:flex;flex-direction:column;gap:10px}
+.option{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;border-radius:12px;cursor:pointer;
+  border:2px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  transition:all .2s;font-size:.95rem;line-height:1.4;
+  -webkit-user-select:none;user-select:none;
+}
+.option:hover{border-color:rgba(37,99,235,.4);background:rgba(37,99,235,.06)}
+.option .letter{
+  flex-shrink:0;width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.85rem;
+  background:rgba(255,255,255,.06);
+  transition:all .2s;
+}
+.option.selected{border-color:var(--blue);background:rgba(37,99,235,.1)}
+.option.selected .letter{background:var(--blue);color:var(--white)}
+
+/* Results Screen */
+.results-wrap{max-width:600px;width:100%;text-align:center}
+.result-icon{
+  width:120px;height:120px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--navy),rgba(37,99,235,.2));
+  border:3px solid var(--blue);
+  margin:0 auto 20px;
+  box-shadow:0 0 30px rgba(37,99,235,.3);
+  font-size:3.2rem;
+}
+.result-name{
+  font-size:clamp(1.4rem,5vw,2rem);font-weight:800;margin-bottom:4px;
+}
+.result-title{
+  font-size:1rem;color:var(--blue);font-weight:600;margin-bottom:6px;
+}
+.result-scripture{
+  font-size:.85rem;color:var(--gray);font-style:italic;margin-bottom:20px;
+}
+.result-description{
+  font-size:1rem;line-height:1.6;color:var(--light);
+  text-align:left;margin-bottom:24px;
+  background:rgba(26,39,68,.3);border:1px solid rgba(37,99,235,.12);
+  border-radius:12px;padding:20px;
+}
+.result-description strong{color:var(--blue)}
+
+/* Traits */
+.traits-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  margin-bottom:24px;text-align:left;
+}
+.trait{
+  background:rgba(26,39,68,.3);border:1px solid rgba(37,99,235,.12);
+  border-radius:12px;padding:14px;
+}
+.trait-label{
+  font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gray);margin-bottom:4px;
+}
+.trait-value{font-size:.95rem;font-weight:600}
+
+/* Breakdown */
+.breakdown{
+  text-align:left;margin-bottom:28px;
+}
+.breakdown h3{
+  font-size:.85rem;color:var(--gray);text-transform:uppercase;
+  letter-spacing:.06em;margin-bottom:12px;
+}
+.bar-row{
+  display:flex;align-items:center;gap:10px;margin-bottom:8px;
+}
+.bar-label{
+  font-size:.8rem;width:80px;text-align:right;flex-shrink:0;
+}
+.bar-track{
+  flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden;
+}
+.bar-fill{
+  height:100%;border-radius:4px;
+  background:linear-gradient(90deg,var(--blue),#60a5fa);
+  transition:width .8s ease-out;
+}
+.bar-pct{
+  font-size:.75rem;color:var(--gray);width:36px;
+}
+
+/* Share */
+.share-section{margin-top:16px}
+.share-section h3{font-size:1rem;margin-bottom:14px}
+.share-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* Nav */
+.nav-row{
+  display:flex;justify-content:center;margin-top:24px;gap:12px;width:100%;max-width:560px;
+}
+
+/* Animations */
+@keyframes pop{
+  0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)}
+}
+.anim-pop{animation:pop .35s ease-out}
+
+/* Confetti */
+#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200}
+
+@media(min-width:640px){
+  .card{padding:36px 32px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- Progress Bar -->
+<div class="progress-wrap" id="progressWrap" style="display:none">
+  <div class="progress-label">
+    <span id="progressText">Question 1 of 14</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<!-- START SCREEN -->
+<div class="screen active" id="startScreen">
+  <div class="hero-icon">👑</div>
+  <h1>Which <span>Man of God</span> Are You?</h1>
+  <p class="subtitle">
+    Answer 14 questions to discover which biblical leader reflects your personality,
+    strengths, and spiritual walk. No wrong answers — just honest ones.
+  </p>
+  <p style="font-size:.8rem;color:var(--gray);margin-bottom:24px;text-align:center">
+    Stay The Way Ministry — 14 Questions · ~5 minutes
+  </p>
+  <button class="btn" onclick="startQuiz()">Discover Your Type →</button>
+</div>
+
+<!-- QUESTION SCREEN -->
+<div class="screen" id="questionScreen">
+  <div class="card" id="questionCard">
+    <div class="q-number" id="qNumber">Question 1</div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsWrap"></div>
+  </div>
+  <div class="nav-row">
+    <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Continue →</button>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div class="screen" id="resultsScreen">
+  <div class="results-wrap">
+    <div class="result-icon" id="resultIcon"></div>
+    <div class="result-name" id="resultName"></div>
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-scripture" id="resultScripture"></div>
+    <div class="result-description" id="resultDesc"></div>
+
+    <div class="traits-grid" id="traitsGrid"></div>
+
+    <div class="breakdown" id="breakdown">
+      <h3>Your Full Breakdown</h3>
+      <div id="barsWrap"></div>
+    </div>
+
+    <div class="share-section">
+      <h3>Share Your Result</h3>
+      <div class="share-btns">
+        <button class="btn btn-sm" onclick="shareResult()">📋 Copy Result</button>
+        <button class="btn btn-sm btn-outline" onclick="retakeQuiz()">🔄 Retake Quiz</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ====== ARCHETYPE DATA ====== */
+const archetypes = {
+  joshua: {
+    name: 'Joshua',
+    emoji: '⚔️',
+    title: 'The Bold Leader',
+    scripture: '"Be strong and courageous." — Joshua 1:9',
+    description: `You are a <strong>natural leader</strong> who steps into hard situations without flinching. Like Joshua, you don't shy away from a fight — you trust God's promises and move forward. People follow you because your courage is contagious.\n\n<strong>Your strength:</strong> You inspire others to take ground they thought was impossible.\n<strong>Your watch-out:</strong> Don't move so fast that you forget to inquire of the Lord first. Joshua's biggest mistake was making a treaty without asking God.`,
+    traits: { strength: 'Courageous Leadership', gifting: 'Rallying Others', shadow: 'Acting Without Asking God', season: 'Taking New Territory' }
+  },
+  david: {
+    name: 'David',
+    emoji: '👑',
+    title: 'The Passionate Worshipper',
+    scripture: '"A man after God\'s own heart." — Acts 13:22',
+    description: `You lead with <strong>heart and passion</strong>. Like David, your relationship with God is deeply personal — you worship with everything you have, you feel things deeply, and you fight fiercely for what matters.\n\n<strong>Your strength:</strong> Your authenticity and emotional depth draw people to God through you.\n<strong>Your watch-out:</strong> Idleness and unchecked desire. David's greatest failures came when he was out of position and had too much unstructured time.`,
+    traits: { strength: 'Authentic Worship', gifting: 'Emotional Depth', shadow: 'Idleness & Temptation', season: 'Building a Legacy' }
+  },
+  solomon: {
+    name: 'Solomon',
+    emoji: '💍',
+    title: 'The Wise Counselor',
+    scripture: '"If any of you lacks wisdom, let him ask God." — James 1:5',
+    description: `You are <strong>sharp, discerning, and strategic</strong>. Like Solomon, people come to you for advice because you see things others miss. You can hold complexity in your mind and find the wisest path.\n\n<strong>Your strength:</strong> Wisdom and discernment that cuts through confusion and brings clarity.\n<strong>Your watch-out:</strong> Gradual compromise. Solomon didn't fall overnight — small allowances turned into full drift. Guard the small things.`,
+    traits: { strength: 'Godly Wisdom', gifting: 'Discernment', shadow: 'Gradual Compromise', season: 'Stewarding Influence' }
+  },
+  moses: {
+    name: 'Moses',
+    emoji: '🪨',
+    title: 'The Reluctant Prophet',
+    scripture: '"Who am I that I should go?" — Exodus 3:11',
+    description: `You didn't ask for the spotlight, but <strong>God called you anyway</strong>. Like Moses, you may feel unqualified, but when you step out in obedience, God moves through you in extraordinary ways. You carry weight for others.\n\n<strong>Your strength:</strong> Humility and perseverance — you keep going when others quit.\n<strong>Your watch-out:</strong> Frustration-driven disobedience. Moses struck the rock instead of speaking to it. Don't let your emotions override God's instructions.`,
+    traits: { strength: 'Humble Perseverance', gifting: 'Intercession', shadow: 'Frustration & Anger', season: 'Leading Through the Wilderness' }
+  },
+  peter: {
+    name: 'Peter',
+    emoji: '🌊',
+    title: 'The All-In Risk Taker',
+    scripture: '"Lord, if it\'s you, tell me to come." — Matthew 14:28',
+    description: `You are <strong>bold, impulsive, and all-in</strong>. Like Peter, you're the first one out of the boat. You'd rather try and fail than sit safely on the sideline. Your faith is active, loud, and often messy.\n\n<strong>Your strength:</strong> You take risks others won't and experience God in ways they can't.\n<strong>Your watch-out:</strong> Shifting focus. Peter sank when he looked at the waves instead of Jesus. Keep your eyes fixed, even in the storm.`,
+    traits: { strength: 'Radical Faith', gifting: 'Boldness in Action', shadow: 'Shifting Focus', season: 'Stepping Into the Unknown' }
+  },
+  samson: {
+    name: 'Samson',
+    emoji: '💪',
+    title: 'The Gifted Fighter',
+    scripture: '"The Spirit of the LORD came powerfully upon him." — Judges 14:6',
+    description: `You are <strong>powerfully gifted</strong> — and you know it. Like Samson, God has given you extraordinary ability. When you operate in your calling, nobody can stop you. The question isn't whether you're gifted — it's whether you'll steward it.\n\n<strong>Your strength:</strong> Raw, God-given power that breaks through barriers.\n<strong>Your watch-out:</strong> Returning to the same compromise. Samson's pattern, not a single sin, destroyed him. Break the cycle before it breaks you.`,
+    traits: { strength: 'Supernatural Gifting', gifting: 'Breaking Through', shadow: 'Repeated Compromise', season: 'Fighting the Right Battles' }
+  },
+  elijah: {
+    name: 'Elijah',
+    emoji: '🔥',
+    title: 'The Fire-Caller',
+    scripture: '"The LORD — he is God!" — 1 Kings 18:39',
+    description: `You are <strong>intense, prophetic, and uncompromising</strong>. Like Elijah, you see clearly what others ignore. You call down fire on false altars and stand alone when nobody else will. Your faith is dramatic and confrontational.\n\n<strong>Your strength:</strong> Prophetic clarity and boldness that cuts through deception.\n<strong>Your watch-out:</strong> Post-victory crashes. Elijah defeated 450 prophets then ran from one woman's threat. After your biggest wins, guard your mind.`,
+    traits: { strength: 'Prophetic Boldness', gifting: 'Confronting Lies', shadow: 'Isolation & Burnout', season: 'Standing Alone for Truth' }
+  }
+};
+
+const archetypeKeys = ['joshua','david','solomon','moses','peter','samson','elijah'];
+
+/* ====== QUESTIONS (14 total, 2 per archetype) ====== */
+const questions = [
+  {
+    text: 'A major decision needs to be made and nobody else is stepping up. What do you do?',
+    options: [
+      { text: 'Take charge — someone has to lead', archetype: 'joshua' },
+      { text: 'Pray and worship until I have clarity', archetype: 'david' },
+      { text: 'Analyze every angle before making a move', archetype: 'solomon' },
+      { text: 'Reluctantly step up — I didn\'t want this, but I\'ll do it', archetype: 'moses' },
+    ]
+  },
+  {
+    text: 'How do you typically respond when you feel the Holy Spirit move?',
+    options: [
+      { text: 'I jump — I\'d rather act and apologize than miss the moment', archetype: 'peter' },
+      { text: 'I feel a surge of power — it\'s time to break through something', archetype: 'samson' },
+      { text: 'I burn with urgency — someone needs to hear the truth right now', archetype: 'elijah' },
+      { text: 'I get on my face — deep worship is my first response', archetype: 'david' },
+    ]
+  },
+  {
+    text: 'What is your biggest spiritual vulnerability?',
+    options: [
+      { text: 'Moving without asking God first', archetype: 'joshua' },
+      { text: 'Getting distracted when I have too much free time', archetype: 'david' },
+      { text: 'Small compromises that slowly build up', archetype: 'solomon' },
+      { text: 'Letting frustration push me to do things my way', archetype: 'moses' },
+    ]
+  },
+  {
+    text: 'What is your biggest spiritual vulnerability? (continued)',
+    options: [
+      { text: 'Losing focus when the storm gets intense', archetype: 'peter' },
+      { text: 'Going back to the same sin pattern over and over', archetype: 'samson' },
+      { text: 'Crashing hard after a big spiritual victory', archetype: 'elijah' },
+      { text: 'Trying to carry everyone else\'s burden alone', archetype: 'moses' },
+    ]
+  },
+  {
+    text: 'When you walk into a room of believers, what role do you naturally fill?',
+    options: [
+      { text: 'The one who sets the direction and rallies the group', archetype: 'joshua' },
+      { text: 'The one who leads worship or sets the emotional tone', archetype: 'david' },
+      { text: 'The one people pull aside to ask for advice', archetype: 'solomon' },
+      { text: 'The one who confronts what everyone else is too polite to mention', archetype: 'elijah' },
+    ]
+  },
+  {
+    text: 'A friend is stuck in sin and won\'t listen to anyone. What do you do?',
+    options: [
+      { text: 'Speak the hard truth directly — they need to hear it', archetype: 'elijah' },
+      { text: 'Pray and intercede for them behind the scenes', archetype: 'moses' },
+      { text: 'Share my own failures to show them they\'re not alone', archetype: 'david' },
+      { text: 'Walk them through the consequences step by step', archetype: 'solomon' },
+    ]
+  },
+  {
+    text: 'Which statement sounds most like you?',
+    options: [
+      { text: '"If God said it, I\'m going — right now."', archetype: 'peter' },
+      { text: '"I\'ll go, but I need to understand the plan first."', archetype: 'solomon' },
+      { text: '"I\'ll go — I just hope He\'s got the right person."', archetype: 'moses' },
+      { text: '"I was born for this fight."', archetype: 'samson' },
+    ]
+  },
+  {
+    text: 'What kind of season are you in right now?',
+    options: [
+      { text: 'Taking new territory — stepping into something big', archetype: 'joshua' },
+      { text: 'Building something — laying foundations for the future', archetype: 'david' },
+      { text: 'Stewarding influence — leading with what God\'s given me', archetype: 'solomon' },
+      { text: 'Wilderness walking — it\'s hard but I\'m still moving', archetype: 'moses' },
+    ]
+  },
+  {
+    text: 'What kind of season are you in right now? (continued)',
+    options: [
+      { text: 'Stepping out — everything feels uncertain but exciting', archetype: 'peter' },
+      { text: 'Fighting — I\'m in a battle and I need to break through', archetype: 'samson' },
+      { text: 'Standing alone — I see things others don\'t yet', archetype: 'elijah' },
+      { text: 'Recovering — I just came through something big', archetype: 'elijah' },
+    ]
+  },
+  {
+    text: 'How do you handle conflict?',
+    options: [
+      { text: 'Head on — I confront it directly and immediately', archetype: 'joshua' },
+      { text: 'Emotionally — it hits me hard, but I process through worship', archetype: 'david' },
+      { text: 'Strategically — I find the wisest resolution', archetype: 'solomon' },
+      { text: 'Passionately — I can\'t ignore injustice or lies', archetype: 'elijah' },
+    ]
+  },
+  {
+    text: 'What motivates you most in your walk with God?',
+    options: [
+      { text: 'The mission — there\'s territory to take and people to reach', archetype: 'joshua' },
+      { text: 'Intimacy — I want to know God personally, not just about Him', archetype: 'david' },
+      { text: 'Using every gift God gave me to its full potential', archetype: 'samson' },
+      { text: 'Being a voice — truth matters more than popularity', archetype: 'elijah' },
+    ]
+  },
+  {
+    text: 'When you fail, what does it usually look like?',
+    options: [
+      { text: 'I acted too fast without consulting God', archetype: 'joshua' },
+      { text: 'I let emotions or desire override my judgment', archetype: 'david' },
+      { text: 'I said yes to one small thing that led to bigger compromise', archetype: 'solomon' },
+      { text: 'I reacted in frustration instead of obedience', archetype: 'moses' },
+    ]
+  },
+  {
+    text: 'When you fail, what does it usually look like? (continued)',
+    options: [
+      { text: 'I took my eyes off Jesus and focused on the problem', archetype: 'peter' },
+      { text: 'I went back to the same old pattern again', archetype: 'samson' },
+      { text: 'I isolated and crashed after a high point', archetype: 'elijah' },
+      { text: 'I jumped without thinking and had to deal with the fallout', archetype: 'peter' },
+    ]
+  },
+  {
+    text: 'Pick the verse that hits hardest for you right now:',
+    options: [
+      { text: '"Be strong and courageous. Do not be afraid." — Joshua 1:9', archetype: 'joshua' },
+      { text: '"Create in me a clean heart, O God." — Psalm 51:10', archetype: 'david' },
+      { text: '"Trust in the LORD with all your heart." — Proverbs 3:5', archetype: 'solomon' },
+      { text: '"My grace is sufficient for you." — 2 Corinthians 12:9', archetype: 'moses' },
+    ]
+  },
+];
+
+/* ====== STATE ====== */
+let current = 0;
+let scores = { joshua:0, david:0, solomon:0, moses:0, peter:0, samson:0, elijah:0 };
+let selectedOption = -1;
+
+/* ====== FUNCTIONS ====== */
+function startQuiz(){
+  document.getElementById('startScreen').classList.remove('active');
+  document.getElementById('questionScreen').classList.add('active');
+  document.getElementById('progressWrap').style.display='block';
+  current = 0;
+  selectedOption = -1;
+  scores = { joshua:0, david:0, solomon:0, moses:0, peter:0, samson:0, elijah:0 };
+  renderQuestion();
+}
+
+function updateProgress(){
+  const pct = Math.round((current / questions.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `Question ${current + 1} of ${questions.length}`;
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+function renderQuestion(){
+  selectedOption = -1;
+  const q = questions[current];
+  updateProgress();
+
+  document.getElementById('qNumber').textContent = `Question ${current + 1}`;
+  document.getElementById('questionText').textContent = q.text;
+  document.getElementById('nextBtn').disabled = true;
+
+  const card = document.getElementById('questionCard');
+  card.classList.remove('anim-pop');
+  void card.offsetWidth;
+  card.classList.add('anim-pop');
+
+  const wrap = document.getElementById('optionsWrap');
+  const letters = ['A','B','C','D'];
+  wrap.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `<div class="letter">${letters[i]}</div><div>${opt.text}</div>`;
+    div.addEventListener('click', () => selectOption(i));
+    wrap.appendChild(div);
+  });
+}
+
+function selectOption(idx){
+  selectedOption = idx;
+  const opts = document.querySelectorAll('.option');
+  opts.forEach((o,i) => {
+    o.classList.toggle('selected', i === idx);
+  });
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQuestion(){
+  if(selectedOption < 0) return;
+  const q = questions[current];
+  const archetype = q.options[selectedOption].archetype;
+  scores[archetype]++;
+
+  current++;
+  if(current >= questions.length){
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResults(){
+  document.getElementById('questionScreen').classList.remove('active');
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressText').textContent = 'Complete!';
+  document.getElementById('progressPct').textContent = '100%';
+
+  // Find winner
+  let maxScore = 0;
+  let winner = 'joshua';
+  archetypeKeys.forEach(k => {
+    if(scores[k] > maxScore){ maxScore = scores[k]; winner = k; }
+  });
+
+  const a = archetypes[winner];
+  document.getElementById('resultIcon').textContent = a.emoji;
+  document.getElementById('resultName').textContent = a.name;
+  document.getElementById('resultTitle').textContent = a.title;
+  document.getElementById('resultScripture').textContent = a.scripture;
+  document.getElementById('resultDesc').innerHTML = a.description.replace(/\n/g,'<br>');
+
+  // Traits
+  const tg = document.getElementById('traitsGrid');
+  tg.innerHTML = '';
+  const traitLabels = { strength:'Core Strength', gifting:'Spiritual Gifting', shadow:'Watch-Out', season:'Your Season' };
+  Object.entries(a.traits).forEach(([k,v]) => {
+    const div = document.createElement('div');
+    div.className = 'trait';
+    div.innerHTML = `<div class="trait-label">${traitLabels[k]}</div><div class="trait-value">${v}</div>`;
+    tg.appendChild(div);
+  });
+
+  // Breakdown bars
+  const bw = document.getElementById('barsWrap');
+  bw.innerHTML = '';
+  const totalAnswers = 14;
+  const sorted = archetypeKeys.slice().sort((a,b) => scores[b] - scores[a]);
+  sorted.forEach(k => {
+    const pct = Math.round((scores[k] / totalAnswers) * 100);
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <div class="bar-label">${archetypes[k].emoji} ${archetypes[k].name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+      <div class="bar-pct">${pct}%</div>
+    `;
+    bw.appendChild(row);
+    // Animate after append
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        row.querySelector('.bar-fill').style.width = pct + '%';
+      });
+    });
+  });
+
+  launchConfetti();
+}
+
+function shareResult(){
+  let maxScore = 0;
+  let winner = 'joshua';
+  archetypeKeys.forEach(k => {
+    if(scores[k] > maxScore){ maxScore = scores[k]; winner = k; }
+  });
+  const a = archetypes[winner];
+  const text = `I got ${a.name} — ${a.title}! ${a.emoji}\n\n${a.scripture}\n\nTake the quiz: Which Man of God Are You?\nStay The Way Ministry`;
+
+  if(navigator.share){
+    navigator.share({ title:'Which Man of God Are You?', text:text }).catch(()=>{});
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.share-btns .btn');
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = '📋 Copy Result', 2000);
+    });
+  }
+}
+
+function retakeQuiz(){
+  document.getElementById('resultsScreen').classList.remove('active');
+  document.getElementById('startScreen').classList.add('active');
+  document.getElementById('progressWrap').style.display='none';
+}
+
+/* ====== CONFETTI ====== */
+function launchConfetti(){
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const colors = ['#2563eb','#3b82f6','#60a5fa','#ffffff','#22c55e','#fbbf24'];
+  const pieces = [];
+  for(let i = 0; i < 100; i++){
+    pieces.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height - canvas.height,
+      w: Math.random()*8+4,
+      h: Math.random()*6+3,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      vy: Math.random()*3+2,
+      vx: (Math.random()-0.5)*2,
+      rot: Math.random()*360,
+      rv: (Math.random()-0.5)*8,
+      opacity: 1,
+    });
+  }
+  let frame = 0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    let alive = false;
+    pieces.forEach(p => {
+      if(p.opacity <= 0) return;
+      alive = true;
+      p.y += p.vy;
+      p.x += p.vx;
+      p.rot += p.rv;
+      if(frame > 80) p.opacity -= 0.015;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI/180);
+      ctx.globalAlpha = Math.max(0,p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if(alive) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+</script>
+</body>
+</html>
