@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>BENR Assessment — Body, Emotions, Neuro, Repair | StayTheWay</title>
+<meta name="description" content="A biblical reflection tool for whole-person healing. Discover where your body, emotions, beliefs, and identity may be carrying unresolved wounds.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;
+  --blue:#2563eb;
+  --black:#0a0a0a;
+  --white:#ffffff;
+  --green:#22c55e;
+  --red:#ef4444;
+  --gray:#94a3b8;
+  --gold:#fbbf24;
+  --rose:#f43f5e;
+  --sky:#38bdf8;
+  --radius:16px;
+}
+html{font-size:16px;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--black);
+  color:var(--white);
+  min-height:100dvh;
+  overflow-x:hidden;
+  -webkit-user-select:none;user-select:none;
+}
+
+/* Progress Bar */
+.progress-wrap{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(10,10,10,.92);
+  backdrop-filter:blur(8px);
+  padding:10px 20px 8px;
+  display:none;
+}
+.progress-wrap.visible{display:block}
+.progress-track{
+  height:4px;border-radius:2px;background:rgba(255,255,255,.08);overflow:hidden;
+}
+.progress-fill{
+  height:100%;border-radius:2px;
+  background:linear-gradient(90deg,var(--blue),#60a5fa);
+  transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;
+}
+
+/* Screens */
+.screen{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100dvh;padding:60px 20px 40px;
+  animation:fadeUp .45s ease-out;
+}
+.screen.active{display:flex}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Start Screen */
+.hero-icon{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--navy));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;margin-bottom:24px;
+  box-shadow:0 0 40px rgba(37,99,235,.35);
+}
+h1{
+  font-size:clamp(1.6rem,5vw,2.2rem);font-weight:800;
+  text-align:center;line-height:1.2;margin-bottom:8px;
+}
+h1 span{color:var(--blue)}
+.subtitle{
+  color:var(--gray);font-size:1rem;text-align:center;
+  max-width:420px;line-height:1.6;margin-bottom:12px;
+}
+.pillars-row{
+  display:flex;gap:12px;margin:20px 0 28px;flex-wrap:wrap;justify-content:center;
+}
+.pillar-chip{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:40px;font-size:.8rem;font-weight:600;
+  background:rgba(26,39,68,.6);border:1px solid rgba(37,99,235,.2);
+}
+.pillar-chip .icon{font-size:1rem}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 36px;border:none;border-radius:60px;cursor:pointer;
+  font-size:1.05rem;font-weight:700;
+  background:linear-gradient(135deg,var(--blue),#3b82f6);
+  color:var(--white);transition:all .2s;
+  box-shadow:0 4px 20px rgba(37,99,235,.4);
+}
+.btn:active{transform:scale(.96);box-shadow:0 2px 10px rgba(37,99,235,.3)}
+.disclaimer{
+  font-size:.7rem;color:var(--gray);text-align:center;
+  max-width:360px;line-height:1.5;margin-top:20px;opacity:.7;
+}
+
+/* ============ SWIPE AREA ============ */
+.swipe-screen{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100dvh;padding:50px 20px 30px;
+  position:relative;overflow:hidden;
+}
+.swipe-screen.active{display:flex}
+
+/* Background tint overlay */
+.bg-tint{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  pointer-events:none;z-index:0;
+  transition:background .15s ease;
+}
+
+/* Up arrow */
+.arrow-up{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  margin-bottom:18px;z-index:2;cursor:pointer;
+  transition:all .2s;opacity:.45;
+}
+.arrow-up:hover{opacity:.8}
+.arrow-up.highlight{opacity:1;transform:scale(1.12)}
+.arrow-up svg{width:28px;height:28px;fill:var(--sky)}
+.arrow-up span{font-size:.65rem;font-weight:700;letter-spacing:.12em;color:var(--sky)}
+
+/* Card stack area */
+.card-stack{
+  position:relative;width:100%;max-width:400px;z-index:2;
+}
+.card-shadow{
+  position:absolute;top:6px;left:4px;right:4px;
+  height:100%;border-radius:var(--radius);
+  background:rgba(26,39,68,.2);border:1px solid rgba(37,99,235,.06);
+}
+.card-shadow:nth-child(2){top:12px;left:8px;right:8px;opacity:.5}
+
+/* Swipe card */
+.swipe-card{
+  position:relative;
+  background:linear-gradient(145deg,rgba(26,39,68,.7),rgba(26,39,68,.3));
+  border:1px solid rgba(37,99,235,.18);
+  border-radius:var(--radius);
+  padding:36px 28px 28px;
+  text-align:center;
+  cursor:grab;
+  touch-action:none;
+  transition:box-shadow .2s;
+  min-height:180px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.swipe-card:active{cursor:grabbing}
+.swipe-card.dragging{transition:none}
+.swipe-card.animating{
+  transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s ease;
+}
+.swipe-card .statement{
+  font-size:clamp(1.15rem,4.5vw,1.45rem);
+  font-weight:600;line-height:1.5;
+  margin-bottom:14px;
+}
+.swipe-card .scripture-ref{
+  font-size:.75rem;color:var(--gray);font-style:italic;
+}
+
+/* Side arrows */
+.arrow-row{
+  display:flex;justify-content:space-between;align-items:center;
+  width:100%;max-width:400px;margin-top:18px;z-index:2;
+  padding:0 4px;
+}
+.arrow-side{
+  display:flex;align-items:center;gap:6px;
+  cursor:pointer;transition:all .2s;opacity:.45;
+}
+.arrow-side:hover{opacity:.8}
+.arrow-side.highlight{opacity:1;transform:scale(1.12)}
+.arrow-side svg{width:28px;height:28px}
+.arrow-side span{font-size:.65rem;font-weight:700;letter-spacing:.12em}
+.arrow-left svg{fill:var(--rose)}
+.arrow-left span{color:var(--rose)}
+.arrow-right svg{fill:var(--green)}
+.arrow-right span{color:var(--green)}
+
+.swipe-hint{
+  font-size:.7rem;color:var(--gray);margin-top:16px;opacity:.5;z-index:2;
+}
+
+/* ============ TRANSITION CARD ============ */
+.transition-screen{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100dvh;padding:60px 20px 40px;text-align:center;
+  animation:fadeUp .45s ease-out;
+}
+.transition-screen.active{display:flex}
+.transition-icon{font-size:3.2rem;margin-bottom:20px}
+.transition-title{
+  font-size:1.4rem;font-weight:800;margin-bottom:8px;
+}
+.transition-subtitle{
+  font-size:1rem;color:var(--gray);max-width:340px;line-height:1.6;margin-bottom:16px;
+}
+.transition-scripture{
+  font-size:.85rem;color:var(--sky);font-style:italic;
+  max-width:360px;line-height:1.5;margin-bottom:28px;
+}
+
+/* ============ RESULTS ============ */
+.results-wrap{max-width:600px;width:100%;padding:0 4px}
+.results-opener{
+  text-align:center;margin-bottom:32px;
+}
+.results-opener h2{
+  font-size:1.5rem;font-weight:800;margin-bottom:8px;
+}
+.results-opener p{
+  color:var(--gray);font-size:1rem;line-height:1.6;
+}
+
+.pillar-section{margin-bottom:28px}
+.pillar-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.pillar-header .icon{font-size:1.4rem}
+.pillar-header h3{font-size:1.1rem;font-weight:700}
+.pillar-bar{
+  height:6px;border-radius:3px;background:rgba(255,255,255,.08);
+  margin-bottom:10px;overflow:hidden;
+}
+.pillar-bar-fill{
+  height:100%;border-radius:3px;
+  transition:width .8s cubic-bezier(.4,0,.2,1);
+}
+.pillar-summary{
+  font-size:.9rem;color:var(--gray);line-height:1.6;margin-bottom:8px;
+}
+.tender-areas{
+  background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.15);
+  border-radius:12px;padding:14px 16px;margin-top:8px;
+}
+.tender-areas h4{
+  font-size:.75rem;font-weight:700;color:var(--sky);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;
+}
+.tender-areas p{font-size:.85rem;color:var(--gray);line-height:1.5}
+
+.identity-box{
+  background:linear-gradient(145deg,rgba(26,39,68,.6),rgba(26,39,68,.25));
+  border:1px solid rgba(37,99,235,.2);
+  border-radius:var(--radius);padding:24px;margin:28px 0;text-align:center;
+}
+.identity-box h3{font-size:1.1rem;font-weight:700;margin-bottom:12px}
+.identity-box .verse{
+  font-size:.95rem;line-height:1.6;color:var(--sky);font-style:italic;
+  margin-bottom:6px;
+}
+.identity-box .ref{font-size:.75rem;color:var(--gray)}
+
+.plan-section{margin:28px 0}
+.plan-section h3{font-size:1.1rem;font-weight:700;margin-bottom:16px;text-align:center}
+.plan-day{
+  display:flex;gap:14px;align-items:flex-start;
+  margin-bottom:14px;
+}
+.plan-day .day-num{
+  flex-shrink:0;width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.8rem;
+  background:var(--blue);color:var(--white);
+}
+.plan-day .day-content{flex:1}
+.plan-day .day-title{font-size:.9rem;font-weight:700;margin-bottom:2px}
+.plan-day .day-desc{font-size:.85rem;color:var(--gray);line-height:1.5}
+.plan-day .day-verse{font-size:.75rem;color:var(--sky);font-style:italic;margin-top:4px}
+
+.next-steps{
+  text-align:center;margin:32px 0 16px;
+}
+.next-steps h3{font-size:1rem;font-weight:700;margin-bottom:14px}
+.next-steps .btn{margin:6px}
+
+.results-disclaimer{
+  font-size:.7rem;color:var(--gray);text-align:center;
+  max-width:400px;margin:24px auto 0;line-height:1.5;opacity:.6;
+}
+
+/* Confetti */
+#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200}
+
+/* Responsive */
+@media(min-width:640px){
+  .swipe-card{padding:44px 36px 36px;min-height:200px}
+  .swipe-card .statement{font-size:1.5rem}
+  .card-stack{max-width:480px}
+  .arrow-row{max-width:480px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- Progress Bar -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<!-- ========== START SCREEN ========== -->
+<div class="screen active" id="startScreen">
+  <div class="hero-icon">🕊️</div>
+  <h1>BENR <span>Assessment</span></h1>
+  <p class="subtitle">
+    Body. Emotions. Neuro. Repair.<br>
+    A biblical reflection for whole-person healing, grounded in 1 Thessalonians 5:23.
+  </p>
+  <div class="pillars-row">
+    <div class="pillar-chip"><span class="icon">🫀</span> Body</div>
+    <div class="pillar-chip"><span class="icon">💛</span> Emotions</div>
+    <div class="pillar-chip"><span class="icon">🧠</span> Neuro</div>
+    <div class="pillar-chip"><span class="icon">🕊️</span> Repair</div>
+  </div>
+  <p style="font-size:.8rem;color:var(--gray);margin-bottom:24px;text-align:center;max-width:320px;line-height:1.5">
+    ~20 cards across 4 phases. Swipe or tap to respond.<br>No sign-up. Nothing stored. Just you and God.
+  </p>
+  <button class="btn" onclick="startAssessment()">Begin Reflection</button>
+  <p class="disclaimer">
+    This is a biblical reflection tool, not a substitute for professional counseling or medical care.
+  </p>
+</div>
+
+<!-- ========== SWIPE SCREEN ========== -->
+<div class="swipe-screen" id="swipeScreen">
+  <div class="bg-tint" id="bgTint"></div>
+
+  <!-- Up arrow — NOT SURE -->
+  <div class="arrow-up" id="arrowUp" onclick="respond('unsure')">
+    <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+    <span>NOT SURE</span>
+  </div>
+
+  <!-- Card stack -->
+  <div class="card-stack" id="cardStack">
+    <div class="card-shadow"></div>
+    <div class="card-shadow"></div>
+    <div class="swipe-card" id="swipeCard">
+      <div class="statement" id="cardStatement"></div>
+      <div class="scripture-ref" id="cardScripture"></div>
+    </div>
+  </div>
+
+  <!-- Side arrows — NO / YES -->
+  <div class="arrow-row">
+    <div class="arrow-side arrow-left" id="arrowLeft" onclick="respond('no')">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg>
+      <span>NO</span>
+    </div>
+    <div class="arrow-side arrow-right" id="arrowRight" onclick="respond('yes')">
+      <span>YES</span>
+      <svg viewBox="0 0 24 24"><path d="M4 13h12.17l-5.59 5.59L12 20l8-8-8-8-1.41 1.41L16.17 11H4z"/></svg>
+    </div>
+  </div>
+
+  <p class="swipe-hint" id="swipeHint">Swipe or tap the arrows</p>
+</div>
+
+<!-- ========== TRANSITION SCREEN ========== -->
+<div class="transition-screen" id="transitionScreen">
+  <div class="transition-icon" id="transIcon"></div>
+  <div class="transition-title" id="transTitle"></div>
+  <p class="transition-subtitle" id="transSub"></p>
+  <p class="transition-scripture" id="transScripture"></p>
+  <button class="btn" onclick="continueFromTransition()">Continue</button>
+</div>
+
+<!-- ========== RESULTS SCREEN ========== -->
+<div class="screen" id="resultsScreen">
+  <div class="results-wrap" id="resultsWrap"></div>
+</div>
+
+<script>
+/* ====================================================================
+   BENR SWIPE ASSESSMENT — StayTheWay
+   ==================================================================== */
+
+/* ---------- PHASE & CARD DATA ---------- */
+const phases = [
+  {
+    id: 'intake',
+    name: 'Gentle Intake',
+    icon: '🕊️',
+    pillar: null,
+    transitionText: "Before we begin, let's gently check in.",
+    transitionScripture: '"Pour out your heart before Him; God is a refuge for us." — Psalm 62:8',
+    cards: [
+      { s: "My emotions feel too big to handle.", ref: "Psalm 61:2" },
+      { s: "Peace feels out of reach for me.", ref: "Isaiah 26:3" },
+      { s: "Something inside me feels unfinished.", ref: "Philippians 1:6" },
+      { s: "I often feel on edge for no clear reason.", ref: "Psalm 46:10" },
+      { s: "I carry something heavy I can't name.", ref: "Matthew 11:28" },
+    ]
+  },
+  {
+    id: 'body',
+    name: 'Body Awareness',
+    icon: '🫀',
+    pillar: 'B',
+    transitionText: "Now we'll notice what your body is carrying.",
+    transitionScripture: '"Be still, and know that I am God." — Psalm 46:10',
+    cards: [
+      { s: "My body feels tense most of the time.", ref: "Psalm 46:10" },
+      { s: "Rest doesn't come easy for me.", ref: "Matthew 11:28-29" },
+      { s: "I'm tired in a way sleep doesn't fix.", ref: "1 Kings 19:5-8" },
+      { s: "I hold my breath without realizing it.", ref: "Genesis 2:7" },
+      { s: "My body reacts before my mind catches up.", ref: "1 Corinthians 6:19-20" },
+    ]
+  },
+  {
+    id: 'emotions',
+    name: 'Emotional Mapping',
+    icon: '💛',
+    pillar: 'E',
+    transitionText: "Let's name what's rising to the surface.",
+    transitionScripture: '"The LORD is close to the brokenhearted." — Psalm 34:18',
+    cards: [
+      { s: "Sadness shows up a lot for me.", ref: "Psalm 34:18" },
+      { s: "I carry anger I can't always explain.", ref: "Psalm 4:4" },
+      { s: "I often feel like I'm not enough.", ref: "Psalm 139:14" },
+      { s: "I feel guilty even when I've done nothing wrong.", ref: "Romans 8:1" },
+      { s: "I shut down before I can feel.", ref: "Psalm 62:8" },
+    ]
+  },
+  {
+    id: 'beliefs',
+    name: 'Belief Identification',
+    icon: '🧠',
+    pillar: 'N',
+    transitionText: "Let's uncover the agreements your mind has made.",
+    transitionScripture: '"Be transformed by the renewing of your mind." — Romans 12:2',
+    cards: [
+      { s: "Deep down I feel something is wrong with me.", ref: "Jeremiah 1:5" },
+      { s: "I feel alone even in a crowd.", ref: "Deuteronomy 31:6" },
+      { s: "It's hard to believe God is for me.", ref: "Romans 8:31" },
+      { s: "I believe I have to earn love.", ref: "Ephesians 2:8-9" },
+      { s: "A voice inside says I'll never change.", ref: "2 Corinthians 5:17" },
+    ]
+  },
+  {
+    id: 'repair',
+    name: 'Repair & Identity',
+    icon: '🕊️',
+    pillar: 'R',
+    transitionText: "God's truth replaces the lie. He makes all things new.",
+    transitionScripture: '"He restores my soul." — Psalm 23:3',
+    cards: [
+      { s: "I want to break free from what holds me back.", ref: "John 8:36" },
+      { s: "I'm ready to let God rewrite my story.", ref: "Joel 2:25" },
+      { s: "I believe healing is possible for me.", ref: "Jeremiah 30:17" },
+      { s: "I want to know who I really am in Christ.", ref: "2 Corinthians 5:17" },
+      { s: "I'm willing to do the work with God's help.", ref: "Philippians 4:13" },
+    ]
+  }
+];
+
+/* ---------- STATE ---------- */
+let currentPhase = 0;
+let currentCard = 0;
+let responses = {}; // { phaseId: [{ statement, answer }] }
+let totalCards = 0;
+let completedCards = 0;
+let isDragging = false;
+let startX = 0, startY = 0, currentX = 0, currentY = 0;
+let cardLocked = false;
+
+phases.forEach(p => {
+  totalCards += p.cards.length;
+  responses[p.id] = [];
+});
+
+/* ---------- DOM ---------- */
+const $progress = document.getElementById('progressWrap');
+const $progressFill = document.getElementById('progressFill');
+const $swipeScreen = document.getElementById('swipeScreen');
+const $card = document.getElementById('swipeCard');
+const $statement = document.getElementById('cardStatement');
+const $scripture = document.getElementById('cardScripture');
+const $bgTint = document.getElementById('bgTint');
+const $arrowUp = document.getElementById('arrowUp');
+const $arrowLeft = document.getElementById('arrowLeft');
+const $arrowRight = document.getElementById('arrowRight');
+const $transScreen = document.getElementById('transitionScreen');
+const $results = document.getElementById('resultsScreen');
+
+/* ---------- START ---------- */
+function startAssessment() {
+  document.getElementById('startScreen').classList.remove('active');
+  showTransition(0);
+}
+
+/* ---------- TRANSITION ---------- */
+function showTransition(phaseIdx) {
+  currentPhase = phaseIdx;
+  currentCard = 0;
+  const p = phases[phaseIdx];
+
+  hideAll();
+  $transScreen.classList.add('active');
+  document.getElementById('transIcon').textContent = p.icon;
+  document.getElementById('transTitle').textContent = 'Phase ' + (phaseIdx + 1) + ': ' + p.name;
+  document.getElementById('transSub').textContent = p.transitionText;
+  document.getElementById('transScripture').textContent = p.transitionScripture;
+  $progress.classList.add('visible');
+  updateProgress();
+}
+
+function continueFromTransition() {
+  $transScreen.classList.remove('active');
+  showSwipeScreen();
+}
+
+/* ---------- SWIPE SCREEN ---------- */
+function showSwipeScreen() {
+  hideAll();
+  $swipeScreen.classList.add('active');
+  loadCard();
+}
+
+function loadCard() {
+  if (cardLocked) return;
+  const p = phases[currentPhase];
+  const c = p.cards[currentCard];
+
+  $card.style.transform = '';
+  $card.style.opacity = '1';
+  $card.classList.remove('dragging', 'animating');
+  $statement.textContent = c.s;
+  $scripture.textContent = c.ref;
+  $bgTint.style.background = 'transparent';
+  resetArrows();
+  updateProgress();
+}
+
+/* ---------- PROGRESS ---------- */
+function updateProgress() {
+  const pct = totalCards > 0 ? (completedCards / totalCards) * 100 : 0;
+  $progressFill.style.width = pct + '%';
+}
+
+/* ---------- DRAG / SWIPE ---------- */
+$card.addEventListener('pointerdown', dragStart);
+document.addEventListener('pointermove', dragMove);
+document.addEventListener('pointerup', dragEnd);
+
+function dragStart(e) {
+  if (cardLocked) return;
+  isDragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+  $card.classList.add('dragging');
+  $card.setPointerCapture(e.pointerId);
+}
+
+function dragMove(e) {
+  if (!isDragging) return;
+  currentX = e.clientX - startX;
+  currentY = e.clientY - startY;
+
+  // Rotation proportional to horizontal offset
+  const rotate = currentX * 0.06;
+  const clampedRotate = Math.max(-8, Math.min(8, rotate));
+
+  $card.style.transform =
+    'translate(' + currentX + 'px, ' + currentY + 'px) rotate(' + clampedRotate + 'deg)';
+
+  // Background tint & arrow highlights
+  resetArrows();
+  $bgTint.style.background = 'transparent';
+
+  if (currentX > 40) {
+    const o = Math.min((currentX - 40) / 80, .2);
+    $bgTint.style.background = 'rgba(34,197,94,' + o + ')';
+    $arrowRight.classList.add('highlight');
+  } else if (currentX < -40) {
+    const o = Math.min((-currentX - 40) / 80, .2);
+    $bgTint.style.background = 'rgba(244,63,94,' + o + ')';
+    $arrowLeft.classList.add('highlight');
+  }
+  if (currentY < -30) {
+    const o = Math.min((-currentY - 30) / 60, .2);
+    $bgTint.style.background = 'rgba(56,189,248,' + o + ')';
+    $arrowUp.classList.add('highlight');
+  }
+}
+
+function dragEnd(e) {
+  if (!isDragging) return;
+  isDragging = false;
+  $card.classList.remove('dragging');
+
+  // Check thresholds
+  if (currentX > 100) {
+    animateOff('right');
+    recordResponse('yes');
+  } else if (currentX < -100) {
+    animateOff('left');
+    recordResponse('no');
+  } else if (currentY < -80) {
+    animateOff('up');
+    recordResponse('unsure');
+  } else {
+    // Snap back
+    $card.classList.add('animating');
+    $card.style.transform = '';
+    $bgTint.style.background = 'transparent';
+    resetArrows();
+  }
+  currentX = 0;
+  currentY = 0;
+}
+
+/* ---------- ARROW TAP FALLBACK ---------- */
+function respond(answer) {
+  if (cardLocked) return;
+  const dir = answer === 'yes' ? 'right' : answer === 'no' ? 'left' : 'up';
+  animateOff(dir);
+  recordResponse(answer);
+}
+
+/* ---------- ANIMATE OFF ---------- */
+function animateOff(dir) {
+  cardLocked = true;
+  $card.classList.add('animating');
+  let tx = 0, ty = 0, rot = 0;
+  if (dir === 'right')  { tx = window.innerWidth + 100; rot = 12; }
+  if (dir === 'left')   { tx = -(window.innerWidth + 100); rot = -12; }
+  if (dir === 'up')     { ty = -(window.innerHeight + 100); }
+  $card.style.transform = 'translate(' + tx + 'px,' + ty + 'px) rotate(' + rot + 'deg)';
+  $card.style.opacity = '0';
+  $bgTint.style.background = 'transparent';
+  resetArrows();
+}
+
+/* ---------- RECORD & ADVANCE ---------- */
+function recordResponse(answer) {
+  const p = phases[currentPhase];
+  const c = p.cards[currentCard];
+  responses[p.id].push({ statement: c.s, answer: answer });
+  completedCards++;
+
+  setTimeout(() => {
+    currentCard++;
+    if (currentCard < p.cards.length) {
+      cardLocked = false;
+      loadCard();
+    } else {
+      // Phase complete
+      cardLocked = false;
+      if (currentPhase < phases.length - 1) {
+        showTransition(currentPhase + 1);
+      } else {
+        showResults();
+      }
+    }
+  }, 380);
+}
+
+/* ---------- HELPERS ---------- */
+function hideAll() {
+  document.querySelectorAll('.screen,.swipe-screen,.transition-screen')
+    .forEach(s => s.classList.remove('active'));
+}
+
+function resetArrows() {
+  $arrowUp.classList.remove('highlight');
+  $arrowLeft.classList.remove('highlight');
+  $arrowRight.classList.remove('highlight');
+}
+
+/* ====================================================================
+   RESULTS — Phase 5: Repair & Identity
+   ==================================================================== */
+function showResults() {
+  hideAll();
+  $results.classList.add('active');
+  $progress.classList.remove('visible');
+  fireConfetti();
+
+  const wrap = document.getElementById('resultsWrap');
+  let html = '';
+
+  /* Opener */
+  html += '<div class="results-opener">';
+  html += '<div style="font-size:2.4rem;margin-bottom:12px">🕊️</div>';
+  html += '<h2>You were honest with God.<br>That takes courage.</h2>';
+  html += '<p>Here is what your reflection revealed, organized by the four BENR pillars. This is not a score or a diagnosis — it is a mirror held up gently, with Scripture to guide what comes next.</p>';
+  html += '</div>';
+
+  /* Per-pillar summaries */
+  const pillarMap = [
+    { id: 'body',     pillar: 'B — Body',     icon: '🫀', color: '#ef4444', phases: ['body'] },
+    { id: 'emotions', pillar: 'E — Emotions',  icon: '💛', color: '#fbbf24', phases: ['emotions'] },
+    { id: 'beliefs',  pillar: 'N — Neuro',     icon: '🧠', color: '#60a5fa', phases: ['beliefs'] },
+    { id: 'repair',   pillar: 'R — Repair',    icon: '🕊️', color: '#22c55e', phases: ['repair'] },
+  ];
+
+  // Also factor in intake for overall picture
+  const intakeYes = responses.intake.filter(r => r.answer === 'yes').length;
+  const intakeUnsure = responses.intake.filter(r => r.answer === 'unsure').length;
+
+  pillarMap.forEach(pm => {
+    const phaseResponses = responses[pm.id] || [];
+    const yes = phaseResponses.filter(r => r.answer === 'yes').length;
+    const unsure = phaseResponses.filter(r => r.answer === 'unsure').length;
+    const no = phaseResponses.filter(r => r.answer === 'no').length;
+    const total = phaseResponses.length;
+    const pct = total > 0 ? Math.round((yes / total) * 100) : 0;
+
+    html += '<div class="pillar-section">';
+    html += '<div class="pillar-header"><span class="icon">' + pm.icon + '</span><h3>' + pm.pillar + '</h3></div>';
+    html += '<div class="pillar-bar"><div class="pillar-bar-fill" style="width:' + pct + '%;background:' + pm.color + '"></div></div>';
+    html += '<p class="pillar-summary">' + getPillarNarrative(pm.id, yes, unsure, no, total) + '</p>';
+
+    // Tender areas (unsure responses)
+    const tenders = phaseResponses.filter(r => r.answer === 'unsure');
+    if (tenders.length > 0) {
+      html += '<div class="tender-areas">';
+      html += '<h4>Tender Areas</h4>';
+      tenders.forEach(t => {
+        html += '<p>"' + t.statement + '"</p>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+
+  /* Identity Statement */
+  const dominant = getDominantPillar();
+  html += '<div class="identity-box">';
+  html += '<h3>Your Identity in Christ</h3>';
+  html += '<div class="verse">' + getIdentityVerse(dominant).text + '</div>';
+  html += '<div class="ref">' + getIdentityVerse(dominant).ref + '</div>';
+  html += '</div>';
+
+  /* Personalized Scriptures */
+  html += '<div class="plan-section"><h3>Scriptures for Your Journey</h3>';
+  getPersonalScriptures().forEach(s => {
+    html += '<div class="plan-day"><div class="day-num" style="background:' + s.color + '">📖</div>';
+    html += '<div class="day-content"><div class="day-title">' + s.ref + '</div>';
+    html += '<div class="day-desc">' + s.focus + '</div></div></div>';
+  });
+  html += '</div>';
+
+  /* 7-Day Healing Plan */
+  html += '<div class="plan-section"><h3>Your 7-Day Healing Plan</h3>';
+  get7DayPlan().forEach((d, i) => {
+    html += '<div class="plan-day">';
+    html += '<div class="day-num">' + (i + 1) + '</div>';
+    html += '<div class="day-content">';
+    html += '<div class="day-title">' + d.title + '</div>';
+    html += '<div class="day-desc">' + d.desc + '</div>';
+    html += '<div class="day-verse">' + d.verse + '</div>';
+    html += '</div></div>';
+  });
+  html += '</div>';
+
+  /* Next Steps */
+  html += '<div class="next-steps">';
+  html += '<h3>What Comes Next</h3>';
+  html += '<p style="color:var(--gray);font-size:.9rem;line-height:1.6;margin-bottom:16px">Healing is not a moment — it is a walk. Take what resonated and bring it before God this week.</p>';
+  html += '<button class="btn" onclick="restartAssessment()">Take Again</button>';
+  html += '</div>';
+
+  /* Disclaimer */
+  html += '<p class="results-disclaimer">This is a biblical reflection tool, not a substitute for professional counseling or medical care. If you are in crisis, please contact a licensed counselor or call 988 (Suicide & Crisis Lifeline).</p>';
+
+  wrap.innerHTML = html;
+}
+
+/* ---------- NARRATIVE GENERATORS ---------- */
+function getPillarNarrative(id, yes, unsure, no, total) {
+  const ratio = total > 0 ? yes / total : 0;
+  const narratives = {
+    body: {
+      high: "Your body may be carrying more than you realize. Trauma often shows up physically before it becomes thought. God began Elijah's healing with rest and food — not a sermon.",
+      mid: "You're noticing some signals from your body. This awareness is the first step. God designed your body as a temple — it speaks when something needs attention.",
+      low: "Your body feels relatively settled. That's a gift. Continue tending to rest, breath, and physical care as an act of stewardship."
+    },
+    emotions: {
+      high: "Your emotional world is carrying significant weight. Emotions are signals, not sins — David poured every one of them out before God, and so can you.",
+      mid: "Some emotions are rising to the surface. This is not weakness — it's honesty. God is close to the brokenhearted.",
+      low: "Your emotional landscape feels more stable. Continue the practice of naming what you feel — it keeps the heart open before God."
+    },
+    beliefs: {
+      high: "There may be false agreements operating beneath the surface — beliefs about your identity that don't align with what God says about you. These can be broken.",
+      mid: "Some beliefs about yourself may need to be examined in the light of Scripture. The mind is where renewal begins.",
+      low: "Your beliefs about your identity seem grounded. Keep renewing your mind with truth — it is an ongoing practice, not a one-time event."
+    },
+    repair: {
+      high: "You are ready for deep restoration. The desire to be made new is itself a sign that God is already at work in you.",
+      mid: "There's a willingness stirring in you. Repair doesn't require perfection — just willingness. God meets you where you are.",
+      low: "You may not feel the urgency for repair right now, and that's okay. Stay open — God's timing is perfect."
+    }
+  };
+  if (ratio >= 0.6) return narratives[id].high;
+  if (ratio >= 0.3) return narratives[id].mid;
+  return narratives[id].low;
+}
+
+function getDominantPillar() {
+  let max = 0, dom = 'body';
+  ['body', 'emotions', 'beliefs', 'repair'].forEach(id => {
+    const yes = responses[id].filter(r => r.answer === 'yes').length;
+    if (yes > max) { max = yes; dom = id; }
+  });
+  return dom;
+}
+
+function getIdentityVerse(pillar) {
+  const verses = {
+    body: { text: '"Do you not know that your bodies are temples of the Holy Spirit, who is in you, whom you have received from God?"', ref: '1 Corinthians 6:19' },
+    emotions: { text: '"The LORD is close to the brokenhearted and saves those who are crushed in spirit."', ref: 'Psalm 34:18' },
+    beliefs: { text: '"Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!"', ref: '2 Corinthians 5:17' },
+    repair: { text: '"He restores my soul. He leads me in paths of righteousness for His name\'s sake."', ref: 'Psalm 23:3' }
+  };
+  return verses[pillar];
+}
+
+function getPersonalScriptures() {
+  const all = [];
+  const colors = { body: '#ef4444', emotions: '#fbbf24', beliefs: '#60a5fa', repair: '#22c55e' };
+  const pool = {
+    body: [
+      { ref: 'Psalm 46:10', focus: 'Be still and know that He is God — let the body rest.' },
+      { ref: '1 Kings 19:5-8', focus: 'God heals the body first: rest, food, presence.' },
+      { ref: 'Matthew 11:28', focus: 'Come to Him when you are weary and heavy laden.' }
+    ],
+    emotions: [
+      { ref: 'Psalm 62:8', focus: 'Pour out your heart before Him — every emotion.' },
+      { ref: 'Psalm 139:23', focus: 'Ask God to search your heart and know your anxious thoughts.' },
+      { ref: 'Romans 8:26', focus: 'The Spirit helps us when we don\'t have words.' }
+    ],
+    beliefs: [
+      { ref: 'Romans 12:2', focus: 'Be transformed by the renewing of your mind.' },
+      { ref: '2 Corinthians 10:5', focus: 'Take every thought captive to the obedience of Christ.' },
+      { ref: 'Jeremiah 29:11', focus: 'God has plans for your welfare, not for harm.' }
+    ],
+    repair: [
+      { ref: 'Joel 2:25', focus: 'He will restore the years the locusts have eaten.' },
+      { ref: '2 Corinthians 5:17', focus: 'You are a new creation — the old has passed.' },
+      { ref: 'Isaiah 61:3', focus: 'Beauty for ashes, joy for mourning, praise for despair.' }
+    ]
+  };
+
+  // Pick based on dominant areas
+  ['body', 'emotions', 'beliefs', 'repair'].forEach(id => {
+    const yes = responses[id].filter(r => r.answer === 'yes').length;
+    if (yes >= 2) {
+      pool[id].forEach(s => all.push({ ...s, color: colors[id] }));
+    } else if (yes >= 1) {
+      all.push({ ...pool[id][0], color: colors[id] });
+    }
+  });
+
+  // Ensure at least 3
+  if (all.length < 3) {
+    const dom = getDominantPillar();
+    pool[dom].forEach(s => {
+      if (!all.find(a => a.ref === s.ref)) all.push({ ...s, color: colors[dom] });
+    });
+  }
+
+  return all.slice(0, 5);
+}
+
+function get7DayPlan() {
+  const dom = getDominantPillar();
+  const plans = {
+    body: [
+      { title: 'Body Rest', desc: 'Spend 10 minutes in silence. No phone, no noise. Let your body settle.', verse: 'Psalm 46:10' },
+      { title: 'Breathe with Scripture', desc: 'Inhale: "Be still." Exhale: "Know that I am God." Repeat 10 times.', verse: 'Psalm 46:10' },
+      { title: 'Walk & Pray', desc: 'Take a 15-minute walk. With each step, release one tension to God.', verse: '1 Kings 19:5-8' },
+      { title: 'Body Scan Prayer', desc: 'Start at your head, move to your feet. Ask God: "What are You showing me here?"', verse: '1 Corinthians 6:19' },
+      { title: 'Rest Like Elijah', desc: 'Nap, eat something nourishing, drink water. Let God minister to your body.', verse: '1 Kings 19:5-8' },
+      { title: 'Tension Release', desc: 'Tense each muscle group for 5 seconds, then release. Thank God for your body.', verse: 'Psalm 139:14' },
+      { title: 'Sabbath Practice', desc: 'Take a full hour with no tasks. Just be. God rested, and so can you.', verse: 'Genesis 2:2-3' }
+    ],
+    emotions: [
+      { title: 'Name It', desc: 'Write down 3 emotions you feel right now. Don\'t judge them — just name them.', verse: 'Psalm 62:8' },
+      { title: 'Lament Prayer', desc: 'Write a prayer of honest emotion to God. He can handle every word.', verse: 'Psalm 13:1-2' },
+      { title: 'Feel Without Fixing', desc: 'Sit with one emotion for 5 minutes. Don\'t try to fix it. Just feel it with God.', verse: 'Psalm 34:18' },
+      { title: 'Anger to Altar', desc: 'If anger is present, speak it out loud to God. Then ask: "What is underneath this?"', verse: 'Psalm 4:4' },
+      { title: 'Gratitude Bridge', desc: 'Write 5 things you\'re grateful for. Gratitude doesn\'t deny pain — it builds a bridge.', verse: 'Psalm 100:4' },
+      { title: 'Tears Are Welcome', desc: 'If tears come, let them. God collects every one.', verse: 'Psalm 56:8' },
+      { title: 'Joy Practice', desc: 'Do one thing today that brings you genuine joy. Joy is an act of faith.', verse: 'Nehemiah 8:10' }
+    ],
+    beliefs: [
+      { title: 'Identify the Lie', desc: 'Write down one false belief you carry about yourself. Be specific.', verse: '2 Corinthians 10:5' },
+      { title: 'Find the Truth', desc: 'Search Scripture for God\'s direct response to that lie. Write it down.', verse: 'John 8:32' },
+      { title: 'Speak It Out', desc: 'Say the truth out loud 3 times. "I am _______ because God says so."', verse: 'Romans 12:2' },
+      { title: 'Replace Agreement', desc: 'Renounce the lie: "I break agreement with _______." Declare the truth instead.', verse: '2 Corinthians 10:5' },
+      { title: 'Identity Meditation', desc: 'Read Ephesians 1:3-14 slowly. Underline every phrase that describes who you are.', verse: 'Ephesians 1:3-14' },
+      { title: 'Mirror Declaration', desc: 'Look in the mirror and say: "I am loved. I am chosen. I am not what happened to me."', verse: '1 John 3:1' },
+      { title: 'New Agreement', desc: 'Write a new agreement with God about your identity. Keep it where you\'ll see it.', verse: 'Jeremiah 31:33' }
+    ],
+    repair: [
+      { title: 'Invitation Prayer', desc: 'Pray: "God, I invite You into the places I\'ve been afraid to go."', verse: 'Psalm 139:23-24' },
+      { title: 'Forgiveness Step', desc: 'Ask God to show you one person to release — including yourself.', verse: 'Colossians 3:13' },
+      { title: 'Restoration Vision', desc: 'Write down what freedom looks like for you. Be as specific as possible.', verse: 'Joel 2:25' },
+      { title: 'Break the Pattern', desc: 'Identify one coping pattern. Replace it with one healthy practice today.', verse: '2 Corinthians 5:17' },
+      { title: 'Community Step', desc: 'Share one honest thing with a safe person today. Healing grows in community.', verse: 'James 5:16' },
+      { title: 'Worship as Warfare', desc: 'Put on worship music and sing. Out loud. Even if you don\'t feel like it.', verse: '2 Chronicles 20:21-22' },
+      { title: 'Walk in It', desc: 'Today, act as if the truth is already true — because in Christ, it is.', verse: '2 Corinthians 5:7' }
+    ]
+  };
+  return plans[dom];
+}
+
+/* ---------- RESTART ---------- */
+function restartAssessment() {
+  currentPhase = 0;
+  currentCard = 0;
+  completedCards = 0;
+  phases.forEach(p => responses[p.id] = []);
+  hideAll();
+  document.getElementById('startScreen').classList.add('active');
+  $progress.classList.remove('visible');
+  $progressFill.style.width = '0%';
+}
+
+/* ---------- CONFETTI ---------- */
+function fireConfetti() {
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = [];
+  const colors = ['#2563eb','#60a5fa','#22c55e','#fbbf24','#f43f5e','#38bdf8'];
+
+  for (let i = 0; i < 120; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - .5) * 3,
+      vy: Math.random() * 3 + 2,
+      rot: Math.random() * 360,
+      rv: (Math.random() - .5) * 8,
+      opacity: 1
+    });
+  }
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    pieces.forEach(p => {
+      if (p.opacity <= 0) return;
+      alive = true;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.rv;
+      if (frame > 80) p.opacity -= 0.015;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (alive) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+</script>
+</body>
+</html>
