@@ -162,7 +162,8 @@ h1 span{color:var(--blue)}
   margin-bottom:14px;
 }
 .swipe-card .scripture-ref{
-  font-size:.75rem;color:var(--gray);font-style:italic;
+  font-size:.75rem;color:var(--sky);font-style:italic;line-height:1.5;
+  max-width:340px;
 }
 
 /* Side arrows */
@@ -187,6 +188,19 @@ h1 span{color:var(--blue)}
 .swipe-hint{
   font-size:.7rem;color:var(--gray);margin-top:16px;opacity:.5;z-index:2;
 }
+
+/* Back button */
+.back-btn{
+  display:none;align-items:center;gap:5px;
+  background:none;border:1px solid rgba(255,255,255,.12);
+  border-radius:40px;padding:8px 16px 8px 12px;
+  color:var(--gray);font-size:.75rem;font-weight:600;
+  cursor:pointer;transition:all .2s;z-index:2;margin-top:10px;
+  letter-spacing:.03em;
+}
+.back-btn:hover{border-color:rgba(255,255,255,.3);color:var(--white)}
+.back-btn.visible{display:inline-flex}
+.back-btn svg{width:14px;height:14px;fill:currentColor}
 
 /* ============ TRANSITION CARD ============ */
 .transition-screen{
@@ -363,6 +377,10 @@ h1 span{color:var(--blue)}
   </div>
 
   <p class="swipe-hint" id="swipeHint">Swipe or tap the arrows</p>
+  <button class="back-btn" id="backBtn" onclick="goBack()">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg>
+    Go Back
+  </button>
 </div>
 
 <!-- ========== TRANSITION SCREEN ========== -->
@@ -394,11 +412,11 @@ const phases = [
     transitionText: "Before we begin, let's gently check in.",
     transitionScripture: '"Pour out your heart before Him; God is a refuge for us." — Psalm 62:8',
     cards: [
-      { s: "My emotions feel too big to handle.", ref: "Psalm 61:2" },
-      { s: "Peace feels out of reach for me.", ref: "Isaiah 26:3" },
-      { s: "Something inside me feels unfinished.", ref: "Philippians 1:6" },
-      { s: "I often feel on edge for no clear reason.", ref: "Psalm 46:10" },
-      { s: "I carry something heavy I can't name.", ref: "Matthew 11:28" },
+      { s: "My emotions feel too big to handle.", ref: "Psalm 61:2", v: "When my heart is overwhelmed; lead me to the rock that is higher than I." },
+      { s: "Peace feels out of reach for me.", ref: "Isaiah 26:3", v: "You will keep him in perfect peace, whose mind is stayed on You, because he trusts in You." },
+      { s: "Something inside me feels unfinished.", ref: "Philippians 1:6", v: "He who has begun a good work in you will complete it until the day of Jesus Christ." },
+      { s: "I often feel on edge for no clear reason.", ref: "Psalm 46:10", v: "Be still, and know that I am God." },
+      { s: "I carry something heavy I can't name.", ref: "Matthew 11:28", v: "Come to Me, all you who labor and are heavy laden, and I will give you rest." },
     ]
   },
   {
@@ -409,11 +427,11 @@ const phases = [
     transitionText: "Now we'll notice what your body is carrying.",
     transitionScripture: '"Be still, and know that I am God." — Psalm 46:10',
     cards: [
-      { s: "My body feels tense most of the time.", ref: "Psalm 46:10" },
-      { s: "Rest doesn't come easy for me.", ref: "Matthew 11:28-29" },
-      { s: "I'm tired in a way sleep doesn't fix.", ref: "1 Kings 19:5-8" },
-      { s: "I hold my breath without realizing it.", ref: "Genesis 2:7" },
-      { s: "My body reacts before my mind catches up.", ref: "1 Corinthians 6:19-20" },
+      { s: "My body feels tense most of the time.", ref: "Psalm 46:10", v: "Be still, and know that I am God; I will be exalted among the nations." },
+      { s: "Rest doesn't come easy for me.", ref: "Matthew 11:28-29", v: "Come to Me, all you who labor and are heavy laden, and I will give you rest. Take My yoke upon you and learn from Me, for I am gentle and lowly in heart." },
+      { s: "I'm tired in a way sleep doesn't fix.", ref: "1 Kings 19:5-7", v: "Then as he lay and slept under a broom tree, an angel touched him, and said, 'Arise and eat.' He looked, and there was a cake and a jar of water. So he ate and drank." },
+      { s: "I hold my breath without realizing it.", ref: "Genesis 2:7", v: "And the LORD God formed man of the dust of the ground, and breathed into his nostrils the breath of life." },
+      { s: "My body reacts before my mind catches up.", ref: "1 Corinthians 6:19", v: "Do you not know that your body is the temple of the Holy Spirit who is in you, whom you have from God?" },
     ]
   },
   {
@@ -424,11 +442,11 @@ const phases = [
     transitionText: "Let's name what's rising to the surface.",
     transitionScripture: '"The LORD is close to the brokenhearted." — Psalm 34:18',
     cards: [
-      { s: "Sadness shows up a lot for me.", ref: "Psalm 34:18" },
-      { s: "I carry anger I can't always explain.", ref: "Psalm 4:4" },
-      { s: "I often feel like I'm not enough.", ref: "Psalm 139:14" },
-      { s: "I feel guilty even when I've done nothing wrong.", ref: "Romans 8:1" },
-      { s: "I shut down before I can feel.", ref: "Psalm 62:8" },
+      { s: "Sadness shows up a lot for me.", ref: "Psalm 34:18", v: "The LORD is near to those who have a broken heart, and saves such as have a contrite spirit." },
+      { s: "I carry anger I can't always explain.", ref: "Psalm 4:4", v: "Be angry, and do not sin. Meditate within your heart on your bed, and be still." },
+      { s: "I often feel like I'm not enough.", ref: "Psalm 139:14", v: "I will praise You, for I am fearfully and wonderfully made; marvelous are Your works." },
+      { s: "I feel guilty even when I've done nothing wrong.", ref: "Romans 8:1", v: "There is therefore now no condemnation to those who are in Christ Jesus." },
+      { s: "I shut down before I can feel.", ref: "Psalm 62:8", v: "Trust in Him at all times, you people; pour out your heart before Him; God is a refuge for us." },
     ]
   },
   {
@@ -439,11 +457,11 @@ const phases = [
     transitionText: "Let's uncover the agreements your mind has made.",
     transitionScripture: '"Be transformed by the renewing of your mind." — Romans 12:2',
     cards: [
-      { s: "Deep down I feel something is wrong with me.", ref: "Jeremiah 1:5" },
-      { s: "I feel alone even in a crowd.", ref: "Deuteronomy 31:6" },
-      { s: "It's hard to believe God is for me.", ref: "Romans 8:31" },
-      { s: "I believe I have to earn love.", ref: "Ephesians 2:8-9" },
-      { s: "A voice inside says I'll never change.", ref: "2 Corinthians 5:17" },
+      { s: "Deep down I feel something is wrong with me.", ref: "Jeremiah 1:5", v: "Before I formed you in the womb I knew you; before you were born I sanctified you." },
+      { s: "I feel alone even in a crowd.", ref: "Deuteronomy 31:6", v: "Be strong and of good courage; do not be afraid, for the LORD your God, He is the One who goes with you. He will not leave you nor forsake you." },
+      { s: "It's hard to believe God is for me.", ref: "Romans 8:31", v: "If God is for us, who can be against us?" },
+      { s: "I believe I have to earn love.", ref: "Ephesians 2:8-9", v: "For by grace you have been saved through faith, and that not of yourselves; it is the gift of God, not of works, lest anyone should boast." },
+      { s: "A voice inside says I'll never change.", ref: "2 Corinthians 5:17", v: "Therefore, if anyone is in Christ, he is a new creation; old things have passed away; behold, all things have become new." },
     ]
   },
   {
@@ -454,11 +472,11 @@ const phases = [
     transitionText: "God's truth replaces the lie. He makes all things new.",
     transitionScripture: '"He restores my soul." — Psalm 23:3',
     cards: [
-      { s: "I want to break free from what holds me back.", ref: "John 8:36" },
-      { s: "I'm ready to let God rewrite my story.", ref: "Joel 2:25" },
-      { s: "I believe healing is possible for me.", ref: "Jeremiah 30:17" },
-      { s: "I want to know who I really am in Christ.", ref: "2 Corinthians 5:17" },
-      { s: "I'm willing to do the work with God's help.", ref: "Philippians 4:13" },
+      { s: "I want to break free from what holds me back.", ref: "John 8:36", v: "Therefore if the Son makes you free, you shall be free indeed." },
+      { s: "I'm ready to let God rewrite my story.", ref: "Joel 2:25", v: "I will restore to you the years that the swarming locust has eaten." },
+      { s: "I believe healing is possible for me.", ref: "Jeremiah 30:17", v: "For I will restore health to you and heal you of your wounds, says the LORD." },
+      { s: "I want to know who I really am in Christ.", ref: "2 Corinthians 5:17", v: "If anyone is in Christ, he is a new creation; old things have passed away; behold, all things have become new." },
+      { s: "I'm willing to do the work with God's help.", ref: "Philippians 4:13", v: "I can do all things through Christ who strengthens me." },
     ]
   }
 ];
@@ -491,6 +509,10 @@ const $arrowLeft = document.getElementById('arrowLeft');
 const $arrowRight = document.getElementById('arrowRight');
 const $transScreen = document.getElementById('transitionScreen');
 const $results = document.getElementById('resultsScreen');
+const $backBtn = document.getElementById('backBtn');
+
+/* ---------- HISTORY STACK (for go-back) ---------- */
+let history = []; // { phase, card, phaseId }
 
 /* ---------- START ---------- */
 function startAssessment() {
@@ -535,10 +557,14 @@ function loadCard() {
   $card.style.opacity = '1';
   $card.classList.remove('dragging', 'animating');
   $statement.textContent = c.s;
-  $scripture.textContent = c.ref;
+  $scripture.innerHTML = '"' + c.v + '"<br><span style="opacity:.6">' + c.ref + '</span>';
   $bgTint.style.background = 'transparent';
   resetArrows();
   updateProgress();
+
+  // Show back button if there's history to undo
+  if (history.length > 0) $backBtn.classList.add('visible');
+  else $backBtn.classList.remove('visible');
 }
 
 /* ---------- PROGRESS ---------- */
@@ -645,6 +671,7 @@ function animateOff(dir) {
 function recordResponse(answer) {
   const p = phases[currentPhase];
   const c = p.cards[currentCard];
+  history.push({ phase: currentPhase, card: currentCard, phaseId: p.id });
   responses[p.id].push({ statement: c.s, answer: answer });
   completedCards++;
 
@@ -663,6 +690,25 @@ function recordResponse(answer) {
       }
     }
   }, 380);
+}
+
+/* ---------- GO BACK ---------- */
+function goBack() {
+  if (cardLocked || history.length === 0) return;
+  const prev = history.pop();
+  // Remove the last response from that phase
+  responses[prev.phaseId].pop();
+  completedCards--;
+  currentPhase = prev.phase;
+  currentCard = prev.card;
+
+  // If we're on a transition screen, switch back to swipe
+  if ($transScreen.classList.contains('active')) {
+    hideAll();
+    $swipeScreen.classList.add('active');
+  }
+
+  loadCard();
 }
 
 /* ---------- HELPERS ---------- */
