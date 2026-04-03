@@ -295,6 +295,36 @@ h1 span{color:var(--blue)}
 .next-steps h3{font-size:1rem;font-weight:700;margin-bottom:14px}
 .next-steps .btn{margin:6px}
 
+.share-section{
+  text-align:center;margin:32px 0 8px;
+}
+.share-section h3{font-size:1rem;font-weight:700;margin-bottom:14px}
+.share-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 24px;border:none;border-radius:60px;cursor:pointer;
+  font-size:.9rem;font-weight:700;color:var(--white);
+  transition:all .2s;
+}
+.share-btn:active{transform:scale(.96)}
+.share-btn svg{width:18px;height:18px;fill:currentColor}
+.share-btn.email-btn{
+  background:linear-gradient(135deg,var(--blue),#3b82f6);
+  box-shadow:0 4px 16px rgba(37,99,235,.35);
+}
+.share-btn.pdf-btn{
+  background:linear-gradient(135deg,#059669,#10b981);
+  box-shadow:0 4px 16px rgba(5,150,105,.35);
+}
+.share-btn.copy-btn{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+}
+.share-btn.copy-btn:hover{background:rgba(255,255,255,.12)}
+.share-status{
+  font-size:.75rem;color:var(--green);margin-top:10px;
+  min-height:18px;
+}
+
 .results-disclaimer{
   font-size:.7rem;color:var(--gray);text-align:center;
   max-width:400px;margin:24px auto 0;line-height:1.5;opacity:.6;
@@ -810,6 +840,17 @@ function showResults() {
   });
   html += '</div>';
 
+  /* Share / Save */
+  html += '<div class="share-section">';
+  html += '<h3>Save Your Results</h3>';
+  html += '<div class="share-btns">';
+  html += '<button class="share-btn email-btn" onclick="emailResults()"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Email</button>';
+  html += '<button class="share-btn pdf-btn" onclick="downloadPDF()"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>Save PDF</button>';
+  html += '<button class="share-btn copy-btn" onclick="copyResults()"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>Copy</button>';
+  html += '</div>';
+  html += '<div class="share-status" id="shareStatus"></div>';
+  html += '</div>';
+
   /* Next Steps */
   html += '<div class="next-steps">';
   html += '<h3>What Comes Next</h3>';
@@ -972,6 +1013,176 @@ function restartAssessment() {
   document.getElementById('startScreen').classList.add('active');
   $progress.classList.remove('visible');
   $progressFill.style.width = '0%';
+}
+
+/* ---------- BUILD PLAIN TEXT RESULTS ---------- */
+function buildResultsText() {
+  let t = 'BENR ASSESSMENT RESULTS\n';
+  t += 'Body \u00b7 Emotions \u00b7 Neuro \u00b7 Repair\n';
+  t += 'StayTheWay Ministry\n';
+  t += '========================\n\n';
+  t += 'You were honest with God. That takes courage.\n\n';
+
+  const pillarMap = [
+    { id: 'body', name: 'B \u2014 BODY', icon: '' },
+    { id: 'emotions', name: 'E \u2014 EMOTIONS', icon: '' },
+    { id: 'beliefs', name: 'N \u2014 NEURO', icon: '' },
+    { id: 'repair', name: 'R \u2014 REPAIR', icon: '' },
+  ];
+
+  pillarMap.forEach(pm => {
+    const r = responses[pm.id] || [];
+    const yes = r.filter(x => x.answer === 'yes').length;
+    const unsure = r.filter(x => x.answer === 'unsure').length;
+    const no = r.filter(x => x.answer === 'no').length;
+    t += pm.name + '\n';
+    t += '  Yes: ' + yes + '  |  No: ' + no + '  |  Not Sure: ' + unsure + '\n';
+    t += '  ' + getPillarNarrative(pm.id, yes, unsure, no, r.length) + '\n';
+    const tenders = r.filter(x => x.answer === 'unsure');
+    if (tenders.length) {
+      t += '  Tender Areas:\n';
+      tenders.forEach(x => { t += '    - ' + x.statement + '\n'; });
+    }
+    t += '\n';
+  });
+
+  const dom = getDominantPillar();
+  const iv = getIdentityVerse(dom);
+  t += 'YOUR IDENTITY IN CHRIST\n';
+  t += iv.text + '\n  \u2014 ' + iv.ref + '\n\n';
+
+  t += 'SCRIPTURES FOR YOUR JOURNEY\n';
+  getPersonalScriptures().forEach(s => {
+    t += '  ' + s.ref + ' \u2014 ' + s.focus + '\n';
+  });
+  t += '\n';
+
+  t += '7-DAY HEALING PLAN\n';
+  get7DayPlan().forEach((d, i) => {
+    t += '  Day ' + (i + 1) + ': ' + d.title + '\n';
+    t += '    ' + d.desc + '\n';
+    t += '    ' + d.verse + '\n';
+  });
+  t += '\n';
+
+  t += '---\n';
+  t += 'This is a biblical reflection tool, not a substitute for professional counseling or medical care.\n';
+  t += 'StayTheWay Ministry \u00b7 staytheway.com/benr\n';
+  return t;
+}
+
+/* ---------- EMAIL RESULTS ---------- */
+function emailResults() {
+  const body = buildResultsText();
+  const subject = 'My BENR Assessment Results \u2014 StayTheWay';
+  const mailto = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  window.location.href = mailto;
+  showShareStatus('Opening your email app...');
+}
+
+/* ---------- COPY RESULTS ---------- */
+function copyResults() {
+  const text = buildResultsText();
+  navigator.clipboard.writeText(text).then(() => {
+    showShareStatus('Copied to clipboard!');
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showShareStatus('Copied to clipboard!');
+  });
+}
+
+/* ---------- PDF RESULTS (print-based) ---------- */
+function downloadPDF() {
+  // Build a clean printable document in a new window
+  const text = buildResultsText();
+  const printWin = window.open('', '_blank');
+  printWin.document.write('<!DOCTYPE html><html><head><title>BENR Assessment Results</title>');
+  printWin.document.write('<style>');
+  printWin.document.write('body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;color:#1a1a1a;max-width:640px;margin:40px auto;padding:0 24px;line-height:1.6;font-size:13px}');
+  printWin.document.write('h1{font-size:20px;margin-bottom:4px} h2{font-size:15px;margin:20px 0 6px;color:#2563eb} h3{font-size:13px;margin:14px 0 4px}');
+  printWin.document.write('.opener{text-align:center;margin-bottom:24px} .opener p{color:#666;font-size:13px}');
+  printWin.document.write('.pillar{margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #e5e7eb}');
+  printWin.document.write('.bar{height:6px;border-radius:3px;background:#f1f5f9;margin:6px 0 8px} .bar-fill{height:100%;border-radius:3px}');
+  printWin.document.write('.tender{background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:10px 14px;margin-top:8px;font-size:12px;color:#0c4a6e}');
+  printWin.document.write('.identity{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:18px;text-align:center;margin:20px 0}');
+  printWin.document.write('.identity .verse{color:#2563eb;font-style:italic;font-size:14px} .identity .ref{color:#94a3b8;font-size:12px}');
+  printWin.document.write('.day{display:flex;gap:12px;margin-bottom:10px} .day-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px}');
+  printWin.document.write('.day-title{font-weight:700;font-size:13px} .day-desc{font-size:12px;color:#4b5563} .day-verse{font-size:11px;color:#2563eb;font-style:italic}');
+  printWin.document.write('.footer{text-align:center;margin-top:28px;padding-top:14px;border-top:1px solid #e5e7eb;font-size:11px;color:#94a3b8}');
+  printWin.document.write('@media print{body{margin:20px auto}}');
+  printWin.document.write('</style></head><body>');
+
+  // Header
+  printWin.document.write('<div class="opener"><h1>BENR Assessment Results</h1>');
+  printWin.document.write('<p>Body \u00b7 Emotions \u00b7 Neuro \u00b7 Repair</p>');
+  printWin.document.write('<p><strong>You were honest with God. That takes courage.</strong></p></div>');
+
+  // Pillars
+  const pm = [
+    { id:'body', name:'B \u2014 Body', color:'#ef4444' },
+    { id:'emotions', name:'E \u2014 Emotions', color:'#fbbf24' },
+    { id:'beliefs', name:'N \u2014 Neuro', color:'#60a5fa' },
+    { id:'repair', name:'R \u2014 Repair', color:'#22c55e' }
+  ];
+  pm.forEach(p => {
+    const r = responses[p.id] || [];
+    const yes = r.filter(x => x.answer === 'yes').length;
+    const unsure = r.filter(x => x.answer === 'unsure').length;
+    const no = r.filter(x => x.answer === 'no').length;
+    const pct = r.length > 0 ? Math.round((yes / r.length) * 100) : 0;
+    printWin.document.write('<div class="pillar"><h2>' + p.name + '</h2>');
+    printWin.document.write('<div class="bar"><div class="bar-fill" style="width:' + pct + '%;background:' + p.color + '"></div></div>');
+    printWin.document.write('<p>' + getPillarNarrative(p.id, yes, unsure, no, r.length) + '</p>');
+    const tenders = r.filter(x => x.answer === 'unsure');
+    if (tenders.length) {
+      printWin.document.write('<div class="tender"><strong>Tender Areas:</strong><br>');
+      tenders.forEach(x => { printWin.document.write('\u2022 ' + x.statement + '<br>'); });
+      printWin.document.write('</div>');
+    }
+    printWin.document.write('</div>');
+  });
+
+  // Identity
+  const dom = getDominantPillar();
+  const iv = getIdentityVerse(dom);
+  printWin.document.write('<div class="identity"><h2>Your Identity in Christ</h2>');
+  printWin.document.write('<div class="verse">' + iv.text + '</div>');
+  printWin.document.write('<div class="ref">' + iv.ref + '</div></div>');
+
+  // Scriptures
+  printWin.document.write('<h2>Scriptures for Your Journey</h2>');
+  getPersonalScriptures().forEach(s => {
+    printWin.document.write('<p><strong>' + s.ref + '</strong> \u2014 ' + s.focus + '</p>');
+  });
+
+  // 7-Day Plan
+  printWin.document.write('<h2>Your 7-Day Healing Plan</h2>');
+  get7DayPlan().forEach((d, i) => {
+    printWin.document.write('<div class="day"><div class="day-num">' + (i+1) + '</div><div>');
+    printWin.document.write('<div class="day-title">' + d.title + '</div>');
+    printWin.document.write('<div class="day-desc">' + d.desc + '</div>');
+    printWin.document.write('<div class="day-verse">' + d.verse + '</div>');
+    printWin.document.write('</div></div>');
+  });
+
+  // Footer
+  printWin.document.write('<div class="footer">This is a biblical reflection tool, not a substitute for professional counseling or medical care.<br>StayTheWay Ministry \u00b7 staytheway.com/benr</div>');
+  printWin.document.write('</body></html>');
+  printWin.document.close();
+
+  setTimeout(() => { printWin.print(); }, 400);
+  showShareStatus('Print/Save dialog opened');
+}
+
+function showShareStatus(msg) {
+  const el = document.getElementById('shareStatus');
+  if (el) { el.textContent = msg; setTimeout(() => { el.textContent = ''; }, 3000); }
 }
 
 /* ---------- CONFETTI ---------- */
