@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>7 Pillars of a Faithful Woman — Toward Her Husband</title>
+<style>
+  :root {
+    --navy: #000014;
+    --navy-2: #06112B;
+    --blue: #1478F0;
+    --sky: #28A0F0;
+    --chrome: #DCDCDC;
+    --rose: #F4B6C9;
+    --white: #FFFFFF;
+    --dim: #9BB6D4;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--navy);
+    color: var(--chrome);
+    font-family: "Calibri", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.25rem 3rem;
+  }
+  header.hero {
+    padding: 3rem 1.25rem 2.5rem;
+    text-align: center;
+    border-bottom: 4px solid var(--blue);
+    position: relative;
+  }
+  header.hero::after {
+    content: ""; display: block;
+    position: absolute; left: 0; right: 0; bottom: -8px; height: 4px;
+    background: var(--rose);
+  }
+  header.hero .kicker {
+    color: var(--sky); font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 0.4em; margin-bottom: 1rem;
+  }
+  header.hero h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.4rem, 8vw, 3.6rem);
+    color: var(--white); margin: 0 0 0.4rem; line-height: 1.05;
+  }
+  header.hero h1 .seven {
+    display: block; color: var(--blue); font-size: 1.6em; line-height: 0.9;
+  }
+  header.hero h2 {
+    font-family: Georgia, serif; font-style: italic; font-weight: 500;
+    color: var(--sky); margin: 1rem 0 0.2rem;
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+  }
+  header.hero h3 {
+    font-weight: 400; color: var(--chrome); margin: 0;
+    font-size: clamp(1rem, 3.5vw, 1.2rem); letter-spacing: 0.08em;
+  }
+  .key-verse {
+    background: var(--navy-2);
+    border: 1px solid var(--blue);
+    margin: 2rem auto 0; padding: 0; max-width: 640px;
+  }
+  .key-verse .label {
+    background: var(--blue); color: var(--white);
+    padding: 0.7rem; text-align: center;
+    font-size: 0.78rem; letter-spacing: 0.25em; font-weight: 700;
+  }
+  .key-verse .verse {
+    padding: 1.5rem 1.25rem 0.5rem; text-align: center;
+    font-family: Georgia, serif; font-style: italic;
+    color: var(--white); font-size: clamp(1.15rem, 4vw, 1.4rem);
+  }
+  .key-verse .ref {
+    padding: 0.5rem 1rem 1.4rem; text-align: center;
+    color: var(--rose); font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 0.05em;
+  }
+  .tagline {
+    text-align: center; margin: 1.25rem 0 0;
+    color: var(--sky); font-style: italic; font-size: 0.95rem;
+  }
+
+  section.principle {
+    margin: 2.5rem 0 1rem; padding: 1.5rem 1.25rem;
+    border-left: 4px solid var(--rose);
+    background: rgba(20, 120, 240, 0.06);
+  }
+  section.principle strong { color: var(--white); }
+
+  .pillar {
+    margin: 2rem 0; padding: 1.25rem 1.25rem 1.25rem;
+    background: var(--navy-2);
+    border: 1px solid rgba(20, 120, 240, 0.35);
+    border-left: 6px solid var(--blue);
+    position: relative;
+  }
+  .pillar-header {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem;
+  }
+  .badge {
+    flex: 0 0 auto; width: 3.2rem; height: 3.2rem; border-radius: 50%;
+    background: var(--blue); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif; font-weight: 700; font-size: 1.6rem;
+    border: 2px solid var(--chrome);
+  }
+  .pillar-title {
+    font-family: Georgia, serif; color: var(--white);
+    font-size: clamp(1.2rem, 4.2vw, 1.55rem); font-weight: 700;
+    line-height: 1.2;
+  }
+  .reference {
+    color: var(--sky); font-style: italic; font-weight: 700;
+    font-size: 1rem; margin: 0.4rem 0 0.6rem;
+  }
+  .verse-text {
+    font-family: Georgia, serif; font-style: italic;
+    color: var(--chrome); font-size: 1.05rem;
+    padding: 0.25rem 0 0.5rem; border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 0.85rem;
+  }
+  .contrast {
+    margin-top: 1rem; padding: 0.75rem 1rem;
+    background: var(--blue); color: var(--white);
+    font-size: 0.95rem;
+  }
+  .contrast strong {
+    letter-spacing: 0.18em; font-size: 0.82rem;
+    display: inline-block; margin-right: 0.5rem;
+  }
+  .echo {
+    margin-top: 0.85rem; padding: 0.9rem 0 0;
+    border-top: 1px dashed rgba(244, 182, 201, 0.35);
+    color: var(--chrome); font-style: italic; font-size: 0.95rem;
+    text-align: center;
+  }
+  .echo .echo-label {
+    display: block; text-align: center; color: var(--rose);
+    font-weight: 700; letter-spacing: 0.18em; font-size: 0.72rem;
+    font-style: normal; margin-bottom: 0.5rem;
+  }
+
+  .wrap-up {
+    margin: 3rem 0 1rem; padding: 2rem 1.25rem;
+    background: var(--navy-2);
+    border: 1px solid var(--blue);
+  }
+  .wrap-up .kicker {
+    color: var(--sky); letter-spacing: 0.3em;
+    font-size: 0.8rem; text-align: center; font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .wrap-up h2 {
+    font-family: Georgia, serif; color: var(--white);
+    text-align: center; font-size: clamp(1.5rem, 5vw, 2rem);
+    margin: 0 0 1.25rem; line-height: 1.2;
+  }
+  .wrap-up .big-verse {
+    font-family: Georgia, serif; font-style: italic;
+    color: var(--white); font-size: 1.2rem;
+    padding: 1rem 0.25rem; border-left: 4px solid var(--blue);
+    padding-left: 1rem;
+  }
+  .wrap-up .ref {
+    color: var(--rose); font-weight: 700; margin-top: 0.75rem;
+    font-size: 1rem;
+  }
+  .call {
+    margin-top: 1.5rem; padding: 1.25rem 1rem;
+    background: var(--blue); color: var(--white);
+    text-align: center; font-family: Georgia, serif;
+    font-style: italic; font-size: 1.15rem; line-height: 1.5;
+  }
+  .call .label {
+    display: block; font-family: Calibri, sans-serif;
+    font-style: normal; font-weight: 700; letter-spacing: 0.3em;
+    font-size: 0.78rem; margin-bottom: 0.75rem;
+  }
+  .companion {
+    text-align: center; margin-top: 1.25rem;
+    color: var(--sky); font-style: italic; font-size: 0.9rem;
+  }
+  .companion q {
+    display: block; color: var(--chrome); font-family: Georgia, serif;
+    margin-top: 0.35rem;
+  }
+
+  footer {
+    text-align: center; padding: 2rem 1rem 1rem;
+    color: var(--dim); font-size: 0.85rem;
+    border-top: 1px solid rgba(20, 120, 240, 0.3);
+    margin-top: 2rem;
+  }
+  footer .rule {
+    width: 60%; height: 1px; margin: 0 auto 1rem;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">STAYTHEWAY MINISTRY</div>
+  <h1><span class="seven">7</span>PILLARS</h1>
+  <h2>of a Faithful Woman</h2>
+  <h3>Toward Her Husband</h3>
+
+  <div class="key-verse">
+    <div class="label">KEY VERSE — FOUNDATION OF ALL 7 PILLARS</div>
+    <div class="verse">&ldquo;My sheep hear My voice, and I know them, and they follow Me.&rdquo;</div>
+    <div class="ref">— Jesus, John 10:27 (NKJV)</div>
+  </div>
+  <div class="tagline">Led by the Holy Spirit &nbsp;•&nbsp; April 2026</div>
+</header>
+
+<main class="wrap">
+
+  <section class="principle">
+    <strong>Teaching principle.</strong> A woman is faithful to God <em>independently</em> of her husband's response. She hears the Shepherd's voice first — and out of that, she honors, builds, and blesses, regardless of whether she is honored, built, or blessed in return. Every pillar stands independent of anyone else's faithfulness.
+  </section>
+
+  <!-- PILLAR 1 -->
+  <article class="pillar">
+    <div class="pillar-header">
+      <div class="badge">1</div>
+      <div class="pillar-title">She Hears Her Shepherd's Voice</div>
+    </div>
+    <div class="reference">John 10:27 (NKJV)</div>
+    <div class="verse-text">&ldquo;My sheep hear My voice, and I know them, and they follow Me.&rdquo;</div>
+    <div class="contrast"><strong>CONTRAST</strong> Eve — She listened to another voice in the garden instead of the voice of her Shepherd.</div>
+    <div class="echo">
+      <span class="echo-label">KEY VERSE ECHO</span>
+      Before she is a wife, she is a sheep of His pasture. Every other pillar rises only as high as this one.
+    </div>
+  </article>
+
+  <!-- PILLAR 2 -->
+  <article class="pillar">
+    <div class="pillar-header">
+      <div class="badge">2</div>
+      <div class="pillar-title">She Honors and Reverences Her Husband</div>
+    </div>
+    <div class="reference">Ephesians 5:33 (NKJV)</div>
+    <div class="verse-text">&ldquo;Nevertheless let each one of you in particular so love his own wife as himself, and let the wife see that she respects her husband.&rdquo;</div>
+    <div class="contrast"><strong>CONTRAST</strong> Michal — She despised David in her heart when he worshiped the Lord freely.</div>
+    <div class="echo">
+      <span class="echo-label">KEY VERSE ECHO</span>
+      When she hears the Shepherd first, she can honor her husband even when he is imperfect — because her respect flows from Christ, not from his performance.
+    </div>
+  </article>
+
+  <!-- PILLAR 3 -->
+  <article class="pillar">
+    <div class="pillar-header">
+      <div class="badge">3</div>
+      <div class="pillar-title">She Builds Her House, Never Tears It Down</div>
+    </div>
+    <div class="reference">Proverbs 14:1 (NKJV)</div>
+    <div class="verse-text">&ldquo;The wise woman builds her house, but the foolish pulls it down with her hands.&rdquo;</div>
+    <div class="contrast"><strong>CONTRAST</strong> Jezebel — She used her voice and hands to pull Ahab and her house into ruin.</div>
+    <div class="echo">
+      <span class="echo-label">KEY VERSE ECHO</span>
+      She follows the Shepherd's voice, so her hands build. She does not use words or will to dismantle what God is raising up.
+    </div>
+  </article>
+
+  <!-- PILLAR 4 -->
+  <article class="pillar">
+    <div class="pillar-header">
+      <div class="badge">4</div>
+      <div class="pillar-title">She Adorns the Hidden Heart — Gentle and Quiet Spirit</div>
+    </div>
+    <div class="reference">1 Peter 3:3&ndash;4 (NKJV)</div>
+    <div class="verse-text">&ldquo;Do not let your adornment be merely outward—arranging the hair, wearing gold, or putting on fine apparel— rather let it be the hidden person of the heart, with the incorruptible beauty of a gentle and quiet spirit, which is very precious in the sight of God.&rdquo;</div>
+    <div class="contrast"><strong>CONTRAST</strong> Sapphira — She agreed with her husband in hidden deception instead of in hidden holiness.</div>
+    <div class="echo">
+      <span class="echo-label">KEY VERSE ECHO</span>
+      A heart tuned to the Shepherd becomes quiet. Quietness is not silence — it is a soul that stopped striving because it already heard Him.
+    </div>
+  </article>
+
+  <!-- PILLAR 5 -->
+  <article class="pillar">
+    <div class="pillar-header">
+      <div class="badge">5</div>
+      <div class="pillar-title">She Wins Him Without a Word</div>
+    </div>
+    <div class="reference">1 Peter 3:1&ndash;2 (NKJV)</div>
+    <div class="verse-text">&ldquo;Wives, likewise, be submissive to your own husbands, that even if some do not obey the word, they, without a word, may be won by the conduct of their wives, when they observe your chaste conduct accompanied by fear.&rdquo;</div>
+    <div class="contrast"><strong>CONTRAST</strong> Job's wife — In his suffering she said, &ldquo;Curse God and die.&rdquo; She preached despair instead of living hope.</div>
+    <div class="echo">
+      <span class="echo-label">KEY VERSE ECHO</span>
+      When she hears the Shepherd clearly, she does not need to preach her husband home. Her conduct becomes the sermon.
+    </div>
+  </article>
+
+  <!-- PILLAR 6 -->
+  <article class="pillar">
+    <div class="pillar-header">
+      <div class="badge">6</div>
+      <div class="pillar-title">She Does Him Good All the Days of Her Life</div>
+    </div>
+    <div class="reference">Proverbs 31:10&ndash;12 (NKJV)</div>
+    <div class="verse-text">&ldquo;Who can find a virtuous wife? For her worth is far above rubies. The heart of her husband safely trusts her; so he will have no lack of gain. She does him good and not evil all the days of her life.&rdquo;</div>
+    <div class="contrast"><strong>CONTRAST</strong> Delilah — She studied her man to destroy him, not to bless him.</div>
+    <div class="echo">
+      <span class="echo-label">KEY VERSE ECHO</span>
+      A woman who hears the Shepherd becomes safe ground for her husband's heart. Not perfect ground — safe ground.
+    </div>
+  </article>
+
+  <!-- PILLAR 7 -->
+  <article class="pillar">
+    <div class="pillar-header">
+      <div class="badge">7</div>
+      <div class="pillar-title">She Looks Forward, Never Back</div>
+    </div>
+    <div class="reference">Luke 17:32 &nbsp;•&nbsp; Philippians 3:13&ndash;14 (NKJV)</div>
+    <div class="verse-text">
+      &ldquo;Remember Lot's wife.&rdquo;<br/><br/>
+      &ldquo;Forgetting those things which are behind and reaching forward to those things which are ahead, I press toward the goal for the prize of the upward call of God in Christ Jesus.&rdquo;
+    </div>
+    <div class="contrast"><strong>CONTRAST</strong> Lot's wife — She was delivered from Sodom, but her heart stayed behind. She looked back, and she was lost.</div>
+    <div class="echo">
+      <span class="echo-label">KEY VERSE ECHO</span>
+      Sheep that hear His voice do not glance back at old pastures. They follow.
+    </div>
+  </article>
+
+  <!-- WRAP-UP -->
+  <section class="wrap-up">
+    <div class="kicker">WRAP-UP</div>
+    <h2>The Shepherd's Promise<br/>to the Woman Who Hears</h2>
+    <div class="big-verse">
+      &ldquo;My sheep hear My voice, and I know them, and they follow Me. And I give them eternal life, and they shall never perish; neither shall anyone snatch them out of My hand.&rdquo;
+      <div class="ref">— John 10:27&ndash;28 (NKJV)</div>
+    </div>
+
+    <div class="call">
+      <span class="label">HER CALL TODAY</span>
+      Hear His voice first.<br/>
+      Let the seven pillars rise.<br/>
+      Be faithful to God&mdash;independent of any response.
+    </div>
+
+    <div class="companion">
+      Companion scripture &nbsp;•&nbsp; Ephesians 5:33 (NKJV)
+      <q>&hellip;let the wife see that she respects her husband.</q>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="rule"></div>
+  <div>StayTheWay Ministry &nbsp;•&nbsp; staytheway.com</div>
+  <div style="margin-top: 0.4rem; font-size: 0.75rem; opacity: 0.7;">7 Pillars of a Faithful Woman — Toward Her Husband &nbsp;•&nbsp; April 2026</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bible Bingo — 7 Pillars of a Faithful Woman</title>
+<meta name="description" content="Interactive Bible Bingo for StayTheWay Ministry's teaching: 7 Pillars of a Faithful Woman — Toward Her Husband." />
+<style>
+  :root {
+    --navy: #000014;
+    --navy-2: #06112B;
+    --blue: #1478F0;
+    --sky: #28A0F0;
+    --chrome: #DCDCDC;
+    --rose: #F4B6C9;
+    --white: #FFFFFF;
+    --gold: #F0D474;
+    --mark: #1478F0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header {
+    text-align: center; padding-bottom: 1.25rem;
+    border-bottom: 3px solid var(--blue);
+    position: relative;
+  }
+  header::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px;
+    background: var(--rose);
+  }
+  header .kicker { color: var(--sky); letter-spacing: 0.35em; font-weight: 900;
+    font-size: 0.75rem; margin-bottom: 0.5rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white);
+    margin: 0; font-size: clamp(1.7rem, 6vw, 2.4rem); letter-spacing: 0.02em; }
+  header .sub { color: var(--sky); font-style: italic; margin-top: 0.5rem;
+    font-size: clamp(0.9rem, 3vw, 1.05rem); }
+
+  .intro { margin: 1.25rem 0 1.5rem; padding: 1rem 1.1rem;
+    background: rgba(20,120,240,0.07); border-left: 4px solid var(--rose);
+    font-size: 0.98rem; line-height: 1.55; }
+  .intro strong { color: var(--white); }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+    margin: 0 0 1.25rem; }
+  .btn {
+    background: var(--blue); color: var(--white); border: 2px solid var(--blue);
+    padding: 0.6rem 1.1rem; font-weight: 900; letter-spacing: 0.08em;
+    font-size: 0.85rem; cursor: pointer; border-radius: 4px;
+    font-family: inherit;
+  }
+  .btn.ghost { background: transparent; color: var(--sky); border-color: var(--sky); }
+  .btn:hover { filter: brightness(1.15); }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem;
+    max-width: 560px; margin: 0 auto;
+  }
+  .cell {
+    aspect-ratio: 1 / 1;
+    background: var(--navy-2); border: 2px solid rgba(20,120,240,0.45);
+    display: flex; align-items: center; justify-content: center;
+    padding: 0.35rem; text-align: center;
+    font-family: Georgia, serif; font-weight: 700;
+    font-size: clamp(0.62rem, 1.9vw, 0.82rem);
+    line-height: 1.2; color: var(--chrome);
+    cursor: pointer; user-select: none;
+    transition: transform 0.08s ease, background 0.15s ease;
+  }
+  .cell:hover { transform: scale(1.02); }
+  .cell.marked {
+    background: var(--blue); color: var(--white);
+    border-color: var(--rose); position: relative;
+  }
+  .cell.marked::after {
+    content: "✓"; position: absolute; top: 2px; right: 6px;
+    color: var(--rose); font-size: 1.1rem; font-weight: 900;
+  }
+  .cell.free {
+    background: var(--navy); border: 2px dashed var(--rose);
+    font-family: "Arial Black", sans-serif; color: var(--rose);
+    letter-spacing: 0.2em;
+  }
+  .cell.free.marked { background: var(--rose); color: var(--navy); border-style: solid; }
+
+  .status {
+    text-align: center; margin-top: 1.25rem; padding: 0.8rem 1rem;
+    background: var(--navy-2); border: 1px solid var(--blue);
+    font-size: 0.95rem; color: var(--chrome);
+  }
+  .status.win {
+    background: var(--blue); color: var(--white); border-color: var(--rose);
+    font-weight: 900; letter-spacing: 0.1em; font-size: 1.1rem;
+  }
+
+  footer {
+    margin-top: 2.5rem; text-align: center; color: var(--chrome);
+    border-top: 1px solid rgba(20,120,240,0.3); padding-top: 1.5rem;
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+  footer .verse { font-family: Georgia, serif; font-style: italic;
+    margin: 0.5rem 0 0.75rem; color: var(--chrome); font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY MINISTRY  •  BIBLE BINGO</div>
+    <h1>7 Pillars of a Faithful Woman</h1>
+    <div class="sub">A game to play along with the teaching</div>
+  </header>
+
+  <div class="intro">
+    <strong>How to play.</strong> As Pastor Darren teaches, listen for each word or name on the board. Tap a square when you hear it. Mark 5 in a row — across, down, or diagonal — to win. The center is a <strong>FREE</strong> space: &ldquo;MY VOICE.&rdquo;
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" id="shuffle">SHUFFLE BOARD</button>
+    <button class="btn ghost" id="reset">CLEAR MARKS</button>
+  </div>
+
+  <div class="grid" id="board" aria-label="Bible Bingo 5x5 board"></div>
+
+  <div class="status" id="status">Click any square when you hear that word. Center is a free space.</div>
+
+  <footer>
+    <div class="verse">&ldquo;My sheep hear My voice, and I know them, and they follow Me.&rdquo; — John 10:27 (NKJV)</div>
+    <div>StayTheWay Ministry  •  <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+  // ===== Bingo terms (24 — center is FREE) =====
+  const TERMS = [
+    "Shepherd", "My Voice", "Follow Me", "Eve", "Michal",
+    "Jezebel", "Sapphira", "Delilah", "Lot's Wife", "Job's Wife",
+    "Gentle", "Quiet Spirit", "Hidden Heart", "Proverbs 31", "1 Peter 3",
+    "Ephesians 5:33", "John 10:27", "Honor", "Respect", "Rubies",
+    "Builds", "Without a Word", "Remember", "Forward", "Faithful",
+    "Husband", "Wise Woman", "NKJV", "Holy Spirit", "Good Shepherd",
+    "Adorn", "Incorruptible", "Eternal Life", "Luke 17", "Philippians 3"
+  ];
+
+  const CENTER_TERM = "MY VOICE";
+
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildBoard() {
+    const pool = shuffle(TERMS.filter(t => t !== CENTER_TERM && t.toUpperCase() !== CENTER_TERM))
+      .slice(0, 24);
+
+    const boardEl = document.getElementById("board");
+    boardEl.innerHTML = "";
+
+    let idx = 0;
+    for (let i = 0; i < 25; i++) {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      if (i === 12) {
+        cell.classList.add("free", "marked");
+        cell.dataset.free = "1";
+        cell.textContent = CENTER_TERM;
+      } else {
+        cell.textContent = pool[idx++];
+      }
+      cell.addEventListener("click", () => toggle(cell));
+      boardEl.appendChild(cell);
+    }
+    setStatus("Click any square when you hear that word. Center is a free space.", false);
+  }
+
+  function toggle(cell) {
+    cell.classList.toggle("marked");
+    checkWin();
+  }
+
+  function checkWin() {
+    const cells = [...document.querySelectorAll("#board .cell")];
+    const marked = cells.map(c => c.classList.contains("marked"));
+    // rows
+    for (let r = 0; r < 5; r++) {
+      if (marked.slice(r*5, r*5+5).every(Boolean)) return win();
+    }
+    // cols
+    for (let c = 0; c < 5; c++) {
+      if ([0,1,2,3,4].every(r => marked[r*5+c])) return win();
+    }
+    // diagonals
+    if ([0,6,12,18,24].every(i => marked[i])) return win();
+    if ([4,8,12,16,20].every(i => marked[i])) return win();
+
+    setStatus("Click any square when you hear that word. Center is a free space.", false);
+  }
+
+  function win() {
+    setStatus("✦  BINGO!  The Shepherd speaks — you heard Him.  ✦", true);
+  }
+
+  function setStatus(text, isWin) {
+    const el = document.getElementById("status");
+    el.textContent = text;
+    el.classList.toggle("win", isWin);
+  }
+
+  document.getElementById("shuffle").addEventListener("click", buildBoard);
+  document.getElementById("reset").addEventListener("click", () => {
+    document.querySelectorAll("#board .cell").forEach(c => {
+      if (c.dataset.free) c.classList.add("marked"); else c.classList.remove("marked");
+    });
+    setStatus("Board cleared. Free space still marked. Listen closely.", false);
+  });
+
+  buildBoard();
+</script>
+</body>
+</html>

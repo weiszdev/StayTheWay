@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Take the Quiz — 7 Pillars of a Faithful Woman</title>
+<meta name="description" content="Short interactive quiz on StayTheWay Ministry's teaching: 7 Pillars of a Faithful Woman — Toward Her Husband." />
+<style>
+  :root {
+    --navy: #000014;
+    --navy-2: #06112B;
+    --blue: #1478F0;
+    --sky: #28A0F0;
+    --chrome: #DCDCDC;
+    --rose: #F4B6C9;
+    --white: #FFFFFF;
+    --green: #3AC47B;
+    --red:   #E0516C;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header { text-align: center; padding-bottom: 1.25rem;
+    border-bottom: 3px solid var(--blue); position: relative; }
+  header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px;
+    background: var(--rose); }
+  header .kicker { color: var(--sky); letter-spacing: 0.35em; font-weight: 900;
+    font-size: 0.75rem; margin-bottom: 0.5rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white);
+    margin: 0; font-size: clamp(1.7rem, 6vw, 2.4rem); }
+  header .sub { color: var(--sky); font-style: italic; margin-top: 0.5rem;
+    font-size: clamp(0.9rem, 3vw, 1.05rem); }
+
+  .meta { display: flex; justify-content: space-between; align-items: center;
+    margin: 1.25rem 0 0.75rem; font-size: 0.85rem; color: var(--sky);
+    letter-spacing: 0.15em; text-transform: uppercase; font-weight: 900; }
+  .progress { height: 6px; background: rgba(20,120,240,0.2); border-radius: 3px; overflow: hidden;
+    margin-bottom: 1.5rem; }
+  .progress > div { height: 100%; background: linear-gradient(90deg, var(--blue), var(--sky));
+    width: 0%; transition: width 0.3s ease; }
+
+  .question {
+    background: var(--navy-2); border: 1px solid var(--blue);
+    border-left: 6px solid var(--rose);
+    padding: 1.25rem 1.25rem 1.5rem; margin-bottom: 1rem;
+  }
+  .q-text { font-family: Georgia, serif; font-size: clamp(1.1rem, 4vw, 1.3rem);
+    color: var(--white); font-weight: 700; margin: 0 0 1.1rem; line-height: 1.35; }
+
+  .options { display: grid; gap: 0.55rem; }
+  .opt {
+    display: block; padding: 0.85rem 1rem; background: rgba(20,120,240,0.07);
+    border: 2px solid rgba(20,120,240,0.45); color: var(--chrome);
+    cursor: pointer; font-size: 1rem; line-height: 1.4;
+    text-align: left; font-family: inherit; width: 100%;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .opt:hover { background: rgba(20,120,240,0.16); }
+  .opt.correct { background: rgba(58,196,123,0.18); border-color: var(--green);
+    color: var(--white); font-weight: 700; }
+  .opt.wrong { background: rgba(224,81,108,0.18); border-color: var(--red); color: var(--white); }
+  .opt[disabled] { cursor: default; }
+
+  .feedback {
+    margin-top: 1rem; padding: 0.85rem 1rem;
+    font-size: 0.95rem; line-height: 1.5;
+    background: var(--navy); border-left: 4px solid var(--sky);
+  }
+  .feedback.correct { border-left-color: var(--green); }
+  .feedback.wrong   { border-left-color: var(--red); }
+  .feedback strong { color: var(--white); }
+
+  .nav { text-align: center; margin-top: 1rem; }
+  .btn {
+    background: var(--blue); color: var(--white); border: 2px solid var(--blue);
+    padding: 0.8rem 1.6rem; font-weight: 900; letter-spacing: 0.08em;
+    font-size: 0.95rem; cursor: pointer; font-family: inherit;
+    border-radius: 4px;
+  }
+  .btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--sky); border-color: var(--sky); }
+
+  .result {
+    text-align: center; padding: 2rem 1.25rem;
+    background: var(--navy-2); border: 1px solid var(--blue); border-left: 6px solid var(--rose);
+  }
+  .result h2 { font-family: Georgia, serif; color: var(--white);
+    font-size: clamp(1.8rem, 6vw, 2.5rem); margin: 0 0 0.5rem; }
+  .result .score { font-size: 3rem; font-family: "Arial Black", sans-serif;
+    color: var(--blue); margin: 0.5rem 0; }
+  .result .score small { font-size: 1.2rem; color: var(--chrome); font-weight: 400; }
+  .result p { color: var(--chrome); line-height: 1.5; font-family: Georgia, serif;
+    font-style: italic; }
+  .result .verse { color: var(--sky); font-style: italic; margin-top: 1.25rem;
+    font-family: Georgia, serif; }
+
+  footer { margin-top: 2.5rem; text-align: center; color: var(--chrome);
+    border-top: 1px solid rgba(20,120,240,0.3); padding-top: 1.5rem; font-size: 0.85rem; }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY MINISTRY  •  TAKE THE QUIZ</div>
+    <h1>7 Pillars of a Faithful Woman</h1>
+    <div class="sub">Let's see what stuck</div>
+  </header>
+
+  <div id="quiz-area">
+    <div class="meta">
+      <span id="counter">Question 1 of 8</span>
+      <span id="score-display">Score 0</span>
+    </div>
+    <div class="progress"><div id="progress-bar"></div></div>
+
+    <div class="question">
+      <h2 class="q-text" id="q-text"></h2>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback" hidden></div>
+    </div>
+
+    <div class="nav">
+      <button class="btn" id="next-btn" disabled>NEXT QUESTION</button>
+    </div>
+  </div>
+
+  <div id="result-area" hidden>
+    <div class="result">
+      <h2>Well done.</h2>
+      <div class="score" id="final-score">0<small> / 8</small></div>
+      <p id="final-message"></p>
+      <div class="verse">&ldquo;My sheep hear My voice, and I know them, and they follow Me.&rdquo;<br/>— John 10:27 (NKJV)</div>
+      <div class="nav" style="margin-top:1.5rem;">
+        <button class="btn ghost" onclick="location.reload()">RETAKE QUIZ</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>StayTheWay Ministry  •  <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "What is the key verse that forms the foundation of all 7 pillars?",
+    options: [
+      "Proverbs 31:10 — 'Who can find a virtuous wife?'",
+      "John 10:27 — 'My sheep hear My voice, and I know them, and they follow Me.'",
+      "Ephesians 5:33 — 'Let the wife see that she respects her husband.'",
+      "1 Peter 3:4 — 'A gentle and quiet spirit.'"
+    ],
+    correct: 1,
+    explain: "The foundation is Jesus' own words in John 10:27. Every pillar only rises as high as the woman's ear is tuned to the Shepherd."
+  },
+  {
+    q: "Pillar 1 is 'She Hears Her Shepherd's Voice.' Which woman is the contrast?",
+    options: ["Michal", "Sapphira", "Eve", "Lot's wife"],
+    correct: 2,
+    explain: "Eve listened to another voice in the garden instead of her Shepherd's. Hearing the wrong voice is the first departure."
+  },
+  {
+    q: "According to Proverbs 14:1, the wise woman does what?",
+    options: [
+      "Adorns herself with gold and fine apparel",
+      "Speaks loudly to correct her husband",
+      "Builds her house — the foolish pulls it down with her hands",
+      "Waits for her husband to lead before acting"
+    ],
+    correct: 2,
+    explain: "Proverbs 14:1 (NKJV) — 'The wise woman builds her house, but the foolish pulls it down with her hands.' Jezebel is the contrast."
+  },
+  {
+    q: "1 Peter 3:3–4 says the adornment precious in God's sight is…",
+    options: [
+      "A gentle and quiet spirit, the hidden person of the heart",
+      "Modest clothing and subdued jewelry",
+      "A well-kept home and children who obey",
+      "Daily Scripture reading before sunrise"
+    ],
+    correct: 0,
+    explain: "1 Peter 3:3–4 (NKJV) calls for 'the hidden person of the heart, with the incorruptible beauty of a gentle and quiet spirit.'"
+  },
+  {
+    q: "Which pillar is paired with 'She Wins Him Without a Word' (1 Peter 3:1–2)?",
+    options: [
+      "Job's wife is the contrast",
+      "Delilah is the contrast",
+      "Eve is the contrast",
+      "Michal is the contrast"
+    ],
+    correct: 0,
+    explain: "Job's wife said 'Curse God and die.' She preached despair. The faithful wife wins her husband without a word — by her conduct."
+  },
+  {
+    q: "Proverbs 31:11–12 says the heart of her husband safely trusts her — and…",
+    options: [
+      "She does him good and not evil all the days of her life",
+      "She rises before dawn to prepare his meals",
+      "She never raises her voice in his presence",
+      "She bears him many children"
+    ],
+    correct: 0,
+    explain: "Proverbs 31:12 — 'She does him good and not evil all the days of her life.' Delilah is the contrast; she studied her man to destroy him."
+  },
+  {
+    q: "Pillar 7 is 'She Looks Forward, Never Back.' Jesus tells us to remember…",
+    options: ["Eve in the garden", "Sarah's laughter", "Lot's wife", "Rahab at the window"],
+    correct: 2,
+    explain: "Luke 17:32 — 'Remember Lot's wife.' She was delivered from Sodom but her heart stayed behind. Sheep that hear His voice follow forward."
+  },
+  {
+    q: "The teaching's core principle is that a woman is faithful to God…",
+    options: [
+      "When her husband leads well",
+      "Only after he earns her respect",
+      "Independent of her husband's response",
+      "Once her children are raised in faith"
+    ],
+    correct: 2,
+    explain: "She hears the Shepherd first. Her honor, building, and blessing flow from Christ — not from her husband's performance. That is the whole foundation."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const counter   = document.getElementById("counter");
+const scoreDisp = document.getElementById("score-display");
+const progBar   = document.getElementById("progress-bar");
+const qText     = document.getElementById("q-text");
+const optsEl    = document.getElementById("options");
+const feedback  = document.getElementById("feedback");
+const nextBtn   = document.getElementById("next-btn");
+
+function render() {
+  const q = QUESTIONS[current];
+  counter.textContent = `Question ${current + 1} of ${QUESTIONS.length}`;
+  scoreDisp.textContent = `Score ${score}`;
+  progBar.style.width = `${(current / QUESTIONS.length) * 100}%`;
+  qText.textContent = q.q;
+  optsEl.innerHTML = "";
+  q.options.forEach((text, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "opt";
+    btn.textContent = text;
+    btn.addEventListener("click", () => pick(i, btn));
+    optsEl.appendChild(btn);
+  });
+  feedback.hidden = true; feedback.className = "feedback";
+  nextBtn.disabled = true;
+  nextBtn.textContent = (current === QUESTIONS.length - 1) ? "SEE RESULTS" : "NEXT QUESTION";
+  answered = false;
+}
+
+function pick(i, btn) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const buttons = [...optsEl.querySelectorAll(".opt")];
+  buttons.forEach(b => b.disabled = true);
+  buttons[q.correct].classList.add("correct");
+  if (i === q.correct) {
+    score += 1;
+    feedback.className = "feedback correct";
+    feedback.innerHTML = `<strong>Right.</strong> ${q.explain}`;
+  } else {
+    btn.classList.add("wrong");
+    feedback.className = "feedback wrong";
+    feedback.innerHTML = `<strong>Not quite.</strong> ${q.explain}`;
+  }
+  feedback.hidden = false;
+  scoreDisp.textContent = `Score ${score}`;
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener("click", () => {
+  current += 1;
+  if (current >= QUESTIONS.length) { showResult(); return; }
+  render();
+});
+
+function showResult() {
+  document.getElementById("quiz-area").hidden = true;
+  document.getElementById("result-area").hidden = false;
+  document.getElementById("final-score").innerHTML = `${score}<small> / ${QUESTIONS.length}</small>`;
+  const msg = document.getElementById("final-message");
+  if (score === QUESTIONS.length) {
+    msg.textContent = "Perfect score. You clearly heard the Shepherd's voice today.";
+  } else if (score >= Math.ceil(QUESTIONS.length * 0.75)) {
+    msg.textContent = "Strong work. The key truths are in your hands — now walk them out.";
+  } else if (score >= Math.ceil(QUESTIONS.length * 0.5)) {
+    msg.textContent = "Good start. Revisit the teaching and let the Word sink deeper.";
+  } else {
+    msg.textContent = "No condemnation. Replay the teaching, take your time — the Shepherd is patient.";
+  }
+}
+
+render();
+</script>
+</body>
+</html>
