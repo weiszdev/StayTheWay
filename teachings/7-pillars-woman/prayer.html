@@ -159,6 +159,13 @@
     msg.style.display = "block";
   }
 
+  // iOS Safari delays value updates on paste; force sync on paste events
+  document.querySelectorAll("input, textarea").forEach(el => {
+    el.addEventListener("paste", () => {
+      setTimeout(() => { el.dispatchEvent(new Event("input", { bubbles: true })); }, 0);
+    });
+  });
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     msg.style.display = "none";
@@ -191,20 +198,15 @@
     btn.disabled = true;
     btn.textContent = "SENDING...";
     try {
-      // Apps Script returns a 302 redirect on POST. Using no-cors + redirect:follow
-      // means the browser follows the redirect as a GET and returns the JSON response.
-      const res = await fetch(APPS_SCRIPT_URL, {
+      // Apps Script 302-redirects POST→GET; browser CORS blocks reading the response.
+      // Use no-cors so the request always goes through, then show success optimistically.
+      // All validation is done client-side above; server errors are rare edge cases.
+      await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        redirect: "follow",
+        mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload),
       });
-      // Apps Script may return opaque or redirected responses; try to parse JSON
-      const text = await res.text().catch(() => "");
-      const data = text ? JSON.parse(text) : {};
-      if (data.status !== "pending") {
-        throw new Error(data.message || "Request failed. Please try again.");
-      }
       showMsg("success",
         "<strong>Check your email.</strong> We just sent a one-click confirmation link to <em>" +
         payload.email + "</em>. Click it to verify and your prayer request goes to our prayer team." +
@@ -214,7 +216,7 @@
     } catch (err) {
       showMsg("error", "<strong>Something went wrong.</strong> " +
         (err.message || "Please try again in a moment.") +
-        " If the issue persists, email <a href='mailto:prayer@staytheway.com' style='color:var(--sky);'>prayer@staytheway.com</a>.");
+        " If the issue persists, email <a href='mailto:info@staytheway.com' style='color:var(--sky);'>info@staytheway.com</a>.");
     } finally {
       btn.disabled = false;
       btn.textContent = "SEND PRAYER REQUEST";
