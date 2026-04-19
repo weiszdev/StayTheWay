@@ -146,7 +146,7 @@
   // Paste your deployed Google Apps Script Web App URL here.
   // (See apps-script.gs in the same folder for setup.)
   // ============================================
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzCFkt5Tg1ewOw_dgNaNWCGdLTgDb48DziOXKhn1CTGONOdN_g-qlmz9-A-pb3yo0y9/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweYkWK2f5FaIF4xPWOeO4RlKk8_dDdhQHLOynBRToJD4O7S_MXBB87fNA_1aXctzVx/exec";
 
   const form = document.getElementById("prayer-form");
   const msg  = document.getElementById("msg");
@@ -191,14 +191,18 @@
     btn.disabled = true;
     btn.textContent = "SENDING...";
     try {
-      // Apps Script requires text/plain or form-url-encoded to avoid CORS preflight
+      // Apps Script returns a 302 redirect on POST. Using no-cors + redirect:follow
+      // means the browser follows the redirect as a GET and returns the JSON response.
       const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
+        redirect: "follow",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || data.status !== "pending") {
+      // Apps Script may return opaque or redirected responses; try to parse JSON
+      const text = await res.text().catch(() => "");
+      const data = text ? JSON.parse(text) : {};
+      if (data.status !== "pending") {
         throw new Error(data.message || "Request failed. Please try again.");
       }
       showMsg("success",
