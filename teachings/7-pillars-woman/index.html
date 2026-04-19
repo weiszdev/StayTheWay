@@ -66,6 +66,13 @@
     border-top: 1px solid rgba(20,120,240,0.3); padding-top: 1.5rem; font-size: 0.85rem; }
   footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
   footer .ministry { margin-top: 0.3rem; }
+
+  .video-section { margin: 1.5rem 0; }
+  .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: 12px; border: 2px solid rgba(20,120,240,0.35); }
+  .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .video-label { color: var(--white); font-weight: 900; font-size: 1rem; margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 0.5rem; }
 </style>
 </head>
 <body>
@@ -80,6 +87,13 @@
   <div class="verse-banner">
     &ldquo;My sheep hear My voice, and I know them, and they follow Me.&rdquo;
     <span class="ref">— John 10:27 (NKJV)</span>
+  </div>
+
+  <div class="video-section">
+    <div class="video-label">Watch the Teaching</div>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/XuLetJBP554" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
   </div>
 
   <div class="section-label">Teaching Resources</div>

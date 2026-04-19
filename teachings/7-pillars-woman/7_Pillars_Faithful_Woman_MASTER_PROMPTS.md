@@ -76,7 +76,43 @@ No tiny footer text — just top/bottom accent bands (blue + rose).
    • Black squares on white background (standard scanner orientation)
    • Error correction level H
    • Pointing to https://staytheway.com/teachings/{TEACHING_SLUG}/{bingo|prayer|quiz}.html
-8. README with upload + Apps Script deployment steps
+8. Kids Bible Bingo — /teachings/{TEACHING_SLUG}/kids-bingo.html
+   • Simpler 4×4 grid with emoji icons and age-appropriate terms (ages 5-10)
+   • Tap to mark, win detection, shuffle + reset
+9. Kids Bible Quiz — /teachings/{TEACHING_SLUG}/kids-quiz.html
+   • 5 easy multiple-choice questions with emoji feedback
+   • Age-appropriate language, Bible verse references, final score screen
+10. Kids Activity Page — /teachings/{TEACHING_SLUG}/kids-activity.html
+    • Color the pillars (tap to paint with selected color)
+    • Trace the key verse (finger/mouse drawing canvas)
+    • Draw your prayer (freeform drawing canvas)
+11. Landing Page — /teachings/{TEACHING_SLUG}/index.html
+    • Card-based hub linking to all resources (adult + kids)
+    • Embedded YouTube teaching video at the top
+    • Each card has emoji icon, title, description, and colored tag
+    • OG meta tags for iOS link preview cards
+12. Verification page — /teachings/{TEACHING_SLUG}/verified.html
+    • Thank-you page shown after prayer verification
+    • Calls Apps Script in background via fetch (avoids Google iframe on iOS)
+13. README with upload + Apps Script deployment steps
+
+==== OG META TAGS (required on ALL HTML deliverables) ====
+Every .html file MUST include these in <head> after the description meta tag:
+  • og:type = "website"
+  • og:title = page-specific title
+  • og:description = page-specific description
+  • og:image = "https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png"
+  • og:url = "https://staytheway.com/teachings/{TEACHING_SLUG}/{filename}"
+  • og:site_name = "StayTheWay"
+  • twitter:card = "summary_large_image"
+  • twitter:title, twitter:description, twitter:image (same values as OG)
+This ensures proper iOS link preview cards when links are shared via iMessage, social media, etc.
+
+==== YOUTUBE EMBED ====
+The landing page (index.html) embeds the YouTube teaching video.
+Variable: YOUTUBE_ID (e.g., "XuLetJBP554")
+Embed URL: https://www.youtube.com/embed/{YOUTUBE_ID}
+Placed in a 16:9 responsive iframe above the resource cards.
 
 ==== SECURITY / SPAM CONTROLS (prayer form) ====
   • Honeypot field hidden from humans (rejected if filled)
