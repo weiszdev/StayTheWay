@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kids Bible Bingo — 7 Pillars</title>
+<meta name="description" content="Fun 4x4 Bible Bingo for kids! Listen to the teaching and tap the squares." />
+<style>
+  :root {
+    --navy: #000014; --navy-2: #06112B; --blue: #1478F0; --sky: #28A0F0;
+    --chrome: #DCDCDC; --rose: #F4B6C9; --white: #FFFFFF;
+    --yellow: #FFD93D; --green: #3AC47B; --purple: #B07CD8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width: 500px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header { text-align: center; padding-bottom: 1rem; border-bottom: 3px solid var(--yellow); position: relative; }
+  header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px; background: var(--rose); }
+  header .kicker { color: var(--yellow); letter-spacing: 0.3em; font-weight: 900; font-size: 0.75rem; margin-bottom: 0.4rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white); margin: 0; font-size: clamp(1.5rem, 6vw, 2rem); }
+  header .sub { color: var(--sky); font-size: 1rem; margin-top: 0.4rem; }
+  header .emoji { font-size: 2rem; margin-top: 0.3rem; }
+
+  .intro { margin: 1rem 0; padding: 0.9rem; background: rgba(255,217,61,0.08);
+    border-left: 4px solid var(--yellow); font-size: 0.95rem; line-height: 1.5; }
+  .intro strong { color: var(--yellow); }
+
+  .toolbar { display: flex; gap: 0.5rem; justify-content: center; margin: 0 0 1rem; }
+  .btn { background: var(--yellow); color: var(--navy); border: none;
+    padding: 0.6rem 1.1rem; font-weight: 900; font-size: 0.85rem;
+    cursor: pointer; border-radius: 8px; font-family: inherit; }
+  .btn.ghost { background: transparent; color: var(--sky); border: 2px solid var(--sky); }
+
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; max-width: 420px; margin: 0 auto; }
+  .cell {
+    aspect-ratio: 1 / 1; background: var(--navy-2); border: 3px solid rgba(20,120,240,0.4);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 0.3rem; text-align: center; font-weight: 700; border-radius: 12px;
+    font-size: clamp(0.7rem, 2.5vw, 0.9rem); line-height: 1.2; color: var(--chrome);
+    cursor: pointer; user-select: none; transition: transform 0.1s;
+  }
+  .cell .icon { font-size: 1.5rem; margin-bottom: 0.15rem; }
+  .cell:hover { transform: scale(1.04); }
+  .cell:active { transform: scale(0.96); }
+  .cell.marked { background: var(--green); color: var(--white); border-color: var(--yellow); }
+  .cell.free { background: var(--navy); border: 3px dashed var(--yellow); color: var(--yellow); }
+  .cell.free.marked { background: var(--yellow); color: var(--navy); border-style: solid; }
+
+  .status { text-align: center; margin-top: 1rem; padding: 0.8rem; background: var(--navy-2);
+    border: 1px solid var(--blue); font-size: 1rem; border-radius: 8px; }
+  .status.win { background: var(--yellow); color: var(--navy); font-weight: 900;
+    font-size: 1.2rem; border-color: var(--yellow); animation: bounce 0.5s ease 2; }
+  @keyframes bounce { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+  footer { margin-top: 2rem; text-align: center; font-size: 0.85rem;
+    border-top: 1px solid rgba(255,217,61,0.3); padding-top: 1rem; }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+  footer .verse { font-family: Georgia, serif; font-style: italic; margin: 0.4rem 0; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY KIDS</div>
+    <h1>Bible Bingo!</h1>
+    <div class="sub">Listen and tap when you hear the word!</div>
+    <div class="emoji">🐑</div>
+  </header>
+
+  <div class="intro">
+    <strong>How to play:</strong> Listen to the teaching. When you hear a word on the board, tap it! Get 4 in a row to win! The star in the middle is FREE.
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" id="shuffle">NEW BOARD</button>
+    <button class="btn ghost" id="reset">START OVER</button>
+  </div>
+
+  <div class="grid" id="board"></div>
+  <div class="status" id="status">Tap a square when you hear the word!</div>
+
+  <footer>
+    <div class="verse">"My sheep hear My voice." — John 10:27</div>
+    <div>StayTheWay Kids • <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+  var TERMS = [
+    {word: "Shepherd", icon: "🐑"},
+    {word: "Jesus", icon: "✝️"},
+    {word: "Kind", icon: "💛"},
+    {word: "Brave", icon: "💪"},
+    {word: "Listen", icon: "👂"},
+    {word: "Build Up", icon: "🏠"},
+    {word: "Heart", icon: "❤️"},
+    {word: "Follow", icon: "👣"},
+    {word: "Gentle", icon: "🕊️"},
+    {word: "Helper", icon: "🤝"},
+    {word: "Love", icon: "💕"},
+    {word: "Good", icon: "⭐"},
+    {word: "Wise", icon: "🦉"},
+    {word: "Pray", icon: "🙏"},
+    {word: "Voice", icon: "🗣️"},
+    {word: "Forward", icon: "➡️"},
+    {word: "Bible", icon: "📖"},
+    {word: "Family", icon: "👨‍👩‍👧‍👦"},
+    {word: "Trust", icon: "🤲"},
+    {word: "Quiet", icon: "🤫"}
+  ];
+  var CENTER = {word: "FREE", icon: "⭐"};
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = a[i]; a[i] = a[j]; a[j] = temp;
+    }
+    return a;
+  }
+
+  function buildBoard() {
+    var pool = shuffle(TERMS.slice()).slice(0, 15);
+    var board = document.getElementById("board");
+    board.innerHTML = "";
+    var idx = 0;
+    for (var i = 0; i < 16; i++) {
+      var cell = document.createElement("div");
+      cell.className = "cell";
+      if (i === 5) {
+        cell.classList.add("free", "marked");
+        cell.dataset.free = "1";
+        cell.innerHTML = '<span class="icon">' + CENTER.icon + '</span>' + CENTER.word;
+      } else {
+        var t = pool[idx++];
+        cell.innerHTML = '<span class="icon">' + t.icon + '</span>' + t.word;
+      }
+      cell.addEventListener("click", function(c) { return function() { toggle(c); }; }(cell));
+      board.appendChild(cell);
+    }
+    setStatus("Tap a square when you hear the word!", false);
+  }
+
+  function toggle(cell) { cell.classList.toggle("marked"); checkWin(); }
+
+  function checkWin() {
+    var cells = Array.from(document.querySelectorAll("#board .cell"));
+    var m = cells.map(function(c) { return c.classList.contains("marked"); });
+    for (var r = 0; r < 4; r++) { if (m[r*4] && m[r*4+1] && m[r*4+2] && m[r*4+3]) return win(); }
+    for (var c = 0; c < 4; c++) { if (m[c] && m[c+4] && m[c+8] && m[c+12]) return win(); }
+    if (m[0] && m[5] && m[10] && m[15]) return win();
+    if (m[3] && m[6] && m[9] && m[12]) return win();
+    setStatus("Tap a square when you hear the word!", false);
+  }
+
+  function win() { setStatus("🎉 BINGO! Great listening! 🎉", true); }
+
+  function setStatus(text, isWin) {
+    var el = document.getElementById("status");
+    el.textContent = text;
+    el.className = isWin ? "status win" : "status";
+  }
+
+  document.getElementById("shuffle").addEventListener("click", buildBoard);
+  document.getElementById("reset").addEventListener("click", function() {
+    document.querySelectorAll("#board .cell").forEach(function(c) {
+      if (c.dataset.free) c.classList.add("marked"); else c.classList.remove("marked");
+    });
+    setStatus("Board cleared! Listen for the words!", false);
+  });
+
+  buildBoard();
+</script>
+</body>
+</html>

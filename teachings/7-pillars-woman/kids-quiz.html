@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kids Quiz — 7 Pillars</title>
+<meta name="description" content="Fun Bible quiz for kids about the Good Shepherd and being faithful!" />
+<style>
+  :root {
+    --navy: #000014; --navy-2: #06112B; --blue: #1478F0; --sky: #28A0F0;
+    --chrome: #DCDCDC; --rose: #F4B6C9; --white: #FFFFFF;
+    --yellow: #FFD93D; --green: #3AC47B; --red: #E0516C; --purple: #B07CD8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width: 580px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header { text-align: center; padding-bottom: 1rem; border-bottom: 3px solid var(--yellow); position: relative; }
+  header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px; background: var(--rose); }
+  header .kicker { color: var(--yellow); letter-spacing: 0.3em; font-weight: 900; font-size: 0.75rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white); margin: 0.3rem 0; font-size: clamp(1.5rem, 6vw, 2rem); }
+  header .emoji { font-size: 2.5rem; }
+
+  .progress { background: var(--navy-2); border-radius: 20px; height: 18px; margin: 1rem 0; overflow: hidden; border: 2px solid var(--blue); }
+  .progress-fill { height: 100%; background: var(--yellow); border-radius: 20px; transition: width 0.4s ease; }
+  .progress-text { text-align: center; font-size: 0.85rem; color: var(--sky); margin-bottom: 0.5rem; }
+
+  .question-card { background: var(--navy-2); border: 2px solid var(--blue); border-radius: 12px;
+    padding: 1.2rem; margin: 1rem 0; }
+  .question-card .q-emoji { font-size: 2rem; text-align: center; margin-bottom: 0.5rem; }
+  .question-card h2 { color: var(--white); font-size: 1.1rem; margin: 0 0 1rem; text-align: center;
+    font-family: Georgia, serif; line-height: 1.4; }
+
+  .answers { display: grid; gap: 0.5rem; }
+  .answer-btn {
+    background: var(--navy); border: 3px solid rgba(20,120,240,0.4); color: var(--chrome);
+    padding: 0.85rem 1rem; font-size: 1rem; font-weight: 700; cursor: pointer;
+    border-radius: 10px; text-align: left; font-family: inherit; transition: all 0.15s;
+  }
+  .answer-btn:hover { border-color: var(--yellow); transform: scale(1.02); }
+  .answer-btn:active { transform: scale(0.98); }
+  .answer-btn.correct { background: var(--green); border-color: var(--green); color: var(--white); }
+  .answer-btn.wrong { background: var(--red); border-color: var(--red); color: var(--white); opacity: 0.7; }
+  .answer-btn:disabled { cursor: default; }
+  .answer-btn:disabled:hover { transform: none; }
+
+  .feedback { margin-top: 0.75rem; padding: 0.8rem; border-radius: 8px; font-size: 0.95rem;
+    line-height: 1.4; display: none; text-align: center; }
+  .feedback.show { display: block; }
+  .feedback.right { background: rgba(58,196,123,0.15); border: 1px solid var(--green); color: var(--green); }
+  .feedback.oops { background: rgba(224,81,108,0.15); border: 1px solid var(--red); color: var(--red); }
+
+  .next-btn { display: none; width: 100%; margin-top: 0.75rem; background: var(--yellow);
+    color: var(--navy); border: none; padding: 0.85rem; font-weight: 900; font-size: 1rem;
+    border-radius: 10px; cursor: pointer; font-family: inherit; }
+  .next-btn.show { display: block; }
+
+  .final { display: none; text-align: center; }
+  .final.show { display: block; }
+  .final .score-emoji { font-size: 4rem; margin: 1rem 0; }
+  .final h2 { color: var(--yellow); font-size: 1.5rem; }
+  .final .score { color: var(--white); font-size: 1.3rem; margin: 0.5rem 0; }
+  .final .message { color: var(--chrome); font-family: Georgia, serif; font-style: italic;
+    font-size: 1rem; margin: 1rem 0; line-height: 1.5; }
+  .final .retry { background: var(--yellow); color: var(--navy); border: none; padding: 0.85rem 2rem;
+    font-weight: 900; font-size: 1rem; border-radius: 10px; cursor: pointer; margin-top: 1rem; }
+
+  footer { margin-top: 2rem; text-align: center; font-size: 0.85rem;
+    border-top: 1px solid rgba(255,217,61,0.3); padding-top: 1rem; }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY KIDS</div>
+    <div class="emoji">🐑📖</div>
+    <h1>Bible Quiz!</h1>
+  </header>
+
+  <div class="progress-text" id="progress-text">Question 1 of 5</div>
+  <div class="progress"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+
+  <div id="quiz-area">
+    <div class="question-card" id="question-card">
+      <div class="q-emoji" id="q-emoji"></div>
+      <h2 id="q-text"></h2>
+      <div class="answers" id="answers"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="next-btn">NEXT QUESTION</button>
+    </div>
+  </div>
+
+  <div class="final" id="final">
+    <div class="score-emoji" id="score-emoji"></div>
+    <h2 id="final-title"></h2>
+    <div class="score" id="final-score"></div>
+    <div class="message" id="final-message"></div>
+    <button class="retry" onclick="startQuiz()">PLAY AGAIN</button>
+  </div>
+
+  <footer>
+    <div>StayTheWay Kids • <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+  var QUESTIONS = [
+    {
+      emoji: "🐑",
+      q: "Jesus said 'My sheep hear My ____.'",
+      answers: ["Voice", "Music", "Bell", "Song"],
+      correct: 0,
+      right: "Yes! Jesus said His sheep hear His VOICE! (John 10:27)",
+      wrong: "Not quite! Jesus said His sheep hear His VOICE. (John 10:27)"
+    },
+    {
+      emoji: "🏠",
+      q: "A wise woman does what to her house?",
+      answers: ["Knocks it down", "Builds it up", "Paints it pink", "Hides it"],
+      correct: 1,
+      right: "That's right! 'The wise woman builds her house.' (Proverbs 14:1)",
+      wrong: "The Bible says 'The wise woman BUILDS her house.' (Proverbs 14:1)"
+    },
+    {
+      emoji: "❤️",
+      q: "God looks at your ______, not the outside.",
+      answers: ["Shoes", "Hair", "Heart", "Lunchbox"],
+      correct: 2,
+      right: "You got it! God cares about the hidden person of the HEART! (1 Peter 3:4)",
+      wrong: "God looks at your HEART, not the outside! (1 Peter 3:4)"
+    },
+    {
+      emoji: "👣",
+      q: "What did Jesus say His sheep do?",
+      answers: ["Run away", "Follow Him", "Go to sleep", "Hide"],
+      correct: 1,
+      right: "Awesome! Jesus' sheep FOLLOW Him! (John 10:27)",
+      wrong: "Jesus said His sheep FOLLOW Him! (John 10:27)"
+    },
+    {
+      emoji: "➡️",
+      q: "Should we look forward or look back?",
+      answers: ["Look back", "Look sideways", "Look forward", "Look down"],
+      correct: 2,
+      right: "Yes! We press on and look FORWARD! (Philippians 3:13-14)",
+      wrong: "We should look FORWARD, not back! (Philippians 3:13-14)"
+    }
+  ];
+
+  var current = 0;
+  var score = 0;
+  var answered = false;
+
+  function startQuiz() {
+    current = 0;
+    score = 0;
+    answered = false;
+    document.getElementById("final").className = "final";
+    document.getElementById("quiz-area").style.display = "block";
+    showQuestion();
+  }
+
+  function showQuestion() {
+    var q = QUESTIONS[current];
+    document.getElementById("progress-text").textContent = "Question " + (current + 1) + " of " + QUESTIONS.length;
+    document.getElementById("progress-fill").style.width = (current / QUESTIONS.length * 100) + "%";
+    document.getElementById("q-emoji").textContent = q.emoji;
+    document.getElementById("q-text").textContent = q.q;
+    document.getElementById("feedback").className = "feedback";
+    document.getElementById("next-btn").className = "next-btn";
+    answered = false;
+
+    var answersEl = document.getElementById("answers");
+    answersEl.innerHTML = "";
+    for (var i = 0; i < q.answers.length; i++) {
+      var btn = document.createElement("button");
+      btn.className = "answer-btn";
+      btn.textContent = q.answers[i];
+      btn.addEventListener("click", function(idx) { return function() { answer(idx); }; }(i));
+      answersEl.appendChild(btn);
+    }
+  }
+
+  function answer(idx) {
+    if (answered) return;
+    answered = true;
+    var q = QUESTIONS[current];
+    var btns = document.querySelectorAll(".answer-btn");
+    var fb = document.getElementById("feedback");
+
+    btns.forEach(function(b, i) {
+      b.disabled = true;
+      if (i === q.correct) b.className = "answer-btn correct";
+      else if (i === idx) b.className = "answer-btn wrong";
+    });
+
+    if (idx === q.correct) {
+      score++;
+      fb.className = "feedback right show";
+      fb.textContent = q.right;
+    } else {
+      fb.className = "feedback oops show";
+      fb.textContent = q.wrong;
+    }
+
+    document.getElementById("next-btn").className = "next-btn show";
+  }
+
+  document.getElementById("next-btn").addEventListener("click", function() {
+    current++;
+    if (current >= QUESTIONS.length) {
+      showFinal();
+    } else {
+      showQuestion();
+    }
+  });
+
+  function showFinal() {
+    document.getElementById("quiz-area").style.display = "none";
+    document.getElementById("progress-fill").style.width = "100%";
+    document.getElementById("progress-text").textContent = "All done!";
+
+    var pct = Math.round(score / QUESTIONS.length * 100);
+    var emoji, title, msg;
+    if (pct === 100) {
+      emoji = "🌟🐑🌟"; title = "AMAZING!"; msg = "You know the Shepherd's voice perfectly! You are one of His sheep!";
+    } else if (pct >= 60) {
+      emoji = "🐑⭐"; title = "GREAT JOB!"; msg = "You're learning to hear the Shepherd's voice! Keep listening!";
+    } else {
+      emoji = "🐑💛"; title = "GOOD TRY!"; msg = "The Shepherd loves you! Keep learning His voice — He's always speaking!";
+    }
+
+    document.getElementById("score-emoji").textContent = emoji;
+    document.getElementById("final-title").textContent = title;
+    document.getElementById("final-score").textContent = score + " out of " + QUESTIONS.length + " correct!";
+    document.getElementById("final-message").textContent = msg;
+    document.getElementById("final").className = "final show";
+  }
+
+  startQuiz();
+</script>
+</body>
+</html>
