@@ -152,11 +152,64 @@ Write a fun, joyful, singable kids worship song for ages 5–7 about hearing Jes
 
 ---
 
-## Upload / Deploy Steps (one-time)
+## Deploy Steps (each week)
 
-1. **Upload HTML suite to staytheway.com.** Create the folder `teachings/7-pillars-woman/` in your site root. Upload `bingo.html`, `quiz.html`, `prayer.html`.
-2. **Deploy Apps Script.** Follow `apps-script.gs` header — create Google Sheet, paste script, set CONFIG, deploy as Web app. Paste the resulting URL into `prayer.html`'s `APPS_SCRIPT_URL` constant, then re-upload `prayer.html`.
-3. **Use the deck.** Open the PPTX in OBS or your streaming tool. The camera will composite into the centered camera slot. QR codes on slides 2, 11, 12 are live and scannable.
+### 1. Upload HTML suite to SiteGround via SSH
+```bash
+# SSH into SiteGround
+ssh -i ~/.ssh/siteground_stw -p 18765 u2121-p9x72lgphszm@ssh.staytheway.com
+
+# Create the folder (files go in stw-teachings to avoid WordPress slug conflicts)
+mkdir -p /home/customer/www/staytheway.com/public_html/stw-teachings/{TEACHING_SLUG}/
+
+# Upload from local machine
+scp -i ~/.ssh/siteground_stw -P 18765 bingo.html quiz.html prayer.html verified.html \
+  u2121-p9x72lgphszm@ssh.staytheway.com:/home/customer/www/staytheway.com/public_html/stw-teachings/{TEACHING_SLUG}/
+```
+
+### 2. Add .htaccess rewrite (first time only for new slugs)
+Add inside the `# BEGIN StayTheWay Teachings Rewrite` block in `/public_html/.htaccess`:
+```
+RewriteRule ^teachings/{TEACHING_SLUG}/(.*\.html)$ /stw-teachings/{TEACHING_SLUG}/$1 [L]
+```
+This maps the public URL `staytheway.com/teachings/{TEACHING_SLUG}/` to the physical files without conflicting with the WordPress "Teachings" page.
+
+### 3. Apps Script backend (reuse existing project)
+- Open https://script.google.com — project "staythewayprayer"
+- The script is topic-agnostic (uses the `topic` field from the form POST). No code changes needed week-to-week.
+- **If a new teaching needs its own Google Sheet:** create one, update `CONFIG.SHEET_ID`
+- **If reusing the same sheet:** no changes needed — all teachings share the same Prayers/Email List/Pending tabs, distinguished by the `topic` column
+- Update `CONFIG.VERIFY_PAGE` to point to the new teaching's `verified.html`
+- Save, Deploy → New deployment → Web app (Execute as Me, Access Anyone)
+- Update `APPS_SCRIPT_URL` in both `prayer.html` and `verified.html` with the new deployment URL
+- Re-upload both files to SiteGround
+
+### 4. Flush SiteGround cache
+```bash
+ssh -i ~/.ssh/siteground_stw -p 18765 u2121-p9x72lgphszm@ssh.staytheway.com \
+  "wp cache flush --path=/home/customer/www/staytheway.com/public_html && \
+   wp litespeed-option set cache false --path=/home/customer/www/staytheway.com/public_html && \
+   wp litespeed-option set cache true --path=/home/customer/www/staytheway.com/public_html"
+```
+
+### 5. Commit to git
+```bash
+cd ~/StayTheWay
+git add teachings/{TEACHING_SLUG}/
+git commit -m "Add {TEACHING_TITLE} teaching package"
+git push origin main
+```
+
+### 6. Use the deck
+Open the PPTX in OBS or your streaming tool. The camera composites into the centered camera slot. QR codes on slides 2, 11, 12 are live and scannable.
+
+### Key lessons learned
+- **WordPress slug conflicts:** Never put files in `/public_html/teachings/` directly — it overrides the WordPress "Teachings" page. Use `/stw-teachings/` with a rewrite rule.
+- **iOS Safari blocks Apps Script iframes:** The `HtmlService.createHtmlOutput()` renders inside a Google sandboxed iframe that iOS Safari blocks. Always redirect verification to a page hosted on staytheway.com that calls Apps Script in the background via `fetch()` with `mode: "no-cors"`.
+- **Apps Script POST returns 302:** Browsers convert the redirect from POST to GET, breaking JSON responses. Use `mode: "no-cors"` for form submissions and show success optimistically after client-side validation.
+- **SiteGround cache is aggressive:** Always flush after uploading files. Use `wp cache flush` + LiteSpeed toggle. Tell users to hard-refresh (Cmd+Shift+R).
+- **Apps Script deployments are versioned:** Saving code does NOT update an existing deployment. You must create a new deployment or edit the existing one and change version to "New version."
+- **Hourly follow-up trigger:** A time-driven trigger runs `sendFollowups()` every hour, emailing people 24 hours after verification asking how to keep praying for them. Replies go to info@staytheway.com.
 
 ---
 
