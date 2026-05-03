@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Applied vs. Nothing — Bible Bingo | Stay The Way</title>
+<style>
+  :root {
+    --bg:#F5F1E8; --ink:#1C1917; --inkSoft:#44403C; --muted:#78716C;
+    --rule:#C8BFA9; --fake:#991B1B; --gold:#B45309; --goldSoft:#EFE3CC;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:780px;margin:0 auto;padding:24px 16px 48px}
+  header{text-align:center;border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:18px}
+  .kicker{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.22em;color:var(--fake);font-weight:700;margin:0}
+  h1{font-family:Georgia,serif;font-size:28px;margin:6px 0 4px}
+  .sub{font-family:Calibri,Arial,sans-serif;font-size:14px;color:var(--inkSoft);margin:0}
+  .controls{display:flex;gap:10px;justify-content:center;margin:14px 0 8px;flex-wrap:wrap}
+  button{font-family:Arial,sans-serif;font-size:13px;padding:9px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:2px;cursor:pointer;letter-spacing:.05em}
+  button.ghost{background:transparent;color:var(--ink)}
+  .status{text-align:center;font-family:Calibri,Arial,sans-serif;font-size:13px;color:var(--muted);margin:6px 0 12px;min-height:18px}
+  .status.win{color:var(--fake);font-weight:700;letter-spacing:.06em}
+  .board{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:var(--rule);padding:6px;border:1px solid var(--rule)}
+  .cell{background:var(--card);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;text-align:center;font-family:Calibri,Arial,sans-serif;font-size:12px;line-height:1.2;padding:6px;cursor:pointer;color:var(--ink);user-select:none;transition:background .15s,color .15s}
+  .cell:hover{background:var(--goldSoft)}
+  .cell.marked{background:var(--fake);color:#fff;font-weight:700}
+  .cell.free{background:var(--ink);color:var(--bg);font-family:Arial,sans-serif;font-weight:700;font-size:11px;letter-spacing:.18em}
+  footer{text-align:center;color:var(--muted);font-family:Arial,sans-serif;font-size:11px;margin-top:22px;letter-spacing:.04em}
+  footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">STAY THE WAY · APPLIED VS. NOTHING</p>
+    <h1>Bible Bingo — Fake vs. Faithful</h1>
+    <p class="sub">Tap a square as the phrase comes up in the teaching. Five in a row wins.</p>
+  </header>
+  <div class="controls">
+    <button id="shuffle">Shuffle Card</button>
+    <button id="clear" class="ghost">Clear Marks</button>
+  </div>
+  <div id="status" class="status">Ready.</div>
+  <div id="board" class="board" aria-label="Bingo board"></div>
+  <footer>staytheway.com · <a href="../">all teachings</a></footer>
+</div>
+<script>
+const TERMS = [
+  "Lord, Lord","Faith without works","Hearer only","Form of godliness",
+  "Bears no fruit","By their fruits","Doers of the word","Demons believe",
+  "I never knew you","Word and deed","Show me your faith","Keep His commandments",
+  "Love in deed","Empty profession","Practice lawlessness","Self-deceived",
+  "Hands and feet","Walking faith","Applied","Stop studying / Start doing",
+  "Nothing","Confess + obey","Knows the lingo","Brother in need"
+];
+const FREE_LABEL = "AMEN";
+const board = document.getElementById('board');
+const statusEl = document.getElementById('status');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function render(){
+  board.innerHTML='';
+  const picks = shuffle(TERMS.slice()).slice(0,24);
+  picks.splice(12,0,FREE_LABEL);
+  picks.forEach((t,i)=>{
+    const el = document.createElement('div');
+    el.className = 'cell' + (i===12 ? ' free marked' : '');
+    el.textContent = t;
+    el.dataset.idx = i;
+    el.addEventListener('click', ()=>{
+      if(i===12) return;
+      el.classList.toggle('marked');
+      checkWin();
+    });
+    board.appendChild(el);
+  });
+  statusEl.className='status'; statusEl.textContent='New card. Listen close.';
+}
+function checkWin(){
+  const cells=[...board.children];
+  const m=i=>cells[i].classList.contains('marked');
+  const lines=[
+    [0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],
+    [0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],
+    [0,6,12,18,24],[4,8,12,16,20]
+  ];
+  if(lines.some(l=>l.every(m))){statusEl.className='status win';statusEl.textContent='✓ BINGO — applied faith wins.'}
+}
+document.getElementById('shuffle').onclick=render;
+document.getElementById('clear').onclick=()=>{[...board.children].forEach((c,i)=>{if(i!==12)c.classList.remove('marked')});statusEl.className='status';statusEl.textContent='Cleared.'};
+render();
+</script>
+</body>
+</html>

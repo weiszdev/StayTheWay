@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Applied vs. Nothing — Quiz | Stay The Way</title>
+<style>
+  :root{--bg:#F5F1E8;--ink:#1C1917;--inkSoft:#44403C;--muted:#78716C;--rule:#C8BFA9;--fake:#991B1B;--gold:#B45309;--goldSoft:#EFE3CC;--card:#FFFFFF}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Calibri,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:680px;margin:0 auto;padding:24px 16px 48px}
+  header{text-align:center;border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:18px}
+  .kicker{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.22em;color:var(--fake);font-weight:700;margin:0}
+  h1{font-family:Georgia,serif;font-size:28px;margin:6px 0 4px;color:var(--ink)}
+  .sub{font-size:14px;color:var(--inkSoft);margin:0}
+  .progressbar{height:6px;background:var(--rule);margin:18px 0 8px;border-radius:3px;overflow:hidden}
+  .progressbar>div{height:100%;background:var(--fake);width:0;transition:width .3s}
+  .progresslabel{font-size:12px;color:var(--muted);text-align:center;letter-spacing:.06em;margin-bottom:14px}
+  .card{background:var(--card);border:1px solid var(--rule);padding:22px 18px;border-radius:2px}
+  .qnum{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.22em;color:var(--gold);font-weight:700}
+  .q{font-family:Georgia,serif;font-size:20px;margin:6px 0 16px;line-height:1.3}
+  .opt{display:block;width:100%;text-align:left;background:var(--bg);border:1px solid var(--rule);padding:12px 14px;margin:0 0 8px;border-radius:2px;cursor:pointer;font:inherit;color:var(--ink);transition:background .15s,border-color .15s}
+  .opt:hover{background:var(--goldSoft)}
+  .opt.correct{background:#DCFCE7;border-color:#16A34A}
+  .opt.wrong{background:#FEE2E2;border-color:var(--fake)}
+  .opt.disabled{cursor:default;pointer-events:none}
+  .feedback{margin-top:12px;padding:12px 14px;border-left:3px solid var(--gold);background:var(--goldSoft);font-size:14px;color:var(--inkSoft)}
+  .feedback.right{border-color:#16A34A;background:#DCFCE7;color:#14532D}
+  .feedback.wrong{border-color:var(--fake);background:#FEE2E2;color:#7F1D1D}
+  .controls{display:flex;justify-content:flex-end;margin-top:14px}
+  button{font-family:Arial,sans-serif;font-size:13px;padding:9px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:2px;cursor:pointer;letter-spacing:.05em}
+  .final{text-align:center;padding:20px}
+  .final h2{font-family:Georgia,serif;font-size:32px;margin:0 0 6px}
+  .final .score{font-size:60px;font-weight:700;color:var(--fake);font-family:Georgia,serif;line-height:1;margin:8px 0}
+  .final p{color:var(--inkSoft)}
+  footer{text-align:center;color:var(--muted);font-size:11px;margin-top:22px;letter-spacing:.04em}
+  footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">STAY THE WAY · APPLIED VS. NOTHING</p>
+    <h1>8-Question Quiz</h1>
+    <p class="sub">Test the marks of an applied faith.</p>
+  </header>
+  <div class="progressbar"><div id="bar"></div></div>
+  <div class="progresslabel" id="plabel">Question 1 of 8</div>
+  <div id="quiz"></div>
+  <footer>staytheway.com · <a href="../">all teachings</a></footer>
+</div>
+<script>
+const Q = [
+  {q:'Which book says "Faith by itself, if it does not have works, is dead"?',
+   options:['Romans','James','1 John','Galatians'], answer:1,
+   why:'James 2:17 NKJV — the through-line of today\'s teaching.'},
+  {q:'Jesus said, "Why do you call Me ___, ___ and not do the things which I say?"',
+   options:['Father, Father','Lord, Lord','Master, Master','Teacher, Teacher'], answer:1,
+   why:'Luke 6:46 — confession without obedience is the first ID.'},
+  {q:'According to James 1:22, those who hear the Word but do not do it are…',
+   options:['Forgetful','Self-deceived','Weak in faith','Babes in Christ'], answer:1,
+   why:'James 1:22 NKJV — "deceiving yourselves."'},
+  {q:'2 Timothy 3:5 warns of those who have a "form of godliness" but…',
+   options:['Reject the church','Deny its power','Hide their gifts','Fall asleep'], answer:1,
+   why:'2 Tim 3:5 — appearance without power is empty profession.'},
+  {q:'1 John 4:20 says you cannot love God if you…',
+   options:['Skip church','Hate your brother','Doubt the Bible','Forget to pray'], answer:1,
+   why:'Loveless toward people = loveless toward God.'},
+  {q:'Jesus said you will know false prophets by their…',
+   options:['Words','Fruits','Followers','Robes'], answer:1,
+   why:'Matthew 7:16-20 — fruit, not vocabulary, identifies the tree.'},
+  {q:'1 John 2:4 calls the one who says "I know Him" but does not keep His commandments a…',
+   options:['Babe','Liar','Backslider','Pretender'], answer:1,
+   why:'1 John 2:4 NKJV — direct and uncomfortable.'},
+  {q:'James says "even the demons believe" — and what?',
+   options:['Repent','Tremble','Confess','Run'], answer:1,
+   why:'James 2:19 — belief without works is no proof of life.'},
+];
+let i=0,score=0;
+const qel=document.getElementById('quiz'),bar=document.getElementById('bar'),plabel=document.getElementById('plabel');
+function render(){
+  if(i>=Q.length){
+    qel.innerHTML=`<div class="card final"><h2>Done.</h2><div class="score">${score}/${Q.length}</div><p>${blessing()}</p></div>`;
+    bar.style.width='100%';plabel.textContent='Complete';return;
+  }
+  bar.style.width=((i)/Q.length*100)+'%';plabel.textContent=`Question ${i+1} of ${Q.length}`;
+  const item=Q[i];
+  qel.innerHTML=`<div class="card"><p class="qnum">QUESTION ${i+1}</p><p class="q">${item.q}</p>
+    <div id="opts">${item.options.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join('')}</div>
+    <div id="fb"></div><div class="controls" id="ctrl"></div></div>`;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(+b.dataset.k));
+}
+function pick(k){
+  const item=Q[i],opts=document.querySelectorAll('.opt'),fb=document.getElementById('fb'),ctrl=document.getElementById('ctrl');
+  opts.forEach(o=>o.classList.add('disabled'));
+  opts[item.answer].classList.add('correct');
+  if(k===item.answer){score++;fb.innerHTML=`<div class="feedback right">✓ ${item.why}</div>`}
+  else{opts[k].classList.add('wrong');fb.innerHTML=`<div class="feedback wrong">${item.why}</div>`}
+  ctrl.innerHTML=`<button id="next">${i===Q.length-1?'See Score':'Next →'}</button>`;
+  document.getElementById('next').onclick=()=>{i++;render()};
+}
+function blessing(){
+  const p=score/Q.length;
+  if(p===1) return 'Knowledge is excellent. Now go DO. — James 1:22';
+  if(p>=.75) return 'Strong. Pick the weak spot — and walk it out this week.';
+  if(p>=.5) return 'Halfway is hearing. Move it from notes to feet.';
+  return 'Stay the Way. Re-listen, then take ONE applied step.';
+}
+render();
+</script>
+</body>
+</html>

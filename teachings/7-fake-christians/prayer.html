@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prayer Request — Applied vs. Nothing | Stay The Way</title>
+<style>
+  :root{--bg:#F5F1E8;--ink:#1C1917;--inkSoft:#44403C;--muted:#78716C;--rule:#C8BFA9;--fake:#991B1B;--gold:#B45309;--goldSoft:#EFE3CC;--card:#FFFFFF}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Calibri,Arial,sans-serif}
+  .wrap{max-width:600px;margin:0 auto;padding:24px 16px 48px}
+  header{text-align:center;border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:18px}
+  .kicker{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.22em;color:var(--fake);font-weight:700;margin:0}
+  h1{font-family:Georgia,serif;font-size:28px;margin:6px 0 4px;color:var(--ink)}
+  .sub{font-size:14px;color:var(--inkSoft);margin:0}
+  .card{background:var(--card);border:1px solid var(--rule);padding:22px 18px;border-radius:2px}
+  label{display:block;font-family:Arial,sans-serif;font-size:11px;letter-spacing:.18em;color:var(--gold);font-weight:700;margin:14px 0 6px}
+  input,textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);border-radius:2px}
+  textarea{min-height:130px;resize:vertical;font-family:Georgia,serif}
+  .row{display:flex;gap:10px;align-items:flex-start;margin-top:6px;font-size:13px;color:var(--inkSoft)}
+  .row input[type=checkbox]{width:auto;margin-top:3px}
+  .actions{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+  .privacy{font-size:11px;color:var(--muted);max-width:60%}
+  button{font-family:Arial,sans-serif;font-size:13px;padding:11px 22px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:2px;cursor:pointer;letter-spacing:.06em;font-weight:700}
+  button[disabled]{opacity:.5;cursor:default}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+  .msg{margin:14px 0 0;padding:12px 14px;border-left:3px solid var(--gold);background:var(--goldSoft);font-size:14px;color:var(--inkSoft)}
+  .msg.ok{border-color:#16A34A;background:#DCFCE7;color:#14532D}
+  .msg.err{border-color:var(--fake);background:#FEE2E2;color:#7F1D1D}
+  footer{text-align:center;color:var(--muted);font-size:11px;margin-top:22px;letter-spacing:.04em}
+  footer a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">STAY THE WAY · APPLIED VS. NOTHING</p>
+    <h1>Submit a Prayer Request</h1>
+    <p class="sub">Confidential. Our team intercedes for every name.</p>
+  </header>
+  <form id="prayerForm" class="card" novalidate>
+    <input type="text" name="company" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="hidden" name="topic" value="7-fake-christians">
+    <input type="hidden" name="loaded_at" id="loaded_at">
+    <label for="name">YOUR NAME</label>
+    <input id="name" name="name" type="text" required autocomplete="name">
+    <label for="email">EMAIL  <span style="font-weight:400;letter-spacing:0;color:var(--muted);text-transform:none">(we'll send a one-click confirm)</span></label>
+    <input id="email" name="email" type="email" required autocomplete="email">
+    <label for="request">PRAYER REQUEST</label>
+    <textarea id="request" name="request" required placeholder="Share what you'd like the team to pray over."></textarea>
+    <div class="row">
+      <input id="optin" name="email_list" type="checkbox" value="yes">
+      <label for="optin" style="all:unset;color:var(--inkSoft);font-size:13px;cursor:pointer">Also add me to the Stay The Way email list (weekly teaching + applied steps).</label>
+    </div>
+    <div class="actions">
+      <p class="privacy">By submitting, you'll receive one verification email. Requests are private to the prayer team.</p>
+      <button id="submitBtn" type="submit">Submit</button>
+    </div>
+    <div id="msg"></div>
+  </form>
+  <footer>staytheway.com · <a href="../">all teachings</a></footer>
+</div>
+<script>
+// Apps Script Web App URL — reused from prior teaching (set after first deployment)
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw7TZJlk8vb4plGs1SXxaRdqgr_rQn1KzRKOgfGhVtK5Xc_cMOrMydh14v1JvKqAe8v/exec";
+const LOADED = Date.now();
+document.getElementById('loaded_at').value = LOADED;
+
+document.getElementById('prayerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target, msg = document.getElementById('msg'), btn = document.getElementById('submitBtn');
+  msg.className=''; msg.textContent='';
+  // honeypot
+  if(form.company.value){ msg.className='msg err'; msg.textContent='Submission blocked.'; return; }
+  // min-time anti-bot (3s)
+  if(Date.now() - LOADED < 3000){ msg.className='msg err'; msg.textContent='Slow down a moment, then submit again.'; return; }
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.startsWith('REPLACE')){
+    msg.className='msg err'; msg.textContent='Form not yet wired to backend. Check back shortly.'; return;
+  }
+  btn.disabled = true; btn.textContent = 'Submitting…';
+  try {
+    const data = new FormData(form);
+    const r = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: data });
+    const j = await r.json().catch(()=>({ok:r.ok}));
+    if(j.ok || r.ok){
+      msg.className='msg ok';
+      msg.textContent='✓ Sent. Check your email and click the confirm link to complete your request.';
+      form.reset();
+    } else {
+      throw new Error(j.error || 'Submission failed.');
+    }
+  } catch(err){
+    msg.className='msg err'; msg.textContent='Something went wrong: ' + err.message;
+  } finally {
+    btn.disabled = false; btn.textContent = 'Submit';
+  }
+});
+</script>
+</body>
+</html>
