@@ -137,9 +137,18 @@ QR_QUIZ:         "https://staytheway.com/teachings/{TEACHING_SLUG}/quiz.html"
 >    - `kids-bingo.html` — 4×4 simplified bingo with teaching-related terms + emoji icons
 >    - `kids-quiz.html` — 5 age-appropriate questions with KJV scripture feedback
 >    - `kids-activity.html` — interactive coloring (7 items), verse tracing, prayer drawing canvas
-> 7. **README.md** with deployment instructions and exact live URLs.
-> 8. **deploy_today.sh** auto-discovering script (mirrors 7-Wives version).
-> 9. **Refresh this MASTER_PROMPTS file** with the next teaching's variables when done.
+> 7. **Kids coloring handout** — printable black-and-white line art coloring sheet tied to the teaching theme. Print-friendly, age 5–10 appropriate. Save as `kids-coloring.html` (with print CSS) or PDF.
+> 8. **Kids teacher guide** — `kids-teacher-guide.html` or `.md`. Includes:
+>    - The 5 kids quiz questions with answers
+>    - Key verses in simple kid-friendly language
+>    - Talking points for each teaching item (simplified for kids)
+>    - Activity instructions (bingo, quiz, coloring)
+>    - Suggested discussion questions
+> 9. **Kids worship song** — original kid-friendly worship song tied to the teaching. Upbeat, singable, hand-motion friendly, ages 5–7. Structure: Verse, Chorus, Verse, Chorus, Bridge (with actions), Chorus. Include suggested actions in brackets + chord suggestions.
+> 10. **Audio → SoundCloud** — extract audio from the YouTube teaching video and post to SoundCloud (requires yt-dlp + SoundCloud API setup).
+> 11. **README.md** with deployment instructions and exact live URLs.
+> 12. **deploy_today.sh** auto-discovering script (mirrors 7-Wives version).
+> 13. **Refresh this MASTER_PROMPTS file** with the next teaching's variables when done.
 >
 > Filename: `{TEACHING_SLUG_TitleCase}_VERTICAL_v1_CAMERA_FULL916_QR.pptx`
 > Translation: NKJV unless overridden.
@@ -154,6 +163,10 @@ QR_QUIZ:         "https://staytheway.com/teachings/{TEACHING_SLUG}/quiz.html"
 - [ ] Visually spot-check 5+ slides for camera-band overlap
 - [ ] Run `deploy_today.sh` from local Mac
 - [ ] Build landing page (`index.html`) + kids pages (`kids-bingo.html`, `kids-quiz.html`, `kids-activity.html`)
-- [ ] Deploy landing + kids pages to SiteGround via rsync
+- [ ] Build kids coloring handout (`kids-coloring.html`)
+- [ ] Build kids teacher guide (`kids-teacher-guide.html`)
+- [ ] Write kids worship song (lyrics + chords + actions)
+- [ ] Deploy all pages to SiteGround via rsync
 - [ ] Flush LiteSpeed cache (`wp cache flush`)
+- [ ] Extract audio from YouTube → post to SoundCloud
 - [ ] Update WordPress home embed with new YouTube video (Chrome MCP into wp-admin)
