@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Take the Quiz — Romans 7</title>
+<meta name="description" content="Short interactive quiz on StayTheWay Ministry's teaching: Romans 7 — The Struggle Under the Law." />
+<meta property="og:type" content="website">
+<meta property="og:title" content="Teaching Quiz — Romans 7">
+<meta property="og:description" content="8 questions covering Romans 7 — the law, sin, the struggle, and deliverance. Test your knowledge with instant feedback.">
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<meta property="og:url" content="https://staytheway.com/teachings/romans-7/quiz.html">
+<meta property="og:site_name" content="StayTheWay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Teaching Quiz — Romans 7">
+<meta name="twitter:description" content="8 questions covering Romans 7 — the law, sin, the struggle, and deliverance. Test your knowledge with instant feedback.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<style>
+  :root {
+    --navy: #000014;
+    --navy-2: #06112B;
+    --blue: #1478F0;
+    --sky: #28A0F0;
+    --chrome: #DCDCDC;
+    --white: #FFFFFF;
+    --green: #3AC47B;
+    --red:   #E0516C;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header { text-align: center; padding-bottom: 1.25rem;
+    border-bottom: 3px solid var(--blue); position: relative; }
+  header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px;
+    background: var(--white); }
+  header .kicker { color: var(--sky); letter-spacing: 0.35em; font-weight: 900;
+    font-size: 0.75rem; margin-bottom: 0.5rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white);
+    margin: 0; font-size: clamp(1.7rem, 6vw, 2.4rem); }
+  header .sub { color: var(--sky); font-style: italic; margin-top: 0.5rem;
+    font-size: clamp(0.9rem, 3vw, 1.05rem); }
+
+  .meta { display: flex; justify-content: space-between; align-items: center;
+    margin: 1.25rem 0 0.75rem; font-size: 0.85rem; color: var(--sky);
+    letter-spacing: 0.15em; text-transform: uppercase; font-weight: 900; }
+  .progress { height: 6px; background: rgba(20,120,240,0.2); border-radius: 3px; overflow: hidden;
+    margin-bottom: 1.5rem; }
+  .progress > div { height: 100%; background: linear-gradient(90deg, var(--blue), var(--sky));
+    width: 0%; transition: width 0.3s ease; }
+
+  .question {
+    background: var(--navy-2); border: 1px solid var(--blue);
+    border-left: 6px solid var(--white);
+    padding: 1.25rem 1.25rem 1.5rem; margin-bottom: 1rem;
+  }
+  .q-text { font-family: Georgia, serif; font-size: clamp(1.1rem, 4vw, 1.3rem);
+    color: var(--white); font-weight: 700; margin: 0 0 1.1rem; line-height: 1.35; }
+
+  .options { display: grid; gap: 0.55rem; }
+  .opt {
+    display: block; padding: 0.85rem 1rem; background: rgba(20,120,240,0.07);
+    border: 2px solid rgba(20,120,240,0.45); color: var(--chrome);
+    cursor: pointer; font-size: 1rem; line-height: 1.4;
+    text-align: left; font-family: inherit; width: 100%;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .opt:hover { background: rgba(20,120,240,0.16); }
+  .opt.correct { background: rgba(58,196,123,0.18); border-color: var(--green);
+    color: var(--white); font-weight: 700; }
+  .opt.wrong { background: rgba(224,81,108,0.18); border-color: var(--red); color: var(--white); }
+  .opt[disabled] { cursor: default; }
+
+  .feedback {
+    margin-top: 1rem; padding: 0.85rem 1rem;
+    font-size: 0.95rem; line-height: 1.5;
+    background: var(--navy); border-left: 4px solid var(--sky);
+  }
+  .feedback.correct { border-left-color: var(--green); }
+  .feedback.wrong   { border-left-color: var(--red); }
+  .feedback strong { color: var(--white); }
+
+  .nav { text-align: center; margin-top: 1rem; }
+  .btn {
+    background: var(--blue); color: var(--white); border: 2px solid var(--blue);
+    padding: 0.8rem 1.6rem; font-weight: 900; letter-spacing: 0.08em;
+    font-size: 0.95rem; cursor: pointer; font-family: inherit;
+    border-radius: 4px;
+  }
+  .btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--sky); border-color: var(--sky); }
+
+  .result {
+    text-align: center; padding: 2rem 1.25rem;
+    background: var(--navy-2); border: 1px solid var(--blue); border-left: 6px solid var(--white);
+  }
+  .result h2 { font-family: Georgia, serif; color: var(--white);
+    font-size: clamp(1.8rem, 6vw, 2.5rem); margin: 0 0 0.5rem; }
+  .result .score { font-size: 3rem; font-family: "Arial Black", sans-serif;
+    color: var(--blue); margin: 0.5rem 0; }
+  .result .score small { font-size: 1.2rem; color: var(--chrome); font-weight: 400; }
+  .result p { color: var(--chrome); line-height: 1.5; font-family: Georgia, serif;
+    font-style: italic; }
+  .result .verse { color: var(--sky); font-style: italic; margin-top: 1.25rem;
+    font-family: Georgia, serif; }
+
+  footer { margin-top: 2.5rem; text-align: center; color: var(--chrome);
+    border-top: 1px solid rgba(20,120,240,0.3); padding-top: 1.5rem; font-size: 0.85rem; }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY MINISTRY  &bull;  TAKE THE QUIZ</div>
+    <h1>Romans 7 — The Struggle Under the Law</h1>
+    <div class="sub">Let's see what stuck</div>
+  </header>
+
+  <div id="quiz-area">
+    <div class="meta">
+      <span id="counter">Question 1 of 8</span>
+      <span id="score-display">Score 0</span>
+    </div>
+    <div class="progress"><div id="progress-bar"></div></div>
+
+    <div class="question">
+      <h2 class="q-text" id="q-text"></h2>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback" hidden></div>
+    </div>
+
+    <div class="nav">
+      <button class="btn" id="next-btn" disabled>NEXT QUESTION</button>
+    </div>
+  </div>
+
+  <div id="result-area" hidden>
+    <div class="result">
+      <h2>Well done.</h2>
+      <div class="score" id="final-score">0<small> / 8</small></div>
+      <p id="final-message"></p>
+      <div class="verse">&ldquo;Therefore, my brethren, you also have become dead to the law through the body of Christ, that you may be married to another&mdash;to Him who was raised from the dead, that we should bear fruit to God.&rdquo;<br/>&mdash; Romans 7:4 (NKJV)</div>
+      <div class="nav" style="margin-top:1.5rem;">
+        <button class="btn ghost" onclick="location.reload()">RETAKE QUIZ</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>StayTheWay Ministry  &bull;  <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+var QUESTIONS = [
+  {
+    q: "What has dominion over a man as long as he lives?",
+    options: [
+      "Grace",
+      "The law",
+      "The flesh",
+      "The Spirit"
+    ],
+    correct: 1,
+    explain: "Romans 7:1 — 'The law has dominion over a man as long as he lives.' Paul uses this to show that death releases us from the law's authority."
+  },
+  {
+    q: "Through what have we become dead to the law?",
+    options: [
+      "Through our own righteousness",
+      "Through the body of Christ",
+      "Through the Ten Commandments",
+      "Through the writings of Moses"
+    ],
+    correct: 1,
+    explain: "Romans 7:4 — 'You also have become dead to the law through the body of Christ.' Christ's death freed us from the law's binding claim."
+  },
+  {
+    q: "What did Paul say he would not have known without the law?",
+    options: [
+      "Faithfulness",
+      "Righteousness",
+      "Covetousness (sin)",
+      "Holiness"
+    ],
+    correct: 2,
+    explain: "Romans 7:7 — 'I would not have known covetousness unless the law had said, \"You shall not covet.\"' The law reveals sin."
+  },
+  {
+    q: "What happened when the commandment came?",
+    options: [
+      "Paul was made righteous",
+      "Sin revived and I died",
+      "The law was abolished",
+      "Grace appeared immediately"
+    ],
+    correct: 1,
+    explain: "Romans 7:9 — 'But when the commandment came, sin revived and I died.' The law exposed sin's deadly power."
+  },
+  {
+    q: "Paul says the law is what?",
+    options: [
+      "Burdensome, heavy, and impossible",
+      "Holy, just, and good",
+      "Temporary, weak, and obsolete",
+      "Hidden, mysterious, and unclear"
+    ],
+    correct: 1,
+    explain: "Romans 7:12 — 'Therefore the law is holy, and the commandment holy and just and good.' The problem is not the law — it is sin in us."
+  },
+  {
+    q: "\"For what I will to do, that I do not ___.\"",
+    options: [
+      "Understand",
+      "Believe",
+      "Practice",
+      "Remember"
+    ],
+    correct: 2,
+    explain: "Romans 7:15 — 'For what I will to do, that I do not practice; but what I hate, that I do.' Paul describes the inner war between flesh and spirit."
+  },
+  {
+    q: "What wars against the law of Paul's mind?",
+    options: [
+      "The law of Moses",
+      "The will of the flesh",
+      "Another law in his members",
+      "The traditions of men"
+    ],
+    correct: 2,
+    explain: "Romans 7:23 — 'But I see another law in my members, warring against the law of my mind, and bringing me into captivity to the law of sin.'"
+  },
+  {
+    q: "Who delivers Paul from the body of death?",
+    options: [
+      "The prophets of old",
+      "His own willpower",
+      "The law of Moses",
+      "Jesus Christ our Lord"
+    ],
+    correct: 3,
+    explain: "Romans 7:24–25 — 'O wretched man that I am! Who will deliver me from this body of death? I thank God — through Jesus Christ our Lord!'"
+  }
+];
+
+var current = 0;
+var score = 0;
+var answered = false;
+
+var counter   = document.getElementById("counter");
+var scoreDisp = document.getElementById("score-display");
+var progBar   = document.getElementById("progress-bar");
+var qText     = document.getElementById("q-text");
+var optsEl    = document.getElementById("options");
+var feedback  = document.getElementById("feedback");
+var nextBtn   = document.getElementById("next-btn");
+
+function render() {
+  var q = QUESTIONS[current];
+  counter.textContent = "Question " + (current + 1) + " of " + QUESTIONS.length;
+  scoreDisp.textContent = "Score " + score;
+  progBar.style.width = (current / QUESTIONS.length * 100) + "%";
+  qText.textContent = q.q;
+  optsEl.innerHTML = "";
+  q.options.forEach(function(text, i) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "opt";
+    btn.textContent = text;
+    btn.addEventListener("click", function() { pick(i, btn); });
+    optsEl.appendChild(btn);
+  });
+  feedback.hidden = true; feedback.className = "feedback";
+  nextBtn.disabled = true;
+  nextBtn.textContent = (current === QUESTIONS.length - 1) ? "SEE RESULTS" : "NEXT QUESTION";
+  answered = false;
+}
+
+function pick(i, btn) {
+  if (answered) return;
+  answered = true;
+  var q = QUESTIONS[current];
+  var buttons = Array.from(optsEl.querySelectorAll(".opt"));
+  buttons.forEach(function(b) { b.disabled = true; });
+  buttons[q.correct].classList.add("correct");
+  if (i === q.correct) {
+    score += 1;
+    feedback.className = "feedback correct";
+    feedback.innerHTML = "<strong>Right.</strong> " + q.explain;
+  } else {
+    btn.classList.add("wrong");
+    feedback.className = "feedback wrong";
+    feedback.innerHTML = "<strong>Not quite.</strong> " + q.explain;
+  }
+  feedback.hidden = false;
+  scoreDisp.textContent = "Score " + score;
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener("click", function() {
+  current += 1;
+  if (current >= QUESTIONS.length) { showResult(); return; }
+  render();
+});
+
+function showResult() {
+  document.getElementById("quiz-area").hidden = true;
+  document.getElementById("result-area").hidden = false;
+  document.getElementById("final-score").innerHTML = score + "<small> / " + QUESTIONS.length + "</small>";
+  var msg = document.getElementById("final-message");
+  if (score === QUESTIONS.length) {
+    msg.textContent = "Perfect score. You clearly understand the struggle — and the Deliverer.";
+  } else if (score >= Math.ceil(QUESTIONS.length * 0.75)) {
+    msg.textContent = "Strong work. The key truths of Romans 7 are taking root — now walk them out.";
+  } else if (score >= Math.ceil(QUESTIONS.length * 0.5)) {
+    msg.textContent = "Good start. Revisit the teaching and let the Word sink deeper.";
+  } else {
+    msg.textContent = "No condemnation. Replay the teaching, take your time — Christ is patient.";
+  }
+}
+
+render();
+</script>
+</body>
+</html>

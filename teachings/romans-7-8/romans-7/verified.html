@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prayer Verified — StayTheWay Ministry</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Prayer Verified — StayTheWay Ministry">
+<meta property="og:description" content="Your prayer request has been verified and sent to our prayer team.">
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<meta property="og:url" content="https://staytheway.com/teachings/romans-7/verified.html">
+<meta property="og:site_name" content="StayTheWay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Prayer Verified — StayTheWay Ministry">
+<meta name="twitter:description" content="Your prayer request has been verified and sent to our prayer team.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<style>
+  :root { --navy: #000014; --blue: #1478F0; --sky: #28A0F0; --white: #FFFFFF; --chrome: #DCDCDC; --green: #3AC47B; --red: #E0516C; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: Georgia, serif; line-height: 1.6; }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 2rem 1rem 3rem; text-align: center; }
+  h1 { color: var(--white); font-size: clamp(1.5rem, 5vw, 2rem);
+    border-bottom: 3px solid var(--blue); padding-bottom: 0.75rem; position: relative; }
+  h1::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px; background: var(--white); }
+  .verse { margin: 1.5rem 0; padding: 1.1rem; background: #06112B; border: 1px solid var(--blue);
+    border-left: 6px solid var(--white); font-style: italic; color: var(--white); font-size: 1.05rem; }
+  .verse .ref { display: block; margin-top: 0.5rem; color: var(--white);
+    font-weight: 900; font-style: normal; font-size: 0.85rem; letter-spacing: 0.1em; }
+  p { font-size: 1rem; }
+  a { color: var(--sky); text-decoration: none; font-weight: 700; }
+  .btn { display: inline-block; margin-top: 1.5rem; background: var(--blue); color: var(--white);
+    padding: 0.85rem 2rem; font-weight: 900; letter-spacing: 0.1em; border-radius: 4px;
+    text-decoration: none; font-size: 1rem; }
+  #status { margin: 1.5rem 0; padding: 1rem; font-size: 1.05rem; }
+  .loading { color: var(--sky); }
+  .success { color: var(--green); }
+  .error { color: var(--red); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 id="heading">Verifying Your Prayer...</h1>
+  <div id="status" class="loading">Connecting to prayer team...</div>
+  <div class="verse" style="display:none;" id="verse">
+    &ldquo;Cast all your care upon Him, for He cares for you.&rdquo;
+    <span class="ref">&mdash; 1 Peter 5:7 (NKJV)</span>
+  </div>
+  <p id="message" style="display:none;"></p>
+  <a href="https://staytheway.com" class="btn" id="back-btn" style="display:none;">BACK TO STAYTHEWAY.COM</a>
+</div>
+<script>
+  var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw7TZJlk8vb4plGs1SXxaRdqgr_rQn1KzRKOgfGhVtK5Xc_cMOrMydh14v1JvKqAe8v/exec";
+
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get("token");
+
+  if (!token) {
+    document.getElementById("heading").textContent = "Invalid Link";
+    document.getElementById("status").className = "error";
+    document.getElementById("status").textContent = "This verification link is missing its token.";
+    document.getElementById("back-btn").style.display = "inline-block";
+    document.getElementById("back-btn").href = "prayer.html";
+    document.getElementById("back-btn").textContent = "SUBMIT A NEW REQUEST";
+  } else {
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "verify", token: token })
+    }).then(function() {
+      document.getElementById("heading").textContent = "Thank You \u2014 Your Prayer Is With Us";
+      document.getElementById("status").className = "success";
+      document.getElementById("status").textContent = "Your prayer request has been verified and sent to our prayer team.";
+      document.getElementById("verse").style.display = "block";
+      document.getElementById("message").style.display = "block";
+      document.getElementById("message").innerHTML = "We'll carry it before the Father.";
+      document.getElementById("back-btn").style.display = "inline-block";
+    }).catch(function() {
+      document.getElementById("heading").textContent = "Something Went Wrong";
+      document.getElementById("status").className = "error";
+      document.getElementById("status").textContent = "Please try clicking the link again, or submit a new prayer request.";
+      document.getElementById("back-btn").style.display = "inline-block";
+      document.getElementById("back-btn").href = "prayer.html";
+      document.getElementById("back-btn").textContent = "SUBMIT A NEW REQUEST";
+    });
+  }
+</script>
+</body>
+</html>
