@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Swipe Study — StayTheWay</title>
+<meta name="description" content="A gentle, swipe-based Bible study. No pressure. Just truth, one card at a time.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2744;
+  --blue:#2563eb;
+  --black:#0a0a0a;
+  --white:#ffffff;
+  --green:#22c55e;
+  --red:#ef4444;
+  --gray:#94a3b8;
+  --gold:#fbbf24;
+  --rose:#f43f5e;
+  --sky:#38bdf8;
+  --radius:16px;
+  --warmGlow:rgba(251,191,36,.08);
+}
+html{font-size:16px;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--black);color:var(--white);
+  min-height:100dvh;overflow-x:hidden;
+  -webkit-user-select:none;user-select:none;
+}
+
+/* ===== PROGRESS ===== */
+.progress-wrap{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(10,10,10,.95);backdrop-filter:blur(12px);
+  padding:12px 20px 10px;display:none;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.progress-wrap.visible{display:block}
+.progress-info{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:8px;
+}
+.progress-label{
+  font-size:.75rem;font-weight:700;color:var(--gray);
+  letter-spacing:.06em;
+}
+.progress-pct{
+  font-size:.85rem;font-weight:800;
+  background:linear-gradient(90deg,var(--gold),var(--green));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  transition:all .3s;
+}
+.progress-track{height:8px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden;position:relative}
+.progress-fill{
+  height:100%;border-radius:4px;
+  background:linear-gradient(90deg,var(--blue),var(--green),var(--gold));
+  transition:width .5s cubic-bezier(.4,0,.2,1);width:0%;
+  box-shadow:0 0 12px rgba(34,197,94,.4);
+  position:relative;
+}
+.progress-fill::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:20px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3));
+  border-radius:4px;
+}
+.streak-counter{
+  display:flex;align-items:center;gap:6px;
+  justify-content:center;margin-top:8px;
+  font-size:.7rem;font-weight:700;color:var(--gold);
+  opacity:0;transition:opacity .3s;
+  letter-spacing:.08em;
+}
+.streak-counter.visible{opacity:1}
+
+/* ===== SCREENS ===== */
+.screen{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100dvh;padding:60px 20px 40px;
+  animation:fadeUp .45s ease-out;
+}
+.screen.active{display:flex}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== START SCREEN ===== */
+.hero-icon{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#f59e0b);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;margin-bottom:24px;
+  box-shadow:0 0 40px rgba(251,191,36,.3);
+}
+h1{font-size:clamp(1.6rem,5vw,2.2rem);font-weight:800;text-align:center;line-height:1.2;margin-bottom:8px}
+h1 span{color:var(--gold)}
+.subtitle{color:var(--gray);font-size:1rem;text-align:center;max-width:420px;line-height:1.6;margin-bottom:12px}
+.study-meta{
+  display:flex;gap:12px;margin:20px 0 28px;flex-wrap:wrap;justify-content:center;
+}
+.meta-chip{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:40px;font-size:.8rem;font-weight:600;
+  background:rgba(26,39,68,.6);border:1px solid rgba(251,191,36,.2);
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 36px;border:none;border-radius:60px;cursor:pointer;
+  font-size:1.05rem;font-weight:700;
+  background:linear-gradient(135deg,var(--gold),#f59e0b);
+  color:var(--black);transition:all .2s;
+  box-shadow:0 4px 20px rgba(251,191,36,.35);
+}
+.btn:active{transform:scale(.96)}
+.btn-secondary{
+  background:linear-gradient(135deg,var(--blue),#3b82f6);
+  color:var(--white);box-shadow:0 4px 20px rgba(37,99,235,.35);
+}
+.gentle-note{
+  font-size:.75rem;color:var(--gray);text-align:center;
+  max-width:340px;line-height:1.5;margin-top:20px;opacity:.7;
+  font-style:italic;
+}
+
+/* ===== SWIPE AREA ===== */
+.swipe-screen{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100dvh;padding:50px 20px 30px;
+  position:relative;overflow:hidden;
+}
+.swipe-screen.active{display:flex}
+
+.bg-tint{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  pointer-events:none;z-index:0;transition:background .15s ease;
+}
+
+/* Question label */
+.question-label{
+  font-size:.7rem;font-weight:700;letter-spacing:.12em;
+  color:var(--sky);margin-bottom:6px;z-index:2;
+  text-transform:uppercase;
+}
+
+/* Card stack */
+.card-stack{position:relative;width:100%;max-width:400px;z-index:2}
+.card-shadow{
+  position:absolute;top:6px;left:4px;right:4px;
+  height:100%;border-radius:var(--radius);
+  background:rgba(26,39,68,.2);border:1px solid rgba(251,191,36,.06);
+}
+.card-shadow:nth-child(2){top:12px;left:8px;right:8px;opacity:.5}
+
+/* Swipe card */
+.swipe-card{
+  position:relative;
+  background:linear-gradient(145deg,rgba(26,39,68,.7),rgba(26,39,68,.3));
+  border:1px solid rgba(251,191,36,.18);
+  border-radius:var(--radius);
+  padding:36px 28px 28px;text-align:center;
+  cursor:grab;touch-action:none;
+  transition:box-shadow .2s;
+  min-height:200px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.swipe-card:active{cursor:grabbing}
+.swipe-card.dragging{transition:none}
+.swipe-card.animating{transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s ease}
+.swipe-card .statement{
+  font-size:clamp(1.15rem,4.5vw,1.45rem);
+  font-weight:600;line-height:1.5;margin-bottom:14px;
+}
+.swipe-card .scripture-ref{
+  font-size:.75rem;color:var(--sky);font-style:italic;line-height:1.5;max-width:340px;
+}
+
+/* Swipe labels on card */
+.card-label{
+  position:absolute;top:16px;padding:6px 16px;
+  border-radius:8px;font-size:.85rem;font-weight:800;
+  letter-spacing:.08em;opacity:0;transition:opacity .15s;
+  text-transform:uppercase;
+}
+.card-label.true-label{right:16px;background:rgba(34,197,94,.2);color:var(--green);border:2px solid var(--green)}
+.card-label.false-label{left:16px;background:rgba(244,63,94,.2);color:var(--rose);border:2px solid var(--rose)}
+.card-label.visible{opacity:1}
+
+/* Arrow controls */
+.arrow-row{
+  display:flex;justify-content:space-between;align-items:center;
+  width:100%;max-width:400px;margin-top:18px;z-index:2;padding:0 4px;
+}
+.arrow-side{
+  display:flex;align-items:center;gap:6px;
+  cursor:pointer;transition:all .2s;opacity:.45;
+}
+.arrow-side:hover{opacity:.8}
+.arrow-side.highlight{opacity:1;transform:scale(1.12)}
+.arrow-side svg{width:28px;height:28px}
+.arrow-side span{font-size:.65rem;font-weight:700;letter-spacing:.12em}
+.arrow-left svg{fill:var(--rose)}
+.arrow-left span{color:var(--rose)}
+.arrow-right svg{fill:var(--green)}
+.arrow-right span{color:var(--green)}
+
+.swipe-hint{font-size:.7rem;color:var(--gray);margin-top:16px;opacity:.5;z-index:2}
+
+/* Back button */
+.back-btn{
+  display:none;align-items:center;gap:5px;
+  background:none;border:1px solid rgba(255,255,255,.12);
+  border-radius:40px;padding:8px 16px 8px 12px;
+  color:var(--gray);font-size:.75rem;font-weight:600;
+  cursor:pointer;transition:all .2s;z-index:2;margin-top:10px;
+}
+.back-btn:hover{border-color:rgba(255,255,255,.3);color:var(--white)}
+.back-btn.visible{display:inline-flex}
+.back-btn svg{width:14px;height:14px;fill:currentColor}
+
+/* ===== FEEDBACK OVERLAY ===== */
+.feedback-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  z-index:150;padding:30px;
+  animation:feedbackIn .3s ease-out;
+}
+.feedback-overlay.active{display:flex}
+@keyframes feedbackIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+
+.feedback-card{
+  max-width:420px;width:100%;border-radius:var(--radius);
+  padding:36px 28px;text-align:center;
+  backdrop-filter:blur(20px);
+}
+.feedback-card.correct{
+  background:linear-gradient(145deg,rgba(34,197,94,.15),rgba(34,197,94,.05));
+  border:1px solid rgba(34,197,94,.3);
+}
+.feedback-card.incorrect{
+  background:linear-gradient(145deg,rgba(56,189,248,.12),rgba(56,189,248,.05));
+  border:1px solid rgba(56,189,248,.25);
+}
+.feedback-emoji{font-size:3rem;margin-bottom:16px}
+.feedback-title{font-size:1.3rem;font-weight:800;margin-bottom:12px}
+.feedback-message{font-size:.95rem;color:var(--gray);line-height:1.6;margin-bottom:16px}
+.feedback-verse{
+  font-size:.85rem;color:var(--sky);font-style:italic;line-height:1.5;
+  padding:12px;background:rgba(56,189,248,.06);border-radius:10px;
+  margin-bottom:20px;
+}
+.feedback-continue{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 32px;border:none;border-radius:60px;cursor:pointer;
+  font-size:1rem;font-weight:700;color:var(--white);
+  transition:all .2s;
+}
+.feedback-continue.correct-btn{
+  background:linear-gradient(135deg,var(--green),#16a34a);
+  box-shadow:0 4px 16px rgba(34,197,94,.35);
+}
+.feedback-continue.incorrect-btn{
+  background:linear-gradient(135deg,var(--sky),var(--blue));
+  box-shadow:0 4px 16px rgba(56,189,248,.35);
+}
+.feedback-continue:active{transform:scale(.96)}
+
+/* ===== RESULTS ===== */
+.results-wrap{max-width:600px;width:100%;padding:0 4px}
+.results-opener{text-align:center;margin-bottom:32px}
+.results-opener h2{font-size:1.5rem;font-weight:800;margin-bottom:8px}
+.results-opener p{color:var(--gray);font-size:1rem;line-height:1.6}
+.results-score{
+  font-size:3.5rem;font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--green));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;margin:16px 0;
+}
+
+.encouragement-box{
+  background:linear-gradient(145deg,rgba(251,191,36,.08),rgba(251,191,36,.02));
+  border:1px solid rgba(251,191,36,.2);
+  border-radius:var(--radius);padding:24px;margin:24px 0;text-align:center;
+}
+.encouragement-box h3{font-size:1.1rem;font-weight:700;margin-bottom:12px;color:var(--gold)}
+.encouragement-box p{font-size:.95rem;line-height:1.6;color:var(--gray)}
+.encouragement-box .verse{
+  font-size:.9rem;color:var(--sky);font-style:italic;margin-top:12px;line-height:1.5;
+}
+
+.review-card{
+  background:rgba(26,39,68,.4);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:16px 18px;margin-bottom:12px;text-align:left;
+}
+.review-card .review-q{font-size:.9rem;font-weight:700;margin-bottom:6px}
+.review-card .review-answer{font-size:.85rem;line-height:1.5}
+.review-card .review-answer.was-correct{color:var(--green)}
+.review-card .review-answer.was-incorrect{color:var(--sky)}
+.review-card .review-verse{font-size:.75rem;color:var(--sky);font-style:italic;margin-top:6px}
+
+.share-section{text-align:center;margin:32px 0 8px}
+.share-section h3{font-size:1rem;font-weight:700;margin-bottom:14px}
+.share-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.share-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 24px;border:none;border-radius:60px;cursor:pointer;
+  font-size:.9rem;font-weight:700;color:var(--white);transition:all .2s;
+}
+.share-btn:active{transform:scale(.96)}
+.share-btn svg{width:18px;height:18px;fill:currentColor}
+.share-btn.email-btn{background:linear-gradient(135deg,var(--blue),#3b82f6);box-shadow:0 4px 16px rgba(37,99,235,.35)}
+.share-btn.copy-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)}
+.share-status{font-size:.75rem;color:var(--green);margin-top:10px;min-height:18px}
+
+.next-steps{text-align:center;margin:32px 0 16px}
+.next-steps h3{font-size:1rem;font-weight:700;margin-bottom:14px}
+
+/* ===== PULSE GLOW ===== */
+@keyframes pulseGlow{
+  0%,100%{box-shadow:0 0 20px rgba(251,191,36,.2)}
+  50%{box-shadow:0 0 40px rgba(251,191,36,.5)}
+}
+.glow{animation:pulseGlow 2s ease-in-out infinite}
+
+/* ===== SPARKLE ===== */
+.sparkle{
+  position:fixed;pointer-events:none;z-index:200;
+  width:8px;height:8px;border-radius:50%;
+  animation:sparkleAnim .6s ease-out forwards;
+}
+@keyframes sparkleAnim{
+  0%{transform:scale(1);opacity:1}
+  100%{transform:scale(0) translateY(-30px);opacity:0}
+}
+
+/* Confetti */
+#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:200}
+
+/* Responsive */
+@media(min-width:640px){
+  .swipe-card{padding:44px 36px 36px;min-height:220px}
+  .swipe-card .statement{font-size:1.5rem}
+  .card-stack{max-width:480px}
+  .arrow-row{max-width:480px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<!-- Progress -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-info">
+    <div class="progress-label" id="progressLabel">Card 1 of 12</div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="streak-counter" id="streakCounter">🔥 <span id="streakNum">0</span> in a row</div>
+</div>
+
+<!-- ========== START SCREEN ========== -->
+<div class="screen active" id="startScreen">
+  <div class="hero-icon">✨</div>
+  <h1>Swipe <span>Study</span></h1>
+  <p class="subtitle" id="studySubtitle">
+    One truth at a time. No pressure.<br>
+    Swipe right if it's true. Swipe left if it's not.<br>
+    Every card is a step forward.
+  </p>
+  <div class="study-meta" id="studyMeta">
+    <div class="meta-chip">📖 <span id="metaCount">0</span> cards</div>
+    <div class="meta-chip">⏱️ ~<span id="metaTime">3</span> min</div>
+    <div class="meta-chip">💛 No score judgment</div>
+  </div>
+  <p style="font-size:.85rem;color:var(--gray);margin-bottom:24px;text-align:center;max-width:340px;line-height:1.5" id="studyIntro">
+    You're here. That matters.<br>Take a breath. Let's walk through this together.
+  </p>
+  <button class="btn" onclick="startStudy()">Begin</button>
+  <p class="gentle-note">
+    "The Lord is near to the brokenhearted and saves the crushed in spirit." — Psalm 34:18
+  </p>
+</div>
+
+<!-- ========== SWIPE SCREEN ========== -->
+<div class="swipe-screen" id="swipeScreen">
+  <div class="bg-tint" id="bgTint"></div>
+
+  <div class="question-label" id="questionLabel">Card 1</div>
+
+  <!-- Card stack -->
+  <div class="card-stack" id="cardStack">
+    <div class="card-shadow"></div>
+    <div class="card-shadow"></div>
+    <div class="swipe-card" id="swipeCard">
+      <div class="card-label true-label" id="labelTrue">TRUE ✓</div>
+      <div class="card-label false-label" id="labelFalse">FALSE ✗</div>
+      <div class="statement" id="cardStatement"></div>
+      <div class="scripture-ref" id="cardScripture"></div>
+    </div>
+  </div>
+
+  <!-- Side arrows -->
+  <div class="arrow-row">
+    <div class="arrow-side arrow-left" id="arrowLeft" onclick="respond(false)">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg>
+      <span>FALSE</span>
+    </div>
+    <div class="arrow-side arrow-right" id="arrowRight" onclick="respond(true)">
+      <span>TRUE</span>
+      <svg viewBox="0 0 24 24"><path d="M4 13h12.17l-5.59 5.59L12 20l8-8-8-8-1.41 1.41L16.17 11H4z"/></svg>
+    </div>
+  </div>
+
+  <p class="swipe-hint">Swipe or tap — there's no wrong pace</p>
+  <button class="back-btn" id="backBtn" onclick="goBack()">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z"/></svg>
+    Go Back
+  </button>
+</div>
+
+<!-- ========== FEEDBACK OVERLAY ========== -->
+<div class="feedback-overlay" id="feedbackOverlay">
+  <div class="feedback-card" id="feedbackCard">
+    <div class="feedback-emoji" id="feedbackEmoji"></div>
+    <div class="feedback-title" id="feedbackTitle"></div>
+    <div class="feedback-message" id="feedbackMessage"></div>
+    <div class="feedback-verse" id="feedbackVerse"></div>
+    <button class="feedback-continue" id="feedbackBtn" onclick="continuePast()">Keep Going →</button>
+  </div>
+</div>
+
+<!-- ========== RESULTS SCREEN ========== -->
+<div class="screen" id="resultsScreen">
+  <div class="results-wrap" id="resultsWrap"></div>
+</div>
+
+<script>
+/* ====================================================================
+   SWIPE STUDY — StayTheWay
+   Gentle, uplifting swipe-based Bible study
+   ==================================================================== */
+
+/* ---------- AUDIO ENGINE (Web Audio API) ---------- */
+let audioCtx = null;
+function getAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+// Ascending major scale tones — each correct answer goes higher
+const SCALE = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33, 659.25];
+let toneIndex = 0;
+
+function playTone(type) {
+  try {
+    const ctx = getAudio();
+    if (ctx.state === 'suspended') ctx.resume();
+
+    if (type === 'correct') {
+      // Warm ascending chime — goes higher with each correct answer
+      const freq = SCALE[Math.min(toneIndex, SCALE.length - 1)];
+      toneIndex++;
+
+      // Main bell tone
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0.25, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.8);
+
+      // Harmonic sparkle (octave above, quieter)
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(freq * 2, ctx.currentTime);
+      gain2.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(ctx.currentTime + 0.05);
+      osc2.stop(ctx.currentTime + 0.5);
+
+      // Third harmonic for warmth
+      const osc3 = ctx.createOscillator();
+      const gain3 = ctx.createGain();
+      osc3.type = 'sine';
+      osc3.frequency.setValueAtTime(freq * 1.5, ctx.currentTime);
+      gain3.gain.setValueAtTime(0.05, ctx.currentTime);
+      gain3.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+      osc3.connect(gain3);
+      gain3.connect(ctx.destination);
+      osc3.start(ctx.currentTime + 0.02);
+      osc3.stop(ctx.currentTime + 0.6);
+
+    } else if (type === 'gentle') {
+      // Soft, warm tone — not punishing, just gentle redirect
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(220, ctx.currentTime);
+      osc.frequency.linearRampToValueAtTime(262, ctx.currentTime + 0.4);
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.6);
+
+    } else if (type === 'complete') {
+      // Triumphant ascending arpeggio
+      [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 1);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.12);
+        osc.stop(ctx.currentTime + i * 0.12 + 1);
+      });
+    }
+  } catch (e) { /* audio not available — silent fallback */ }
+}
+
+/* ---------- SPARKLE EFFECTS ---------- */
+function spawnSparkles(count, color) {
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.className = 'sparkle';
+    el.style.background = color;
+    el.style.left = (Math.random() * window.innerWidth) + 'px';
+    el.style.top = (Math.random() * window.innerHeight * 0.6 + window.innerHeight * 0.2) + 'px';
+    el.style.width = (Math.random() * 6 + 4) + 'px';
+    el.style.height = el.style.width;
+    el.style.animationDelay = (Math.random() * 0.3) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 900);
+  }
+}
+
+/* ---------- STUDY DATA ----------
+   Each study is an object with metadata and cards.
+   Cards are true/false statements derived from Bible study content.
+
+   To add a new study: copy this structure and change the data.
+   The system auto-detects query param ?study=slug or defaults to first.
+*/
+const STUDIES = {
+  'romans-8': {
+    title: 'Romans 8 — Life in the Spirit',
+    subtitle: 'No condemnation. Only freedom.',
+    icon: '🕊️',
+    cards: [
+      {
+        statement: "There is now no condemnation for those who are in Christ Jesus.",
+        answer: true,
+        ref: "Romans 8:1",
+        verse: "There is therefore now no condemnation to those who are in Christ Jesus.",
+        encourageCorrect: "You know the foundation. Nothing can condemn you in Christ. That's where freedom starts.",
+        encourageIncorrect: "This one is actually true — and it's the best news you'll ever hear. No condemnation. Not some. None."
+      },
+      {
+        statement: "The law of the Spirit of life set us free from the law of sin and death.",
+        answer: true,
+        ref: "Romans 8:2",
+        verse: "For the law of the Spirit of life in Christ Jesus has made me free from the law of sin and death.",
+        encourageCorrect: "Freedom isn't something you earn — it was given. The Spirit broke the chain.",
+        encourageIncorrect: "It's true! A new law took over — the Spirit of life. The old law lost its grip on you."
+      },
+      {
+        statement: "To be carnally minded is foolishness.",
+        answer: false,
+        ref: "Romans 8:6",
+        verse: "For to be carnally minded is death, but to be spiritually minded is life and peace.",
+        encourageCorrect: "Good catch. Paul didn't say foolishness — he said death. The contrast is that stark.",
+        encourageIncorrect: "Close, but the word Paul used is stronger: death. The mind set on the flesh doesn't just stumble — it leads to death. But the Spirit leads to life."
+      },
+      {
+        statement: "To be spiritually minded is life and peace.",
+        answer: true,
+        ref: "Romans 8:6",
+        verse: "To be spiritually minded is life and peace.",
+        encourageCorrect: "Both things — life AND peace. Not just surviving, but actually at rest. That's what the Spirit brings.",
+        encourageIncorrect: "This one is true. Life and peace aren't earned by trying harder — they come from where your mind rests."
+      },
+      {
+        statement: "We received the spirit of bondage again to fear.",
+        answer: false,
+        ref: "Romans 8:15",
+        verse: "For you did not receive the spirit of bondage again to fear, but you received the Spirit of adoption by whom we cry out, 'Abba, Father.'",
+        encourageCorrect: "Exactly right. Fear and bondage are not your inheritance. You received adoption — you can call God 'Father.'",
+        encourageIncorrect: "Actually the opposite — we did NOT receive bondage or fear. We received the Spirit of adoption. You belong."
+      },
+      {
+        statement: "The Spirit Himself bears witness that we are children of God.",
+        answer: true,
+        ref: "Romans 8:16",
+        verse: "The Spirit Himself bears witness with our spirit that we are children of God.",
+        encourageCorrect: "The Holy Spirit confirms it inside you — you are His child. That identity can't be taken.",
+        encourageIncorrect: "This is true, and it's personal. The Spirit doesn't just know you're God's child — He tells your spirit directly."
+      },
+      {
+        statement: "Our present sufferings are worth comparing to the glory that will be revealed.",
+        answer: false,
+        ref: "Romans 8:18",
+        verse: "For I consider that the sufferings of this present time are not worthy to be compared with the glory which shall be revealed in us.",
+        encourageCorrect: "Right — they are NOT worth comparing. Whatever you're carrying right now, the coming glory outweighs it beyond measure.",
+        encourageIncorrect: "Paul actually says they're NOT worth comparing. The glory ahead is so much bigger than the pain of now. Hold on."
+      },
+      {
+        statement: "The Spirit helps us in our weaknesses and intercedes for us.",
+        answer: true,
+        ref: "Romans 8:26",
+        verse: "Likewise the Spirit also helps in our weaknesses. For we do not know what we should pray for as we ought, but the Spirit Himself makes intercession for us with groanings which cannot be uttered.",
+        encourageCorrect: "Even when you don't have words, the Spirit prays for you. You are never alone in this.",
+        encourageIncorrect: "This is true — and it matters most on your hardest days. When you can't pray, the Spirit prays for you."
+      },
+      {
+        statement: "All things work together for good to those who love God.",
+        answer: true,
+        ref: "Romans 8:28",
+        verse: "And we know that all things work together for good to those who love God, to those who are the called according to His purpose.",
+        encourageCorrect: "ALL things. Not just the easy ones. God is weaving even the hard chapters into something beautiful.",
+        encourageIncorrect: "This is one of the most powerful promises in Scripture. God doesn't waste your pain — He redeems it."
+      },
+      {
+        statement: "If God is for us, it still matters who is against us.",
+        answer: false,
+        ref: "Romans 8:31",
+        verse: "What then shall we say to these things? If God is for us, who can be against us?",
+        encourageCorrect: "Exactly. When God is on your side, opposition loses its power. No one can overrule Him.",
+        encourageIncorrect: "Paul's point is the opposite — if God is FOR you, nothing against you ultimately matters. You're covered."
+      },
+      {
+        statement: "Nothing can separate us from the love of God in Christ Jesus.",
+        answer: true,
+        ref: "Romans 8:38-39",
+        verse: "For I am persuaded that neither death nor life, nor angels nor principalities nor powers, nor things present nor things to come, nor height nor depth, nor any other created thing, shall be able to separate us from the love of God which is in Christ Jesus our Lord.",
+        encourageCorrect: "Nothing. Not your worst day, not your biggest failure, not your deepest fear. His love holds.",
+        encourageIncorrect: "This is gloriously true. Read the list — death, life, angels, demons, present, future, NOTHING can cut you off from His love."
+      },
+      {
+        statement: "God condemned sin by sending His own Son in the likeness of sinful flesh.",
+        answer: true,
+        ref: "Romans 8:3",
+        verse: "For what the law could not do in that it was weak through the flesh, God did by sending His own Son in the likeness of sinful flesh, on account of sin: He condemned sin in the flesh.",
+        encourageCorrect: "What the law couldn't do, God did Himself. He didn't ask you to be stronger — He sent His Son.",
+        encourageIncorrect: "This is true — God didn't condemn YOU. He condemned sin itself, by sending Jesus. The target was never you."
+      }
+    ]
+  },
+
+  'psalm-34': {
+    title: 'Psalm 34 — The Lord Delivers',
+    subtitle: 'For when the world feels heavy.',
+    icon: '🛡️',
+    cards: [
+      {
+        statement: "I will bless the Lord at all times; His praise shall continually be in my mouth.",
+        answer: true,
+        ref: "Psalm 34:1",
+        verse: "I will bless the Lord at all times; His praise shall continually be in my mouth.",
+        encourageCorrect: "At ALL times — even the hard ones. Praise isn't pretending things are fine. It's knowing who holds you.",
+        encourageIncorrect: "This is David's declaration — praise at all times. Even in the cave, even in the dark. It's an anchor."
+      },
+      {
+        statement: "The Lord hears the righteous but ignores the brokenhearted.",
+        answer: false,
+        ref: "Psalm 34:18",
+        verse: "The Lord is near to the brokenhearted and saves those who are crushed in spirit.",
+        encourageCorrect: "He doesn't ignore the broken — He draws NEAR to them. If your heart is heavy, He is close right now.",
+        encourageIncorrect: "The opposite is true. God is closest to the brokenhearted. Your pain doesn't push Him away — it draws Him in."
+      },
+      {
+        statement: "The angel of the Lord encamps around those who fear Him and delivers them.",
+        answer: true,
+        ref: "Psalm 34:7",
+        verse: "The angel of the Lord encamps around those who fear Him, and delivers them.",
+        encourageCorrect: "You are surrounded — not by problems, but by the protection of God. He camps around you.",
+        encourageIncorrect: "This is true. An army of heaven is encamped around you right now. You are not unprotected."
+      },
+      {
+        statement: "Those who seek the Lord shall lack no good thing.",
+        answer: true,
+        ref: "Psalm 34:10",
+        verse: "Those who seek the Lord shall not lack any good thing.",
+        encourageCorrect: "Not a single good thing withheld. Seeking Him is never wasted — everything you need flows from there.",
+        encourageIncorrect: "It's true — and it's a promise. When you seek God first, He makes sure you lack nothing good."
+      },
+      {
+        statement: "The righteous have no troubles.",
+        answer: false,
+        ref: "Psalm 34:19",
+        verse: "Many are the afflictions of the righteous, but the Lord delivers him out of them all.",
+        encourageCorrect: "Right — the righteous DO have troubles. Many of them. But God delivers out of ALL of them. Every single one.",
+        encourageIncorrect: "David says the righteous have MANY afflictions — but deliverance comes out of them all. Trouble isn't the end of your story."
+      },
+      {
+        statement: "Taste and see that the Lord is good; blessed is the one who takes refuge in Him.",
+        answer: true,
+        ref: "Psalm 34:8",
+        verse: "Oh, taste and see that the Lord is good; blessed is the man who trusts in Him!",
+        encourageCorrect: "It's an invitation — not just to believe, but to experience. Taste it. His goodness is real and personal.",
+        encourageIncorrect: "This is one of the most beautiful invitations in all of Scripture. He's saying: try me. See for yourself."
+      }
+    ]
+  },
+
+  'identity': {
+    title: 'Who You Are in Christ',
+    subtitle: 'When the lies get loud, truth gets louder.',
+    icon: '👑',
+    cards: [
+      {
+        statement: "You are fearfully and wonderfully made.",
+        answer: true,
+        ref: "Psalm 139:14",
+        verse: "I will praise You, for I am fearfully and wonderfully made; marvelous are Your works, and that my soul knows very well.",
+        encourageCorrect: "Not an accident. Not a mistake. Fearfully and wonderfully — on purpose, with purpose.",
+        encourageIncorrect: "This is TRUE. You were made with intention, care, and wonder. Your existence is not random — it's purposeful."
+      },
+      {
+        statement: "God started a good work in you but may not finish it.",
+        answer: false,
+        ref: "Philippians 1:6",
+        verse: "Being confident of this very thing, that He who has begun a good work in you will complete it until the day of Jesus Christ.",
+        encourageCorrect: "He finishes what He starts. If you're still breathing, He's still working. Your story isn't over.",
+        encourageIncorrect: "He WILL complete it. God doesn't abandon projects — especially not you. He's not done with you yet."
+      },
+      {
+        statement: "You are a new creation in Christ — the old has passed away.",
+        answer: true,
+        ref: "2 Corinthians 5:17",
+        verse: "Therefore, if anyone is in Christ, he is a new creation; old things have passed away; behold, all things have become new.",
+        encourageCorrect: "The old version doesn't define you anymore. You've been remade. Walk in that.",
+        encourageIncorrect: "This is true — and it applies to you right now. New creation. Not the same person. The past doesn't own you."
+      },
+      {
+        statement: "You have to earn God's love through good works.",
+        answer: false,
+        ref: "Ephesians 2:8-9",
+        verse: "For by grace you have been saved through faith, and that not of yourselves; it is the gift of God, not of works, lest anyone should boast.",
+        encourageCorrect: "You can't earn what's already freely given. Grace means it's a gift — no performance required.",
+        encourageIncorrect: "Grace says otherwise. You can't earn it, and you don't have to. It's a gift. Just receive it."
+      },
+      {
+        statement: "God knew you before you were born and set you apart.",
+        answer: true,
+        ref: "Jeremiah 1:5",
+        verse: "Before I formed you in the womb I knew you; before you were born I sanctified you.",
+        encourageCorrect: "Before you took your first breath, He already knew you and chose you. You were wanted from the start.",
+        encourageIncorrect: "This is true. He didn't discover you by accident. He KNEW you before you existed. You are deeply known."
+      },
+      {
+        statement: "You can do all things through your own determination.",
+        answer: false,
+        ref: "Philippians 4:13",
+        verse: "I can do all things through Christ who strengthens me.",
+        encourageCorrect: "Not through willpower — through Christ. The strength isn't yours to manufacture. It's His to give.",
+        encourageIncorrect: "Through Christ — not through gritting your teeth harder. His strength is what carries you. Lean into it."
+      },
+      {
+        statement: "Nothing can separate you from the love of God.",
+        answer: true,
+        ref: "Romans 8:38-39",
+        verse: "Neither death nor life, nor angels nor principalities, nor things present nor things to come… shall be able to separate us from the love of God.",
+        encourageCorrect: "Not your worst day. Not your darkest thought. Not your biggest regret. NOTHING separates you.",
+        encourageIncorrect: "This is one of the most powerful truths in Scripture. Absolutely nothing can cut you off from His love."
+      },
+      {
+        statement: "You are chosen, royal, and called out of darkness.",
+        answer: true,
+        ref: "1 Peter 2:9",
+        verse: "But you are a chosen generation, a royal priesthood, a holy nation, His own special people, that you may proclaim the praises of Him who called you out of darkness into His marvelous light.",
+        encourageCorrect: "Chosen. Royal. Called out of darkness. That's not wishful thinking — that's your identity.",
+        encourageIncorrect: "This is true. Peter says it plainly — you are chosen, you are royal, and you've been called into light."
+      }
+    ]
+  }
+};
+
+/* ---------- ENCOURAGING PHRASES ---------- */
+const CORRECT_PHRASES = [
+  "You're getting it.", "Truth is taking root.", "That's the Word working in you.",
+  "Keep going — you're building something.", "Look at you go.", "Every right answer is a seed planted.",
+  "You're learning what God already knows about you.", "Step by step, truth by truth.",
+  "This is what growth feels like.", "Your spirit is sharpening."
+];
+const STREAK_PHRASES = [
+  "", "", "You're on a roll!", "The Spirit is moving.", "Unstoppable.",
+  "God's Word is alive in you.", "Nothing can stop this momentum.",
+  "You were made for this.", "Walking in truth!", "The Word is your weapon."
+];
+
+/* ---------- STATE ---------- */
+let currentStudy = null;
+let currentCard = 0;
+let results = []; // { statement, userAnswer, correctAnswer, wasCorrect }
+let streak = 0;
+let bestStreak = 0;
+let cardLocked = false;
+let isDragging = false;
+let startX = 0, currentX = 0;
+let historyStack = [];
+
+/* ---------- DOM ---------- */
+const $progress = document.getElementById('progressWrap');
+const $progressFill = document.getElementById('progressFill');
+const $streakCounter = document.getElementById('streakCounter');
+const $streakNum = document.getElementById('streakNum');
+const $swipeScreen = document.getElementById('swipeScreen');
+const $card = document.getElementById('swipeCard');
+const $statement = document.getElementById('cardStatement');
+const $scripture = document.getElementById('cardScripture');
+const $bgTint = document.getElementById('bgTint');
+const $arrowLeft = document.getElementById('arrowLeft');
+const $arrowRight = document.getElementById('arrowRight');
+const $labelTrue = document.getElementById('labelTrue');
+const $labelFalse = document.getElementById('labelFalse');
+const $feedbackOverlay = document.getElementById('feedbackOverlay');
+const $resultsScreen = document.getElementById('resultsScreen');
+const $backBtn = document.getElementById('backBtn');
+
+/* ---------- INIT ---------- */
+(function init() {
+  // Detect study from URL param or default
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('study') || Object.keys(STUDIES)[0];
+  currentStudy = STUDIES[slug] || STUDIES[Object.keys(STUDIES)[0]];
+
+  // Populate start screen
+  document.querySelector('h1 span').textContent = 'Study';
+  document.getElementById('studySubtitle').innerHTML =
+    '<strong>' + currentStudy.title + '</strong><br>' + currentStudy.subtitle;
+  document.getElementById('metaCount').textContent = currentStudy.cards.length;
+  document.getElementById('metaTime').textContent = Math.max(2, Math.round(currentStudy.cards.length * 0.4));
+
+  // Build study selector if multiple studies
+  if (Object.keys(STUDIES).length > 1) {
+    const meta = document.getElementById('studyMeta');
+    const selector = document.createElement('div');
+    selector.style.cssText = 'width:100%;max-width:420px;margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center';
+    Object.entries(STUDIES).forEach(([key, study]) => {
+      const chip = document.createElement('button');
+      chip.style.cssText = 'padding:10px 18px;border-radius:40px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;border:1px solid rgba(251,191,36,.2);background:' + (key === slug ? 'rgba(251,191,36,.15)' : 'rgba(26,39,68,.6)') + ';color:var(--white)';
+      chip.textContent = study.icon + ' ' + study.title;
+      chip.onclick = () => { window.location.search = '?study=' + key; };
+      selector.appendChild(chip);
+    });
+    meta.parentNode.insertBefore(selector, meta.nextSibling);
+  }
+})();
+
+/* ---------- START ---------- */
+function startStudy() {
+  document.getElementById('startScreen').classList.remove('active');
+  $progress.classList.add('visible');
+  showSwipeScreen();
+}
+
+/* ---------- SWIPE SCREEN ---------- */
+function showSwipeScreen() {
+  hideAll();
+  $swipeScreen.classList.add('active');
+  loadCard();
+}
+
+function loadCard() {
+  if (cardLocked) return;
+  const c = currentStudy.cards[currentCard];
+
+  $card.style.transform = '';
+  $card.style.opacity = '1';
+  $card.classList.remove('dragging', 'animating');
+  $statement.textContent = c.statement;
+  $scripture.innerHTML = '<span style="opacity:.5">' + c.ref + '</span>';
+  $bgTint.style.background = 'transparent';
+  $labelTrue.classList.remove('visible');
+  $labelFalse.classList.remove('visible');
+  resetArrows();
+  updateProgress();
+
+  document.getElementById('questionLabel').textContent =
+    'Card ' + (currentCard + 1) + ' of ' + currentStudy.cards.length;
+
+  if (historyStack.length > 0) $backBtn.classList.add('visible');
+  else $backBtn.classList.remove('visible');
+
+  // Update streak display
+  if (streak >= 2) {
+    $streakCounter.classList.add('visible');
+    $streakNum.textContent = streak;
+  } else {
+    $streakCounter.classList.remove('visible');
+  }
+}
+
+/* ---------- PROGRESS ---------- */
+function updateProgress() {
+  const total = currentStudy.cards.length;
+  const pct = total > 0 ? Math.round((currentCard / total) * 100) : 0;
+  $progressFill.style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = 'Card ' + (currentCard + 1) + ' of ' + total;
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+/* ---------- DRAG / SWIPE ---------- */
+$card.addEventListener('pointerdown', dragStart);
+document.addEventListener('pointermove', dragMove);
+document.addEventListener('pointerup', dragEnd);
+
+function dragStart(e) {
+  if (cardLocked) return;
+  isDragging = true;
+  startX = e.clientX;
+  $card.classList.add('dragging');
+  $card.setPointerCapture(e.pointerId);
+}
+
+function dragMove(e) {
+  if (!isDragging) return;
+  currentX = e.clientX - startX;
+
+  const rotate = Math.max(-8, Math.min(8, currentX * 0.06));
+  $card.style.transform = 'translate(' + currentX + 'px, 0) rotate(' + rotate + 'deg)';
+
+  resetArrows();
+  $bgTint.style.background = 'transparent';
+  $labelTrue.classList.remove('visible');
+  $labelFalse.classList.remove('visible');
+
+  if (currentX > 40) {
+    const o = Math.min((currentX - 40) / 80, .2);
+    $bgTint.style.background = 'rgba(34,197,94,' + o + ')';
+    $arrowRight.classList.add('highlight');
+    $labelTrue.classList.add('visible');
+  } else if (currentX < -40) {
+    const o = Math.min((-currentX - 40) / 80, .2);
+    $bgTint.style.background = 'rgba(244,63,94,' + o + ')';
+    $arrowLeft.classList.add('highlight');
+    $labelFalse.classList.add('visible');
+  }
+}
+
+function dragEnd() {
+  if (!isDragging) return;
+  isDragging = false;
+  $card.classList.remove('dragging');
+
+  if (currentX > 100) {
+    animateOff('right');
+    recordResponse(true);
+  } else if (currentX < -100) {
+    animateOff('left');
+    recordResponse(false);
+  } else {
+    $card.classList.add('animating');
+    $card.style.transform = '';
+    $bgTint.style.background = 'transparent';
+    $labelTrue.classList.remove('visible');
+    $labelFalse.classList.remove('visible');
+    resetArrows();
+  }
+  currentX = 0;
+}
+
+/* ---------- ARROW TAP ---------- */
+function respond(userSaidTrue) {
+  if (cardLocked) return;
+  animateOff(userSaidTrue ? 'right' : 'left');
+  recordResponse(userSaidTrue);
+}
+
+/* ---------- ANIMATE OFF ---------- */
+function animateOff(dir) {
+  cardLocked = true;
+  $card.classList.add('animating');
+  const tx = dir === 'right' ? window.innerWidth + 100 : -(window.innerWidth + 100);
+  const rot = dir === 'right' ? 12 : -12;
+  $card.style.transform = 'translate(' + tx + 'px, 0) rotate(' + rot + 'deg)';
+  $card.style.opacity = '0';
+  $bgTint.style.background = 'transparent';
+  $labelTrue.classList.remove('visible');
+  $labelFalse.classList.remove('visible');
+  resetArrows();
+}
+
+/* ---------- RECORD & SHOW FEEDBACK ---------- */
+function recordResponse(userSaidTrue) {
+  const c = currentStudy.cards[currentCard];
+  const wasCorrect = userSaidTrue === c.answer;
+
+  historyStack.push({ card: currentCard });
+  results.push({
+    statement: c.statement,
+    userAnswer: userSaidTrue,
+    correctAnswer: c.answer,
+    wasCorrect: wasCorrect,
+    ref: c.ref
+  });
+
+  if (wasCorrect) {
+    streak++;
+    if (streak > bestStreak) bestStreak = streak;
+  } else {
+    streak = 0;
+  }
+
+  // Show feedback after card animates away
+  setTimeout(() => showFeedback(c, wasCorrect), 400);
+}
+
+/* ---------- FEEDBACK OVERLAY ---------- */
+function showFeedback(card, wasCorrect) {
+  const $overlay = document.getElementById('feedbackOverlay');
+  const $fCard = document.getElementById('feedbackCard');
+  const $emoji = document.getElementById('feedbackEmoji');
+  const $title = document.getElementById('feedbackTitle');
+  const $message = document.getElementById('feedbackMessage');
+  const $verse = document.getElementById('feedbackVerse');
+  const $btn = document.getElementById('feedbackBtn');
+
+  if (wasCorrect) {
+    playTone('correct');
+    spawnSparkles(8, 'var(--gold)');
+
+    $fCard.className = 'feedback-card correct';
+    $emoji.textContent = streak >= 3 ? '🔥' : ['✨', '🌟', '💛', '🕊️', '🌿'][Math.floor(Math.random() * 5)];
+
+    const phrase = streak >= 3
+      ? STREAK_PHRASES[Math.min(streak, STREAK_PHRASES.length - 1)]
+      : CORRECT_PHRASES[Math.floor(Math.random() * CORRECT_PHRASES.length)];
+    $title.textContent = phrase;
+    $message.textContent = card.encourageCorrect;
+    $btn.className = 'feedback-continue correct-btn';
+  } else {
+    playTone('gentle');
+
+    $fCard.className = 'feedback-card incorrect';
+    $emoji.textContent = ['💙', '🌊', '🤲', '🕊️'][Math.floor(Math.random() * 4)];
+    $title.textContent = "Let's look at this one together.";
+    $message.textContent = card.encourageIncorrect;
+    $btn.className = 'feedback-continue incorrect-btn';
+  }
+
+  $verse.innerHTML = '"' + card.verse + '"<br><span style="opacity:.6;font-size:.75rem">' + card.ref + '</span>';
+  $btn.textContent = currentCard < currentStudy.cards.length - 1 ? 'Keep Going →' : 'See Your Journey →';
+
+  $overlay.classList.add('active');
+}
+
+function continuePast() {
+  $feedbackOverlay.classList.remove('active');
+
+  currentCard++;
+  if (currentCard < currentStudy.cards.length) {
+    cardLocked = false;
+    loadCard();
+  } else {
+    showResults();
+  }
+}
+
+/* ---------- GO BACK ---------- */
+function goBack() {
+  if (cardLocked || historyStack.length === 0) return;
+  historyStack.pop();
+  const lastResult = results.pop();
+  if (lastResult && lastResult.wasCorrect) {
+    streak = Math.max(0, streak - 1);
+    toneIndex = Math.max(0, toneIndex - 1);
+  }
+  currentCard--;
+  loadCard();
+}
+
+/* ---------- HELPERS ---------- */
+function hideAll() {
+  document.querySelectorAll('.screen,.swipe-screen').forEach(s => s.classList.remove('active'));
+  $feedbackOverlay.classList.remove('active');
+}
+function resetArrows() {
+  $arrowLeft.classList.remove('highlight');
+  $arrowRight.classList.remove('highlight');
+}
+
+/* ====================================================================
+   RESULTS
+   ==================================================================== */
+function showResults() {
+  hideAll();
+  $resultsScreen.classList.add('active');
+  $progress.classList.remove('visible');
+  playTone('complete');
+  fireConfetti();
+
+  const correct = results.filter(r => r.wasCorrect).length;
+  const total = results.length;
+  const pct = Math.round((correct / total) * 100);
+
+  const wrap = document.getElementById('resultsWrap');
+  let html = '';
+
+  /* Opener */
+  html += '<div class="results-opener">';
+  html += '<div style="font-size:3rem;margin-bottom:12px">🏆</div>';
+  html += '<h2>You finished. That took courage.</h2>';
+  html += '<div class="results-score">' + correct + ' / ' + total + '</div>';
+  html += '<p>' + getCompletionMessage(pct) + '</p>';
+  html += '</div>';
+
+  /* Encouragement box */
+  html += '<div class="encouragement-box">';
+  html += '<h3>' + getEncouragementTitle(pct) + '</h3>';
+  html += '<p>' + getEncouragementBody(pct, bestStreak) + '</p>';
+  html += '<div class="verse">"For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."<br><span style="font-size:.75rem;opacity:.7">Jeremiah 29:11</span></div>';
+  html += '</div>';
+
+  /* Stats */
+  if (bestStreak >= 2) {
+    html += '<div style="text-align:center;margin:16px 0;font-size:.9rem;color:var(--gold)">';
+    html += '🔥 Best streak: <strong>' + bestStreak + ' in a row</strong></div>';
+  }
+
+  /* Card review */
+  html += '<div style="margin:24px 0"><h3 style="font-size:1rem;font-weight:700;margin-bottom:14px;text-align:center">Your Journey — Card by Card</h3>';
+  results.forEach((r, i) => {
+    html += '<div class="review-card">';
+    html += '<div class="review-q">' + (i + 1) + '. "' + r.statement + '"</div>';
+    if (r.wasCorrect) {
+      html += '<div class="review-answer was-correct">✓ You got this one right</div>';
+    } else {
+      html += '<div class="review-answer was-incorrect">The answer is <strong>' + (r.correctAnswer ? 'TRUE' : 'FALSE') + '</strong> — and now you know</div>';
+    }
+    html += '<div class="review-verse">' + r.ref + '</div>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  /* Share */
+  html += '<div class="share-section">';
+  html += '<h3>Save or Share</h3>';
+  html += '<div class="share-btns">';
+  html += '<button class="share-btn email-btn" onclick="emailResults()"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Email</button>';
+  html += '<button class="share-btn copy-btn" onclick="copyResults()"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>Copy</button>';
+  html += '</div>';
+  html += '<div class="share-status" id="shareStatus"></div>';
+  html += '</div>';
+
+  /* Next steps */
+  html += '<div class="next-steps">';
+  html += '<h3>What Now?</h3>';
+  html += '<p style="color:var(--gray);font-size:.9rem;line-height:1.6;margin-bottom:16px">Every truth you touched today is planted in you. Let it grow. Come back whenever you need to be reminded who you are.</p>';
+  html += '<button class="btn" onclick="restartStudy()" style="margin:6px">Take Again</button>';
+
+  // Links to other studies
+  const otherStudies = Object.entries(STUDIES).filter(([k]) => k !== (new URLSearchParams(window.location.search).get('study') || Object.keys(STUDIES)[0]));
+  if (otherStudies.length > 0) {
+    html += '<div style="margin-top:16px">';
+    otherStudies.forEach(([key, study]) => {
+      html += '<button class="btn btn-secondary" onclick="window.location.search=\'?study=' + key + '\'" style="margin:6px">' + study.icon + ' ' + study.title + '</button>';
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+
+  /* Gentle note */
+  html += '<p class="gentle-note" style="margin:28px auto 0">"He heals the brokenhearted and binds up their wounds." — Psalm 147:3</p>';
+
+  wrap.innerHTML = html;
+}
+
+/* ---------- COMPLETION MESSAGES ---------- */
+function getCompletionMessage(pct) {
+  if (pct === 100) return "Every single one. The Word is alive in you.";
+  if (pct >= 80) return "You know this deeply. The truth is taking hold.";
+  if (pct >= 60) return "You're building. Every card you touched is a step forward.";
+  if (pct >= 40) return "You showed up and you stayed. That matters more than a number.";
+  return "You finished. That alone takes strength. The truth is planting seeds in you right now.";
+}
+
+function getEncouragementTitle(pct) {
+  if (pct === 100) return "You Walked in Full Truth Today";
+  if (pct >= 80) return "The Word Is Working in You";
+  if (pct >= 60) return "You're Growing — Don't Stop";
+  if (pct >= 40) return "Every Step Counts";
+  return "You Showed Up — That's Everything";
+}
+
+function getEncouragementBody(pct, streak) {
+  if (pct === 100) return "Perfect isn't the goal — but knowing God's truth this deeply means it's becoming part of you. You're not just reading Scripture. You're living it.";
+  if (pct >= 80) return "You know God's Word well. The cards you missed? Those aren't failures — they're invitations to dig deeper. The Spirit is your teacher.";
+  if (pct >= 60) return "You're in the middle of something good. Growth doesn't happen all at once. Every truth you recognized today is a brick in your foundation.";
+  if (pct >= 40) return "Depression lies and says you can't learn, can't grow, can't change. But you just proved it wrong by finishing this study. You're still moving.";
+  return "The enemy wants you to feel like you're falling behind. But you're not. You showed up. You engaged with God's Word. That is a victory. Come back tomorrow and try again — there's no judgment here.";
+}
+
+/* ---------- RESTART ---------- */
+function restartStudy() {
+  currentCard = 0;
+  results = [];
+  streak = 0;
+  bestStreak = 0;
+  toneIndex = 0;
+  historyStack = [];
+  hideAll();
+  document.getElementById('startScreen').classList.add('active');
+  $progressFill.style.width = '0%';
+  $streakCounter.classList.remove('visible');
+}
+
+/* ---------- EMAIL / COPY ---------- */
+function buildResultsText() {
+  let t = 'SWIPE STUDY RESULTS\n';
+  t += currentStudy.title + '\n';
+  t += 'StayTheWay Ministry\n';
+  t += '========================\n\n';
+  const correct = results.filter(r => r.wasCorrect).length;
+  t += 'Score: ' + correct + ' / ' + results.length + '\n';
+  if (bestStreak >= 2) t += 'Best streak: ' + bestStreak + ' in a row\n';
+  t += '\n';
+  results.forEach((r, i) => {
+    t += (i + 1) + '. "' + r.statement + '"\n';
+    t += '   Answer: ' + (r.correctAnswer ? 'TRUE' : 'FALSE');
+    t += r.wasCorrect ? ' ✓ (You got it!)\n' : ' (You said ' + (r.userAnswer ? 'TRUE' : 'FALSE') + ')\n';
+    t += '   ' + r.ref + '\n\n';
+  });
+  t += '---\n';
+  t += 'StayTheWay Ministry · staytheway.com\n';
+  return t;
+}
+
+function emailResults() {
+  const body = buildResultsText();
+  const subject = 'My Swipe Study Results — ' + currentStudy.title;
+  window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  showShareStatus('Opening your email app...');
+}
+
+function copyResults() {
+  navigator.clipboard.writeText(buildResultsText()).then(() => {
+    showShareStatus('Copied to clipboard!');
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = buildResultsText();
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showShareStatus('Copied to clipboard!');
+  });
+}
+
+function showShareStatus(msg) {
+  const el = document.getElementById('shareStatus');
+  if (el) { el.textContent = msg; setTimeout(() => { el.textContent = ''; }, 3000); }
+}
+
+/* ---------- CONFETTI ---------- */
+function fireConfetti() {
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = [];
+  const colors = ['#fbbf24','#f59e0b','#22c55e','#38bdf8','#60a5fa','#a78bfa'];
+
+  for (let i = 0; i < 120; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: Math.random() * 8 + 4, h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - .5) * 3, vy: Math.random() * 3 + 2,
+      rot: Math.random() * 360, rv: (Math.random() - .5) * 8, opacity: 1
+    });
+  }
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    pieces.forEach(p => {
+      if (p.opacity <= 0) return;
+      alive = true;
+      p.x += p.vx; p.y += p.vy; p.rot += p.rv;
+      if (frame > 80) p.opacity -= 0.015;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (alive) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+</script>
+</body>
+</html>
