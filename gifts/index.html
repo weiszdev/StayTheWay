@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discover Your Spiritual Gifts — StayTheWay</title>
+<meta name="description" content="Explore 28 spiritual gifts through an interactive walkthrough and self-assessment worksheet. Discover how God has uniquely gifted you.">
+<meta property="og:title" content="Discover Your Spiritual Gifts — StayTheWay">
+<meta property="og:description" content="Explore 28 spiritual gifts through an interactive walkthrough and self-assessment worksheet.">
+<meta property="og:url" content="https://staytheway.com/gifts/">
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #0a0a0a;
+  color: #d4d4d4;
+  line-height: 1.7;
+  overflow-x: clip;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+a { color: #60a5fa; text-decoration: none; transition: color 0.2s; }
+a:hover { color: #93bbfd; }
+h1, h2, h3, h4 { color: #ffffff; font-weight: 700; line-height: 1.3; }
+h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+h3 { font-size: clamp(1.15rem, 2.5vw, 1.5rem); }
+p { margin-bottom: 1rem; }
+
+/* ========== LAYOUT ========== */
+.container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+section { padding: 56px 0; }
+@media (min-width: 768px) { section { padding: 72px 0; } }
+
+/* ========== HEADER ========== */
+.site-header {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #1a1a1a;
+  padding: 0 20px;
+}
+.header-inner {
+  max-width: 960px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.logo { display: inline-block; text-decoration: none; }
+.logo::after { content:''; display:block; height:2px; background:#3b82f6; transform:scaleX(0); transform-origin:left; transition:transform 0.2s; }
+.logo:hover::after { transform:scaleX(1); }
+.logo-text {
+  font-size: 1.3rem; font-weight: 800; color: #fff;
+  letter-spacing: -0.02em;
+}
+.logo-sub { font-size: 0.65rem; color: #888; font-weight: 500; letter-spacing: 0.04em; }
+.back-link {
+  color: #d4d4d4; font-size: 0.875rem; font-weight: 500;
+  padding: 8px 14px; border-radius: 8px; transition: all 0.2s;
+}
+.back-link:hover { color: #fff; background: #1a1a1a; }
+
+/* ========== HERO ========== */
+.page-hero {
+  padding: 100px 0 48px; text-align: center;
+  background: linear-gradient(180deg, #0a0a0a 0%, #0f1420 100%);
+}
+.page-hero .kicker {
+  display: inline-block;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #60a5fa;
+  margin-bottom: 16px;
+}
+.page-hero h1 { margin-bottom: 20px; }
+.page-hero .intro {
+  color: #a3a3a3; font-size: 1.05rem; max-width: 600px; margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ========== CARDS ========== */
+.cards-section { padding-bottom: 32px; }
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+@media (min-width: 640px) {
+  .cards-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.gift-card {
+  background: #111111;
+  border: 1px solid #242424;
+  border-radius: 16px;
+  padding: 32px 28px 28px;
+  text-decoration: none;
+  display: block;
+  transition: transform 0.25s cubic-bezier(.2,.8,.3,1), border-color 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.gift-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2563eb, #1e9bff);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.gift-card:hover {
+  transform: translateY(-4px);
+  border-color: #2563eb;
+  box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+}
+.gift-card:hover::before { opacity: 1; }
+
+.card-icon {
+  font-size: 2.4rem;
+  margin-bottom: 16px;
+  display: block;
+}
+.card-tag {
+  display: inline-block;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #60a5fa;
+  background: rgba(37, 99, 235, 0.12);
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+.gift-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+}
+.gift-card p {
+  color: #a3a3a3;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+.card-arrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.875rem; font-weight: 600; color: #60a5fa;
+  transition: gap 0.2s;
+}
+.gift-card:hover .card-arrow { gap: 10px; }
+
+/* ========== VERSE BANNER ========== */
+.verse-banner {
+  text-align: center;
+  padding: 48px 20px;
+  background: linear-gradient(180deg, transparent 0%, rgba(37, 99, 235, 0.06) 50%, transparent 100%);
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+}
+.verse-text {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  color: #e5e5e5;
+  font-style: italic;
+  max-width: 640px;
+  margin: 0 auto 12px;
+  line-height: 1.75;
+}
+.verse-ref {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #60a5fa;
+  letter-spacing: 0.06em;
+}
+
+/* ========== FOOTER ========== */
+.site-footer {
+  margin-top: auto;
+  padding: 36px 20px;
+  text-align: center;
+  border-top: 1px solid #1a1a1a;
+  background: #0a0a0a;
+}
+.site-footer p {
+  color: #666;
+  font-size: 0.82rem;
+  margin-bottom: 6px;
+}
+.site-footer a {
+  color: #888;
+  font-weight: 500;
+}
+.site-footer a:hover { color: #60a5fa; }
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://staytheway.com" class="logo">
+      <span class="logo-text">STAYTHEWAY</span>
+      <span class="logo-sub">MINISTRY</span>
+    </a>
+    <a href="https://staytheway.com/resources.html" class="back-link">&larr; Resources</a>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="page-hero">
+  <div class="container">
+    <span class="kicker">StayTheWay Ministry</span>
+    <h1>Discover Your Spiritual Gifts</h1>
+    <p class="intro">The Bible reveals 28 distinct spiritual gifts given by the Holy Spirit to build up the body of Christ. These tools will help you explore each gift and begin to identify how God has uniquely equipped you to serve.</p>
+  </div>
+</section>
+
+<!-- ========== CARDS ========== -->
+<section class="cards-section">
+  <div class="container">
+    <div class="cards-grid">
+
+      <a href="journey.html" class="gift-card">
+        <span class="card-icon">&#x1F9ED;</span>
+        <span class="card-tag">Interactive Walkthrough</span>
+        <h3>The Gifts Journey</h3>
+        <p>A guided walkthrough of all 28 spiritual gifts. Walk through each gift one at a time with Scripture, biblical examples, and real-life applications.</p>
+        <span class="card-arrow">Begin the Journey <span>&rarr;</span></span>
+      </a>
+
+      <a href="worksheet.html" class="gift-card">
+        <span class="card-icon">&#x1F4CB;</span>
+        <span class="card-tag">Self-Assessment</span>
+        <h3>Gift Worksheet</h3>
+        <p>Mark Yes, No, or Want for each of the 28 gifts. An interactive worksheet to help you identify where God has gifted you.</p>
+        <span class="card-arrow">Start the Worksheet <span>&rarr;</span></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== VERSE BANNER ========== -->
+<section class="verse-banner">
+  <div class="container">
+    <p class="verse-text">"Now there are diversities of gifts, but the same Spirit. There are differences of ministries, but the same Lord. And there are diversities of activities, but it is the same God who works all in all. But the manifestation of the Spirit is given to each one for the profit of all."</p>
+    <span class="verse-ref">1 Corinthians 12:4-7 (NKJV)</span>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <p><a href="https://staytheway.com">staytheway.com</a></p>
+  <p>StayTheWay Ministry &mdash; a 501(c)(3) service ministry</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Gifts Journey — StayTheWay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* staytheway.com palette: dark theme, blue-600 primary, blue-400 accent */
+    --stw:#2563eb; --stw-deep:#1d4ed8; --stw-bright:#1e9bff; --stw-accent:#60a5fa; --stw-ink:#93c5fd;
+    --ink:#f4f6f8; --muted:#a3a3a3;
+    --bg:#000000; --card:#111111; --panel:#15191f; --panel-line:#26303f; --line:#242424;
+    --path:#2a2f3a; --leaf:#34d399;
+    --shadow:0 1px 2px rgba(0,0,0,.6),0 18px 44px rgba(0,0,0,.55);
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{font-family:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);
+    background:
+      radial-gradient(900px 520px at 82% -8%, rgba(37,99,235,.18) 0%, rgba(37,99,235,0) 60%),
+      radial-gradient(760px 520px at -5% 108%, rgba(30,155,255,.12) 0%, rgba(30,155,255,0) 55%),
+      var(--bg);
+    line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;}
+
+  /* ---- Pinned progress ---- */
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.82);
+    backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line);}
+  .topwrap{max-width:760px;margin:0 auto;padding:12px 18px 14px;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Manrope";font-weight:800;
+    letter-spacing:.2px;color:#fff;font-size:15px;}
+  .brand .dot{width:11px;height:11px;border-radius:50%;background:var(--stw);
+    box-shadow:0 0 0 4px rgba(37,99,235,.28);}
+  .brand .sub{font-family:"Inter";font-weight:500;color:var(--muted);font-size:12.5px;letter-spacing:0;}
+  .progress-row{display:flex;align-items:center;gap:12px;margin-top:10px;}
+  .ptrack{flex:1;height:9px;border-radius:99px;background:#1c2230;overflow:hidden;
+    box-shadow:inset 0 1px 2px rgba(0,0,0,.5);}
+  .pfill{height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,var(--stw-accent),var(--stw));transition:width .45s cubic-bezier(.4,1.2,.4,1);}
+  .pcount{font-family:"Manrope";font-weight:700;color:var(--stw-accent);font-size:13px;white-space:nowrap;}
+  .pcount small{color:var(--muted);font-weight:600;}
+
+  /* ---- Stage ---- */
+  .stage{max-width:760px;margin:0 auto;padding:26px 18px 120px;}
+
+  .milestone{display:flex;align-items:center;gap:12px;justify-content:center;margin:6px 0 20px;}
+  .ms-line{height:2px;flex:1;max-width:90px;background:repeating-linear-gradient(90deg,var(--path) 0 8px,transparent 8px 14px);}
+  .ms-tree{font-size:26px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6));}
+  .ms-label{font-family:"Manrope";font-weight:700;font-size:12.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--stw-accent);}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);overflow:hidden;position:relative;animation:rise .5s cubic-bezier(.2,.8,.3,1);}
+  @keyframes rise{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+  .card .hood{height:6px;background:linear-gradient(90deg,var(--stw),var(--stw-bright));}
+  .pad{padding:26px 26px 24px;}
+  @media(max-width:520px){.pad{padding:20px 18px 20px;}}
+
+  .stopno{display:inline-flex;align-items:center;gap:8px;font-family:"Manrope";font-weight:700;
+    color:var(--stw-accent);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;}
+  .stopno .pill{background:var(--panel);border:1px solid var(--panel-line);border-radius:99px;padding:3px 10px;}
+  h1.gift{font-family:"Manrope";font-weight:800;letter-spacing:-.01em;color:#fff;
+    font-size:clamp(26px,5.4vw,36px);margin:10px 0 2px;line-height:1.08;}
+  .refchip{font-family:"Inter";font-size:13px;color:var(--muted);margin-bottom:14px;}
+
+  .story{font-size:17.5px;line-height:1.72;color:#dfe4ea;margin:8px 0 4px;}
+  @media(max-width:520px){.story{font-size:16.5px;}}
+
+  .reveal{margin-top:18px;}
+  details.disc{border:1px solid var(--line);border-radius:14px;background:#0c0f14;margin-top:12px;overflow:hidden;}
+  details.disc[open]{box-shadow:0 0 0 1px rgba(37,99,235,.18);}
+  details.disc>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:11px;
+    font-family:"Manrope";font-weight:700;color:var(--stw-accent);font-size:14.5px;user-select:none;}
+  details.disc>summary::-webkit-details-marker{display:none;}
+  .chev{margin-left:auto;transition:transform .25s;color:var(--stw-accent);font-weight:800;}
+  details.disc[open] .chev{transform:rotate(90deg);}
+  .sm-ico{font-size:17px;}
+  .disc .body{padding:2px 16px 16px;}
+
+  blockquote.v{margin:6px 0 4px;padding:12px 16px;border-left:3px solid var(--stw);
+    background:var(--panel);border-radius:0 12px 12px 0;}
+  blockquote.v .vt{font-family:"Source Serif 4",Georgia,serif;font-size:16.5px;color:#eef2f6;}
+  blockquote.v .vl{display:block;margin-top:8px;font-family:"Manrope";font-weight:700;font-size:12.5px;
+    color:var(--stw-accent);letter-spacing:.02em;}
+
+  .refs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  a.blb{display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+    font-family:"Manrope";font-weight:700;font-size:12.5px;color:var(--stw-accent);
+    background:#0c0f14;border:1px solid var(--panel-line);border-radius:99px;padding:6px 12px;transition:.15s;}
+  a.blb:hover{background:var(--stw);color:#fff;border-color:var(--stw);}
+  a.blb .bk{font-size:11px;opacity:.85;}
+  .refs-h{font-family:"Manrope";font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);margin:16px 0 2px;}
+
+  .example .ex-head{font-family:"Manrope";font-weight:800;color:#fff;font-size:16px;margin:2px 0 2px;}
+  .example .ex-ref{font-family:"Inter";font-size:12.5px;color:var(--muted);margin-bottom:8px;}
+  ul.more{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:9px;}
+  ul.more li{display:flex;gap:9px;align-items:flex-start;font-size:14.5px;color:#cdd4dc;}
+  ul.more li .lf{color:var(--leaf);flex:none;margin-top:1px;}
+  ul.more li a.inl{color:var(--stw-accent);font-weight:600;text-decoration:none;border-bottom:1px solid var(--panel-line);}
+  ul.more li a.inl:hover{border-color:var(--stw-accent);}
+
+  /* resonance */
+  .mark{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+  .mbtn{flex:1;min-width:150px;border:1.5px solid var(--line);background:#0c0f14;border-radius:13px;
+    padding:12px 14px;font-family:"Manrope";font-weight:700;font-size:14px;color:#cdd4dc;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:9px;transition:.15s;}
+  .mbtn:hover{border-color:var(--stw);color:#fff;}
+  .mbtn[aria-pressed="true"]{background:var(--stw);border-color:var(--stw);color:#fff;box-shadow:0 8px 18px rgba(37,99,235,.4);}
+  .mbtn.want[aria-pressed="true"]{background:var(--stw-deep);border-color:var(--stw-deep);}
+
+  /* nav */
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:25;
+    background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.92) 38%);
+    padding:18px 18px 18px;}
+  .navwrap{max-width:760px;margin:0 auto;display:flex;gap:12px;align-items:center;}
+  .nbtn{font-family:"Manrope";font-weight:800;font-size:15px;border-radius:14px;padding:13px 20px;cursor:pointer;
+    border:1.5px solid var(--panel-line);background:#101418;color:var(--stw-accent);transition:.15s;}
+  .nbtn:hover{border-color:var(--stw);}
+  .nbtn[disabled]{opacity:.4;cursor:default;}
+  .nbtn.primary{margin-left:auto;background:linear-gradient(180deg,var(--stw),var(--stw-deep));
+    color:#fff;border:none;box-shadow:0 10px 24px rgba(37,99,235,.4);padding:13px 26px;}
+  .nbtn.primary:hover{filter:brightness(1.1);}
+
+  /* end screen */
+  .end{display:none;}
+  .end.show{display:block;animation:rise .5s cubic-bezier(.2,.8,.3,1);}
+  .end h2{font-family:"Manrope";font-weight:800;font-size:clamp(24px,5vw,32px);margin:6px 0 6px;color:#fff;}
+  .end p.lead{color:var(--muted);font-size:16px;margin:0 0 18px;}
+  .grp{margin:18px 0;}
+  .grp h3{font-family:"Manrope";font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--stw-accent);margin:0 0 10px;display:flex;align-items:center;gap:8px;}
+  .tags{display:flex;flex-wrap:wrap;gap:9px;}
+  .tag{font-family:"Manrope";font-weight:700;font-size:13.5px;border-radius:99px;padding:8px 14px;cursor:pointer;
+    border:1px solid var(--panel-line);background:#0c0f14;color:var(--stw-accent);}
+  .tag.want{color:#fff;background:var(--stw-deep);border-color:var(--stw-deep);}
+  .tag.res{color:#fff;background:var(--stw);border-color:var(--stw);}
+  .muted-note{color:var(--muted);font-size:13.5px;}
+  .endactions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+
+  .hide{display:none !important;}
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topwrap">
+      <div class="brand"><span class="dot"></span>StayTheWay&nbsp;<span class="sub">· The Gifts Journey</span></div>
+      <div class="progress-row">
+        <div class="ptrack"><div class="pfill" id="pfill"></div></div>
+        <div class="pcount" id="pcount">Stop 1 <small>/ 28</small></div>
+      </div>
+    </div>
+  </div>
+
+  <main class="stage">
+    <div id="journey">
+      <div class="milestone" id="milestone">
+        <span class="ms-line"></span><span class="ms-tree" id="tree">&#127794;</span><span class="ms-line"></span>
+      </div>
+      <article class="card" id="card"><div class="hood"></div><div class="pad" id="cardpad"></div></article>
+    </div>
+
+    <section class="end" id="end">
+      <div class="milestone"><span class="ms-line"></span><span class="ms-tree">&#9961;</span><span class="ms-line"></span></div>
+      <div class="card"><div class="hood"></div><div class="pad">
+        <div class="stopno"><span class="pill">Journey's end</span></div>
+        <h2>You walked the whole path.</h2>
+        <p class="lead">Here are the stops that stood out to you. None of this is a score — it's a starting place for prayer and a conversation with someone who knows you.</p>
+        <div class="grp" id="grp-res">
+          <h3>&#10003;&nbsp; This is me</h3>
+          <div class="tags" id="tags-res"></div>
+        </div>
+        <div class="grp" id="grp-want">
+          <h3>&#9734;&nbsp; I want to grow here</h3>
+          <div class="tags" id="tags-want"></div>
+        </div>
+        <p class="muted-note" id="endempty"></p>
+        <div class="endactions">
+          <button class="nbtn primary" id="restart">Walk it again</button>
+          <button class="nbtn" id="backlast">Back to the path</button>
+        </div>
+      </div></div>
+    </section>
+  </main>
+
+  <nav class="nav" id="nav">
+    <div class="navwrap">
+      <button class="nbtn" id="prev">&#8592; Back</button>
+      <button class="nbtn primary" id="next">Next stop &#8594;</button>
+    </div>
+  </nav>
+
+<script>
+const GIFTS = [{"n": "Prophecy", "r": "Rom. 12:6; 1 Cor. 12:10; Eph. 4:11", "pl": "Romans 12:6", "pt": "Having then gifts differing according to the grace that is given to us, whether prophecy, let us prophesy according to the proportion of faith;", "el": "Agabus foretells a coming famine", "er": "Acts 11:28", "et": "And there stood up one of them named Agabus, and signified by the Spirit that there should be great dearth throughout all the world: which came to pass in the days of Claudius Caesar.", "desc": "Hearing God's truth and faithfully speaking it into a situation — to foretell, but more often to call people back to Him.", "bib": ["Nathan confronted David with God's word — 2 Samuel 12:7", "The prophets called Israel to repentance — Isaiah 1:18–20"], "life": ["Sensing and naming what God seems to be saying to your family or group in a season", "Speaking a hard but loving, Scripture-grounded truth someone needs to hear", "Encouraging others toward obedience before a big decision is made"], "j": "The path begins where someone is willing to listen before they speak. The gift of prophecy isn't mainly about predicting the future — it's about hearing God's truth and carrying it faithfully into a moment that needs it. As you walk this stretch, you find you sense what God seems to be saying and feel a holy nudge to call people gently back to Him. God's design here is protective and restorative: a true prophetic word builds up, warns in love, and turns hearts toward obedience before harm is done."}, {"n": "Ministry (Service)", "r": "Rom. 12:7; 1 Cor. 12:5", "pl": "Romans 12:7", "pt": "Or ministry, let us wait on our ministering: or he that teacheth, on teaching;", "el": "The seven chosen to serve the church", "er": "Acts 6:3", "et": "Wherefore, brethren, look ye out among you seven men of honest report, full of the Holy Ghost and wisdom, whom we may appoint over this business.", "desc": "A Spirit-given readiness to meet practical needs so the body of Christ can function — often quietly, behind the scenes.", "bib": ["Martha served the household when Jesus visited — Luke 10:40", "Tabitha was always doing kind deeds for the needy — Acts 9:36"], "life": ["Setting up, cleaning up, or handling logistics so others can worship and learn", "Noticing the unglamorous task no one sees and simply doing it", "Keeping a ministry, home group, or event running smoothly"], "j": "Further along, the path passes the quiet work that keeps everything else standing. The gift of service is a Spirit-given readiness to meet practical needs — often unseen — so the whole body of Christ can flourish. You may find yourself spotting the unglamorous task no one else notices and simply doing it. God's design is that this hidden faithfulness frees others to worship, learn, and lead; in His economy, service is never small."}, {"n": "Teaching", "r": "Rom. 12:7; 1 Cor. 12:28; Eph. 4:11", "pl": "1 Corinthians 12:28", "pt": "And God hath set some in the church, first apostles, secondarily prophets, thirdly teachers, after that miracles, then gifts of healings, helps, governments, diversities of tongues.", "el": "Apollos taught the Scriptures diligently", "er": "Acts 18:25", "et": "This man was instructed in the way of the Lord; and being fervent in the spirit, he spake and taught diligently the things of the Lord, knowing only the baptism of John.", "desc": "The ability to study, understand, and clearly explain God's Word so others can grasp it and live it.", "bib": ["Ezra read the Law and gave the sense so people understood — Nehemiah 8:8", "Priscilla and Aquila explained the way more accurately — Acts 18:26"], "life": ["Leading a home Bible study or discipling a newer believer", "Breaking down a hard passage so a group truly understands it", "Preparing lessons for kids, teens, or adults that make truth stick"], "j": "Here the trail opens into a clearing where things finally make sense. Teaching is the ability to study God's Word, understand it, and explain it so clearly that others can grasp it and live it. You feel most alive breaking down a hard passage until a group truly sees it. God's design is steady growth: clear teaching roots believers so they aren't tossed around, and builds a church that knows why it believes."}, {"n": "Exhortation", "r": "Rom. 12:8", "pl": "Romans 12:8", "pt": "Or he that exhorteth, on exhortation: he that giveth, let him do it with simplicity; he that ruleth, with diligence; he that sheweth mercy, with cheerfulness.", "el": "Barnabas exhorted the new believers", "er": "Acts 11:23", "et": "Who, when he came, and had seen the grace of God, was glad, and exhorted them all, that with purpose of heart they would cleave unto the Lord.", "desc": "Coming alongside others to encourage, comfort, and urge them on toward growth and faithfulness.", "bib": ["Paul urged believers to live worthy of God — 1 Thessalonians 2:11–12", "Judas and Silas strengthened the church — Acts 15:32"], "life": ["Being the one who reaches out to someone discouraged", "Helping a friend take a faithful next step instead of staying stuck", "Speaking courage into someone facing a hard decision"], "j": "At this stop a hand reaches out to help you keep going. Exhortation comes alongside people to encourage, comfort, and urge them onward toward growth and faithfulness. You may be the one who notices someone discouraged and refuses to let them stay stuck. God's design is courage — the gift breathes strength into people so they take the faithful next step instead of giving up."}, {"n": "Giving", "r": "Rom. 12:8; 2 Cor. 9:7", "pl": "2 Corinthians 9:7", "pt": "Every man according as he purposeth in his heart, so let him give; not grudgingly, or of necessity: for God loveth a cheerful giver.", "el": "The Macedonians' overflowing generosity", "er": "2 Corinthians 8:2", "et": "How that in a great trial of affliction the abundance of their joy and their deep poverty abounded unto the riches of their liberality.", "desc": "A joyful generosity that shares resources freely to advance God's work and meet others' needs.", "bib": ["Barnabas sold a field and gave the proceeds — Acts 4:36–37", "The Philippians repeatedly supported Paul — Philippians 4:15–18"], "life": ["Funding a missionary, a struggling family, or a ministry need", "Looking for needs to meet rather than waiting to be asked", "Budgeting so you always keep margin to give"], "j": "The path winds past an open hand. Giving is a joyful generosity that shares resources freely to advance God's work and meet real needs. You find yourself looking for needs to meet rather than waiting to be asked, and you keep margin so you're always ready. God's design is provision flowing through people: cheerful giving meets needs, frees others for mission, and loosens the grip money wants to have on a heart."}, {"n": "Leadership", "r": "Rom. 12:8; 1 Tim. 5:17", "pl": "1 Timothy 5:17", "pt": "Let the elders that rule well be counted worthy of double honour, especially they who labour in the word and doctrine.", "el": "Nehemiah rallies the people to rebuild", "er": "Nehemiah 2:18", "et": "Then I told them of the hand of my God which was good upon me; as also the king’s words that he had spoken unto me. And they said, Let us rise up and build. So they strengthened their hands for this good work.", "desc": "A God-given ability to set direction, organize people, and move a group toward a shared goal with diligence.", "bib": ["Moses appointed capable leaders over the people — Exodus 18:21–26", "Joshua led Israel into the promised land — Joshua 1:6–9"], "life": ["Casting vision and coordinating a team or ministry project", "Helping a group decide, plan, and follow through", "Stepping up to guide when others are unsure who should"], "j": "Ahead, the trail forks and someone steps up to point the way. Leadership is a God-given ability to set direction, organize people, and move a group toward a shared goal with diligence. You sense when others are unsure who should guide, and you're willing to carry the vision. God's design is momentum with care: good leadership doesn't dominate — it strengthens hands for good work and helps a whole body move together."}, {"n": "Mercy", "r": "Rom. 12:8", "pl": "Romans 12:8", "pt": "Or he that exhorteth, on exhortation: he that giveth, let him do it with simplicity; he that ruleth, with diligence; he that sheweth mercy, with cheerfulness.", "el": "The Good Samaritan cares for the wounded", "er": "Luke 10:34", "et": "And went to him, and bound up his wounds, pouring in oil and wine, and set him on his own beast, and brought him to an inn, and took care of him.", "desc": "A deep compassion for the hurting that moves you to act with kindness toward those in distress.", "bib": ["Dorcas was always doing acts of kindness — Acts 9:36", "Job rescued the poor and the fatherless — Job 29:12–16"], "life": ["Sitting with the grieving, sick, lonely, or forgotten", "Visiting hospitals, shut-ins, prisoners, or the overlooked", "Meeting suffering with practical compassion, not just sympathy"], "j": "This stop sits low to the ground, beside the hurting. Mercy is a deep compassion for those in pain that moves you to act with kindness, not just feel sympathy. You're drawn to sit with the grieving, the sick, the lonely, the overlooked. God's design is tenderness made tangible: mercy lets a suffering person feel that they are seen, cared for, and not alone."}, {"n": "Word of Wisdom", "r": "1 Cor. 12:8", "pl": "1 Corinthians 12:8", "pt": "For to one is given by the Spirit the word of wisdom; to another the word of knowledge by the same Spirit;", "el": "Solomon's wise judgment between two mothers", "er": "1 Kings 3:28", "et": "And all Israel heard of the judgment which the king had judged; and they feared the king: for they saw that the wisdom of God was in him, to do judgment.", "desc": "A Spirit-given insight that applies God's truth to a specific situation — knowing the right thing to do.", "bib": ["James gave the wise word that settled the council — Acts 15:13–21", "Stephen spoke with wisdom none could resist — Acts 6:10"], "life": ["Offering the clarifying word that untangles a conflict", "Helping someone see the wise, godly path in a confusing choice", "Bringing calm, biblical perspective to a heated decision"], "j": "Here the path narrows and the right step isn't obvious — until clarity comes. The word of wisdom is Spirit-given insight that applies God's truth to a specific situation, knowing the right thing to do. You may offer the clarifying word that untangles a conflict or shows the godly path in a confusing choice. God's design is peace and direction: wisdom brings calm, biblical perspective to a heated moment and keeps a body from stumbling."}, {"n": "Word of Knowledge", "r": "1 Cor. 12:8", "pl": "1 Corinthians 12:8", "pt": "For to one is given by the Spirit the word of wisdom; to another the word of knowledge by the same Spirit;", "el": "Peter perceives Ananias' hidden deceit", "er": "Acts 5:3", "et": "But Peter said, Ananias, why hath Satan filled thine heart to lie to the Holy Ghost, and to keep back part of the price of the land?", "desc": "A Spirit-given grasp of truth or facts — sometimes revealed — that serves and protects God's people.", "bib": ["Jesus knew the woman at the well's history — John 4:16–19", "Elisha knew the Syrian king's secret plans — 2 Kings 6:8–12"], "life": ["Sensing the real issue beneath what someone is saying", "Recalling Scripture that speaks exactly to a need", "Perceiving when something is 'off' in a way that protects others"], "j": "Further on, you sense something beneath the surface. The word of knowledge is a Spirit-given grasp of truth or facts — sometimes simply perceived — that serves and protects God's people. You might notice the real issue under what someone is saying, or recall the very Scripture that meets the need. God's design is protection and insight: this gift guards the flock and brings God's truth to bear right where it's needed."}, {"n": "Faith", "r": "1 Cor. 12:9", "pl": "1 Corinthians 12:9", "pt": "To another faith by the same Spirit; to another the gifts of healing by the same Spirit;", "el": "The centurion's great faith", "er": "Matthew 8:10", "et": "When Jesus heard it, he marvelled, and said to them that followed, Verily I say unto you, I have not found so great faith, no, not in Israel.", "desc": "An extraordinary confidence in God's power and promises that trusts Him for what seems impossible.", "bib": ["Elijah prayed with bold confidence on Mount Carmel — 1 Kings 18:36–38", "Abraham believed God against all odds — Romans 4:18–21"], "life": ["Praying boldly and stepping out when others hesitate", "Holding steady trust through a crisis that shakes everyone else", "Believing God for a need and drawing others to trust too"], "j": "This stretch climbs higher than seems reasonable, and you keep walking anyway. The gift of faith is an extraordinary confidence in God's power and promises that trusts Him for what looks impossible. You pray boldly and step out when others hesitate, holding steady through a crisis that shakes everyone else. God's design is contagious trust: your confidence in Him draws others to believe and take heart."}, {"n": "Gifts of Healing", "r": "1 Cor. 12:9, 28, 30", "pl": "1 Corinthians 12:9", "pt": "To another faith by the same Spirit; to another the gifts of healing by the same Spirit;", "el": "Peter heals the lame man at the gate", "er": "Acts 3:6", "et": "Then Peter said, Silver and gold have I none; but such as I have give I thee: In the name of Jesus Christ of Nazareth rise up and walk.", "desc": "Being used by God as a channel of His healing — physical, emotional, or spiritual.", "bib": ["Paul healed the sick on the island of Malta — Acts 28:8–9", "Jesus healed all who came to Him — Matthew 4:23–24"], "life": ["Praying for the sick and trusting God for restoration", "Walking with people through emotional or spiritual healing", "Pointing to Jesus as Healer in seasons of suffering"], "j": "The path passes a place of restoration. This gift is being used by God as a channel of His healing — physical, emotional, or spiritual. You're moved to pray for the sick and to walk with people through deep wounds, trusting God to restore. God's design is wholeness that points to the Healer: every healing, loud or quiet, lifts eyes back to Jesus."}, {"n": "Working of Miracles", "r": "1 Cor. 12:10, 28", "pl": "1 Corinthians 12:10", "pt": "To another the working of miracles; to another prophecy; to another discerning of spirits; to another divers kinds of tongues; to another the interpretation of tongues:", "el": "Moses parts the Red Sea", "er": "Exodus 14:21", "et": "And Moses stretched out his hand over the sea; and the LORD caused the sea to go back by a strong east wind all that night, and made the sea dry land, and the waters were divided.", "desc": "Being used by God to do what only His power can accomplish, displaying His glory.", "bib": ["Paul struck Elymas the sorcerer blind — Acts 13:8–11", "Elijah called down fire from heaven — 1 Kings 18:36–38"], "life": ["Praying for God's intervention when there's no natural solution", "Witnessing and expecting God to act in power", "Giving Him the glory when He moves beyond explanation"], "j": "Here the trail reaches a place where only God can make a way. The working of miracles is being used by Him to do what only His power can accomplish, displaying His glory. You find yourself praying for intervention when there's no natural solution, expecting Him to act. God's design is unmistakable glory: when He moves beyond explanation, faith is strengthened and He receives the honor."}, {"n": "Discerning of Spirits", "r": "1 Cor. 12:10", "pl": "1 Corinthians 12:10", "pt": "To another the working of miracles; to another prophecy; to another discerning of spirits; to another divers kinds of tongues; to another the interpretation of tongues:", "el": "Paul discerns the spirit in the slave girl", "er": "Acts 16:18", "et": "And this did she many days. But Paul, being grieved, turned and said to the spirit, I command thee in the name of Jesus Christ to come out of her. And he came out the same hour.", "desc": "The ability to tell what is truly of God, what is merely human, and what is deceptive or evil.", "bib": ["Peter exposed the bitterness behind Simon's request — Acts 8:18–23", "John urged believers to test the spirits — 1 John 4:1"], "life": ["Sensing when teaching or influence doesn't line up with Scripture", "Protecting a group from manipulation or false doctrine", "Recognizing genuine spiritual fruit versus a false front"], "j": "This stop teaches you to read what's really there. Discerning of spirits is the ability to tell what is truly of God, what is merely human, and what is deceptive or evil. You may sense when teaching or influence doesn't line up with Scripture before others notice. God's design is safekeeping: discernment protects a community from manipulation and falsehood and recognizes genuine fruit."}, {"n": "Tongues", "r": "1 Cor. 12:10, 28; 14:1–39", "pl": "1 Corinthians 12:10", "pt": "To another the working of miracles; to another prophecy; to another discerning of spirits; to another divers kinds of tongues; to another the interpretation of tongues:", "el": "The disciples speak in tongues at Pentecost", "er": "Acts 2:4", "et": "And they were all filled with the Holy Ghost, and began to speak with other tongues, as the Spirit gave them utterance.", "desc": "Spirit-enabled speech in a language unknown to the speaker — for prayer, or, with interpretation, for the church.", "bib": ["The Gentiles spoke in tongues at Cornelius' house — Acts 10:44–46", "The Ephesian disciples spoke in tongues — Acts 19:6"], "life": ["Praying in the Spirit in private devotion", "Using it in church only when interpretation is present (1 Cor 14:27–28)", "Letting it draw you into deeper worship of God"], "j": "Further along, worship rises in a language beyond your own. Tongues is Spirit-enabled speech in a language unknown to the speaker — for prayer, or, with interpretation, for the church. You may find it drawing you into deeper, private devotion. God's design is intimacy and edification: rightly used, it builds you up in prayer and, when interpreted, builds up the whole church."}, {"n": "Interp. of Tongues", "r": "1 Cor. 12:10, 30; 14:13, 27–28", "pl": "1 Corinthians 12:10", "pt": "To another the working of miracles; to another prophecy; to another discerning of spirits; to another divers kinds of tongues; to another the interpretation of tongues:", "el": "Paul's order for tongues and interpretation", "er": "1 Corinthians 14:27", "et": "If any man speak in an unknown tongue, let it be by two, or at the most by three, and that by course; and let one interpret.", "desc": "The companion gift that makes a message in tongues understandable, so the whole church is built up.", "bib": ["With interpretation, tongues edifies like prophecy — 1 Corinthians 14:5", "Let all things be done for building up — 1 Corinthians 14:26"], "life": ["Serving alongside someone who speaks in tongues so others understand", "Helping public worship stay orderly and edifying", "Turning spiritual expression into shared encouragement"], "j": "This stop is the companion that makes the mystery understood. Interpretation of tongues makes a message in an unknown tongue understandable, so the whole church is built up. You serve alongside the one who speaks, turning spiritual expression into shared encouragement. God's design is order and edification: interpretation keeps worship clear so everyone is strengthened together."}, {"n": "Apostleship", "r": "1 Cor. 12:28; Eph. 4:11", "pl": "1 Corinthians 12:28", "pt": "And God hath set some in the church, first apostles, secondarily prophets, thirdly teachers, after that miracles, then gifts of healings, helps, governments, diversities of tongues.", "el": "The Spirit sets apart Barnabas and Saul", "er": "Acts 13:2", "et": "As they ministered to the Lord, and fasted, the Holy Ghost said, Separate me Barnabas and Saul for the work whereunto I have called them.", "desc": "A sending gift — pioneering, planting, and overseeing new works for the gospel where they don't yet exist.", "bib": ["Paul aimed to preach where Christ was unknown — Romans 15:20", "Jesus chose and sent out the twelve — Mark 3:14–15"], "life": ["Starting a new ministry, group, or outreach from nothing", "Going where the gospel hasn't reached and laying foundations", "Overseeing and strengthening several works at once"], "j": "The path pushes out past the edge of the map. Apostleship is a sending gift — pioneering, planting, and overseeing new works for the gospel where they don't yet exist. You feel the pull to start something from nothing and lay foundations where Christ is unknown. God's design is expansion: this gift opens new ground and strengthens many works so the gospel keeps reaching further."}, {"n": "Helps", "r": "1 Cor. 12:28", "pl": "1 Corinthians 12:28", "pt": "And God hath set some in the church, first apostles, secondarily prophets, thirdly teachers, after that miracles, then gifts of healings, helps, governments, diversities of tongues.", "el": "Phoebe, a helper of many", "er": "Romans 16:2", "et": "That ye receive her in the Lord, as becometh saints, and that ye assist her in whatsoever business she hath need of you: for she hath been a succourer of many, and of myself also.", "desc": "A gift for supporting and assisting others — lifting burdens so leaders and the body can thrive.", "bib": ["Onesiphorus often refreshed and helped Paul — 2 Timothy 1:16–18", "Many women supported Jesus' ministry — Luke 8:2–3"], "life": ["Coming alongside a leader to carry the practical load", "Being a dependable second who makes others effective", "Filling gaps so nothing important falls through"], "j": "Here the path is held up by someone underneath the load. Helps is a gift for supporting and assisting others — lifting burdens so leaders and the body can thrive. You're the dependable second who fills gaps so nothing important falls through. God's design is partnership: helps makes others effective and keeps the whole work standing."}, {"n": "Governments (Administration)", "r": "1 Cor. 12:28", "pl": "1 Corinthians 12:28", "pt": "And God hath set some in the church, first apostles, secondarily prophets, thirdly teachers, after that miracles, then gifts of healings, helps, governments, diversities of tongues.", "el": "Joseph set over all the land of Egypt", "er": "Genesis 41:41", "et": "And Pharaoh said unto Joseph, See, I have set thee over all the land of Egypt.", "desc": "The ability to organize people, plans, and resources so a vision actually gets carried out.", "bib": ["Moses set up an ordered system of judges — Exodus 18:21–26", "The apostles organized the daily distribution — Acts 6:1–6"], "life": ["Turning a big vision into workable steps, roles, and timelines", "Keeping budgets, schedules, and systems running well", "Coordinating volunteers so a ministry operates smoothly"], "j": "This stop turns vision into something that actually moves. Administration is the ability to organize people, plans, and resources so a goal truly gets carried out. You see how to turn a big idea into workable steps, roles, and timelines. God's design is fruitfulness: good administration lets a ministry run smoothly so the vision bears real fruit instead of stalling."}, {"n": "Evangelism", "r": "Eph. 4:11; 2 Tim. 4:5; Acts 21:8", "pl": "Ephesians 4:11", "pt": "And he gave some, apostles; and some, prophets; and some, evangelists; and some, pastors and teachers;", "el": "Philip preaches Jesus to the Ethiopian", "er": "Acts 8:35", "et": "Then Philip opened his mouth, and began at the same scripture, and preached unto him Jesus.", "desc": "A Spirit-given effectiveness in sharing the gospel and leading others to faith in Christ.", "bib": ["Peter preached and three thousand believed — Acts 2:14–41", "Andrew brought his brother Simon to Jesus — John 1:40–42"], "life": ["Naturally turning conversations toward Jesus", "Sharing your testimony with neighbors, coworkers, or strangers", "Helping someone cross the line into following Christ"], "j": "Further on, a conversation turns naturally toward Jesus. Evangelism is a Spirit-given effectiveness in sharing the gospel and leading others to faith. You find yourself drawing talk toward Christ and helping people cross the line into following Him. God's design is harvest: this gift brings the lost home and fills the church with new life."}, {"n": "Pastoring (Shepherding)", "r": "Eph. 4:11; 1 Pet. 5:1–4", "pl": "Ephesians 4:11", "pt": "And he gave some, apostles; and some, prophets; and some, evangelists; and some, pastors and teachers;", "el": "Jesus charges Peter: “Feed my sheep”", "er": "John 21:16", "et": "He saith to him again the second time, Simon, son of Jonas, lovest thou me? He saith unto him, Yea, Lord; thou knowest that I love thee. He saith unto him, Feed my sheep.", "desc": "A heart to guide, protect, feed, and care for a group of believers over the long haul.", "bib": ["Elders are to shepherd the flock willingly — 1 Peter 5:1–4", "Paul carried daily concern for the churches — 2 Corinthians 11:28"], "life": ["Caring for the ongoing spiritual growth of a group", "Walking with people through seasons of life, not just events", "Protecting and feeding those God entrusts to you"], "j": "This stop slows down to walk with people over the long haul. Pastoring is a heart to guide, protect, feed, and care for a group of believers through every season — not just events. You carry an ongoing concern for others' growth. God's design is steady care: shepherding keeps the flock fed, safe, and maturing under God's hand."}, {"n": "Understanding", "r": "Isa. 11:2; 1 Chron. 12:32; 1 Cor. 14:20", "pl": "Isaiah 11:2", "pt": "And the spirit of the LORD shall rest upon him, the spirit of wisdom and understanding, the spirit of counsel and might, the spirit of knowledge and of the fear of the LORD;", "el": "The men of Issachar understood the times", "er": "1 Chronicles 12:32", "et": "And of the children of Issachar, which were men that had understanding of the times, to know what Israel ought to do; the heads of them were two hundred; and all their brethren were at their commandment.", "desc": "Insight that grasps the meaning behind facts and reads the times rightly, so you know how to respond.", "bib": ["Daniel had understanding in all visions and dreams — Daniel 1:17", "Solomon asked God for an understanding heart — 1 Kings 3:9"], "life": ["Seeing what's really going on beneath the surface of events", "Helping others know not just what's true but what to do", "Bringing biblical perspective to current cultural moments"], "j": "Here the path gives you eyes for the times. Understanding is insight that grasps the meaning behind facts and reads a season rightly, so you know how to respond. Like the men of Issachar, you see what's really going on beneath events and sense what God's people ought to do. God's design is wise response: understanding helps a body know not just what is true, but what to do about it."}, {"n": "Craftsmanship", "r": "Ex. 31:3–5; 35:30–35", "pl": "Exodus 31:3", "pt": "And I have filled him with the spirit of God, in wisdom, and in understanding, and in knowledge, and in all manner of workmanship,", "el": "Bezalel filled with skill for the tabernacle", "er": "Exodus 35:31", "et": "And he hath filled him with the spirit of God, in wisdom, in understanding, and in knowledge, and in all manner of workmanship;", "desc": "Skilled, Spirit-filled ability with hands and materials to build and create for God's purposes.", "bib": ["Oholiab was gifted to craft and to teach others — Exodus 35:34–35", "Huram did the bronze work for the temple — 1 Kings 7:13–14"], "life": ["Building, fixing, designing, or making things for the church's use", "Using a trade or art as worship and service", "Creating spaces and tools that help ministry happen"], "j": "The path passes a workshop. Craftsmanship is skilled, Spirit-filled ability with hands and materials to build and create for God's purposes. You may use a trade or an art as worship, making spaces and tools that help ministry happen. God's design is beauty and usefulness offered back to Him: like Bezalel, skilled hands build what the body needs."}, {"n": "Celibacy", "r": "1 Cor. 7:7–8; Matt. 19:11–12", "pl": "1 Corinthians 7:7", "pt": "For I would that all men were even as I myself. But every man hath his proper gift of God, one after this manner, and another after that.", "el": "Paul wished others single, as he was", "er": "1 Corinthians 7:8", "et": "I say therefore to the unmarried and widows, It is good for them if they abide even as I.", "desc": "A God-given contentment in singleness that frees you for undistracted devotion and service.", "bib": ["Jesus spoke of singleness for the kingdom — Matthew 19:11–12", "The unmarried can focus on the Lord's affairs — 1 Corinthians 7:32–34"], "life": ["Giving time and focus to ministry that marriage would divide", "Being available for people and mission in flexible ways", "Modeling that wholeness is found in Christ, not status"], "j": "This quieter stretch is marked by an undivided focus. Celibacy is a God-given contentment in singleness that frees you for undistracted devotion and service. You may be available for people and mission in ways marriage would divide. God's design is wholeness in Christ: this gift gives time and focus fully to the Lord's work, modeling that fullness is found in Him."}, {"n": "Voluntary Poverty", "r": "1 Cor. 13:3; Acts 2:44–45; 2 Cor. 8:9", "pl": "1 Corinthians 13:3", "pt": "And though I bestow all my goods to feed the poor, and though I give my body to be burned, and have not charity, it profiteth me nothing.", "el": "Believers sold goods and shared with all", "er": "Acts 2:45", "et": "And sold their possessions and goods, and parted them to all men, as every man had need.", "desc": "A willingness to give up comfort and live simply in order to serve Christ and others more fully.", "bib": ["The rich young ruler was called to give all and follow — Matthew 19:21", "Jesus became poor so that we might be rich — 2 Corinthians 8:9"], "life": ["Choosing a simpler lifestyle so you can give and serve more", "Releasing comfort or status for the sake of the gospel", "Holding possessions loosely and trusting God to provide"], "j": "Here the path travels light. Voluntary poverty is a willingness to give up comfort and live simply in order to serve Christ and others more fully. You may choose less so you can give and serve more, holding possessions loosely. God's design is freedom and generosity: releasing comfort for the gospel trusts God to provide and frees you to bless."}, {"n": "Martyrdom", "r": "1 Cor. 13:3; Acts 7:54–60", "pl": "1 Corinthians 13:3", "pt": "And though I bestow all my goods to feed the poor, and though I give my body to be burned, and have not charity, it profiteth me nothing.", "el": "Stephen forgives his killers as he dies", "er": "Acts 7:60", "et": "And he kneeled down, and cried with a loud voice, Lord, lay not this sin to their charge. And when he had said this, he fell asleep.", "desc": "The grace to suffer, and even die, for Christ with steadfast faith and a forgiving spirit.", "bib": ["James was put to death for his faith — Acts 12:1–2", "Faithful witnesses loved not their lives to the death — Revelation 12:11"], "life": ["Standing firm in faith when it costs you something real", "Facing ridicule, loss, or danger without bitterness", "Letting your endurance point others to Christ"], "j": "This is the steepest stop on the path, and grace meets you there. Martyrdom is the grace to suffer, and even die, for Christ with steadfast faith and a forgiving spirit. It shows up first in standing firm when faith costs you something real, without bitterness. God's design is a witness that cannot be argued away: endurance under cost points others powerfully to Christ."}, {"n": "Hospitality", "r": "1 Pet. 4:9–10; Rom. 12:13; Heb. 13:2", "pl": "1 Peter 4:9", "pt": "Use hospitality one to another without grudging.", "el": "Lydia opens her home to Paul's company", "er": "Acts 16:15", "et": "And when she was baptized, and her household, she besought us, saying, If ye have judged me to be faithful to the Lord, come into my house, and abide there. And she constrained us.", "desc": "A gift for welcoming others — especially strangers — making them feel at home and cared for.", "bib": ["Abraham welcomed three strangers with a feast — Genesis 18:1–8", "Gaius hosted Paul and the whole church — Romans 16:23"], "life": ["Opening your home for meals, study, or those who need a place", "Making newcomers and outsiders feel they belong", "Creating warmth where people connect and are cared for"], "j": "The path arrives at an open door. Hospitality is a gift for welcoming others — especially strangers — making them feel at home and cared for. You open your home and your table so newcomers and outsiders sense they belong. God's design is belonging: hospitality creates the warm places where people connect, are cared for, and meet Christ."}, {"n": "Missionary", "r": "Eph. 3:6–9; 1 Cor. 9:19–23; Rom. 10:15; Acts 13:2–3", "pl": "Romans 10:15", "pt": "And how shall they preach, except they be sent? as it is written, How beautiful are the feet of them that preach the gospel of peace, and bring glad tidings of good things!", "el": "Paul became all things to all men", "er": "1 Corinthians 9:22", "et": "To the weak became I as weak, that I might gain the weak: I am made all things to all men, that I might by all means save some.", "desc": "A calling to carry the gospel across cultures and boundaries, adapting to reach people far from Christ.", "bib": ["Antioch sent Barnabas and Saul to the nations — Acts 13:1–3", "Paul preached from Jerusalem all the way to Illyricum — Romans 15:19–20"], "life": ["Crossing cultural or language lines to share Christ", "Serving short- or long-term where the gospel is needed", "Adapting your approach to reach people unlike yourself"], "j": "Here the trail crosses a border. The missionary gift is a calling to carry the gospel across cultures and boundaries, adapting to reach people far from Christ. Like Paul, you become all things to all people to win some. God's design is reach: this gift takes the good news where it hasn't gone and brings glad tidings to those who've never heard."}, {"n": "Intercession", "r": "1 Tim. 2:1–2; Col. 1:9–12; Jas. 5:14–16; Rom. 8:26–27", "pl": "1 Timothy 2:1", "pt": "I exhort therefore, that, first of all, supplications, prayers, intercessions, and giving of thanks, be made for all men;", "el": "Moses intercedes for sinning Israel", "er": "Exodus 32:11", "et": "And Moses besought the LORD his God, and said, LORD, why doth thy wrath wax hot against thy people, which thou hast brought forth out of the land of Egypt with great power, and with a mighty hand?", "desc": "A burden and persistence in prayer — standing in the gap on behalf of others.", "bib": ["Epaphras wrestled in prayer for the Colossians — Colossians 4:12", "Samuel refused to stop praying for Israel — 1 Samuel 12:23"], "life": ["Carrying others' needs faithfully and specifically in prayer", "Praying through a situation until you sense peace or breakthrough", "Being the quiet covering behind a person or ministry"], "j": "The journey's last stop is found on its knees. Intercession is a burden and persistence in prayer — standing in the gap on behalf of others. You carry people's needs faithfully and specifically, praying until you sense peace or breakthrough. God's design is hidden power: intercession is the quiet covering behind every person and ministry, holding others up before God."}];
+const TREES = ["🌳","🌲","🌴","🌳","🌲"];
+
+/* ---------- Blue Letter Bible linking ---------- */
+const BOOK = {
+ "genesis":"gen","gen":"gen","exodus":"exo","exo":"exo","ex":"exo","leviticus":"lev","lev":"lev",
+ "numbers":"num","num":"num","deuteronomy":"deu","deu":"deu","deut":"deu","joshua":"jos","jos":"jos","josh":"jos",
+ "judges":"jdg","jdg":"jdg","judg":"jdg","ruth":"rut","rut":"rut","1 samuel":"1sa","1 sam":"1sa","1sa":"1sa",
+ "2 samuel":"2sa","2 sam":"2sa","2sa":"2sa","1 kings":"1ki","1 kgs":"1ki","1ki":"1ki","2 kings":"2ki","2 kgs":"2ki","2ki":"2ki",
+ "1 chronicles":"1ch","1 chron":"1ch","1 chr":"1ch","1ch":"1ch","2 chronicles":"2ch","2 chron":"2ch","2 chr":"2ch","2ch":"2ch",
+ "ezra":"ezr","ezr":"ezr","nehemiah":"neh","neh":"neh","esther":"est","est":"est","job":"job",
+ "psalm":"psa","psalms":"psa","psa":"psa","ps":"psa","proverbs":"pro","prov":"pro","pro":"pro",
+ "ecclesiastes":"ecc","ecc":"ecc","song of solomon":"sng","song":"sng","sng":"sng",
+ "isaiah":"isa","isa":"isa","jeremiah":"jer","jer":"jer","lamentations":"lam","lam":"lam",
+ "ezekiel":"eze","eze":"eze","ezek":"eze","daniel":"dan","dan":"dan",
+ "hosea":"hos","hos":"hos","joel":"joe","joe":"joe","amos":"amo","amo":"amo","obadiah":"oba","oba":"oba",
+ "jonah":"jon","jon":"jon","micah":"mic","mic":"mic","nahum":"nah","nah":"nah","habakkuk":"hab","hab":"hab",
+ "zephaniah":"zep","zep":"zep","haggai":"hag","hag":"hag","zechariah":"zec","zec":"zec","malachi":"mal","mal":"mal",
+ "matthew":"mat","matt":"mat","mat":"mat","mark":"mar","mar":"mar","mrk":"mar","luke":"luk","luk":"luk",
+ "john":"jhn","jhn":"jhn","jn":"jhn","acts":"act","act":"act",
+ "romans":"rom","rom":"rom","1 corinthians":"1co","1 cor":"1co","1co":"1co","2 corinthians":"2co","2 cor":"2co","2co":"2co",
+ "galatians":"gal","gal":"gal","ephesians":"eph","eph":"eph","philippians":"php","phil":"php","php":"php",
+ "colossians":"col","col":"col","1 thessalonians":"1th","1 thess":"1th","1th":"1th","2 thessalonians":"2th","2 thess":"2th","2th":"2th",
+ "1 timothy":"1ti","1 tim":"1ti","1ti":"1ti","2 timothy":"2ti","2 tim":"2ti","2ti":"2ti","titus":"tit","tit":"tit",
+ "philemon":"phm","phm":"phm","hebrews":"heb","heb":"heb","james":"jas","jas":"jas",
+ "1 peter":"1pe","1 pet":"1pe","1pe":"1pe","2 peter":"2pe","2 pet":"2pe","2pe":"2pe",
+ "1 john":"1jo","1 jn":"1jo","1jo":"1jo","2 john":"2jo","2jo":"2jo","3 john":"3jo","3jo":"3jo",
+ "jude":"jud","jud":"jud","revelation":"rev","rev":"rev"
+};
+function normBook(b){return b.toLowerCase().replace(/\./g,"").replace(/\s+/g," ").trim();}
+function blbUrl(ref){
+  const m = ref.trim().match(/^([1-3]?\s?[A-Za-z.]+(?:\s+of\s+[A-Za-z]+)?)\s+(\d+):(\d+)/);
+  if(m){
+    const ab = BOOK[normBook(m[1])];
+    if(ab) return "https://www.blueletterbible.org/kjv/"+ab+"/"+m[2]+"/"+m[3]+"/";
+  }
+  return "https://www.blueletterbible.org/search/preSearch.cfm?Criteria="+encodeURIComponent(ref)+"&t=KJV";
+}
+function refLink(ref,extraClass){
+  const u = blbUrl(ref);
+  return '<a class="blb '+(extraClass||'')+'" target="_blank" rel="noopener" href="'+u+'"><span class="bk">📖</span>'+esc(ref)+'</a>';
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function expandRefs(rstr){
+  let lastBook="";
+  return (rstr||"").split(";").map(s=>s.trim()).filter(Boolean).map(tok=>{
+    const bm = tok.match(/^([1-3]?\s?[A-Za-z][A-Za-z.]*)\s+/);
+    if(bm){ lastBook = bm[1]; return tok; }
+    if(/^\d/.test(tok) && lastBook) return lastBook+" "+tok; // inherit book name
+    return tok;
+  });
+}
+
+/* ---------- state ---------- */
+const state = { i:0, marks:{} }; // marks[name] = 'res' | 'want'
+const N = GIFTS.length;
+
+function render(){
+  const g = GIFTS[state.i];
+  document.getElementById("tree").innerHTML = TREES[state.i % TREES.length];
+  // references row
+  const refsHtml = expandRefs(g.r).map(r=>refLink(r)).join("");
+  // bib list with inline links
+  const bibHtml = (g.bib||[]).map(b=>{
+    const idx = b.lastIndexOf("—"); // em dash
+    if(idx>-1){
+      const txt=b.slice(0,idx).trim(), rf=b.slice(idx+1).trim();
+      return '<li><span class="lf">🌿</span><span>'+esc(txt)+' — <a class="inl" target="_blank" rel="noopener" href="'+blbUrl(rf)+'">'+esc(rf)+'</a></span></li>';
+    }
+    return '<li><span class="lf">🌿</span><span>'+esc(b)+'</span></li>';
+  }).join("");
+
+  const mk = state.marks[g.n];
+  document.getElementById("cardpad").innerHTML =
+    '<div class="stopno"><span class="pill">Stop '+(state.i+1)+' of '+N+'</span></div>'+
+    '<h1 class="gift">'+esc(g.n)+'</h1>'+
+    '<div class="refchip">'+esc(g.r||"")+'</div>'+
+    '<p class="story">'+esc(g.j)+'</p>'+
+    '<div class="reveal">'+
+      '<details class="disc"><summary><span class="sm-ico">📖</span>Reveal the Scripture<span class="chev">›</span></summary>'+
+        '<div class="body">'+
+          '<blockquote class="v"><span class="vt">“'+esc(g.pt)+'”</span><span class="vl">'+esc(g.pl)+' (KJV)</span></blockquote>'+
+          '<div class="refs-h">Look it up at Blue Letter Bible</div>'+
+          '<div class="refs">'+refsHtml+'</div>'+
+        '</div>'+
+      '</details>'+
+      '<details class="disc example"><summary><span class="sm-ico">🔍</span>Dig deeper — see it happen in Scripture<span class="chev">›</span></summary>'+
+        '<div class="body">'+
+          '<div class="ex-head">'+esc(g.el)+'</div>'+
+          '<div class="ex-ref">'+esc(g.er)+'</div>'+
+          '<blockquote class="v"><span class="vt">“'+esc(g.et)+'”</span><span class="vl">'+esc(g.er)+' (KJV)</span></blockquote>'+
+          '<div class="refs">'+refLink(g.er)+'</div>'+
+          (bibHtml? '<div class="refs-h">More places it shows up</div><ul class="more">'+bibHtml+'</ul>':'')+
+        '</div>'+
+      '</details>'+
+    '</div>'+
+    '<div class="mark">'+
+      '<button class="mbtn res" data-mark="res" aria-pressed="'+(mk==="res")+'">✓ This is me</button>'+
+      '<button class="mbtn want" data-mark="want" aria-pressed="'+(mk==="want")+'">☆ I want to grow here</button>'+
+    '</div>';
+
+  document.querySelectorAll(".mbtn").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const v=b.dataset.mark;
+      state.marks[g.n] = (state.marks[g.n]===v)? undefined : v;
+      render();
+    });
+  });
+
+  // progress + nav
+  const pct = Math.round(((state.i+1)/N)*100);
+  document.getElementById("pfill").style.width = pct+"%";
+  document.getElementById("pcount").innerHTML = "Stop "+(state.i+1)+" <small>/ "+N+"</small>";
+  document.getElementById("prev").disabled = state.i===0;
+  document.getElementById("next").innerHTML = state.i===N-1 ? "Finish the journey &#10003;" : "Next stop &#8594;";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function showEnd(){
+  document.getElementById("journey").classList.add("hide");
+  document.getElementById("nav").classList.add("hide");
+  const res=[],want=[];
+  GIFTS.forEach(g=>{ if(state.marks[g.n]==="res")res.push(g.n); if(state.marks[g.n]==="want")want.push(g.n); });
+  document.getElementById("tags-res").innerHTML = res.map(n=>'<span class="tag res">'+esc(n)+'</span>').join("") || '<span class="muted-note">None marked.</span>';
+  document.getElementById("tags-want").innerHTML = want.map(n=>'<span class="tag want">'+esc(n)+'</span>').join("") || '<span class="muted-note">None marked.</span>';
+  document.getElementById("endempty").textContent = (!res.length && !want.length) ? "You didn’t mark any stops — that’s okay. You can walk it again and notice what stirs you." : "";
+  document.getElementById("pfill").style.width="100%";
+  document.getElementById("pcount").innerHTML="Complete <small>✓</small>";
+  document.getElementById("end").classList.add("show");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function hideEnd(){
+  document.getElementById("end").classList.remove("show");
+  document.getElementById("journey").classList.remove("hide");
+  document.getElementById("nav").classList.remove("hide");
+}
+
+document.getElementById("next").addEventListener("click",()=>{
+  if(state.i===N-1){ showEnd(); return; }
+  state.i++; render();
+});
+document.getElementById("prev").addEventListener("click",()=>{ if(state.i>0){state.i--; render();} });
+document.getElementById("restart").addEventListener("click",()=>{ state.i=0; state.marks={}; hideEnd(); render(); });
+document.getElementById("backlast").addEventListener("click",()=>{ state.i=N-1; hideEnd(); render(); });
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("end").classList.contains("show"))return;
+  if(e.key==="ArrowRight")document.getElementById("next").click();
+  if(e.key==="ArrowLeft")document.getElementById("prev").click();
+});
+
+render();
+</script>
+</body>
+</html>

@@ -76,6 +76,15 @@
   .video-placeholder { display: flex; align-items: center; justify-content: center;
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: var(--navy-2); color: var(--chrome); font-size: 1rem; font-style: italic; }
+
+  .week-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(20,120,240,0.3); }
+  .week-nav a { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--sky, #28A0F0); text-decoration: none; font-weight: 700; font-size: 0.9rem; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid rgba(20,120,240,0.3); transition: background 0.15s, border-color 0.15s; }
+  .week-nav a:hover { background: rgba(20,120,240,0.15); border-color: #1478F0; }
+  .week-nav .nav-label { font-size: 0.75rem; color: #DCDCDC; opacity: 0.7; display: block; }
+  .week-nav .nav-title { display: block; }
+  .week-nav .prev { text-align: left; }
+  .week-nav .next { text-align: right; margin-left: auto; }
+  .week-nav .series-home { text-align: center; font-size: 0.8rem; }
 </style>
 </head>
 <body>
@@ -147,6 +156,18 @@
     </a>
   </div>
 
+  <div class="week-nav">
+    <a href="/teachings/7-fake-christians/" class="prev">
+      <span class="nav-label">&larr; Week 4</span>
+      <span class="nav-title">Fake Christian</span>
+    </a>
+    <a href="/teachings/walking-by-the-spirit/" class="series-home">All 8 Weeks</a>
+    <a href="/teachings/romans-7-8/romans-8/" class="next">
+      <span class="nav-label">Week 6 &rarr;</span>
+      <span class="nav-title">Romans 8</span>
+    </a>
+  </div>
+
   <footer>
     <div><a href="https://staytheway.com">staytheway.com</a></div>
     <div class="ministry">StayTheWay Ministry — a 501(c)(3) service ministry</div>
@@ -155,7 +176,7 @@
 
 <script>
   // When a YouTube ID is added, replace the placeholder with the iframe
-  var YOUTUBE_ID = "N4EBMedqZzc";
+  var YOUTUBE_ID = "U9S8l8osTDs";
   if (YOUTUBE_ID) {
     document.getElementById("video-wrap").innerHTML =
       '<iframe src="https://www.youtube.com/embed/' + YOUTUBE_ID + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>';

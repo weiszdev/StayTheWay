@@ -67,6 +67,15 @@
   footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
   footer .ministry { margin-top: 0.3rem; }
 
+  .week-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(20,120,240,0.3); }
+  .week-nav a { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--sky, #28A0F0); text-decoration: none; font-weight: 700; font-size: 0.9rem; padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid rgba(20,120,240,0.3); transition: background 0.15s, border-color 0.15s; }
+  .week-nav a:hover { background: rgba(20,120,240,0.15); border-color: #1478F0; }
+  .week-nav .nav-label { font-size: 0.75rem; color: #DCDCDC; opacity: 0.7; display: block; }
+  .week-nav .nav-title { display: block; }
+  .week-nav .prev { text-align: left; }
+  .week-nav .next { text-align: right; margin-left: auto; }
+  .week-nav .series-home { text-align: center; font-size: 0.8rem; }
+
   .video-section { margin: 1.5rem 0; }
   .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
     border-radius: 12px; border: 2px solid rgba(20,120,240,0.35); }
@@ -141,6 +150,18 @@
       <div class="card-title">Kids Activity Page</div>
       <div class="card-desc">Color the 7 pillars, trace John 10:27 with your finger, and draw a picture of your prayer!</div>
       <span class="card-tag kids">Kids</span>
+    </a>
+  </div>
+
+  <div class="week-nav">
+    <a href="/teachings/7-pillars-man/" class="prev">
+      <span class="nav-label">&larr; Week 1</span>
+      <span class="nav-title">Faithful Man</span>
+    </a>
+    <a href="/teachings/walking-by-the-spirit/" class="series-home">All 8 Weeks</a>
+    <a href="/teachings/7-women-god-met/" class="next">
+      <span class="nav-label">Week 3 &rarr;</span>
+      <span class="nav-title">7 Wives</span>
     </a>
   </div>
 
