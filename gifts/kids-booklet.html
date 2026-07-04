@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>God's Gifts &amp; Me — Kids' Booklet — StayTheWay</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#2d2a26; --soft:#6b655c; --paper:#fffdf8;
+  --c1:#e05c5c; --c2:#e8963a; --c3:#3d9970; --c4:#3b82c4; --c5:#8e6cc0; --c6:#d4589a;
+}
+body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:#dedbd3;color:var(--ink);line-height:1.45}
+h1,h2,h3{font-family:'Chalkboard SE','Comic Sans MS','Comic Neue',cursive;line-height:1.2}
+
+/* ===== TOOLBAR (screen only) ===== */
+.toolbar{position:sticky;top:0;z-index:50;background:#2d2a26;color:#fff;padding:12px 18px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.toolbar .tb-title{font-weight:700;font-size:1rem}
+.toolbar .tb-sub{font-size:.75rem;color:#c9c4bb}
+.btn-print{background:#e8963a;color:#2d2a26;border:none;font-weight:800;font-size:1rem;padding:10px 22px;border-radius:10px;cursor:pointer;font-family:inherit}
+.btn-print:hover{background:#f5a94e}
+.howto{background:#fff8ec;border-bottom:3px solid #e8963a;padding:14px 18px;font-size:.85rem;max-width:100%;}
+.howto b{color:#a05c10}
+.howto ol{margin:6px 0 0 22px}
+
+/* ===== REVIEW VIEW (screen) ===== */
+#review{display:flex;flex-direction:column;align-items:center;gap:26px;padding:30px 10px 60px}
+.pg-wrap{text-align:center}
+.pg-label{font-size:.72rem;color:#78716a;margin-bottom:6px;letter-spacing:.05em;text-transform:uppercase}
+
+/* ===== PAGE (5.5in x 8.5in half-letter) ===== */
+.pg{width:5.5in;height:8.5in;background:var(--paper);box-shadow:0 3px 14px rgba(0,0,0,.18);padding:.42in .4in;overflow:hidden;position:relative;text-align:left;display:flex;flex-direction:column}
+@media(max-width:560px){.pg-wrap{transform:scale(.62);transform-origin:top center;margin-bottom:-3.1in}}
+
+/* ---- gift page pieces ---- */
+.gift-frame{border:3px dashed var(--ac,#3b82c4);border-radius:18px;padding:.22in .24in;height:100%;display:flex;flex-direction:column}
+.g-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.g-emoji{font-size:2.1rem;line-height:1}
+.g-num{font-size:.62rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ac);background:color-mix(in srgb,var(--ac) 12%,white);padding:3px 9px;border-radius:20px}
+.g-name{font-size:1.32rem;color:var(--ac)}
+.g-kid{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:2px;font-family:'Chalkboard SE','Comic Sans MS',cursive}
+.g-ref{font-size:.68rem;color:var(--soft);font-style:italic;margin-bottom:10px}
+.g-sec{margin-bottom:9px}
+.g-h{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ac);margin-bottom:2px}
+.g-sec p{font-size:.83rem;line-height:1.42}
+.g-talk{margin-top:auto;background:color-mix(in srgb,var(--ac) 9%,white);border-radius:12px;padding:9px 12px}
+.g-talk .g-h{margin-bottom:1px}
+.g-talk p{font-size:.8rem;font-style:italic;line-height:1.4}
+.flag{font-size:.62rem;color:#a05c10;background:#fdf0d9;border-radius:8px;padding:2px 8px;display:inline-block;margin-top:6px}
+
+/* ---- cover / info pages ---- */
+.pg.cover{background:linear-gradient(160deg,#fdf6e8 0%,#f7e8cf 55%,#f3ddba 100%);align-items:center;justify-content:center;text-align:center}
+.cover .big-emoji{font-size:3.6rem;margin-bottom:14px}
+.cover h1{font-size:2.05rem;color:#8a4f12;margin-bottom:10px}
+.cover .sub{font-size:.95rem;color:#6b5027;max-width:3.9in;margin:0 auto 26px}
+.cover .verse{font-size:.82rem;font-style:italic;color:#7a5c2e;max-width:3.7in;margin:0 auto 4px}
+.cover .vref{font-size:.7rem;font-weight:700;color:#a06a1f;letter-spacing:.05em}
+.cover .brand{position:absolute;bottom:.45in;left:0;right:0;font-size:.68rem;color:#8a6a35;font-weight:600;letter-spacing:.04em}
+.info h2{font-size:1.35rem;color:#3b82c4;margin-bottom:10px}
+.info p{font-size:.85rem;margin-bottom:9px}
+.info ul{margin:0 0 9px 18px;font-size:.85rem}
+.info li{margin-bottom:5px}
+.info .tip{background:#eef4fb;border-radius:12px;padding:10px 12px;font-size:.8rem;font-style:italic;margin-top:auto}
+.pg.back{background:linear-gradient(160deg,#fdf6e8,#f3ddba);text-align:center;align-items:center}
+.back h2{font-size:1.5rem;color:#8a4f12;margin:24px 0 8px}
+.back p{font-size:.85rem;color:#6b5027;max-width:3.9in}
+.back .lines{width:3.6in;margin:16px auto}
+.back .line{border-bottom:2px dotted #b08d54;height:.42in}
+.back .verse{font-style:italic;font-size:.8rem;margin-top:20px}
+.back .brand{position:absolute;bottom:.45in;left:0;right:0;font-size:.7rem;color:#8a6a35;font-weight:600}
+
+/* ===== PRINT: booklet imposition on 11x8.5 landscape sheets ===== */
+#printArea{display:none}
+@media print{
+  body{background:#fff}
+  .toolbar,.howto,#review{display:none!important}
+  #printArea{display:block}
+  @page{size:11in 8.5in;margin:0}
+  .sheet{width:11in;height:8.5in;display:flex;page-break-after:always;overflow:hidden}
+  .sheet .pg{box-shadow:none;flex:0 0 5.5in}
+  .pg{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <div class="tb-title">God's Gifts &amp; Me — Kids' Booklet (32 pages)</div>
+    <div class="tb-sub">Scroll to review every page below, then print.</div>
+  </div>
+  <button class="btn-print" onclick="window.print()">🖨️ Print Booklet</button>
+</div>
+<div class="howto">
+  <b>How to print as a fold-in-half booklet:</b>
+  <ol>
+    <li>Click <b>Print Booklet</b> (pages are automatically arranged in booklet order, 2 per side).</li>
+    <li>Paper: <b>Letter</b>, orientation <b>Landscape</b>, margins <b>None/Default</b>, scale <b>100%</b>, and turn <b>ON</b> "Background graphics".</li>
+    <li>Print <b>double-sided</b>, flip on <b>SHORT edge</b>. (No duplex printer? Print odd sheets, re-feed, print even.)</li>
+    <li>Stack the 8 sheets in order, fold the whole stack in half, staple the fold. Done — a 32-page booklet!</li>
+  </ol>
+</div>
+
+<div id="review">
+<!-- ============ PAGE 1 : COVER ============ -->
+<div class="pg-wrap"><div class="pg-label">Page 1 · Front Cover</div>
+<div class="pg cover" data-pg="1">
+  <div class="big-emoji">🎁</div>
+  <h1>God's Gifts &amp; Me</h1>
+  <p class="sub">A treasure hunt through the 28 spiritual gifts — for kids and the grown-ups who love them</p>
+  <p class="verse">"God has given each of you a gift. Use it to serve one another."</p>
+  <p class="vref">1 PETER 4:10</p>
+  <div class="brand">STAYTHEWAY MINISTRY · staytheway.com/gifts</div>
+</div></div>
+
+<!-- ============ PAGE 2 : FOR GROWN-UPS ============ -->
+<div class="pg-wrap"><div class="pg-label">Page 2 · A Note for Grown-Ups</div>
+<div class="pg info" data-pg="2">
+  <h2>👋 A Note for Grown-Ups</h2>
+  <p>This little booklet walks through the 28 spiritual gifts found in Scripture — one gift per page, in words a 5–10 year old can grab onto.</p>
+  <p><b>How to use it:</b></p>
+  <ul>
+    <li><b>Go slow.</b> One gift a night (or a week) is plenty. It's a treasure hunt, not a test.</li>
+    <li><b>Read together.</b> Each page has what the gift is, a Bible story, an everyday kid example, and a "Talk together" question.</li>
+    <li><b>Watch for sparkle.</b> When your child lights up — "That's me!" — circle that page number on the back cover.</li>
+    <li><b>Pages marked ✦</b> touch on gifts Christians understand in different ways, or that need a gentle grown-up touch. You know your child best — guide the conversation your way.</li>
+  </ul>
+  <p class="tip">Every gift comes from the same giver, and none is for keeping — every one is for sharing. There are no wrong answers here.</p>
+</div></div>
+
+<!-- ============ PAGE 3 : HEY KIDS ============ -->
+<div class="pg-wrap"><div class="pg-label">Page 3 · What Is a Spiritual Gift?</div>
+<div class="pg info" data-pg="3">
+  <h2>🎈 Hey Kids! What's a Spiritual Gift?</h2>
+  <p>When you love Jesus, God's Holy Spirit gives you a <b>special ability</b> — a gift! Not the kind wrapped in paper. A gift that lives <b>inside you</b>.</p>
+  <p>Here's the secret about God's gifts:</p>
+  <ul>
+    <li>🎁 They come from God — you don't have to earn them.</li>
+    <li>🤝 They're for <b>helping other people</b>, not just for you.</li>
+    <li>🧩 Everybody gets different ones — that's why we need each other, like puzzle pieces!</li>
+  </ul>
+  <p>In this booklet you'll meet <b>28 gifts</b>. As you read, ask yourself:</p>
+  <p style="text-align:center;font-weight:800;font-size:1rem">"Does this one feel like ME?" 🌟</p>
+  <p class="tip">The Bible says: "There are different kinds of gifts, but the same Spirit gives them all." — 1 Corinthians 12:4</p>
+</div></div>
+
+<!-- ============ GIFT PAGES 4–31 ============ -->
+<div class="pg-wrap"><div class="pg-label">Page 4 · Gift 1</div>
+<div class="pg" data-pg="4"><div class="gift-frame" style="--ac:var(--c1)">
+  <div class="g-top"><span class="g-emoji">📣</span><span class="g-num">Gift 1 of 28</span></div>
+  <h3 class="g-name">Prophecy</h3>
+  <div class="g-kid">The Truth-Teller Gift</div>
+  <div class="g-ref">Romans 12:6</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>God helps some people hear what He wants to say — and say it out loud, bravely, even when it's hard.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Jonah told the people of Nineveh God's message, and the whole city turned back to God! (Jonah 3)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Kindly telling your friends, "That's not fair, and God wants us to be fair" — even when it's not the popular thing to say.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Is it ever hard to say what's true? When?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 5 · Gift 2</div>
+<div class="pg" data-pg="5"><div class="gift-frame" style="--ac:var(--c2)">
+  <div class="g-top"><span class="g-emoji">🧹</span><span class="g-num">Gift 2 of 28</span></div>
+  <h3 class="g-name">Serving</h3>
+  <div class="g-kid">The Happy Helper Gift</div>
+  <div class="g-ref">Romans 12:7 · also called "Ministry"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Some people spot jobs that need doing — and just do them! No one has to ask, and they don't need a prize.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Dorcas sewed coats and clothes for people who needed them, and everyone loved her for it. (Acts 9:39)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Clearing the table before anyone asks, or stacking chairs at church while others are still talking.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>What's one job our family needs done that you could surprise-do this week?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 6 · Gift 3</div>
+<div class="pg" data-pg="6"><div class="gift-frame" style="--ac:var(--c3)">
+  <div class="g-top"><span class="g-emoji">📖</span><span class="g-num">Gift 3 of 28</span></div>
+  <h3 class="g-name">Teaching</h3>
+  <div class="g-kid">The Explainer Gift</div>
+  <div class="g-ref">1 Corinthians 12:28</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Understanding God's Word and explaining it so clearly that others go, "Ohhh, NOW I get it!"</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Ezra read God's book out loud to everyone and helped them understand what it meant. (Nehemiah 8:8)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Helping your little brother understand a Bible story by drawing pictures of it, or showing a friend how to find books in the Bible.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Teach me something you know! What makes a teacher easy to understand?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 7 · Gift 4</div>
+<div class="pg" data-pg="7"><div class="gift-frame" style="--ac:var(--c4)">
+  <div class="g-top"><span class="g-emoji">🎉</span><span class="g-num">Gift 4 of 28</span></div>
+  <h3 class="g-name">Encouragement</h3>
+  <div class="g-kid">The Cheerleader Gift</div>
+  <div class="g-ref">Romans 12:8 · also called "Exhortation"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Noticing when someone feels down and knowing just what to say to help them keep going.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Barnabas's name means "Son of Encouragement." He cheered for new believers when everyone else was scared of them. (Acts 4:36)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Your sister falls off her bike and you sit beside her: "You almost had it! Let's try again together."</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Who cheered you up this week? Who could YOU cheer up tomorrow?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 8 · Gift 5</div>
+<div class="pg" data-pg="8"><div class="gift-frame" style="--ac:var(--c5)">
+  <div class="g-top"><span class="g-emoji">🎁</span><span class="g-num">Gift 5 of 28</span></div>
+  <h3 class="g-name">Giving</h3>
+  <div class="g-kid">The Cheerful Sharer Gift</div>
+  <div class="g-ref">2 Corinthians 9:7</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>A happy heart that loves to share money, toys, and time to help God's work and people in need.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>A poor widow gave her last two little coins, and Jesus said her gift was the greatest of all. (Mark 12:42)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Putting your own allowance in the offering, or giving away a toy that's still really nice — not just the broken ones.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>What could our family give together this month?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 9 · Gift 6</div>
+<div class="pg" data-pg="9"><div class="gift-frame" style="--ac:var(--c6)">
+  <div class="g-top"><span class="g-emoji">🧭</span><span class="g-num">Gift 6 of 28</span></div>
+  <h3 class="g-name">Leadership</h3>
+  <div class="g-kid">The Point-the-Way Gift</div>
+  <div class="g-ref">1 Timothy 5:17</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Helping a group know where to go and what to do — and going first, like a good shepherd with a flashlight.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Nehemiah got a whole city working together, and they rebuilt a giant wall in just 52 days! (Nehemiah 6:15)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>When the game gets confusing, you help everyone know their job so it's fun again — without being bossy.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Jesus said leaders serve first. Who is a leader you love following? Why?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 10 · Gift 7</div>
+<div class="pg" data-pg="10"><div class="gift-frame" style="--ac:var(--c1)">
+  <div class="g-top"><span class="g-emoji">💗</span><span class="g-num">Gift 7 of 28</span></div>
+  <h3 class="g-name">Mercy</h3>
+  <div class="g-kid">The Kind-Heart Gift</div>
+  <div class="g-ref">Romans 12:8</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Feeling sad WITH people who are hurting — and doing something kind to help them feel loved.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>The Good Samaritan stopped for a hurt stranger when everyone else walked right past. (Luke 10:33)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Sitting with the new kid who's eating lunch alone, or making a card for someone who's sick.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Who might feel left out at your school? What's one kind thing you could do?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 11 · Gift 8</div>
+<div class="pg" data-pg="11"><div class="gift-frame" style="--ac:var(--c2)">
+  <div class="g-top"><span class="g-emoji">🦉</span><span class="g-num">Gift 8 of 28</span></div>
+  <h3 class="g-name">Wisdom</h3>
+  <div class="g-kid">The Good-Choice Gift</div>
+  <div class="g-ref">1 Corinthians 12:8 · "Word of Wisdom"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Knowing the BEST thing to do, God's way — especially when a problem is tricky and confusing.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>God gave King Solomon wisdom to figure out who a baby's real mother was. (1 Kings 3)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Two friends are fighting over the swing — and you think of the taking-turns timer idea that makes everyone happy.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>God promises wisdom to anyone who asks (James 1:5). What tricky problem could we ask Him about?</p></div>
+</div></div></div>
+<div class="pg-wrap"><div class="pg-label">Page 12 · Gift 9</div>
+<div class="pg" data-pg="12"><div class="gift-frame" style="--ac:var(--c3)">
+  <div class="g-top"><span class="g-emoji">💡</span><span class="g-num">Gift 9 of 28</span></div>
+  <h3 class="g-name">Knowledge</h3>
+  <div class="g-kid">The Right-Fact-Right-Time Gift</div>
+  <div class="g-ref">1 Corinthians 12:8 · "Word of Knowledge"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Loving to learn about God — and having God bring just the right truth to mind exactly when someone needs it.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Jesus knew all about the woman at the well without anyone telling Him — and it changed her whole life. (John 4)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Remembering the perfect Bible story or verse right when a friend needs to hear it.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>What's your favorite thing you KNOW about God?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 13 · Gift 10</div>
+<div class="pg" data-pg="13"><div class="gift-frame" style="--ac:var(--c4)">
+  <div class="g-top"><span class="g-emoji">🌱</span><span class="g-num">Gift 10 of 28</span></div>
+  <h3 class="g-name">Faith</h3>
+  <div class="g-kid">The Big-Trust Gift</div>
+  <div class="g-ref">1 Corinthians 12:9</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Trusting that God can do BIG things — even when everyone else says "no way."</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>David faced the giant Goliath with just a sling, because he trusted God more than he feared the giant. (1 Samuel 17)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Praying big prayers and actually expecting God to answer — and reminding your family "God's got this!"</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Let's pray one BIG prayer together right now. What should it be?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 14 · Gift 11</div>
+<div class="pg" data-pg="14"><div class="gift-frame" style="--ac:var(--c5)">
+  <div class="g-top"><span class="g-emoji">🩹</span><span class="g-num">Gift 11 of 28</span></div>
+  <h3 class="g-name">Healing</h3>
+  <div class="g-kid">The Get-Well Prayer Gift</div>
+  <div class="g-ref">1 Corinthians 12:9</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>God uses some people's prayers in a special way to help sick and hurting people get better.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Peter prayed for a man who had never walked — and he jumped up and went leaping and praising God! (Acts 3)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Being the first to say "Can we pray for Grandma?" when she's sick — and remembering to keep praying.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Who can we pray for tonight? (God always hears — and He answers in His way and His time.)</p></div>
+  <span class="flag">✦ Grown-up guide: talk about how God heals in many ways — sometimes doctors, sometimes time, sometimes heaven.</span>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 15 · Gift 12</div>
+<div class="pg" data-pg="15"><div class="gift-frame" style="--ac:var(--c6)">
+  <div class="g-top"><span class="g-emoji">🌊</span><span class="g-num">Gift 12 of 28</span></div>
+  <h3 class="g-name">Miracles</h3>
+  <div class="g-kid">The Wow-God Gift</div>
+  <div class="g-ref">1 Corinthians 12:10</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>God doing things only GOD can do — and using people who trust Him to be part of it.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>God split the Red Sea right down the middle so His people could walk through on dry ground! (Exodus 14)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Noticing and celebrating when God does something amazing — and believing He still does big things today.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>What's the most amazing thing you know God has done?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 16 · Gift 13</div>
+<div class="pg" data-pg="16"><div class="gift-frame" style="--ac:var(--c1)">
+  <div class="g-top"><span class="g-emoji">⚖️</span><span class="g-num">Gift 13 of 28</span></div>
+  <h3 class="g-name">Discernment</h3>
+  <div class="g-kid">The True-or-False Gift</div>
+  <div class="g-ref">1 Corinthians 12:10 · "Discerning of Spirits"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>A feeling deep inside, from God, that helps you tell what's really true and good — and what's fake or wrong.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Paul knew a fortune-teller's power wasn't from God, even though she said nice-sounding words. (Acts 16)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Something about a show, game, or friend's idea feels "off" — and you notice it and tell a grown-up.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>What should we do when something feels wrong inside, even if we can't explain it?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 17 · Gift 14</div>
+<div class="pg" data-pg="17"><div class="gift-frame" style="--ac:var(--c2)">
+  <div class="g-top"><span class="g-emoji">🗣️</span><span class="g-num">Gift 14 of 28</span></div>
+  <h3 class="g-name">Tongues</h3>
+  <div class="g-kid">The Special-Language Gift</div>
+  <div class="g-ref">1 Corinthians 12:10</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>God giving someone special words or languages to praise Him and pray — languages they never learned!</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>At Pentecost, Jesus' friends spoke in languages they didn't know — and visitors from many lands each heard about God in their OWN language! (Acts 2)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Hearing someone worship God in another language and knowing God understands every single one.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Let's learn to say "Jesus loves me" in another language!</p></div>
+  <span class="flag">✦ Grown-up guide: churches understand this gift in different ways — share your family's view.</span>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 18 · Gift 15</div>
+<div class="pg" data-pg="18"><div class="gift-frame" style="--ac:var(--c3)">
+  <div class="g-top"><span class="g-emoji">🧩</span><span class="g-num">Gift 15 of 28</span></div>
+  <h3 class="g-name">Interpretation</h3>
+  <div class="g-kid">The Translator Gift</div>
+  <div class="g-ref">1 Corinthians 12:10 · "Interpretation of Tongues"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Explaining the special words (from Gift 14) so that EVERYONE can understand and be encouraged.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Paul taught that in church, special languages should be explained — so everybody learns, not just a few. (1 Corinthians 14)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Being the kid who kindly explains the game rules to someone who doesn't get it yet, so no one is left out.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Why does it matter that everyone gets to understand?</p></div>
+  <span class="flag">✦ Grown-up guide: pairs with Gift 14 — one conversation can cover both.</span>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 19 · Gift 16</div>
+<div class="pg" data-pg="19"><div class="gift-frame" style="--ac:var(--c4)">
+  <div class="g-top"><span class="g-emoji">🚀</span><span class="g-num">Gift 16 of 28</span></div>
+  <h3 class="g-name">Apostleship</h3>
+  <div class="g-kid">The Sent-Out Starter Gift</div>
+  <div class="g-ref">1 Corinthians 12:28</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Being sent by God to START new things for Him — new churches, new groups, new adventures in new places.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Paul sailed from city to city starting brand-new churches where nobody had ever heard of Jesus. (Acts 13)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Starting a prayer club at school, a welcome crew at church, or being the first to invite neighbors over.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>If you could start something brand-new for God, what would it be?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 20 · Gift 17</div>
+<div class="pg" data-pg="20"><div class="gift-frame" style="--ac:var(--c5)">
+  <div class="g-top"><span class="g-emoji">🤝</span><span class="g-num">Gift 17 of 28</span></div>
+  <h3 class="g-name">Helps</h3>
+  <div class="g-kid">The Teammate Gift</div>
+  <div class="g-ref">1 Corinthians 12:28</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Helping SOMEONE ELSE do their job well — being the teammate who makes another person's work possible.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Four friends carried their friend who couldn't walk all the way to Jesus — even through the ROOF! (Mark 2)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Turning pages for the piano player, handing out papers for your teacher, holding the flashlight for Dad.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Whose helper could you be this week? What do they need?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 21 · Gift 18</div>
+<div class="pg" data-pg="21"><div class="gift-frame" style="--ac:var(--c6)">
+  <div class="g-top"><span class="g-emoji">📋</span><span class="g-num">Gift 18 of 28</span></div>
+  <h3 class="g-name">Organizing</h3>
+  <div class="g-kid">The Planner Gift</div>
+  <div class="g-ref">1 Corinthians 12:28 · "Governments / Administration"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Putting people, plans, and stuff in the right order so everything works — like a captain steering a ship.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Joseph planned seven years ahead and stored up food, saving whole countries from going hungry. (Genesis 41)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Making the chore chart, lining up the steps for the lemonade stand, or packing the perfect backpack.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>What's something at home you could organize so it works better for everyone?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 22 · Gift 19</div>
+<div class="pg" data-pg="22"><div class="gift-frame" style="--ac:var(--c1)">
+  <div class="g-top"><span class="g-emoji">🐟</span><span class="g-num">Gift 19 of 28</span></div>
+  <h3 class="g-name">Evangelism</h3>
+  <div class="g-kid">The Good-News-Teller Gift</div>
+  <div class="g-ref">Ephesians 4:11</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Loving to tell people about Jesus so much that it just bubbles out of you — the best news ever!</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Philip ran up to a traveler's chariot and explained the good news about Jesus — and the man believed that very day. (Acts 8)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Inviting a friend to church, or telling them why you love Jesus in your own words — no big speech needed.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Practice telling the story of Jesus in one minute. Who could you share it with?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 23 · Gift 20</div>
+<div class="pg" data-pg="23"><div class="gift-frame" style="--ac:var(--c2)">
+  <div class="g-top"><span class="g-emoji">🐑</span><span class="g-num">Gift 20 of 28</span></div>
+  <h3 class="g-name">Shepherding</h3>
+  <div class="g-kid">The Look-After-the-Flock Gift</div>
+  <div class="g-ref">Ephesians 4:11 · "Pastoring"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Watching over a group of people the way a shepherd watches sheep — so nobody gets lost or left behind.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Jesus called Himself the Good Shepherd who knows every one of His sheep by name. (John 10)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Making sure the littlest kid isn't left behind in the game, and noticing when a friend hasn't been to church.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Who is in your "flock" — the people you look out for?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 24 · Gift 21</div>
+<div class="pg" data-pg="24"><div class="gift-frame" style="--ac:var(--c3)">
+  <div class="g-top"><span class="g-emoji">🔎</span><span class="g-num">Gift 21 of 28</span></div>
+  <h3 class="g-name">Understanding</h3>
+  <div class="g-kid">The Deep-Thinker Gift</div>
+  <div class="g-ref">Isaiah 11:2</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Really "getting" God's ways deep down — asking great questions and thinking hard about the answers.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>When Jesus was twelve, the teachers in the temple were amazed at His understanding and His answers. (Luke 2:47)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Asking wonderful "why" questions about God at bedtime — and really thinking about what the answers mean.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Ask me ANY question about God. Let's think about it together.</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 25 · Gift 22</div>
+<div class="pg" data-pg="25"><div class="gift-frame" style="--ac:var(--c4)">
+  <div class="g-top"><span class="g-emoji">🔨</span><span class="g-num">Gift 22 of 28</span></div>
+  <h3 class="g-name">Craftsmanship</h3>
+  <div class="g-kid">The Maker Gift</div>
+  <div class="g-ref">Exodus 31:3</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Hands that love to build, draw, and create beautiful things — and using them for God.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>God filled Bezalel with His Spirit and amazing skill to build the beautiful tabernacle — God's special tent. (Exodus 31)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Building, drawing, LEGO, crafts — making things that help people or make them think of God.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Let's MAKE something this week for someone at church. What should it be?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 26 · Gift 23</div>
+<div class="pg" data-pg="26"><div class="gift-frame" style="--ac:var(--c5)">
+  <div class="g-top"><span class="g-emoji">🕯️</span><span class="g-num">Gift 23 of 28</span></div>
+  <h3 class="g-name">Singleness</h3>
+  <div class="g-kid">The All-In-for-God Gift</div>
+  <div class="g-ref">1 Corinthians 7:7 · "Celibacy"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Some grown-ups stay unmarried on purpose — happily! — so they have extra time and a whole heart to serve God.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Paul stayed single, so he could sail anywhere, anytime, to tell people about Jesus. (1 Corinthians 7)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>For kids: being happy spending time with just you and Jesus — you don't always need a crowd to feel full.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Married or single, everyone can love God with their WHOLE heart. Who do we know who serves God single?</p></div>
+  <span class="flag">✦ Grown-up guide: a grown-up gift — frame it simply as "extra time to serve God."</span>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 27 · Gift 24</div>
+<div class="pg" data-pg="27"><div class="gift-frame" style="--ac:var(--c6)">
+  <div class="g-top"><span class="g-emoji">🎒</span><span class="g-num">Gift 24 of 28</span></div>
+  <h3 class="g-name">Living Simply</h3>
+  <div class="g-kid">The Less-Stuff-More-Love Gift</div>
+  <div class="g-ref">1 Corinthians 13:3 · "Voluntary Poverty"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Choosing to keep less stuff for yourself — happily — so you can give more away to people who need it.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>The first church shared everything they had, so that NO ONE among them was ever in need. (Acts 2:44–45)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Choosing the missions jar over more toys, or happily giving things away because people matter more than stuff.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Is there something of ours we could give away together this week?</p></div>
+  <span class="flag">✦ Grown-up guide: the point isn't being poor — it's loving people more than possessions.</span>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 28 · Gift 25</div>
+<div class="pg" data-pg="28"><div class="gift-frame" style="--ac:var(--c1)">
+  <div class="g-top"><span class="g-emoji">🛡️</span><span class="g-num">Gift 25 of 28</span></div>
+  <h3 class="g-name">Brave Faith</h3>
+  <div class="g-kid">The Courage-No-Matter-What Gift</div>
+  <div class="g-ref">1 Corinthians 13:3 · "Martyrdom"</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Courage to keep loving Jesus even when it costs a lot — special bravery God gives when it's hardest.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Shadrach, Meshach, and Abednego wouldn't bow to a fake god, even facing a fiery furnace — and God was WITH them in the fire. (Daniel 3)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Staying true to Jesus even if kids laugh — like praying before lunch anyway, or saying "I believe in God" out loud.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>When is it hardest to be brave about your faith? Let's pray for kids around the world who need this courage.</p></div>
+  <span class="flag">✦ Grown-up guide: keep it gentle — focus on courage, and on God's presence in hard places.</span>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 29 · Gift 26</div>
+<div class="pg" data-pg="29"><div class="gift-frame" style="--ac:var(--c2)">
+  <div class="g-top"><span class="g-emoji">🏠</span><span class="g-num">Gift 26 of 28</span></div>
+  <h3 class="g-name">Hospitality</h3>
+  <div class="g-kid">The Welcome-Home Gift</div>
+  <div class="g-ref">1 Peter 4:9</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Making people feel welcome and at home — especially new people and strangers.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>A woman in Shunem built a special little room so the prophet Elisha would always have a place to stay. (2 Kings 4)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Showing the new kid where everything is, or helping set the table and welcoming guests at the door.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Who could our family welcome over soon? What would make them feel at home?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 30 · Gift 27</div>
+<div class="pg" data-pg="30"><div class="gift-frame" style="--ac:var(--c3)">
+  <div class="g-top"><span class="g-emoji">✈️</span><span class="g-num">Gift 27 of 28</span></div>
+  <h3 class="g-name">Missionary</h3>
+  <div class="g-kid">The Go-Anywhere Gift</div>
+  <div class="g-ref">Romans 10:15</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Carrying Jesus' love to people far away, or very different from you — and loving their world like your own.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Paul and Silas traveled to faraway lands — and even sang about Jesus in a jail cell at midnight! (Acts 16)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Praying for kids in other countries, learning hello in new languages, making friends with kids different from you.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Let's pick one country to pray for this month. Which one?</p></div>
+</div></div></div>
+
+<div class="pg-wrap"><div class="pg-label">Page 31 · Gift 28</div>
+<div class="pg" data-pg="31"><div class="gift-frame" style="--ac:var(--c4)">
+  <div class="g-top"><span class="g-emoji">🙏</span><span class="g-num">Gift 28 of 28</span></div>
+  <h3 class="g-name">Intercession</h3>
+  <div class="g-kid">The Prayer-Warrior Gift</div>
+  <div class="g-ref">1 Timothy 2:1</div>
+  <div class="g-sec"><div class="g-h">What it is</div><p>Praying for OTHER people a lot — and not giving up, even when the answer takes a long time.</p></div>
+  <div class="g-sec"><div class="g-h">📖 In the Bible</div><p>Moses prayed on the hilltop with his arms raised — and when he got tired, friends held his arms up! (Exodus 17)</p></div>
+  <div class="g-sec"><div class="g-h">🏠 It might look like…</div><p>Keeping a prayer list you really pray through every night — friends, family, and even people who are unkind.</p></div>
+  <div class="g-talk"><div class="g-h">💬 Talk together</div><p>Let's start a family prayer list tonight. Who goes on it first?</p></div>
+</div></div></div>
+
+<!-- ============ PAGE 32 : BACK COVER ============ -->
+<div class="pg-wrap"><div class="pg-label">Page 32 · Back Cover</div>
+<div class="pg back" data-pg="32">
+  <h2>🌟 My Treasure Map</h2>
+  <p>You met all 28 gifts! Which ones felt the most like <b>YOU</b>?</p>
+  <p>Write (or draw!) up to three:</p>
+  <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+  <p>Now ask someone who loves you: <i>"Which gifts do YOU see in me?"</i></p>
+  <p class="verse">"There are different kinds of gifts, but the same Spirit gives them all… so we can help each other." — 1 Corinthians 12:4, 7</p>
+  <div class="brand">STAYTHEWAY MINISTRY · staytheway.com/gifts<br>Keep exploring with the Gifts Journey &amp; Worksheet online</div>
+</div></div>
+</div>
+
+<div id="printArea"></div>
+
+<script>
+// Build booklet imposition: 32 pages -> 8 landscape sheets, 2-up, saddle-stitch order.
+window.addEventListener('DOMContentLoaded', () => {
+  const pages = [...document.querySelectorAll('#review .pg')];
+  const N = pages.length;
+  const area = document.getElementById('printArea');
+  const get = n => pages[n-1].cloneNode(true);
+  for (let k = 0; k < N/4; k++) {
+    const front = document.createElement('div'); front.className = 'sheet';
+    front.append(get(N - 2*k), get(1 + 2*k));           // front: [N-2k | 1+2k]
+    const back = document.createElement('div'); back.className = 'sheet';
+    back.append(get(2 + 2*k), get(N - 1 - 2*k));        // back:  [2+2k | N-1-2k]
+    area.append(front, back);
+  }
+});
+</script>
+</body>
+</html>
