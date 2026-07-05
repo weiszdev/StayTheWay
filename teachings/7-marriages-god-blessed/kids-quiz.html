@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>7 Marriages God Blessed — Kids Quiz — StayTheWay</title>
+<meta name="description" content="A fun swipe quiz for kids about 7 Marriages God Blessed!" />
+<meta property="og:type" content="website">
+<meta property="og:title" content="7 Marriages God Blessed — Kids Quiz — StayTheWay Kids">
+<meta property="og:description" content="5 fun true-or-false questions about marriages in the Bible. Swipe or tap to answer!">
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<meta property="og:url" content="https://staytheway.com/teachings/7-marriages-god-blessed/kids-quiz.html">
+<meta property="og:site_name" content="StayTheWay">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root {
+    --navy: #000014; --navy-2: #06112B; --blue: #D4A847; --sky: #C97B7B;
+    --chrome: #DCDCDC; --white: #FFFFFF; --yellow: #FFD93D;
+    --green: #3AC47B; --red: #E0516C; --purple: #B07CD8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--navy); color: var(--chrome);
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; user-select: none;
+    overflow-x: hidden; min-height: 100vh;
+  }
+
+  .screen { display: none; min-height: 100vh; padding: 1.5rem 1rem; flex-direction: column; align-items: center; justify-content: center; }
+  .screen.active { display: flex; }
+
+  /* HOME SCREEN */
+  #home { text-align: center; background: linear-gradient(180deg, #000014 0%, #0a1a3e 100%); }
+  .home-kicker { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--yellow); margin-bottom: 0.3rem; }
+  .home-emoji { font-size: 4rem; margin-bottom: 0.5rem; }
+  .home-title { font-size: clamp(2rem, 8vw, 3rem); font-weight: 900; color: var(--white); margin-bottom: 0.3rem; }
+  .home-subtitle { font-size: clamp(1rem, 4vw, 1.4rem); color: var(--sky); margin-bottom: 1rem; }
+  .home-instructions { font-size: 0.95rem; color: rgba(255,255,255,0.7); max-width: 360px; line-height: 1.6; margin-bottom: 1.5rem; }
+  .home-instructions span { display: block; margin: 0.3rem 0; }
+  .start-btn {
+    background: var(--yellow); color: var(--navy); border: none;
+    padding: 1rem 3rem; font-size: 1.3rem; font-weight: 900;
+    border-radius: 50px; cursor: pointer; min-height: 60px;
+    transition: transform 0.15s;
+  }
+  .start-btn:active { transform: scale(0.95); }
+
+  /* GAME SCREEN */
+  #game { position: relative; overflow: hidden; }
+  .progress-bar { width: 100%; max-width: 400px; height: 14px; background: var(--navy-2); border-radius: 20px; border: 2px solid var(--blue); margin-bottom: 0.5rem; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--yellow); border-radius: 20px; transition: width 0.4s ease; width: 0%; }
+  .progress-text { color: var(--sky); font-size: 0.85rem; margin-bottom: 1rem; }
+
+  /* CARD */
+  .card-container { position: relative; width: 100%; max-width: 380px; height: 320px; perspective: 1000px; }
+  .quiz-card {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #0d1b3e, #162450);
+    border: 3px solid var(--blue); border-radius: 20px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 2rem 1.5rem; text-align: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    touch-action: none;
+  }
+  .quiz-card.swiping { transition: none; }
+  .quiz-card .card-emoji { font-size: 3.5rem; margin-bottom: 1rem; }
+  .quiz-card .card-question { font-size: clamp(1.1rem, 4.5vw, 1.4rem); font-weight: 700; color: var(--white); line-height: 1.4; font-family: Georgia, serif; }
+  .quiz-card .card-hint { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 1rem; }
+
+  /* Swipe indicators */
+  .swipe-indicator {
+    position: absolute; top: 20px; padding: 0.5rem 1rem; border-radius: 8px;
+    font-weight: 900; font-size: 1.2rem; opacity: 0; transition: opacity 0.15s;
+    pointer-events: none;
+  }
+  .swipe-indicator.left { left: 20px; background: var(--red); color: var(--white); }
+  .swipe-indicator.right { right: 20px; background: var(--green); color: var(--white); }
+  .swipe-indicator.up { top: 10px; left: 50%; transform: translateX(-50%); background: var(--purple); color: var(--white); }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 0.8rem; margin-top: 1.5rem; width: 100%; max-width: 380px; justify-content: center; flex-wrap: wrap; }
+  .action-btn {
+    border: none; padding: 0.9rem 1.4rem; font-size: 1.1rem; font-weight: 900;
+    border-radius: 14px; cursor: pointer; min-height: 60px; min-width: 100px;
+    transition: transform 0.15s; font-family: inherit;
+  }
+  .action-btn:active { transform: scale(0.92); }
+  .btn-nope { background: var(--red); color: var(--white); flex: 1; }
+  .btn-yep { background: var(--green); color: var(--white); flex: 1; }
+  .btn-parent { background: var(--purple); color: var(--white); flex-basis: 100%; order: -1; }
+
+  /* FEEDBACK OVERLAY */
+  .feedback-overlay {
+    position: fixed; inset: 0; display: none; flex-direction: column;
+    align-items: center; justify-content: center; z-index: 100;
+    background: rgba(0,0,20,0.92);
+  }
+  .feedback-overlay.active { display: flex; }
+  .feedback-emoji { font-size: 5rem; animation: bounceIn 0.4s ease; }
+  .feedback-msg { font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 900; margin: 0.5rem 0; text-align: center; animation: bounceIn 0.4s ease 0.1s both; }
+  .feedback-detail { font-size: 1rem; color: rgba(255,255,255,0.7); text-align: center; max-width: 300px; line-height: 1.5; margin-top: 0.5rem; animation: fadeIn 0.4s ease 0.2s both; }
+  .feedback-continue {
+    margin-top: 1.5rem; background: var(--yellow); color: var(--navy);
+    border: none; padding: 0.8rem 2.5rem; font-size: 1.1rem; font-weight: 900;
+    border-radius: 50px; cursor: pointer; min-height: 60px;
+    animation: fadeIn 0.4s ease 0.3s both;
+  }
+  .feedback-correct .feedback-msg { color: var(--green); }
+  .feedback-wrong .feedback-msg { color: var(--red); }
+  .feedback-skip .feedback-msg { color: var(--purple); }
+
+  /* CONFETTI */
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 101; overflow: hidden; }
+  .confetti-piece {
+    position: absolute; top: -20px;
+    font-size: 1.5rem;
+    animation: confettiFall 1.5s ease-out forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
+  }
+
+  /* SKUNK ANIMATION */
+  .skunk-float {
+    position: fixed; font-size: 4rem; z-index: 101; pointer-events: none;
+    animation: skunkWobble 1.5s ease-out forwards;
+  }
+  @keyframes skunkWobble {
+    0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+    30% { transform: scale(1.3) rotate(10deg); opacity: 1; }
+    50% { transform: scale(1) rotate(-5deg); }
+    70% { transform: scale(1.1) rotate(5deg); }
+    100% { transform: scale(0.8) rotate(0deg); opacity: 0; }
+  }
+
+  /* SCORE SCREEN */
+  #score { text-align: center; background: linear-gradient(180deg, #000014 0%, #0a1a3e 100%); }
+  .score-emoji { font-size: 5rem; margin-bottom: 0.5rem; animation: bounceIn 0.5s ease; }
+  .score-title { font-size: clamp(1.8rem, 7vw, 2.5rem); font-weight: 900; color: var(--yellow); margin-bottom: 0.5rem; }
+  .score-number { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: 900; color: var(--white); margin: 0.5rem 0; }
+  .score-message { font-size: 1.1rem; color: var(--chrome); max-width: 320px; line-height: 1.5; font-family: Georgia, serif; font-style: italic; margin: 1rem 0; }
+  .replay-btn {
+    background: var(--yellow); color: var(--navy); border: none;
+    padding: 1rem 3rem; font-size: 1.2rem; font-weight: 900;
+    border-radius: 50px; cursor: pointer; min-height: 60px;
+    margin-bottom: 0.8rem;
+  }
+  .home-link { color: var(--sky); text-decoration: none; font-size: 0.9rem; }
+
+  /* ANIMATIONS */
+  @keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  footer { margin-top: auto; padding-top: 1.5rem; text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+  footer a { color: var(--sky); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- HOME SCREEN -->
+<div id="home" class="screen active">
+  <div class="home-kicker">STAYTHEWAY KIDS</div>
+  <div class="home-emoji">&#128141;</div>
+  <h1 class="home-title">Marriage Quiz!</h1>
+  <p class="home-subtitle">Swipe to Answer!</p>
+  <div class="home-instructions">
+    <span>&#128073; Swipe RIGHT or tap <strong>Yep!</strong> = True</span>
+    <span>&#128072; Swipe LEFT or tap <strong>Nope</strong> = False</span>
+    <span>&#128070; Swipe UP or tap <strong>Ask My Parent</strong> = Get a hint!</span>
+  </div>
+  <button class="start-btn" onclick="startGame()">LET'S GO!</button>
+  <footer><a href="/teachings/7-marriages-god-blessed/">Back to Teaching</a> &middot; <a href="/">StayTheWay</a></footer>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="game" class="screen">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">Question 1 of 5</div>
+
+  <div class="card-container" id="cardContainer">
+    <div class="quiz-card" id="quizCard">
+      <div class="swipe-indicator left">NOPE</div>
+      <div class="swipe-indicator right">YEP!</div>
+      <div class="swipe-indicator up">HINT</div>
+      <div class="card-emoji" id="cardEmoji"></div>
+      <div class="card-question" id="cardQuestion"></div>
+      <div class="card-hint">Swipe or tap below!</div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="action-btn btn-parent" onclick="handleAnswer('skip')">&#129300; Ask My Parent</button>
+    <button class="action-btn btn-nope" onclick="handleAnswer('false')">&#128078; Nope</button>
+    <button class="action-btn btn-yep" onclick="handleAnswer('true')">&#128077; Yep!</button>
+  </div>
+  <div style="display:flex;gap:12px;justify-content:center;margin-top:12px;">
+    <button onclick="startGame()" style="background:none;border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:6px 16px;color:rgba(255,255,255,0.4);font-size:0.8rem;font-weight:600;cursor:pointer;">Start Over</button>
+    <a href="/teachings/7-marriages-god-blessed/" style="background:none;border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:6px 16px;color:rgba(255,255,255,0.4);font-size:0.8rem;font-weight:600;cursor:pointer;text-decoration:none;">Home</a>
+  </div>
+</div>
+
+<!-- FEEDBACK OVERLAY -->
+<div class="feedback-overlay" id="feedback">
+  <div class="feedback-emoji" id="feedbackEmoji"></div>
+  <div class="feedback-msg" id="feedbackMsg"></div>
+  <div class="feedback-detail" id="feedbackDetail"></div>
+  <button class="feedback-continue" id="feedbackBtn" onclick="nextQuestion()">Next &rarr;</button>
+</div>
+
+<!-- CONFETTI CONTAINER -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- SCORE SCREEN -->
+<div id="score" class="screen">
+  <div class="score-emoji" id="scoreEmoji"></div>
+  <h1 class="score-title" id="scoreTitle"></h1>
+  <div class="score-number" id="scoreNumber"></div>
+  <p class="score-message" id="scoreMessage"></p>
+  <button class="replay-btn" onclick="startGame()">Start Over</button>
+  <a class="home-link" href="/teachings/7-marriages-god-blessed/">Home</a>
+</div>
+
+<script>
+var TOTAL = 5;
+var questions = [
+  {
+    emoji: "\u{1F476}", q: "Abraham and Sarah had to wait a long time for God to give them a baby.",
+    answer: true,
+    feedback: "Yes! They waited until they were very old \u2014 but God always keeps His promises!",
+    _skipped: false, _skipCount: 0
+  },
+  {
+    emoji: "\u{1F33E}", q: "Boaz was mean to Ruth when she came to his field.",
+    answer: false,
+    feedback: "No way! Boaz was kind and protected Ruth. He told his workers to leave extra grain for her!",
+    _skipped: false, _skipCount: 0
+  },
+  {
+    emoji: "\u{1F64F}", q: "Hannah was so happy she cried tears of joy at the temple.",
+    answer: false,
+    feedback: "Actually, Hannah was crying because she was sad \u2014 she really wanted a baby. But God heard her prayers!",
+    _skipped: false, _skipCount: 0
+  },
+  {
+    emoji: "\u{2B50}", q: "Joseph and Mary raised baby Jesus together.",
+    answer: true,
+    feedback: "Yes! God chose them both to take care of His Son. Joseph protected the family, and Mary treasured everything in her heart.",
+    _skipped: false, _skipCount: 0
+  },
+  {
+    emoji: "\u{2764}\uFE0F", q: "Jesus loves the Church the way a husband loves his wife.",
+    answer: true,
+    feedback: "That\u2019s right! The Bible says Jesus loved us so much He gave His whole life for us \u2014 that\u2019s the biggest love ever!",
+    _skipped: false, _skipCount: 0
+  }
+];
+
+var currentQ = 0;
+var score = 0;
+var touchStartX = 0, touchStartY = 0, touchDeltaX = 0, touchDeltaY = 0;
+var isSwiping = false;
+
+var correctMessages = ["AMAZING!", "YOU GOT IT!", "SO SMART!", "AWESOME!", "NAILED IT!", "GOD IS GOOD!"];
+var wrongMessages = ["Pee-yew! That was stinky!", "Skunk alert! Try the next one!", "Oops! That one was a stinker!"];
+var confettiEmojis = ["\u{1F389}", "\u{1F973}", "\u{1F38A}", "\u2728", "\u{1F31F}"];
+var skunkEmojis = ["\u{1F4A8}", "\u{1F9A8}"];
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+function startGame() {
+  currentQ = 0; score = 0;
+  questions.forEach(function(q) { q._skipped = false; q._skipCount = 0; });
+  showScreen('game');
+  loadQuestion();
+}
+
+function loadQuestion() {
+  var q = questions[currentQ];
+  document.getElementById('cardEmoji').textContent = q.emoji;
+  document.getElementById('cardQuestion').textContent = q.q;
+  document.getElementById('progressText').textContent = 'Question ' + (currentQ + 1) + ' of ' + TOTAL;
+  document.getElementById('progressFill').style.width = ((currentQ) / TOTAL * 100) + '%';
+  // Reset card position
+  var card = document.getElementById('quizCard');
+  card.style.transform = '';
+  card.style.opacity = '1';
+  card.querySelectorAll('.swipe-indicator').forEach(function(i) { i.style.opacity = '0'; });
+}
+
+function handleAnswer(ans) {
+  var q = questions[currentQ];
+  var overlay = document.getElementById('feedback');
+  var emojiEl = document.getElementById('feedbackEmoji');
+  var msgEl = document.getElementById('feedbackMsg');
+  var detailEl = document.getElementById('feedbackDetail');
+  var btn = document.getElementById('feedbackBtn');
+
+  overlay.className = 'feedback-overlay active';
+
+  if (ans === 'skip') {
+    q._skipCount++;
+    if (q._skipCount === 1) {
+      // First skip: show hint, let them try again
+      q._skipped = true;
+      overlay.classList.add('feedback-skip');
+      emojiEl.textContent = '\u{1F914}';
+      msgEl.textContent = 'Ask your parent!';
+      detailEl.textContent = 'Hint: The answer is ' + (q.answer ? 'TRUE' : 'FALSE') + '!';
+      btn.textContent = 'Try This One \u2192';
+      btn.onclick = function() { goBackToQuestion(); };
+      return;
+    } else {
+      // Second skip: counts as wrong, move on
+      overlay.classList.add('feedback-wrong');
+      emojiEl.textContent = '\u{1F9A8}';
+      msgEl.textContent = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+      detailEl.textContent = q.feedback;
+      btn.textContent = 'Next \u2192';
+      btn.onclick = function() { nextQuestion(); };
+      spawnSkunk();
+      return;
+    }
+  }
+
+  // Reset continue button for normal flow
+  btn.textContent = 'Next \u2192';
+  btn.onclick = function() { nextQuestion(); };
+
+  var isCorrect = (ans === 'true') === q.answer;
+  if (isCorrect) {
+    score++;
+    overlay.classList.add('feedback-correct');
+    emojiEl.textContent = '\u{1F389}';
+    msgEl.textContent = correctMessages[Math.floor(Math.random() * correctMessages.length)];
+    detailEl.textContent = q.feedback;
+    spawnConfetti();
+  } else {
+    overlay.classList.add('feedback-wrong');
+    emojiEl.textContent = '\u{1F9A8}';
+    msgEl.textContent = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+    detailEl.textContent = q.feedback;
+    spawnSkunk();
+  }
+}
+
+function goBackToQuestion() {
+  document.getElementById('feedback').className = 'feedback-overlay';
+  document.getElementById('confettiContainer').innerHTML = '';
+  loadQuestion();
+}
+
+function nextQuestion() {
+  document.getElementById('feedback').className = 'feedback-overlay';
+  document.getElementById('confettiContainer').innerHTML = '';
+  currentQ++;
+  if (currentQ >= questions.length) {
+    showScore();
+  } else {
+    loadQuestion();
+  }
+}
+
+function showScore() {
+  showScreen('score');
+  document.getElementById('progressFill').style.width = '100%';
+  var emoji, title, message;
+  if (score === TOTAL) {
+    emoji = '\u{1F490}'; title = 'PERFECT SCORE!';
+    message = 'PERFECT! You know all about the marriages God blessed \u2014 and His amazing love!';
+  } else if (score >= 4) {
+    emoji = '\u{1F31F}'; title = 'GREAT JOB!';
+    message = 'GREAT JOB! You really know how much God loves families!';
+  } else if (score >= 3) {
+    emoji = '\u{1F4AA}'; title = 'GOOD TRY!';
+    message = 'GOOD TRY! Ask your parents to read these Bible stories with you tonight!';
+  } else {
+    emoji = '\u{1F4D6}'; title = 'KEEP GOING!';
+    message = 'KEEP GOING! God\u2019s love stories are the best \u2014 try again!';
+  }
+  document.getElementById('scoreEmoji').textContent = emoji;
+  document.getElementById('scoreTitle').textContent = title;
+  document.getElementById('scoreNumber').textContent = score + ' / ' + TOTAL;
+  document.getElementById('scoreMessage').textContent = message;
+  if (score >= 4) spawnConfetti();
+}
+
+/* CONFETTI */
+function spawnConfetti() {
+  var container = document.getElementById('confettiContainer');
+  container.innerHTML = '';
+  for (var i = 0; i < 40; i++) {
+    var piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.animationDelay = (Math.random() * 0.5) + 's';
+    piece.style.animationDuration = (1 + Math.random() * 1) + 's';
+    piece.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+    container.appendChild(piece);
+  }
+  setTimeout(function() { container.innerHTML = ''; }, 2500);
+}
+
+/* SKUNK */
+function spawnSkunk() {
+  for (var i = 0; i < 4; i++) {
+    var el = document.createElement('div');
+    el.className = 'skunk-float';
+    el.textContent = skunkEmojis[Math.floor(Math.random() * skunkEmojis.length)];
+    el.style.left = (15 + Math.random() * 70) + '%';
+    el.style.top = (25 + Math.random() * 40) + '%';
+    el.style.animationDelay = (i * 0.15) + 's';
+    document.body.appendChild(el);
+    setTimeout(function() { el.remove(); }, 2000);
+  }
+}
+
+/* SWIPE DETECTION */
+var card = document.getElementById('quizCard');
+
+card.addEventListener('touchstart', function(e) {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  isSwiping = true;
+  card.classList.add('swiping');
+}, { passive: true });
+
+card.addEventListener('touchmove', function(e) {
+  if (!isSwiping) return;
+  touchDeltaX = e.touches[0].clientX - touchStartX;
+  touchDeltaY = e.touches[0].clientY - touchStartY;
+
+  var rotation = touchDeltaX * 0.1;
+  card.style.transform = 'translateX(' + touchDeltaX + 'px) translateY(' + Math.min(touchDeltaY, 0) + 'px) rotate(' + rotation + 'deg)';
+
+  // Show indicators
+  var leftInd = card.querySelector('.swipe-indicator.left');
+  var rightInd = card.querySelector('.swipe-indicator.right');
+  var upInd = card.querySelector('.swipe-indicator.up');
+
+  leftInd.style.opacity = touchDeltaX < -40 ? '1' : '0';
+  rightInd.style.opacity = touchDeltaX > 40 ? '1' : '0';
+  upInd.style.opacity = touchDeltaY < -40 && Math.abs(touchDeltaX) < 40 ? '1' : '0';
+}, { passive: true });
+
+card.addEventListener('touchend', function() {
+  if (!isSwiping) return;
+  isSwiping = false;
+  card.classList.remove('swiping');
+
+  var threshold = 50;
+  if (touchDeltaX > threshold) {
+    card.style.transform = 'translateX(400px) rotate(30deg)';
+    card.style.opacity = '0';
+    setTimeout(function() { handleAnswer('true'); }, 200);
+  } else if (touchDeltaX < -threshold) {
+    card.style.transform = 'translateX(-400px) rotate(-30deg)';
+    card.style.opacity = '0';
+    setTimeout(function() { handleAnswer('false'); }, 200);
+  } else if (touchDeltaY < -threshold && Math.abs(touchDeltaX) < 60) {
+    card.style.transform = 'translateY(-400px)';
+    card.style.opacity = '0';
+    setTimeout(function() { handleAnswer('skip'); }, 200);
+  } else {
+    card.style.transform = '';
+    card.style.opacity = '1';
+  }
+
+  card.querySelectorAll('.swipe-indicator').forEach(function(i) { i.style.opacity = '0'; });
+  touchDeltaX = 0;
+  touchDeltaY = 0;
+}, { passive: true });
+</script>
+</body>
+</html>
