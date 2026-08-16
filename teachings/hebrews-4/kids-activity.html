@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kids Activity — Hebrews 4</title>
+<meta name="description" content="Color Hebrews 4 scenes, trace the verse, and draw your prayer — a Bible activity page for kids!" />
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kids Activity Page — StayTheWay Kids">
+<meta property="og:description" content="Color Hebrews 4 scenes, trace Hebrews 4:12, and draw your prayer! Interactive Bible activities for kids.">
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<meta property="og:url" content="https://staytheway.com/teachings/hebrews-4/kids-activity.html">
+<meta property="og:site_name" content="StayTheWay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kids Activity Page — StayTheWay Kids">
+<meta name="twitter:description" content="Color Hebrews 4 scenes, trace Hebrews 4:12, and draw your prayer! Interactive Bible activities for kids.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<style>
+  :root {
+    --navy: #000014; --navy-2: #06112B; --blue: #1E9BFF; --sky: #00BFFF;
+    --chrome: #DCDCDC; --white: #FFFFFF;
+    --yellow: #FFD93D; --green: #3AC47B;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width: 580px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header { text-align: center; padding-bottom: 1rem; border-bottom: 3px solid var(--yellow); position: relative; }
+  header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px; background: var(--white); }
+  header .kicker { color: var(--yellow); letter-spacing: 0.3em; font-weight: 900; font-size: 0.75rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white); margin: 0.3rem 0; font-size: clamp(1.5rem, 6vw, 2rem); }
+  header .emoji { font-size: 2rem; margin-top: 0.3rem; }
+
+  .section { background: var(--navy-2); border: 2px solid var(--blue); border-radius: 12px;
+    padding: 1.2rem; margin: 1.25rem 0; }
+  .section h2 { color: var(--yellow); font-size: 1.1rem; margin: 0 0 0.75rem; text-align: center; }
+  .section p { font-size: 0.95rem; line-height: 1.5; margin: 0.5rem 0; text-align: center; }
+
+  /* Color the Story */
+  .words-grid { display: flex; justify-content: center; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
+  .word-box {
+    width: 70px; height: 70px; border: 3px solid var(--chrome); border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s; font-size: 0.7rem; font-weight: 700;
+    text-align: center; padding: 0.2rem; line-height: 1.2; color: var(--white);
+    background: var(--navy);
+  }
+  .word-box .w-icon { font-size: 1.3rem; margin-bottom: 0.15rem; }
+  .word-box:active { transform: scale(0.95); }
+
+  .color-picker { display: flex; justify-content: center; gap: 0.4rem; margin: 0.75rem 0; flex-wrap: wrap; }
+  .color-dot {
+    width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+    border: 3px solid transparent; transition: transform 0.1s;
+  }
+  .color-dot:hover { transform: scale(1.15); }
+  .color-dot.selected { border-color: var(--white); transform: scale(1.15); }
+
+  /* Coloring canvases */
+  .scene-label { color: var(--sky); font-size: 0.85rem; font-weight: 700; text-align: center; margin: 0.75rem 0 0.25rem; }
+  .canvas-wrap { background: var(--white); border-radius: 8px; padding: 0.5rem; margin: 0.4rem 0; position: relative; }
+  canvas { display: block; width: 100%; border-radius: 6px; touch-action: none; }
+  .trace-tools { display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem; }
+  .trace-btn { background: var(--yellow); color: var(--navy); border: none; padding: 0.5rem 1rem;
+    font-weight: 900; font-size: 0.8rem; border-radius: 8px; cursor: pointer; }
+  .trace-btn.erase { background: #E0516C; color: var(--white); }
+  .trace-btn.print-btn { background: var(--green); color: var(--white); }
+
+  .pen-colors { display: flex; justify-content: center; gap: 0.3rem; margin: 0.5rem 0; }
+  .pen-dot { width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; }
+  .pen-dot.selected { border-color: var(--white); }
+
+  /* Verse Trace */
+  .trace-canvas-wrap { background: var(--white); border-radius: 8px; padding: 0.5rem; margin: 0.75rem 0; position: relative; }
+
+  /* Prayer Draw */
+  .prayer-canvas-wrap { background: var(--white); border-radius: 8px; padding: 0.5rem; margin: 0.75rem 0; }
+
+  footer { margin-top: 2rem; text-align: center; font-size: 0.85rem;
+    border-top: 1px solid rgba(255,217,61,0.3); padding-top: 1rem; }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+
+  @media print {
+    body { background: white; color: black; }
+    .wrap { max-width: 100%; }
+    header, footer, .color-picker, .trace-tools, .pen-colors, .toolbar { display: none; }
+    .section { border: 2px solid #ccc; break-inside: avoid; }
+    .word-box { border-color: #999; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY KIDS</div>
+    <h1>Activity Page!</h1>
+    <div class="emoji">&#127912;&#9999;&#65039;&#128214;</div>
+  </header>
+
+  <!-- Activity 1: Color the Story Scenes -->
+  <div class="section">
+    <h2>&#127912; Color the Story!</h2>
+    <p>5 big ideas from Hebrews 4! Pick a color, then tap each box to color it in!</p>
+    <div class="color-picker" id="color-picker"></div>
+    <div class="words-grid" id="words-grid"></div>
+  </div>
+
+  <!-- Activity 2: Coloring Canvases -->
+  <div class="section">
+    <h2>&#127912; Finger-Paint the Scenes!</h2>
+    <p>Use your finger to draw and color each scene!</p>
+
+    <div class="scene-label">1. God&rsquo;s People Resting Under the Stars</div>
+    <div class="canvas-wrap">
+      <canvas id="scene1" width="520" height="260"></canvas>
+    </div>
+
+    <div class="scene-label">2. The Big Open Bible with Light Shining Out</div>
+    <div class="canvas-wrap">
+      <canvas id="scene2" width="520" height="260"></canvas>
+    </div>
+
+    <div class="scene-label">3. The Two-Edged Sword and a Heart</div>
+    <div class="canvas-wrap">
+      <canvas id="scene3" width="520" height="260"></canvas>
+    </div>
+
+    <div class="scene-label">4. Jesus Our High Priest with Arms Open</div>
+    <div class="canvas-wrap">
+      <canvas id="scene4" width="520" height="260"></canvas>
+    </div>
+
+    <div class="scene-label">5. The Throne of Grace &mdash; Come Boldly!</div>
+    <div class="canvas-wrap">
+      <canvas id="scene5" width="520" height="260"></canvas>
+    </div>
+
+    <div class="pen-colors" id="scene-pen-colors"></div>
+    <div class="trace-tools">
+      <button class="trace-btn erase" onclick="clearAllScenes()">ERASE ALL</button>
+    </div>
+  </div>
+
+  <!-- Activity 3: Trace / Write the Verse -->
+  <div class="section">
+    <h2>&#9999;&#65039; Trace the Verse!</h2>
+    <p>Use your finger or mouse to trace the key verse:</p>
+    <div class="trace-canvas-wrap">
+      <canvas id="trace-canvas" width="520" height="160"></canvas>
+    </div>
+    <div class="pen-colors" id="pen-colors"></div>
+    <div class="trace-tools">
+      <button class="trace-btn erase" onclick="clearCanvas('trace-canvas')">ERASE</button>
+    </div>
+  </div>
+
+  <!-- Activity 4: Draw Your Prayer -->
+  <div class="section">
+    <h2>&#128591; Draw What You Bring to God!</h2>
+    <p>Hebrews 4:16 says come BOLDLY to God. Draw something you want to tell Him about &mdash; then pray about it!</p>
+    <div class="prayer-canvas-wrap">
+      <canvas id="prayer-canvas" width="520" height="300"></canvas>
+    </div>
+    <div class="pen-colors" id="prayer-pen-colors"></div>
+    <div class="trace-tools">
+      <button class="trace-btn erase" onclick="clearCanvas('prayer-canvas')">ERASE</button>
+      <button class="trace-btn print-btn" onclick="window.print()">PRINT</button>
+    </div>
+  </div>
+
+  <footer>
+    <div>StayTheWay Kids &bull; <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+  // ===== Color the Story =====
+  var WORD_DATA = [
+    {icon: "\u{1F6CC}", label: "God's Rest"},
+    {icon: "\u{1F91D}", label: "Faith"},
+    {icon: "\u{1F4D6}", label: "Living Word"},
+    {icon: "\u{2694}️", label: "Sharper Than a Sword"},
+    {icon: "\u{1FA91}", label: "Throne of Grace"}
+  ];
+  var COLORS = ["#E0516C","#FF8C42","#FFD93D","#3AC47B","#1478F0","#B07CD8","#F4B6C9","#FFFFFF"];
+  var selectedColor = COLORS[0];
+
+  var pickerEl = document.getElementById("color-picker");
+  COLORS.forEach(function(c) {
+    var dot = document.createElement("div");
+    dot.className = "color-dot" + (c === selectedColor ? " selected" : "");
+    dot.style.background = c;
+    dot.addEventListener("click", function() {
+      selectedColor = c;
+      document.querySelectorAll(".color-dot").forEach(function(d) { d.classList.remove("selected"); });
+      dot.classList.add("selected");
+    });
+    pickerEl.appendChild(dot);
+  });
+
+  var wordsEl = document.getElementById("words-grid");
+  WORD_DATA.forEach(function(w) {
+    var div = document.createElement("div");
+    div.className = "word-box";
+    div.innerHTML = '<span class="w-icon">' + w.icon + '</span>' + w.label;
+    div.addEventListener("click", function() {
+      div.style.background = selectedColor;
+      div.style.borderColor = selectedColor;
+    });
+    wordsEl.appendChild(div);
+  });
+
+  // ===== Drawing Canvases =====
+  var PEN_COLORS = ["#000000","#E0516C","#1478F0","#3AC47B","#FFD93D","#B07CD8","#FF8C42"];
+
+  // Scene line-art drawing functions
+  var sceneDrawFunctions = {
+    scene1: function(ctx, w, h) {
+      // God's people resting under the stars
+      ctx.fillStyle = "#E0E0E0";
+      var starPositions = [[50,30],[120,20],[200,40],[300,25],[400,35],[450,15],[350,50],[150,50],[250,20],[500,30]];
+      ctx.font = "16px sans-serif";
+      starPositions.forEach(function(s) { ctx.fillText("⭐", s[0], s[1]); });
+      ctx.strokeStyle = "#CCCCCC"; ctx.lineWidth = 2;
+      // Ground line
+      ctx.beginPath(); ctx.moveTo(0, 225); ctx.lineTo(w, 225); ctx.stroke();
+      // Tent
+      ctx.beginPath(); ctx.moveTo(60,225); ctx.lineTo(140,110); ctx.lineTo(220,225); ctx.closePath(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(120,225); ctx.lineTo(140,165); ctx.lineTo(160,225); ctx.stroke();
+      // Two figures lying down (resting)
+      ctx.beginPath(); ctx.arc(300, 205, 14, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(314,208); ctx.lineTo(390,208); ctx.stroke();
+      ctx.beginPath(); ctx.arc(300, 175, 12, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(312,178); ctx.lineTo(375,178); ctx.stroke();
+      // Campfire
+      ctx.beginPath(); ctx.moveTo(450,225); ctx.lineTo(470,195); ctx.lineTo(490,225); ctx.stroke();
+    },
+    scene2: function(ctx, w, h) {
+      // Big open Bible with light shining out
+      ctx.strokeStyle = "#CCCCCC"; ctx.lineWidth = 2;
+      // Book pages (two curved halves)
+      ctx.beginPath();
+      ctx.moveTo(w/2, 150);
+      ctx.quadraticCurveTo(w/2 - 90, 130, w/2 - 160, 155);
+      ctx.lineTo(w/2 - 160, 215);
+      ctx.quadraticCurveTo(w/2 - 90, 190, w/2, 210);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(w/2, 150);
+      ctx.quadraticCurveTo(w/2 + 90, 130, w/2 + 160, 155);
+      ctx.lineTo(w/2 + 160, 215);
+      ctx.quadraticCurveTo(w/2 + 90, 190, w/2, 210);
+      ctx.stroke();
+      // Center spine
+      ctx.beginPath(); ctx.moveTo(w/2, 150); ctx.lineTo(w/2, 210); ctx.stroke();
+      // Text lines on pages
+      ctx.lineWidth = 1;
+      for (var y = 165; y <= 195; y += 12) {
+        ctx.beginPath(); ctx.moveTo(w/2 - 140, y); ctx.lineTo(w/2 - 25, y - 4); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(w/2 + 25, y - 4); ctx.lineTo(w/2 + 140, y); ctx.stroke();
+      }
+      // Light rays shining up
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5,5]);
+      for (var angle = -70; angle <= 70; angle += 17.5) {
+        var rad = angle * Math.PI / 180;
+        ctx.beginPath();
+        ctx.moveTo(w/2, 140);
+        ctx.lineTo(w/2 + Math.sin(rad)*130, 140 - Math.cos(rad)*110);
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+    },
+    scene3: function(ctx, w, h) {
+      // Two-edged sword pointing at a heart
+      ctx.strokeStyle = "#CCCCCC"; ctx.lineWidth = 2;
+      // Heart on the right
+      var hx = w/2 + 110;
+      ctx.beginPath();
+      ctx.moveTo(hx, 200);
+      ctx.bezierCurveTo(hx-70, 155, hx-70, 100, hx, 125);
+      ctx.bezierCurveTo(hx+70, 100, hx+70, 155, hx, 200);
+      ctx.stroke();
+      // Sword: blade pointing right toward the heart
+      ctx.beginPath();
+      ctx.moveTo(60, 155);           // pommel end
+      ctx.lineTo(120, 155);          // grip
+      ctx.stroke();
+      // Crossguard
+      ctx.beginPath(); ctx.moveTo(122, 120); ctx.lineTo(122, 190); ctx.stroke();
+      // Blade (double-edged: two lines converging to a point)
+      ctx.beginPath();
+      ctx.moveTo(126, 140);
+      ctx.lineTo(hx - 80, 155);
+      ctx.lineTo(126, 170);
+      ctx.stroke();
+      // Center ridge of the blade
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(126, 155); ctx.lineTo(hx - 82, 155); ctx.stroke();
+      // Pommel circle
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(56, 155, 10, 0, Math.PI*2); ctx.stroke();
+    },
+    scene4: function(ctx, w, h) {
+      // Jesus our High Priest with arms open
+      ctx.strokeStyle = "#CCCCCC"; ctx.lineWidth = 2;
+      // Head
+      ctx.beginPath(); ctx.arc(w/2, 85, 26, 0, Math.PI*2); ctx.stroke();
+      // Robe body (trapezoid)
+      ctx.beginPath();
+      ctx.moveTo(w/2 - 22, 112);
+      ctx.lineTo(w/2 - 60, 235);
+      ctx.lineTo(w/2 + 60, 235);
+      ctx.lineTo(w/2 + 22, 112);
+      ctx.closePath();
+      ctx.stroke();
+      // Open arms
+      ctx.beginPath(); ctx.moveTo(w/2 - 22, 130); ctx.lineTo(w/2 - 110, 105); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w/2 + 22, 130); ctx.lineTo(w/2 + 110, 105); ctx.stroke();
+      // Open hands
+      ctx.beginPath(); ctx.arc(w/2 - 118, 102, 9, 0, Math.PI*2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(w/2 + 118, 102, 9, 0, Math.PI*2); ctx.stroke();
+      // Sash across the robe
+      ctx.beginPath(); ctx.moveTo(w/2 - 42, 165); ctx.lineTo(w/2 + 42, 165); ctx.stroke();
+      // Halo of light above
+      ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.arc(w/2, 85, 42, Math.PI, 2*Math.PI); ctx.stroke();
+      ctx.setLineDash([]);
+    },
+    scene5: function(ctx, w, h) {
+      // The throne of grace
+      ctx.strokeStyle = "#CCCCCC"; ctx.lineWidth = 2;
+      // Throne back
+      ctx.beginPath(); ctx.rect(w/2 - 60, 70, 120, 110); ctx.stroke();
+      // Throne seat
+      ctx.beginPath(); ctx.rect(w/2 - 75, 180, 150, 22); ctx.stroke();
+      // Legs
+      ctx.beginPath(); ctx.moveTo(w/2 - 62, 202); ctx.lineTo(w/2 - 62, 235); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w/2 + 62, 202); ctx.lineTo(w/2 + 62, 235); ctx.stroke();
+      // Armrests
+      ctx.beginPath(); ctx.moveTo(w/2 - 75, 180); ctx.lineTo(w/2 - 85, 150); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w/2 + 75, 180); ctx.lineTo(w/2 + 85, 150); ctx.stroke();
+      // Cross on the throne back
+      ctx.beginPath(); ctx.moveTo(w/2, 95); ctx.lineTo(w/2, 160); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w/2 - 22, 118); ctx.lineTo(w/2 + 22, 118); ctx.stroke();
+      // Steps leading up (come boldly!)
+      ctx.beginPath(); ctx.moveTo(w/2 - 120, 235); ctx.lineTo(w/2 + 120, 235); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w/2 - 100, 218); ctx.lineTo(w/2 + 100, 218); ctx.stroke();
+      // Light rays behind the throne
+      ctx.setLineDash([5,5]);
+      for (var angle = -50; angle <= 50; angle += 25) {
+        var rad = angle * Math.PI / 180;
+        ctx.beginPath();
+        ctx.moveTo(w/2, 60);
+        ctx.lineTo(w/2 + Math.sin(rad)*110, 60 - Math.cos(rad)*45);
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+    }
+  };
+
+  // Scene pen color state
+  var scenePenColor = "#000000";
+
+  function setupSceneCanvas(canvasId) {
+    var canvas = document.getElementById(canvasId);
+    var ctx = canvas.getContext("2d");
+    var drawing = false;
+
+    // Scale for retina
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * 2;
+    canvas.height = 260;
+
+    ctx.lineWidth = 6;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    // Draw the line-art scene
+    if (sceneDrawFunctions[canvasId]) {
+      sceneDrawFunctions[canvasId](ctx, canvas.width, canvas.height);
+    }
+
+    function getPos(e) {
+      var r = canvas.getBoundingClientRect();
+      var touch = e.touches ? e.touches[0] : e;
+      return {
+        x: (touch.clientX - r.left) * (canvas.width / r.width),
+        y: (touch.clientY - r.top) * (canvas.height / r.height)
+      };
+    }
+
+    function start(e) {
+      e.preventDefault();
+      drawing = true;
+      var p = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+    }
+    function move(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      var p = getPos(e);
+      ctx.strokeStyle = scenePenColor;
+      ctx.lineWidth = 6;
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    }
+    function end() { drawing = false; }
+
+    canvas.addEventListener("mousedown", start);
+    canvas.addEventListener("mousemove", move);
+    canvas.addEventListener("mouseup", end);
+    canvas.addEventListener("mouseleave", end);
+    canvas.addEventListener("touchstart", start, {passive: false});
+    canvas.addEventListener("touchmove", move, {passive: false});
+    canvas.addEventListener("touchend", end);
+  }
+
+  // Setup scene pen color picker
+  var scenePenContainer = document.getElementById("scene-pen-colors");
+  PEN_COLORS.forEach(function(c) {
+    var dot = document.createElement("div");
+    dot.className = "pen-dot" + (c === scenePenColor ? " selected" : "");
+    dot.style.background = c;
+    dot.addEventListener("click", function() {
+      scenePenColor = c;
+      scenePenContainer.querySelectorAll(".pen-dot").forEach(function(d) { d.classList.remove("selected"); });
+      dot.classList.add("selected");
+    });
+    scenePenContainer.appendChild(dot);
+  });
+
+  function clearAllScenes() {
+    for (var i = 1; i <= 5; i++) {
+      var canvasId = "scene" + i;
+      var canvas = document.getElementById(canvasId);
+      var ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (sceneDrawFunctions[canvasId]) {
+        sceneDrawFunctions[canvasId](ctx, canvas.width, canvas.height);
+      }
+    }
+  }
+
+  // Init all scene canvases
+  for (var i = 1; i <= 5; i++) {
+    setupSceneCanvas("scene" + i);
+  }
+
+  // ===== Standard Drawing Canvases (Trace + Prayer) =====
+  function setupCanvas(canvasId, penContainerId) {
+    var canvas = document.getElementById(canvasId);
+    var ctx = canvas.getContext("2d");
+    var drawing = false;
+    var penColor = "#000000";
+
+    // Scale for retina
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * 2;
+    canvas.height = canvas.height;
+
+    ctx.lineWidth = 4;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    // Pre-draw verse text if trace canvas
+    if (canvasId === "trace-canvas") {
+      drawVerseText(ctx, canvas.width);
+    }
+
+    function getPos(e) {
+      var r = canvas.getBoundingClientRect();
+      var touch = e.touches ? e.touches[0] : e;
+      return {
+        x: (touch.clientX - r.left) * (canvas.width / r.width),
+        y: (touch.clientY - r.top) * (canvas.height / r.height)
+      };
+    }
+
+    function start(e) {
+      e.preventDefault();
+      drawing = true;
+      var p = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+    }
+    function move(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      var p = getPos(e);
+      ctx.strokeStyle = penColor;
+      ctx.lineWidth = 4;
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    }
+    function end() { drawing = false; }
+
+    canvas.addEventListener("mousedown", start);
+    canvas.addEventListener("mousemove", move);
+    canvas.addEventListener("mouseup", end);
+    canvas.addEventListener("mouseleave", end);
+    canvas.addEventListener("touchstart", start, {passive: false});
+    canvas.addEventListener("touchmove", move, {passive: false});
+    canvas.addEventListener("touchend", end);
+
+    // Pen colors
+    if (penContainerId) {
+      var container = document.getElementById(penContainerId);
+      PEN_COLORS.forEach(function(c) {
+        var dot = document.createElement("div");
+        dot.className = "pen-dot" + (c === penColor ? " selected" : "");
+        dot.style.background = c;
+        dot.addEventListener("click", function() {
+          penColor = c;
+          container.querySelectorAll(".pen-dot").forEach(function(d) { d.classList.remove("selected"); });
+          dot.classList.add("selected");
+        });
+        container.appendChild(dot);
+      });
+    }
+  }
+
+  function drawVerseText(ctx, canvasWidth) {
+    ctx.fillStyle = "#E0E0E0";
+    ctx.font = "italic 22px Georgia, serif";
+    ctx.textAlign = "center";
+    ctx.fillText('"The word of God is living and powerful"', canvasWidth / 2, 60);
+    ctx.fillText('— Hebrews 4:12', canvasWidth / 2, 100);
+  }
+
+  function clearCanvas(id) {
+    var canvas = document.getElementById(id);
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (id === "trace-canvas") {
+      drawVerseText(ctx, canvas.width);
+    }
+  }
+
+  setupCanvas("trace-canvas", "pen-colors");
+  setupCanvas("prayer-canvas", "prayer-pen-colors");
+</script>
+</body>
+</html>

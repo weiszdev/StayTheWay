@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hebrews 4 — The Rest, The Word, The High Priest — StayTheWay Ministry</title>
+<meta name="description" content="Interactive teaching resources for Hebrews 4 — The Rest, The Word, The High Priest. Bible Bingo, quizzes, prayer, and kids activities." />
+<meta property="og:title" content="Hebrews 4 — The Rest, The Word, The High Priest — StayTheWay Ministry" />
+<meta property="og:description" content="God's Word is not information — it is living, powerful, and a discerner of the thoughts and intents of the heart." />
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png" />
+<meta property="og:url" content="https://staytheway.com/teachings/hebrews-4/" />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+  :root {
+    --navy: #000014; --navy-2: #06112B; --blue: #1E9BFF; --sky: #00BFFF;
+    --chrome: #DCDCDC; --white: #FFFFFF;
+    --yellow: #FFD93D; --green: #3AC47B;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header { text-align: center; padding-bottom: 1.25rem; border-bottom: 3px solid var(--blue); position: relative; }
+  header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px; background: var(--white); }
+  header .kicker { color: var(--sky); letter-spacing: 0.35em; font-weight: 900; font-size: 0.75rem; margin-bottom: 0.5rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white); margin: 0; font-size: clamp(1.6rem, 5.5vw, 2.2rem); line-height: 1.2; }
+  header .sub { color: var(--sky); font-style: italic; margin-top: 0.5rem; font-size: clamp(0.9rem, 3vw, 1.05rem); }
+
+  .verse-banner { margin: 1.5rem 0; padding: 1rem; background: var(--navy-2); border: 1px solid var(--blue);
+    border-left: 6px solid var(--white); font-family: Georgia, serif; font-style: italic;
+    color: var(--white); text-align: center; font-size: 1rem; line-height: 1.5; }
+  .verse-banner .ref { display: block; margin-top: 0.4rem; color: var(--white);
+    font-weight: 900; font-style: normal; font-size: 0.8rem; letter-spacing: 0.1em; }
+
+  .section-label { color: var(--sky); font-weight: 900; letter-spacing: 0.25em; font-size: 0.75rem;
+    text-transform: uppercase; margin: 2rem 0 0.75rem; padding-bottom: 0.4rem;
+    border-bottom: 1px solid rgba(30,155,255,0.3); }
+
+  .arc-text { font-size: 0.95rem; line-height: 1.6; color: var(--chrome); opacity: 0.9; margin: 0 0 1rem; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+
+  .card {
+    background: var(--navy-2); border: 2px solid rgba(30,155,255,0.35); border-radius: 12px;
+    padding: 1.25rem; text-decoration: none; color: var(--chrome);
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .card:hover { transform: translateY(-3px); border-color: var(--blue);
+    box-shadow: 0 8px 24px rgba(30,155,255,0.15); }
+  .card:active { transform: translateY(0); }
+
+  .card .card-icon { font-size: 2.2rem; }
+  .card .card-title { color: var(--white); font-weight: 900; font-size: 1.1rem; letter-spacing: 0.02em; }
+  .card .card-desc { font-size: 0.9rem; line-height: 1.45; color: var(--chrome); opacity: 0.85; }
+  .card .card-tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px;
+    font-size: 0.7rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
+    align-self: flex-start; margin-top: auto; }
+  .card .card-tag.interactive { background: rgba(30,155,255,0.2); color: var(--sky); }
+  .card .card-tag.prayer { background: rgba(255,255,255,0.15); color: var(--white); }
+  .card .card-tag.kids { background: rgba(255,217,61,0.2); color: var(--yellow); }
+  .card .card-tag.watch { background: rgba(224,81,108,0.22); color: #FF8FA3; }
+
+  /* Kids cards get a yellow left accent */
+  .card.kids-card { border-left: 4px solid var(--yellow); }
+  .card.watch-card { border-left: 4px solid #FF8FA3; }
+
+  .movements { list-style: none; padding: 0; margin: 0; }
+  .movements li { padding: 0.8rem 0; border-bottom: 1px solid rgba(30,155,255,0.15);
+    font-size: 0.95rem; line-height: 1.45; }
+  .movements li:last-child { border-bottom: none; }
+  .movements .num { color: var(--sky); font-weight: 900; margin-right: 0.4rem; }
+  .movements .name { color: var(--white); font-weight: 700; }
+  .movements .refs { color: var(--sky); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; }
+  .movements .label { display: block; color: var(--chrome); opacity: 0.8; margin-top: 0.15rem; }
+
+  footer { margin-top: 2.5rem; text-align: center; color: var(--chrome);
+    border-top: 1px solid rgba(30,155,255,0.3); padding-top: 1.5rem; font-size: 0.85rem; }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+  footer .ministry { margin-top: 0.3rem; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY MINISTRY</div>
+    <h1>Hebrews 4</h1>
+    <div class="sub">The Rest, The Word, The High Priest</div>
+  </header>
+
+  <div class="verse-banner">
+    &ldquo;For the word of God is living and powerful, and sharper than any two-edged sword&hellip; and is a discerner of the thoughts and intents of the heart.&rdquo;
+    <span class="ref">&mdash; Hebrews 4:12 (NKJV)</span>
+  </div>
+
+  <div class="section-label">This Week&rsquo;s Teaching</div>
+  <p class="arc-text">Hebrews 4 is one of the clearest reminders in Scripture that God&rsquo;s Word is not merely information &mdash; it is alive, penetrating, and able to reveal what is happening deep within us. The chapter moves in four beats: a promise still standing (rest), a warning still sounding (unbelief), a tool still cutting (the Word), and a throne still open (our great High Priest).</p>
+
+  <div class="cards">
+    <a href="https://www.youtube.com/live/WJSYGNo8PsI" class="card watch-card" target="_blank" rel="noopener">
+      <div class="card-icon">&#9654;&#65039;</div>
+      <div class="card-title">Watch the Teaching</div>
+      <div class="card-desc">The full 30-minute Hebrews 4 study on YouTube &mdash; entering God&rsquo;s rest, the danger of unbelief, the power of the Word, and Jesus our High Priest.</div>
+      <span class="card-tag watch">Video</span>
+    </a>
+  </div>
+
+  <div class="section-label">This Week&rsquo;s Resources</div>
+  <div class="cards">
+    <a href="bingo.html" class="card">
+      <div class="card-icon">&#127919;</div>
+      <div class="card-title">Bible Bingo</div>
+      <div class="card-desc">Play along with the teaching! 5&times;5 board &mdash; listen for each word and mark your squares. Get 5 in a row to win.</div>
+      <span class="card-tag interactive">Interactive</span>
+    </a>
+
+    <a href="quiz.html" class="card">
+      <div class="card-icon">&#128214;</div>
+      <div class="card-title">Hebrews 4 Quiz</div>
+      <div class="card-desc">8 questions on the rest, the warning, the Word, and the High Priest. Instant feedback and a final score.</div>
+      <span class="card-tag interactive">Interactive</span>
+    </a>
+
+    <a href="prayer.html" class="card">
+      <div class="card-icon">&#128591;</div>
+      <div class="card-title">Prayer Request</div>
+      <div class="card-desc">Come boldly to the throne of grace &mdash; and let us come with you. Double opt-in verification, your request stays confidential.</div>
+      <span class="card-tag prayer">Prayer</span>
+    </a>
+  </div>
+
+  <div class="section-label">Kids Activities</div>
+  <div class="cards">
+    <a href="kids-quiz.html" class="card kids-card">
+      <div class="card-icon">&#9876;&#65039;</div>
+      <div class="card-title">Kids Quiz</div>
+      <div class="card-desc">5 fun questions about God&rsquo;s living Word and His rest &mdash; perfect for ages 5&ndash;10!</div>
+      <span class="card-tag kids">Kids</span>
+    </a>
+
+    <a href="kids-activity.html" class="card kids-card">
+      <div class="card-icon">&#127912;</div>
+      <div class="card-title">Kids Activity</div>
+      <div class="card-desc">Coloring page and verse tracing &mdash; bring Hebrews 4:12 to life with crayons!</div>
+      <span class="card-tag kids">Kids</span>
+    </a>
+
+    <a href="kids-bingo.html" class="card kids-card">
+      <div class="card-icon">&#11088;</div>
+      <div class="card-title">Kids Bingo</div>
+      <div class="card-desc">4&times;4 bingo board with emojis &mdash; a fun way for little ones to follow along!</div>
+      <span class="card-tag kids">Kids</span>
+    </a>
+  </div>
+
+  <div class="section-label">The Four Movements</div>
+  <ol class="movements">
+    <li>
+      <span class="num">1.</span> <span class="name">The Rest That Remains</span>
+      <span class="refs">&mdash; Hebrews 4:1&ndash;11</span>
+      <span class="label">The promise did not expire in the wilderness. It is still open &mdash; and entering means ceasing from your own works.</span>
+    </li>
+    <li>
+      <span class="num">2.</span> <span class="name">The Danger of Unbelief</span>
+      <span class="refs">&mdash; Hebrews 4:2, 6, 11</span>
+      <span class="label">They heard the same gospel we did. It did not profit them, because it was not mixed with faith.</span>
+    </li>
+    <li>
+      <span class="num">3.</span> <span class="name">The Word That Cuts</span>
+      <span class="refs">&mdash; Hebrews 4:12&ndash;13</span>
+      <span class="label">Living, powerful, sharper than any two-edged sword &mdash; and a discerner of the thoughts and intents of the heart.</span>
+    </li>
+    <li>
+      <span class="num">4.</span> <span class="name">Our Great High Priest</span>
+      <span class="refs">&mdash; Hebrews 4:14&ndash;16</span>
+      <span class="label">Tempted in every point as we are, yet without sin. So come boldly to the throne of grace.</span>
+    </li>
+  </ol>
+
+  <div class="section-label">This Week&rsquo;s Challenge</div>
+  <p class="arc-text">Open the Word this week and let it examine you <em>before</em> you use it to examine anyone else. Then bring what it exposes to the throne of grace &mdash; boldly, and in time of need.</p>
+
+  <footer>
+    <div><a href="https://staytheway.com">staytheway.com</a></div>
+    <div class="ministry">StayTheWay Ministry &mdash; a 501(c)(3) service ministry</div>
+  </footer>
+</div>
+
+</body>
+</html>

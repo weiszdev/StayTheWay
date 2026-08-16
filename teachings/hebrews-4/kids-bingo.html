@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kids Bingo — Hebrews 4</title>
+<meta name="description" content="Interactive Kids Bible Bingo for StayTheWay Ministry's teaching: Hebrews 4." />
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kids Bingo — Hebrews 4">
+<meta property="og:description" content="Play Kids Bible Bingo! 4x4 board with big touch targets — listen for each word and mark your squares!">
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<meta property="og:url" content="https://staytheway.com/teachings/hebrews-4/kids-bingo.html">
+<meta property="og:site_name" content="StayTheWay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kids Bingo — Hebrews 4">
+<meta name="twitter:description" content="Play Kids Bible Bingo! 4x4 board with big touch targets — listen for each word and mark your squares!">
+<meta name="twitter:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<style>
+  :root {
+    --navy: #000014;
+    --navy-2: #06112B;
+    --blue: #1E9BFF;
+    --sky: #00BFFF;
+    --chrome: #DCDCDC;
+    --white: #FFFFFF;
+    --yellow: #FFD93D;
+    --green: #3AC47B;
+    --mark: #1E9BFF;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none; user-select: none; }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header {
+    text-align: center; padding-bottom: 1.25rem;
+    border-bottom: 3px solid var(--yellow);
+    position: relative;
+  }
+  header::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px;
+    background: var(--white);
+  }
+  header .kicker { color: var(--yellow); letter-spacing: 0.35em; font-weight: 900;
+    font-size: 0.75rem; margin-bottom: 0.5rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white);
+    margin: 0; font-size: clamp(1.7rem, 6vw, 2.4rem); letter-spacing: 0.02em; }
+  header .sub { color: var(--sky); font-style: italic; margin-top: 0.5rem;
+    font-size: clamp(0.9rem, 3vw, 1.05rem); }
+
+  .intro { margin: 1.25rem 0 1.5rem; padding: 1rem 1.1rem;
+    background: rgba(255,217,61,0.07); border-left: 4px solid var(--yellow);
+    font-size: 0.98rem; line-height: 1.55; }
+  .intro strong { color: var(--white); }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+    margin: 0 0 1.25rem; }
+  .btn {
+    background: var(--yellow); color: var(--navy); border: 2px solid var(--yellow);
+    padding: 0.6rem 1.1rem; font-weight: 900; letter-spacing: 0.08em;
+    font-size: 0.85rem; cursor: pointer; border-radius: 8px;
+    font-family: inherit;
+  }
+  .btn.ghost { background: transparent; color: var(--sky); border-color: var(--sky); }
+  .btn:hover { filter: brightness(1.15); }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;
+    max-width: 480px; margin: 0 auto;
+  }
+  .cell {
+    aspect-ratio: 1 / 1;
+    background: var(--navy-2); border: 3px solid rgba(30,155,255,0.45);
+    border-radius: 12px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 0.35rem; text-align: center;
+    font-weight: 700;
+    font-size: clamp(0.6rem, 2.5vw, 0.78rem);
+    line-height: 1.2; color: var(--chrome);
+    cursor: pointer;
+    transition: transform 0.08s ease, background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cell .cell-emoji { font-size: clamp(1.4rem, 5vw, 1.8rem); margin-bottom: 0.15rem; }
+  .cell .cell-label { pointer-events: none; }
+  .cell:hover { transform: scale(1.03); }
+  .cell:active { transform: scale(0.96); }
+  .cell.marked {
+    background: var(--blue); color: var(--white);
+    border-color: var(--yellow); position: relative;
+  }
+  .cell.marked::after {
+    content: "\2713"; position: absolute; top: 4px; right: 6px;
+    color: var(--yellow); font-size: 1rem; font-weight: 900;
+  }
+
+  .status {
+    text-align: center; margin-top: 1.25rem; padding: 0.8rem 1rem;
+    background: var(--navy-2); border: 2px solid var(--blue); border-radius: 10px;
+    font-size: 0.95rem; color: var(--chrome);
+  }
+  .status.win {
+    background: var(--yellow); color: var(--navy); border-color: var(--yellow);
+    font-weight: 900; letter-spacing: 0.1em; font-size: 1.1rem;
+  }
+
+  /* WIN CELEBRATION */
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 101; overflow: hidden; }
+  .confetti-piece {
+    position: absolute; top: -20px; font-size: 1.5rem;
+    animation: confettiFall 1.5s ease-out forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
+  }
+
+  footer {
+    margin-top: 2.5rem; text-align: center; color: var(--chrome);
+    border-top: 1px solid rgba(255,217,61,0.3); padding-top: 1.5rem;
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+  footer .verse { font-family: Georgia, serif; font-style: italic;
+    margin: 0.5rem 0 0.75rem; color: var(--chrome); font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY KIDS  &bull;  BIBLE BINGO</div>
+    <h1>Hebrews 4</h1>
+    <div class="sub">A game to play along with the teaching!</div>
+  </header>
+
+  <div class="intro">
+    <strong>How to play.</strong> Listen to the teaching and play along! Tap a square when you hear each word or phrase on the board. Mark 4 in a row &mdash; across, down, or diagonal &mdash; to win!
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" id="shuffle">SHUFFLE BOARD</button>
+    <button class="btn ghost" id="reset">CLEAR MARKS</button>
+  </div>
+
+  <div class="grid" id="board" aria-label="Kids Bible Bingo 4x4 board"></div>
+
+  <div class="status" id="status">Tap any square when you hear that word!</div>
+
+  <div class="confetti-container" id="confettiContainer"></div>
+
+  <footer>
+    <div class="verse">&ldquo;The word of God is living and powerful.&rdquo; &mdash; Hebrews 4:12</div>
+    <div>StayTheWay Kids &bull; <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+  var TERMS = [
+    { emoji: "\u{1F4D6}", label: "God's Word" },
+    { emoji: "\u{2694}️", label: "Two-Edged Sword" },
+    { emoji: "\u{1F49D}", label: "Our Heart" },
+    { emoji: "\u{1F6CC}", label: "God's Rest" },
+    { emoji: "\u{1F440}", label: "God Sees All" },
+    { emoji: "\u{1F64F}", label: "Come Boldly" },
+    { emoji: "\u{1FA91}", label: "Throne of Grace" },
+    { emoji: "\u{271D}️", label: "Jesus Our Priest" },
+    { emoji: "\u{1F3DC}️", label: "The Wilderness" },
+    { emoji: "\u{1F91D}", label: "Faith" },
+    { emoji: "\u{1F5FB}", label: "Hold Fast" },
+    { emoji: "\u{2764}️", label: "Mercy" },
+    { emoji: "\u{1F381}", label: "Grace to Help" },
+    { emoji: "\u{1F31F}", label: "Living Word" },
+    { emoji: "\u{1F642}", label: "Jesus Understands" },
+    { emoji: "\u{1F4A4}", label: "The Seventh Day" }
+  ];
+
+  var confettiEmojis = ["\u{1F389}", "\u{1F973}", "\u{1F38A}", "✨", "\u{1F31F}", "\u{1F4D6}", "\u{1F496}"];
+  var hasWon = false;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = a[i]; a[i] = a[j]; a[j] = temp;
+    }
+    return a;
+  }
+
+  function buildBoard() {
+    hasWon = false;
+    var pool = shuffle(TERMS.slice());
+    var boardEl = document.getElementById("board");
+    boardEl.innerHTML = "";
+
+    for (var i = 0; i < 16; i++) {
+      var cell = document.createElement("div");
+      cell.className = "cell";
+      cell.innerHTML = '<span class="cell-emoji">' + pool[i].emoji + '</span><span class="cell-label">' + pool[i].label + '</span>';
+      cell.addEventListener("click", function(c) {
+        return function() { toggle(c); };
+      }(cell));
+      boardEl.appendChild(cell);
+    }
+    setStatus("Tap any square when you hear that word!", false);
+  }
+
+  function toggle(cell) {
+    cell.classList.toggle("marked");
+    checkWin();
+  }
+
+  function checkWin() {
+    if (hasWon) return;
+    var cells = Array.prototype.slice.call(document.querySelectorAll("#board .cell"));
+    var marked = cells.map(function(c) { return c.classList.contains("marked"); });
+    // rows (4x4)
+    for (var r = 0; r < 4; r++) {
+      if (marked[r*4] && marked[r*4+1] && marked[r*4+2] && marked[r*4+3]) return win();
+    }
+    // cols
+    for (var c = 0; c < 4; c++) {
+      if (marked[c] && marked[c+4] && marked[c+8] && marked[c+12]) return win();
+    }
+    // diagonals
+    if (marked[0] && marked[5] && marked[10] && marked[15]) return win();
+    if (marked[3] && marked[6] && marked[9] && marked[12]) return win();
+  }
+
+  function win() {
+    hasWon = true;
+    setStatus("✦  BINGO! God's Word is living and powerful — Hebrews 4:12  ✦", true);
+    spawnConfetti();
+  }
+
+  function setStatus(text, isWin) {
+    var el = document.getElementById("status");
+    el.textContent = text;
+    if (isWin) { el.classList.add("win"); } else { el.classList.remove("win"); }
+  }
+
+  function spawnConfetti() {
+    var container = document.getElementById('confettiContainer');
+    container.innerHTML = '';
+    for (var i = 0; i < 50; i++) {
+      var piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+      piece.style.left = Math.random() * 100 + '%';
+      piece.style.animationDelay = (Math.random() * 0.6) + 's';
+      piece.style.animationDuration = (1 + Math.random() * 1.2) + 's';
+      piece.style.fontSize = (1.2 + Math.random() * 1.5) + 'rem';
+      container.appendChild(piece);
+    }
+    setTimeout(function() { container.innerHTML = ''; }, 3000);
+  }
+
+  document.getElementById("shuffle").addEventListener("click", buildBoard);
+  document.getElementById("reset").addEventListener("click", function() {
+    hasWon = false;
+    document.querySelectorAll("#board .cell").forEach(function(c) {
+      c.classList.remove("marked");
+    });
+    setStatus("Board cleared! Listen closely.", false);
+  });
+
+  buildBoard();
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Take the Quiz — Hebrews 4</title>
+<meta name="description" content="Short interactive quiz on StayTheWay Ministry's teaching: Hebrews 4 — the rest, the warning, the Word, and the High Priest." />
+<meta property="og:type" content="website">
+<meta property="og:title" content="Teaching Quiz — Hebrews 4">
+<meta property="og:description" content="8 questions covering Hebrews 4. Test your knowledge of God's rest, the living Word, and our great High Priest.">
+<meta property="og:url" content="https://staytheway.com/teachings/hebrews-4/quiz.html">
+<meta property="og:site_name" content="StayTheWay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Teaching Quiz — Hebrews 4">
+<meta name="twitter:description" content="8 questions covering Hebrews 4. Test your knowledge of God's rest, the living Word, and our great High Priest.">
+<style>
+  :root {
+    --navy: #000014;
+    --navy-2: #06112B;
+    --blue: #1E9BFF;
+    --sky: #00BFFF;
+    --chrome: #DCDCDC;
+    --white: #FFFFFF;
+    --green: #3AC47B;
+    --red:   #E0516C;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header { text-align: center; padding-bottom: 1.25rem;
+    border-bottom: 3px solid var(--blue); position: relative; }
+  header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px;
+    background: var(--white); }
+  header .kicker { color: var(--sky); letter-spacing: 0.35em; font-weight: 900;
+    font-size: 0.75rem; margin-bottom: 0.5rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white);
+    margin: 0; font-size: clamp(1.7rem, 6vw, 2.4rem); }
+  header .sub { color: var(--sky); font-style: italic; margin-top: 0.5rem;
+    font-size: clamp(0.9rem, 3vw, 1.05rem); }
+
+  .meta { display: flex; justify-content: space-between; align-items: center;
+    margin: 1.25rem 0 0.75rem; font-size: 0.85rem; color: var(--sky);
+    letter-spacing: 0.15em; text-transform: uppercase; font-weight: 900; }
+  .progress { height: 6px; background: rgba(30,155,255,0.2); border-radius: 3px; overflow: hidden;
+    margin-bottom: 1.5rem; }
+  .progress > div { height: 100%; background: linear-gradient(90deg, var(--blue), var(--sky));
+    width: 0%; transition: width 0.3s ease; }
+
+  .question {
+    background: var(--navy-2); border: 1px solid var(--blue);
+    border-left: 6px solid var(--white);
+    padding: 1.25rem 1.25rem 1.5rem; margin-bottom: 1rem;
+  }
+  .q-text { font-family: Georgia, serif; font-size: clamp(1.1rem, 4vw, 1.3rem);
+    color: var(--white); font-weight: 700; margin: 0 0 1.1rem; line-height: 1.35; }
+
+  .options { display: grid; gap: 0.55rem; }
+  .opt {
+    display: block; padding: 0.85rem 1rem; background: rgba(30,155,255,0.07);
+    border: 2px solid rgba(30,155,255,0.45); color: var(--chrome);
+    cursor: pointer; font-size: 1rem; line-height: 1.4;
+    text-align: left; font-family: inherit; width: 100%;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .opt:hover { background: rgba(30,155,255,0.16); }
+  .opt.correct { background: rgba(58,196,123,0.18); border-color: var(--green);
+    color: var(--white); font-weight: 700; }
+  .opt.wrong { background: rgba(224,81,108,0.18); border-color: var(--red); color: var(--white); }
+  .opt[disabled] { cursor: default; }
+
+  .feedback {
+    margin-top: 1rem; padding: 0.85rem 1rem;
+    font-size: 0.95rem; line-height: 1.5;
+    background: var(--navy); border-left: 4px solid var(--sky);
+  }
+  .feedback.correct { border-left-color: var(--green); }
+  .feedback.wrong   { border-left-color: var(--red); }
+  .feedback strong { color: var(--white); }
+
+  .nav { text-align: center; margin-top: 1rem; }
+  .btn {
+    background: var(--blue); color: var(--white); border: 2px solid var(--blue);
+    padding: 0.8rem 1.6rem; font-weight: 900; letter-spacing: 0.08em;
+    font-size: 0.95rem; cursor: pointer; font-family: inherit;
+    border-radius: 4px;
+  }
+  .btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--sky); border-color: var(--sky); }
+
+  .result {
+    text-align: center; padding: 2rem 1.25rem;
+    background: var(--navy-2); border: 1px solid var(--blue); border-left: 6px solid var(--white);
+  }
+  .result h2 { font-family: Georgia, serif; color: var(--white);
+    font-size: clamp(1.8rem, 6vw, 2.5rem); margin: 0 0 0.5rem; }
+  .result .score { font-size: 3rem; font-family: "Arial Black", sans-serif;
+    color: var(--blue); margin: 0.5rem 0; }
+  .result .score small { font-size: 1.2rem; color: var(--chrome); font-weight: 400; }
+  .result p { color: var(--chrome); line-height: 1.5; font-family: Georgia, serif;
+    font-style: italic; }
+  .result .verse { color: var(--sky); font-style: italic; margin-top: 1.25rem;
+    font-family: Georgia, serif; }
+
+  footer { margin-top: 2.5rem; text-align: center; color: var(--chrome);
+    border-top: 1px solid rgba(30,155,255,0.3); padding-top: 1.5rem; font-size: 0.85rem; }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY MINISTRY  &bull;  TAKE THE QUIZ</div>
+    <h1>Hebrews 4</h1>
+    <div class="sub">Let's see what stuck</div>
+  </header>
+
+  <div id="quiz-area">
+    <div class="meta">
+      <span id="counter">Question 1 of 8</span>
+      <span id="score-display">Score 0</span>
+    </div>
+    <div class="progress"><div id="progress-bar"></div></div>
+
+    <div class="question">
+      <h2 class="q-text" id="q-text"></h2>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback" hidden></div>
+    </div>
+
+    <div class="nav">
+      <button class="btn" id="next-btn" disabled>NEXT QUESTION</button>
+    </div>
+  </div>
+
+  <div id="result-area" hidden>
+    <div class="result">
+      <h2>Well done.</h2>
+      <div class="score" id="final-score">0<small> / 8</small></div>
+      <p id="final-message"></p>
+      <div class="verse">&ldquo;Let us therefore come boldly to the throne of grace.&rdquo;<br/>&mdash; Hebrews 4:16 (NKJV)</div>
+      <div class="nav" style="margin-top:1.5rem;">
+        <button class="btn ghost" onclick="location.reload()">RETAKE QUIZ</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>StayTheWay Ministry  &bull;  <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "According to Hebrews 4:2, why did the gospel NOT profit the wilderness generation?",
+    options: [
+      "They never heard it",
+      "It was not mixed with faith in those who heard it",
+      "It was preached in the wrong language",
+      "Moses withheld it from them"
+    ],
+    correct: 1,
+    explain: "Hebrews 4:2 — They heard the same good news we did. Hearing is not believing; the word has to be mixed with faith."
+  },
+  {
+    q: "What does Hebrews 4:10 say the one who has entered God’s rest has done?",
+    options: [
+      "Ceased from his own works",
+      "Finished the law",
+      "Moved to the Promised Land",
+      "Taken a Sabbath day off"
+    ],
+    correct: 0,
+    explain: "Hebrews 4:10 — Entering the rest means ceasing from your own works, as God did from His. It is the end of self-effort as the engine of your standing."
+  },
+  {
+    q: "Hebrews 4:9 says a rest still remains. For whom?",
+    options: [
+      "For the priests only",
+      "For the nation of Israel only",
+      "For the people of God",
+      "For those who complete the law"
+    ],
+    correct: 2,
+    explain: "Hebrews 4:9 — ‘There remains therefore a rest for the people of God.’ The promise did not expire in the wilderness."
+  },
+  {
+    q: "Hebrews 4:12 calls the word of God sharper than what?",
+    options: [
+      "A plowshare",
+      "Any two-edged sword",
+      "A refiner’s fire",
+      "A shepherd’s rod"
+    ],
+    correct: 1,
+    explain: "Hebrews 4:12 — Living, powerful, and sharper than any two-edged sword. Not a reference book — a blade."
+  },
+  {
+    q: "What does the word of God pierce and divide, according to Hebrews 4:12?",
+    options: [
+      "Nation from nation",
+      "Law from grace",
+      "Soul and spirit, joints and marrow",
+      "Clean from unclean"
+    ],
+    correct: 2,
+    explain: "Hebrews 4:12 — It reaches the seam between what you feel and what you actually are."
+  },
+  {
+    q: "The Word is a discerner of what?",
+    options: [
+      "The thoughts and intents of the heart",
+      "The sins of the fathers",
+      "The times and the seasons",
+      "The works of the hands"
+    ],
+    correct: 0,
+    explain: "Hebrews 4:12 — It judges not just what you did, but why you did it. That is what no other knowledge tool can do."
+  },
+  {
+    q: "Hebrews 4:15 says our High Priest was tempted in all points as we are — with what difference?",
+    options: [
+      "He was tempted less often",
+      "He was tempted only in the wilderness",
+      "Yet without sin",
+      "He was tempted only by Satan"
+    ],
+    correct: 2,
+    explain: "Hebrews 4:15 — He sympathizes with our weaknesses because He faced them. He is not a distant priest who cannot relate."
+  },
+  {
+    q: "Verse 13 says all things are naked and open before Him. What does verse 16 tell us to do about it?",
+    options: [
+      "Hide until we are clean",
+      "Come boldly to the throne of grace",
+      "Send a priest in our place",
+      "Wait for the day of judgment"
+    ],
+    correct: 1,
+    explain: "Hebrews 4:16 — That is the mercy of the chapter’s design. Verse 13 leaves you exposed; verse 16 opens the throne of grace — in time of need."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const counter   = document.getElementById("counter");
+const scoreDisp = document.getElementById("score-display");
+const progBar   = document.getElementById("progress-bar");
+const qText     = document.getElementById("q-text");
+const optsEl    = document.getElementById("options");
+const feedback  = document.getElementById("feedback");
+const nextBtn   = document.getElementById("next-btn");
+
+function render() {
+  const q = QUESTIONS[current];
+  counter.textContent = `Question ${current + 1} of ${QUESTIONS.length}`;
+  scoreDisp.textContent = `Score ${score}`;
+  progBar.style.width = `${(current / QUESTIONS.length) * 100}%`;
+  qText.textContent = q.q;
+  optsEl.innerHTML = "";
+  q.options.forEach((text, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "opt";
+    btn.textContent = text;
+    btn.addEventListener("click", () => pick(i, btn));
+    optsEl.appendChild(btn);
+  });
+  feedback.hidden = true; feedback.className = "feedback";
+  nextBtn.disabled = true;
+  nextBtn.textContent = (current === QUESTIONS.length - 1) ? "SEE RESULTS" : "NEXT QUESTION";
+  answered = false;
+}
+
+function pick(i, btn) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const buttons = [...optsEl.querySelectorAll(".opt")];
+  buttons.forEach(b => b.disabled = true);
+  buttons[q.correct].classList.add("correct");
+  if (i === q.correct) {
+    score += 1;
+    feedback.className = "feedback correct";
+    feedback.innerHTML = `<strong>Right.</strong> ${q.explain}`;
+  } else {
+    btn.classList.add("wrong");
+    feedback.className = "feedback wrong";
+    feedback.innerHTML = `<strong>Not quite.</strong> ${q.explain}`;
+  }
+  feedback.hidden = false;
+  scoreDisp.textContent = `Score ${score}`;
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener("click", () => {
+  current += 1;
+  if (current >= QUESTIONS.length) { showResult(); return; }
+  render();
+});
+
+function showResult() {
+  document.getElementById("quiz-area").hidden = true;
+  document.getElementById("result-area").hidden = false;
+  document.getElementById("final-score").innerHTML = `${score}<small> / ${QUESTIONS.length}</small>`;
+  const msg = document.getElementById("final-message");
+  if (score === QUESTIONS.length) {
+    msg.textContent = "Perfect score. Now let the Word do to you what you just proved you understand.";
+  } else if (score >= Math.ceil(QUESTIONS.length * 0.75)) {
+    msg.textContent = "Strong work. The rest remains, the Word still cuts, and the throne is still open.";
+  } else if (score >= Math.ceil(QUESTIONS.length * 0.5)) {
+    msg.textContent = "Good start. Read Hebrews 4 again this week — slowly, out loud, all sixteen verses.";
+  } else {
+    msg.textContent = "No condemnation. Verse 13 leaves us all exposed — and verse 16 still says come boldly. Try again.";
+  }
+}
+
+render();
+</script>
+</body>
+</html>
