@@ -373,13 +373,13 @@ section { padding: 56px 0; margin-top: -1px; }
       <img src="https://res.cloudinary.com/dyq7rnjjw/image/upload/v1775012979/IMG_2161_r3euqs.png" alt="StayTheWay" style="height:44px;width:auto;display:block;">
     </a>
     <nav class="desktop-nav">
-      <a href="teachings.html">Teachings</a>
+      <a href="/teachings/">Teachings</a>
       <a href="resources.html">Resources</a>
       <a href="gifts/">Gifts</a>
-      <a href="bridges.html">Bridges</a>
-      <a href="beliefs.html">Beliefs</a>
-      <a href="community.html">Community</a>
-      <a href="give.html">Give</a>
+      <a href="/bridges/">Bridges</a>
+      <a href="/beliefs/">Beliefs</a>
+      <a href="/community/">Community</a>
+      <a href="/give/">Give</a>
     </nav>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
@@ -390,13 +390,13 @@ section { padding: 56px 0; margin-top: -1px; }
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Home</a>
-  <a href="teachings.html">Teachings</a>
+  <a href="/teachings/">Teachings</a>
   <a href="resources.html">Resources</a>
   <a href="gifts/">Gifts</a>
-  <a href="bridges.html">Bridges</a>
-  <a href="beliefs.html">Beliefs</a>
-  <a href="community.html">Community</a>
-  <a href="give.html">Give</a>
+  <a href="/bridges/">Bridges</a>
+  <a href="/beliefs/">Beliefs</a>
+  <a href="/community/">Community</a>
+  <a href="/give/">Give</a>
 </div>
 
 <!-- HERO -->
@@ -406,7 +406,7 @@ section { padding: 56px 0; margin-top: -1px; }
     <h1>Grow Deep. Think Biblically.<br>Build Community.</h1>
     <p>We equip believers to study God's Word at home, strengthen their faith, and become pillars of support in their communities. Not a church — a resource for every church.</p>
     <div class="hero-buttons">
-      <a href="teachings.html" class="btn btn-primary">Start Learning</a>
+      <a href="/teachings/" class="btn btn-primary">Start Learning</a>
       <a href="https://www.youtube.com/@weStayTheWay" target="_blank" rel="noopener" class="btn btn-secondary">Watch on YouTube</a>
     </div>
     <div class="stats">
@@ -466,8 +466,22 @@ section { padding: 56px 0; margin-top: -1px; }
         <div style="width:0;height:0;border-style:solid;border-width:10px 0 10px 18px;border-color:transparent transparent transparent #fff;margin-left:4px"></div>
       </div>
     </div>
+
+    <!-- THIS WEEK'S PACKAGE — content comes from STW_CURRENT_PACKAGE in the script below -->
+    <div id="stwPackageBand" style="margin-top:22px;display:none">
+      <a id="stwPackageLink" href="/teachings/" style="display:block;text-decoration:none;color:inherit;background:linear-gradient(135deg,rgba(37,99,235,0.12),rgba(37,99,235,0.02));border:1px solid rgba(37,99,235,0.3);border-radius:14px;padding:22px 26px;transition:border-color .3s,transform .3s,box-shadow .3s" onmouseover="this.style.borderColor='#2563eb';this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 40px -18px rgba(37,99,235,.55)'" onmouseout="this.style.borderColor='rgba(37,99,235,0.3)';this.style.transform='none';this.style.boxShadow='none'">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap">
+          <span style="font-size:.66rem;font-weight:800;color:#fff;background:#2563eb;padding:3px 10px;border-radius:100px;letter-spacing:.09em;text-transform:uppercase">This Week</span>
+          <span id="stwPackageKicker" style="font-size:.72rem;font-weight:700;color:#60a5fa;letter-spacing:.08em;text-transform:uppercase"></span>
+        </div>
+        <h3 id="stwPackageTitle" style="color:#fff;font-size:1.28rem;margin:0 0 6px;line-height:1.25"></h3>
+        <p id="stwPackageDesc" style="color:#a3a3a3;font-size:.92rem;margin:0 0 14px;line-height:1.5"></p>
+        <div id="stwPackageChips" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+      </a>
+    </div>
+
     <div class="grid-4">
-      <a href="teachings.html" class="link-card">
+      <a href="/teachings/" class="link-card">
         <span class="lc-icon">📚</span>
         <div><div class="lc-text">All Teachings</div><div class="lc-desc">Browse 304 video studies</div></div>
       </a>
@@ -483,7 +497,11 @@ section { padding: 56px 0; margin-top: -1px; }
         <span class="lc-icon">🎁</span>
         <div><div class="lc-text">Spiritual Gifts</div><div class="lc-desc">Discover your gifts & kids' booklet</div></div>
       </a>
-      <a href="community.html" class="link-card">
+      <a href="https://podcasts.apple.com/us/podcast/stay-the-way/id1187607030" target="_blank" rel="noopener" class="link-card">
+        <span class="lc-icon">&#127911;</span>
+        <div><div class="lc-text">Stay The Way Podcast</div><div class="lc-desc">Listen anywhere &mdash; 500+ episodes</div></div>
+      </a>
+      <a href="/community/" class="link-card">
         <span class="lc-icon">💬</span>
         <div><div class="lc-text">Join the Community</div><div class="lc-desc">Private group & prayer</div></div>
       </a>
@@ -525,8 +543,8 @@ section { padding: 56px 0; margin-top: -1px; }
     <h2>Ready to Go Deeper?</h2>
     <p>Start with a teaching, grab the handout, take the quiz, and bring it to your home group. Everything you need is here — and it's all free.</p>
     <div class="cta-buttons">
-      <a href="teachings.html" class="btn btn-primary">Browse Teachings</a>
-      <a href="give.html" class="btn btn-secondary">Support the Ministry</a>
+      <a href="/teachings/" class="btn btn-primary">Browse Teachings</a>
+      <a href="/give/" class="btn btn-secondary">Support the Ministry</a>
     </div>
   </div>
 </section>
@@ -541,15 +559,15 @@ section { padding: 56px 0; margin-top: -1px; }
       </div>
       <div class="footer-col">
         <h4>Study</h4>
-        <a href="teachings.html">Teachings</a>
+        <a href="/teachings/">Teachings</a>
         <a href="resources.html">Resources</a>
-        <a href="beliefs.html">Beliefs</a>
+        <a href="/beliefs/">Beliefs</a>
       </div>
       <div class="footer-col">
         <h4>Connect</h4>
-        <a href="community.html">Community</a>
-        <a href="bridges.html">Bridges</a>
-        <a href="give.html">Give</a>
+        <a href="/community/">Community</a>
+        <a href="/bridges/">Bridges</a>
+        <a href="/give/">Give</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -560,6 +578,32 @@ section { padding: 56px 0; margin-top: -1px; }
 
 <script>
 // ========== DYNAMIC LATEST / LIVE VIDEO ==========
+
+/* ---- This week's teaching package (update these 4 lines each Sunday) ---- */
+const STW_CURRENT_PACKAGE = {
+  slug:   'hebrews-4',
+  kicker: 'Aug 16, 2026',
+  title:  'Hebrews 4 \u2014 The Rest, The Word, The High Priest',
+  desc:   'A promise still standing, a warning still sounding, a Word still cutting to the thoughts and intents of the heart \u2014 and a throne of grace still open.',
+  chips:  ['Bingo', 'Quiz', 'Prayer', 'Kids']
+};
+(function renderStwPackage() {
+  var p = STW_CURRENT_PACKAGE;
+  if (!p || !p.slug) return;
+  var band = document.getElementById('stwPackageBand');
+  if (!band) return;
+  document.getElementById('stwPackageLink').href = '/teachings/' + p.slug + '/';
+  document.getElementById('stwPackageKicker').textContent = p.kicker || '';
+  document.getElementById('stwPackageTitle').textContent  = p.title  || '';
+  document.getElementById('stwPackageDesc').textContent   = p.desc   || '';
+  document.getElementById('stwPackageChips').innerHTML = (p.chips || []).map(function (c) {
+    return '<span style="font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:100px;' +
+           'background:rgba(37,99,235,0.14);color:#60a5fa;letter-spacing:.05em;text-transform:uppercase">' +
+           c + '</span>';
+  }).join('');
+  band.style.display = 'block';
+})();
+
 const STW_API_KEY = 'AIzaSyDroXdYqCxQDBXOzp1Ha9wIHJhg36iPUbw';
 const STW_CHANNEL_ID = 'UCmL874CrrKEa6l7fXWdePUQ';
 const STW_UPLOADS = 'UUmL874CrrKEa6l7fXWdePUQ';

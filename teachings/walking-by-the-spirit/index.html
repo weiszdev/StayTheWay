@@ -3,388 +3,176 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Walking By the Spirit — 7-Week Teaching Series — StayTheWay Ministry</title>
-<meta name="description" content="A seven-week guided arc from John 10:27 to Galatians 5:23. Interactive resources, quizzes, Bible bingo, prayer, and kids activities for every week." />
-<meta property="og:type" content="website">
-<meta property="og:title" content="Walking By the Spirit — 7-Week Series — StayTheWay">
-<meta property="og:description" content="From the Shepherd's voice to the Spirit's fruit. Seven weeks of teaching with interactive resources for every session.">
-<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
-<meta property="og:url" content="https://staytheway.com/teachings/walking-by-the-spirit/">
-<meta property="og:site_name" content="StayTheWay">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Walking By the Spirit — 7-Week Series">
-<meta name="twitter:description" content="From the Shepherd's voice to the Spirit's fruit. Seven weeks of teaching with interactive resources.">
-<meta name="twitter:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
-<style>
-  :root {
-    --bg: #0a0a0a; --bg2: #111; --bg3: #0d0d0d;
-    --border: #1a1a1a; --border2: #222; --border3: #333;
-    --blue: #2563eb; --blue-light: #3b82f6; --blue-link: #60a5fa;
-    --white: #ffffff; --text: #d4d4d4; --muted: #a3a3a3; --dim: #888; --faint: #666;
-    --green: #22c55e; --yellow: #eab308; --red: #ef4444;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
-  a { color: var(--blue-link); text-decoration: none; transition: color .2s; }
-  a:hover { color: #93bbfd; }
-  h1,h2,h3,h4 { color: var(--white); font-weight: 700; line-height: 1.3; }
-  .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
-
-  /* Header bar */
-  .top-bar { background: rgba(10,10,10,.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.06); padding: 16px 20px; text-align: center; }
-  .top-bar a { color: var(--dim); font-size: .85rem; font-weight: 500; }
-  .top-bar a:hover { color: var(--white); }
-  .top-bar .sep { color: #333; margin: 0 8px; }
-
-  /* Hero */
-  .series-hero { padding: 80px 20px 60px; text-align: center; background: linear-gradient(180deg, var(--bg) 0%, #0f1420 50%, var(--bg) 100%); }
-  .series-hero .eyebrow { font-size: .75rem; font-weight: 600; color: var(--blue); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 16px; }
-  .series-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
-  .series-hero .subtitle { color: var(--muted); font-size: 1.1rem; max-width: 640px; margin: 0 auto 32px; line-height: 1.8; }
-
-  /* Verse banner */
-  .verse-banner { max-width: 720px; margin: 0 auto 40px; background: var(--bg2); border-left: 3px solid var(--blue); padding: 24px 28px; border-radius: 0 12px 12px 0; font-style: italic; color: var(--text); }
-  .verse-banner cite { display: block; margin-top: 12px; font-style: normal; color: var(--dim); font-size: .9rem; }
-
-  /* Arc overview */
-  .arc-section { padding: 64px 20px; border-top: 1px solid var(--border); }
-  .arc-section .section-label { font-size: .75rem; font-weight: 600; color: var(--blue); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; text-align: center; }
-  .arc-section h2 { text-align: center; margin-bottom: 12px; font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
-  .arc-section .section-desc { text-align: center; color: var(--muted); max-width: 600px; margin: 0 auto 48px; }
-
-  /* Week cards */
-  .weeks { display: flex; flex-direction: column; gap: 16px; max-width: 800px; margin: 0 auto; }
-  .week-card {
-    display: grid; grid-template-columns: 56px 1fr; gap: 20px; align-items: start;
-    background: var(--bg2); border: 1px solid var(--border2); border-radius: 14px;
-    padding: 28px 28px; transition: border-color .3s, transform .3s;
-    text-decoration: none; color: inherit;
-  }
-  a.week-card:hover { border-color: var(--blue); transform: translateY(-2px); }
-  .week-card.no-link { cursor: default; }
-  .week-num {
-    width: 56px; height: 56px; border-radius: 50%;
-    background: rgba(37,99,235,.12); border: 1px solid rgba(37,99,235,.25);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--blue-link); font-weight: 800; font-size: 1.3rem;
-    flex-shrink: 0;
-  }
-  .week-card.current .week-num { background: rgba(37,99,235,.3); border-color: rgba(37,99,235,.6); color: var(--white); }
-  .week-body h3 { font-size: 1.1rem; margin-bottom: 4px; }
-  .week-body .verse-ref { font-size: .82rem; color: var(--blue-link); font-weight: 500; margin-bottom: 6px; }
-  .week-body p { color: var(--muted); font-size: .93rem; margin-bottom: 10px; }
-  .week-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .week-tag {
-    font-size: .72rem; font-weight: 600; padding: 3px 10px; border-radius: 100px;
-    letter-spacing: .04em; text-transform: uppercase;
-  }
-  .week-tag.interactive { background: rgba(37,99,235,.1); color: var(--blue-link); }
-  .week-tag.new { background: rgba(34,197,94,.12); color: var(--green); }
-  .week-tag.coming { background: rgba(234,179,8,.1); color: var(--yellow); }
-
-  /* Resources grid */
-  .resources-section { padding: 64px 20px; border-top: 1px solid var(--border); background: var(--bg3); }
-  .resources-section .section-label { font-size: .75rem; font-weight: 600; color: var(--blue); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; text-align: center; }
-  .resources-section h2 { text-align: center; margin-bottom: 48px; font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
-  .res-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; max-width: 800px; margin: 0 auto; }
-  .res-card {
-    background: var(--bg2); border: 1px solid var(--border2); border-radius: 12px;
-    padding: 24px; display: flex; align-items: center; gap: 16px;
-    transition: border-color .2s, transform .2s; text-decoration: none; color: var(--text);
-  }
-  .res-card:hover { border-color: var(--blue); transform: translateY(-2px); color: var(--white); }
-  .res-icon { font-size: 1.6rem; flex-shrink: 0; }
-  .res-text h4 { font-size: .95rem; color: var(--white); margin-bottom: 2px; }
-  .res-text p { font-size: .82rem; color: var(--dim); margin: 0; }
-
-  /* Thesis / theology section */
-  .thesis-section { padding: 64px 20px; border-top: 1px solid var(--border); }
-  .thesis-section h2 { text-align: center; margin-bottom: 48px; }
-  .thesis-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 800px; margin: 0 auto; }
-  @media (min-width: 640px) { .thesis-grid { grid-template-columns: repeat(3, 1fr); } }
-  .thesis-card { background: var(--bg2); border: 1px solid var(--border2); border-radius: 14px; padding: 28px 24px; text-align: center; }
-  .thesis-card h3 { font-size: 1rem; margin-bottom: 8px; }
-  .thesis-card p { color: var(--muted); font-size: .9rem; margin: 0; }
-  .thesis-card .t-icon { font-size: 2rem; margin-bottom: 12px; }
-
-  /* CTA */
-  .cta { text-align: center; padding: 64px 20px; border-top: 1px solid var(--border); background: linear-gradient(180deg, transparent, rgba(37,99,235,.04), transparent); }
-  .cta h2 { margin-bottom: 12px; }
-  .cta p { color: var(--muted); max-width: 540px; margin: 0 auto 28px; font-size: 1.05rem; }
-  .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px; border-radius: 10px; font-weight: 600; font-size: .95rem; transition: all .2s; border: none; cursor: pointer; text-decoration: none; font-family: inherit; }
-  .btn-primary { background: var(--blue); color: var(--white); }
-  .btn-primary:hover { background: var(--blue-light); color: var(--white); transform: translateY(-1px); }
-  .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border3); }
-  .btn-secondary:hover { border-color: #555; color: var(--white); }
-
-  /* Footer */
-  .site-footer { border-top: 1px solid var(--border); padding: 32px 20px; text-align: center; font-size: .85rem; color: var(--faint); }
-  .site-footer a { color: var(--blue-link); font-weight: 600; }
-
-  @media (max-width: 500px) {
-    .week-card { grid-template-columns: 44px 1fr; gap: 14px; padding: 20px 18px; }
-    .week-num { width: 44px; height: 44px; font-size: 1.1rem; }
-  }
-</style>
+<title>Walking By the Spirit — StayTheWay Ministry</title>
+<meta name="description" content="From the Shepherd&#x27;s voice to the Spirit&#x27;s fruit. Seven weeks of teaching with interactive resources for every session." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Walking By the Spirit — StayTheWay Ministry" />
+<meta property="og:description" content="From the Shepherd&#x27;s voice to the Spirit&#x27;s fruit. Seven weeks of teaching with interactive resources for every session." />
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png" />
+<meta property="og:url" content="https://staytheway.com/teachings/walking-by-the-spirit/" />
+<meta property="og:site_name" content="StayTheWay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Walking By the Spirit — StayTheWay Ministry" />
+<meta name="twitter:description" content="From the Shepherd&#x27;s voice to the Spirit&#x27;s fruit. Seven weeks of teaching with interactive resources for every session." />
+<meta name="twitter:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png" />
+<link rel="preconnect" href="https://i.ytimg.com" />
+<link rel="stylesheet" href="https://staytheway.com/stw-teachings/assets/stw-teaching.css" />
 </head>
 <body>
 
-<div class="top-bar">
-  <a href="https://staytheway.com">StayTheWay</a>
-  <span class="sep">/</span>
-  <a href="https://staytheway.com/teachings/">Teachings</a>
-  <span class="sep">/</span>
-  <span style="color:#fff;font-weight:600;font-size:.85rem">Current Series</span>
+<div class="wrap">
+
+  <div class="topbar">
+    <a href="https://staytheway.com/teachings/">&larr; All Teachings</a>
+    <span class="brand">STAYTHEWAY</span>
+    <a href="https://staytheway.com/">Home</a>
+  </div>
+
+  <header class="stw">
+    <div class="kicker">Teaching Package</div>
+    <h1>Walking By the Spirit</h1>
+    
+    <div class="rule"></div>
+  </header>
+
+  <a class="hero novid reveal" href="https://www.youtube.com/@weStayTheWay" target="_blank" rel="noopener" aria-label="Watch on the StayTheWay YouTube channel">
+    <div class="fallback">
+      <div class="mark">&#9654;&#65039;</div>
+      <div class="txt">Watch this teaching on the StayTheWay YouTube channel.</div>
+    </div>
+    <div class="meta">
+      <div class="eyebrow">&#9654; Watch on YouTube</div>
+    </div>
+  </a>
+  <p class="hero-note">Prefer to listen? <a href="https://podcasts.apple.com/us/podcast/stay-the-way/id1187607030" target="_blank" rel="noopener">Stay The Way on Apple Podcasts &rarr;</a></p>
+
+  <div class="verse reveal">
+    &quot;But the fruit of the Spirit is love, joy, peace, longsuffering, kindness, goodness, faithfulness, gentleness, self-control. Against such there is no law.&quot; — Galatians 5:22–23 (NKJV)
+    <span class="ref"></span>
+  </div>
+
+  <div class="section-label reveal">Listen &amp; Watch Anywhere</div>
+  <div class="cards reveal">
+      <a href="https://podcasts.apple.com/us/podcast/stay-the-way/id1187607030" class="rcard listen">
+        <div class="ico">🎧</div>
+        <div class="rtitle">Stay The Way Podcast</div>
+        <div class="rdesc">Every teaching as audio — 500+ episodes on Apple Podcasts.</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="https://www.youtube.com/@weStayTheWay" class="rcard listen">
+        <div class="ico">📺</div>
+        <div class="rtitle">YouTube Channel</div>
+        <div class="rdesc">Watch live on Sundays and catch every past teaching.</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+  </div>
+  <div class="section-label reveal">In This Series</div>
+  <div class="cards reveal">
+      <a href="/teachings/7-pillars-man/" class="rcard">
+        <div class="ico">📚</div>
+        <div class="rtitle">Week 1 · 7 Pillars of a Faithful Man</div>
+        <div class="rdesc">What does it mean to be a man who hears the Shepherd and stands? Seven pillars from Scripture that hold a life, a marriage, a calling.</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="/teachings/7-pillars-woman/" class="rcard">
+        <div class="ico">📚</div>
+        <div class="rtitle">Week 2 · 7 Pillars of a Faithful Woman</div>
+        <div class="rdesc">Identity before performance. The pillars that hold a household and a marriage — toward her husband, rooted in the Shepherd&#x27;s voice.</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="/teachings/7-women-god-met/" class="rcard">
+        <div class="ico">📚</div>
+        <div class="rtitle">Week 3 · 7 Wives, 7 Failing Husbands, 1 Faithful God</div>
+        <div class="rdesc">Seven women God met in Scripture — each one married to a failing man, each one sustained by a faithful God. Identity forged in the hardest marriages.</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="/teachings/7-fake-christians/" class="rcard">
+        <div class="ico">📚</div>
+        <div class="rtitle">Week 4 · 7 IDs of a Fake Christian</div>
+        <div class="rdesc">Applied vs. nothing. Let Scripture name where the imitation lives. The mirror, not the magnifying glass — examine yourself first.</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="/teachings/romans-7/" class="rcard">
+        <div class="ico">📚</div>
+        <div class="rtitle">Week 5 · Romans 7 — The War Within</div>
+        <div class="rdesc">&quot;The good that I will to do, I do not do.&quot; The reason willpower fails. Naming the war is the first step to leaving it.</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="/teachings/romans-8/" class="rcard">
+        <div class="ico">📚</div>
+        <div class="rtitle">Week 6 · Romans 8 — Life in the Spirit</div>
+        <div class="rdesc">&quot;No condemnation… more than conquerors.&quot; The gospel mechanism — the Spirit who raised Christ now dwells in you. Fruit is produced by life, not effort.</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="/teachings/fruit-or-flesh/" class="rcard">
+        <div class="ico">📚</div>
+        <div class="rtitle">Week 7 · Fruit or Flesh — Galatians 5</div>
+        <div class="rdesc">Two lists. Both visible. Both growing. One reveals the flesh. One reveals the Spirit. The test isn&#x27;t whether you ever stumble — it&#x27;s what&#x27;s habitually</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="/teachings/pulling-it-together/" class="rcard">
+        <div class="ico">📚</div>
+        <div class="rtitle">Week 8 · Pulling 8 Weeks Together — The Servant NEW</div>
+        <div class="rdesc">Fake men or women, roles, true faith, fruit — pulling eight weeks together. The arc lands where it was always headed: the servant heart that hears, fo</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+  </div>
+  <div class="section-label reveal">More From StayTheWay</div>
+  <div class="cards reveal">
+      <a href="/teachings/fruit-or-flesh/interactive/prayer.html" class="rcard">
+        <div class="ico">&#128591;</div>
+        <div class="rtitle">Prayer Request</div>
+        <div class="rdesc">Confidential — our team prays personally</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="https://staytheway.com/community/" class="rcard">
+        <div class="ico">&#129309;</div>
+        <div class="rtitle">Join the Community</div>
+        <div class="rdesc">Private group, prayer wins, discussion</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="https://staytheway.com/quizzes/" class="rcard">
+        <div class="ico">&#9989;</div>
+        <div class="rtitle">All Quizzes</div>
+        <div class="rdesc">Interactive Bible quizzes for every teaching</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+      <a href="https://staytheway.com/resources/" class="rcard">
+        <div class="ico">&#128221;</div>
+        <div class="rtitle">Handouts &amp; Guides</div>
+        <div class="rdesc">Study materials and downloads</div>
+        <div class="go">Open <i>&rarr;</i></div>
+      </a>
+  </div>
+
+  <footer class="stw">
+    <div class="flinks">
+      <a href="https://staytheway.com/teachings/">All Teachings</a>
+      <a href="https://podcasts.apple.com/us/podcast/stay-the-way/id1187607030" target="_blank" rel="noopener">Podcast</a>
+      <a href="https://www.youtube.com/@weStayTheWay" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://staytheway.com/resources/">Resources</a>
+      <a href="https://staytheway.com/give/">Give</a>
+    </div>
+    <div><a href="https://staytheway.com" style="color:var(--sky);text-decoration:none;font-weight:700;">staytheway.com</a></div>
+    <div class="ministry">StayTheWay Ministry &mdash; a 501(c)(3) service ministry</div>
+  </footer>
+
 </div>
 
-<section class="series-hero">
-  <div class="container">
-    <div class="eyebrow">8-Week Teaching Series</div>
-    <h1>Walking By the Spirit</h1>
-    <p class="subtitle">From the Shepherd's voice to the Spirit's visible fruit. An eight-week guided arc through the gospel mechanism that moves a believer from hearing to following to bearing fruit.</p>
-    <div class="verse-banner">
-      "But the fruit of the Spirit is love, joy, peace, longsuffering, kindness, goodness, faithfulness, gentleness, self-control. Against such there is no law."
-      <cite>&mdash; Galatians 5:22&ndash;23 (NKJV)</cite>
-    </div>
-  </div>
-</section>
-
-<!-- THESIS -->
-<section class="thesis-section">
-  <div class="container">
-    <h2>The Arc</h2>
-    <div class="thesis-grid">
-      <div class="thesis-card">
-        <div class="t-icon">&#128490;</div>
-        <h3>Hear</h3>
-        <p>"My sheep hear My voice, and I know them, and they follow Me." &mdash; John 10:27</p>
-      </div>
-      <div class="thesis-card">
-        <div class="t-icon">&#128099;</div>
-        <h3>Follow</h3>
-        <p>Hearing produces following. Identity reshapes role. The Pillars stand because the Shepherd spoke.</p>
-      </div>
-      <div class="thesis-card">
-        <div class="t-icon">&#127815;</div>
-        <h3>Bear Fruit</h3>
-        <p>The fruit is not the program. The fruit is the proof. Walk by the Spirit and the fruit will come.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SEVEN WEEKS -->
-<section class="arc-section">
-  <div class="container">
-    <div class="section-label">Week by Week</div>
-    <h2>The Eight Teachings</h2>
-    <p class="section-desc">Each week builds on the last. Start at Week 1 and walk the full arc, or jump to any teaching that meets you where you are.</p>
-    <div class="weeks">
-
-      <a href="/teachings/7-pillars-man/" class="week-card">
-        <div class="week-num">1</div>
-        <div class="week-body">
-          <h3>7 Pillars of a Faithful Man</h3>
-          <div class="verse-ref">1 Corinthians 16:13 &bull; Proverbs 24:3&ndash;4</div>
-          <p>What does it mean to be a man who hears the Shepherd and stands? Seven pillars from Scripture that hold a life, a marriage, a calling.</p>
-          <div class="week-tags">
-            <span class="week-tag interactive">Quiz</span>
-            <span class="week-tag interactive">Bingo</span>
-            <span class="week-tag interactive">Prayer</span>
-            <span class="week-tag interactive">Kids</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="/teachings/7-pillars-woman/" class="week-card">
-        <div class="week-num">2</div>
-        <div class="week-body">
-          <h3>7 Pillars of a Faithful Woman</h3>
-          <div class="verse-ref">Proverbs 31 &bull; Ephesians 5:22&ndash;33</div>
-          <p>Identity before performance. The pillars that hold a household and a marriage &mdash; toward her husband, rooted in the Shepherd's voice.</p>
-          <div class="week-tags">
-            <span class="week-tag interactive">Quiz</span>
-            <span class="week-tag interactive">Bingo</span>
-            <span class="week-tag interactive">Prayer</span>
-            <span class="week-tag interactive">Kids</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="/teachings/7-women-god-met/" class="week-card">
-        <div class="week-num">3</div>
-        <div class="week-body">
-          <h3>7 Wives, 7 Failing Husbands, 1 Faithful God</h3>
-          <div class="verse-ref">Genesis &ndash; Esther &bull; Selected narratives</div>
-          <p>Seven women God met in Scripture &mdash; each one married to a failing man, each one sustained by a faithful God. Identity forged in the hardest marriages.</p>
-          <div class="week-tags">
-            <span class="week-tag interactive">Quiz</span>
-            <span class="week-tag interactive">Bingo</span>
-            <span class="week-tag interactive">Prayer</span>
-            <span class="week-tag interactive">Kids</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="/teachings/7-fake-christians/" class="week-card">
-        <div class="week-num">4</div>
-        <div class="week-body">
-          <h3>7 IDs of a Fake Christian</h3>
-          <div class="verse-ref">James 1:22&ndash;25 &bull; Matthew 7:15&ndash;23</div>
-          <p>Applied vs. nothing. Let Scripture name where the imitation lives. The mirror, not the magnifying glass &mdash; examine yourself first.</p>
-          <div class="week-tags">
-            <span class="week-tag interactive">Quiz</span>
-            <span class="week-tag interactive">Bingo</span>
-            <span class="week-tag interactive">Prayer</span>
-            <span class="week-tag interactive">Kids</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="/teachings/romans-7/" class="week-card">
-        <div class="week-num">5</div>
-        <div class="week-body">
-          <h3>Romans 7 &mdash; The War Within</h3>
-          <div class="verse-ref">Romans 7:14&ndash;25</div>
-          <p>"The good that I will to do, I do not do." The reason willpower fails. Naming the war is the first step to leaving it.</p>
-          <div class="week-tags">
-            <span class="week-tag interactive">Quiz</span>
-            <span class="week-tag interactive">Bingo</span>
-            <span class="week-tag interactive">Prayer</span>
-            <span class="week-tag interactive">Kids</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="/teachings/romans-8/" class="week-card">
-        <div class="week-num">6</div>
-        <div class="week-body">
-          <h3>Romans 8 &mdash; Life in the Spirit</h3>
-          <div class="verse-ref">Romans 8:1&ndash;39</div>
-          <p>"No condemnation&hellip; more than conquerors." The gospel mechanism &mdash; the Spirit who raised Christ now dwells in you. Fruit is produced by life, not effort.</p>
-          <div class="week-tags">
-            <span class="week-tag interactive">Quiz</span>
-            <span class="week-tag interactive">Bingo</span>
-            <span class="week-tag interactive">Prayer</span>
-            <span class="week-tag interactive">Kids</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="/teachings/fruit-or-flesh/" class="week-card">
-        <div class="week-num">7</div>
-        <div class="week-body">
-          <h3>Fruit or Flesh &mdash; Galatians 5</h3>
-          <div class="verse-ref">Galatians 5:19&ndash;23 &bull; John 10:27</div>
-          <p>Two lists. Both visible. Both growing. One reveals the flesh. One reveals the Spirit. The test isn't whether you ever stumble &mdash; it's what's habitually growing.</p>
-          <div class="week-tags">
-            <span class="week-tag interactive">Quiz</span>
-            <span class="week-tag interactive">Bingo</span>
-            <span class="week-tag interactive">Prayer</span>
-            <span class="week-tag interactive">Kids</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="/teachings/pulling-it-together/" class="week-card current">
-        <div class="week-num">8</div>
-        <div class="week-body">
-          <h3>Pulling 8 Weeks Together &mdash; The Servant <span class="week-tag new" style="vertical-align:middle;margin-left:6px">NEW</span></h3>
-          <div class="verse-ref">Mark 10:45 &bull; Galatians 5 &bull; Romans 7&ndash;8</div>
-          <p>Fake men or women, roles, true faith, fruit &mdash; pulling eight weeks together. The arc lands where it was always headed: the servant heart that hears, follows, and bears fruit.</p>
-          <div class="week-tags">
-            <span class="week-tag interactive">Video</span>
-          </div>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- RESOURCES -->
-<section class="resources-section">
-  <div class="container">
-    <div class="section-label">Series Resources</div>
-    <h2>Everything You Need</h2>
-    <div class="res-grid">
-      <a href="https://www.youtube.com/@weStayTheWay" target="_blank" rel="noopener" class="res-card">
-        <span class="res-icon">&#127909;</span>
-        <div class="res-text">
-          <h4>Watch on YouTube</h4>
-          <p>All 8 teachings, full-length video</p>
-        </div>
-      </a>
-      <a href="https://podcasts.apple.com/us/podcast/stay-the-way/id1187607030" target="_blank" rel="noopener" class="res-card">
-        <span class="res-icon">&#127911;</span>
-        <div class="res-text">
-          <h4>Listen on Apple Podcasts</h4>
-          <p>Audio versions for the drive or gym</p>
-        </div>
-      </a>
-      <a href="/teachings/fruit-or-flesh/interactive/prayer.html" class="res-card">
-        <span class="res-icon">&#128591;</span>
-        <div class="res-text">
-          <h4>Prayer Request</h4>
-          <p>Confidential &mdash; our team prays personally</p>
-        </div>
-      </a>
-      <a href="https://staytheway.com/community/" class="res-card">
-        <span class="res-icon">&#129309;</span>
-        <div class="res-text">
-          <h4>Join the Community</h4>
-          <p>Private group, prayer wins, discussion</p>
-        </div>
-      </a>
-      <a href="https://staytheway.com/quizzes/" class="res-card">
-        <span class="res-icon">&#9989;</span>
-        <div class="res-text">
-          <h4>All Quizzes</h4>
-          <p>Interactive Bible quizzes for every teaching</p>
-        </div>
-      </a>
-      <a href="https://staytheway.com/resources/" class="res-card">
-        <span class="res-icon">&#128221;</span>
-        <div class="res-text">
-          <h4>Handouts &amp; Guides</h4>
-          <p>Study materials and downloads</p>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- APPLIED STEP -->
-<section style="padding:64px 20px;border-top:1px solid var(--border)">
-  <div class="container" style="max-width:720px;text-align:center">
-    <div style="font-size:.75rem;font-weight:600;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">The Applied Step</div>
-    <h2 style="margin-bottom:16px">Notes Don't Matter Until They Reach Your Feet</h2>
-    <p style="color:var(--muted);font-size:1.05rem;line-height:1.8;max-width:600px;margin:0 auto 24px">Every teaching ends the same way. Faith without works is dead. Pick one thing. Make it specific. Make it dated. Make it concrete. Then do it.</p>
-    <div class="verse-banner" style="text-align:left">
-      "If we live in the Spirit, let us also walk in the Spirit."
-      <cite>&mdash; Galatians 5:25 (NKJV)</cite>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta">
-  <div class="container">
-    <h2>Start the Arc</h2>
-    <p>Seven weeks. One gospel mechanism. From hearing to following to fruit. Begin with Week 1 or jump into the latest.</p>
-    <div class="cta-buttons">
-      <a href="/teachings/7-pillars-man/" class="btn btn-primary">Start at Week 1</a>
-      <a href="/teachings/fruit-or-flesh/" class="btn btn-secondary">Jump to Week 7 (Latest)</a>
-    </div>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div><a href="https://staytheway.com">staytheway.com</a></div>
-  <div style="margin-top:4px">StayTheWay Ministry &mdash; a 501(c)(3) service ministry</div>
-</footer>
-
+<script>
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function (e) { e.classList.add('visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  els.forEach(function (e) { io.observe(e); });
+})();
+</script>
 </body>
 </html>
