@@ -92,3 +92,59 @@ teachings/_build/probe_thumbs.py     re-probe thumbnails when videos are added
 ```
 
 **Rollback:** every touched file on the server has a sibling `.bak-redesign`.
+
+---
+
+# Follow-up — Shorts were displacing the Sunday teaching (2026-08-16)
+
+**Symptom:** the `/teachings/` hero looked broken — a giant pixelated face with hard
+vertical seams behind a portrait thumbnail.
+
+**Cause:** the featured video was `hiXER4q5iLw`, a **43-second Short**. A Short's
+YouTube thumbnail is a 16:9 frame with the vertical video pillarboxed inside it, so
+the blurred hero backdrop rendered the seams. Underneath that, the real bug: both the
+teachings page and the homepage excluded Shorts by testing for `#shorts` in the
+**title**. This channel has never used that tag, so every Short sailed through and the
+newest upload — usually a Short — took the featured slot from the Sunday teaching.
+
+**The signal that actually works:** `videos?part=player&maxHeight=720` returns the true
+embed dimensions.
+
+| Video | Embed | Verdict |
+|---|---|---|
+| "The Power of Rest" (43s) | 405 × 720 | portrait Short |
+| Hebrews 4 teaching (21m) | 1280 × 720 | wide |
+| Hebrews 4 live stream (30m) | 960 × 720 | wide (4:3) |
+
+### The rule, and why it is not "wide only"
+
+First attempt filtered on orientation alone. **That was wrong** — it hid 77 real
+teachings, because this channel streams plenty of full-length services in portrait
+(including a 3.4-hour Armor of God study and several Sunday messages). Verified before
+shipping.
+
+Final rule, matching YouTube's own definition of a Short:
+
+```
+isShort  = vertical (aspect < 1.0)  AND  duration <= 180s
+featured = duration >= 300s, wide preferred, portrait long-form as fallback
+```
+
+- Library: 473 → **192** teachings. 284 Shorts hidden, zero real teachings lost.
+- Featured: correctly skips the #1 newest upload (the Short) for the 21-minute teaching.
+- Unknown aspect or duration **fails open** — an API hiccup can never hide a teaching.
+
+### Also
+- `.hero-bg` blur raised from `blur(2px)` to `blur(22px) scale(1.18)`. At the old value
+  a pillarboxed thumbnail showed its seams; now no thumbnail can look broken.
+- Note: the channel often posts a wide **and** a portrait cut of the same teaching
+  (the portrait one usually suffixed 📱). Preferring wide in the featured slot picks
+  the right one automatically.
+
+**Files:** `wp-theme/page-teachings.php` (live copy, source of truth), `index.html`.
+**Rollback:** `page-teachings.php.bak-shorts` (pre-fix) and `.bak-shorts-v1` (aspect-only attempt).
+
+### Still stale
+`teachings.html` in this repo (the GitHub Pages copy) still categorises Shorts by title
+at line ~351. It is not what staytheway.com serves — that path 404s live — so it was
+left alone. Worth fixing if GitHub Pages is ever brought back.

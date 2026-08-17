@@ -579,6 +579,47 @@ section { padding: 56px 0; margin-top: -1px; }
 <script>
 // ========== DYNAMIC LATEST / LIVE VIDEO ==========
 
+
+/* ---- Long-form picker: keeps Shorts out of the homepage feature slot ---- */
+function stwSecs(iso) {
+  const m = /^P(?:(\d+)D)?T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/.exec(iso || '');
+  if (!m) return 0;
+  const n = m.map(function (x) { return parseInt(x || 0, 10); });
+  return (n[1]||0)*86400 + (n[2]||0)*3600 + (n[3]||0)*60 + (n[4]||0);
+}
+async function stwPickLongForm(items) {
+  try {
+    var ids = items.map(function (i) { return i.snippet.resourceId.videoId; }).join(',');
+    var url = 'https://www.googleapis.com/youtube/v3/videos?part=contentDetails,player' +
+              '&maxHeight=720&id=' + ids + '&key=' + STW_API_KEY;
+    var meta = await (await fetch(url)).json();
+    var info = {};
+    (meta.items || []).forEach(function (it) {
+      var html = (it.player && it.player.embedHtml) || '';
+      var w = /width="(\d+)"/.exec(html), h = /height="(\d+)"/.exec(html);
+      info[it.id] = {
+        aspect: (w && h && +h[1]) ? (+w[1] / +h[1]) : null,
+        secs: stwSecs(it.contentDetails && it.contentDetails.duration)
+      };
+    });
+    var ok = items.filter(function (i) {
+      var d = info[i.snippet.resourceId.videoId];
+      if (!d) return true;                                  // unknown -> fail open
+      var vertical = d.aspect !== null && d.aspect < 1.0;
+      var isShort  = vertical && d.secs > 0 && d.secs <= 180;
+      return !isShort && d.secs >= 300;                     // >= 5 min to headline
+    });
+    var wide = ok.filter(function (i) {
+      var d = info[i.snippet.resourceId.videoId];
+      return !d || d.aspect === null || d.aspect >= 1.0;    // prefer wide
+    });
+    return wide[0] || ok[0] || items[0];
+  } catch (e) {
+    console.warn('[STW] long-form pick failed, using newest', e);
+    return items[0];
+  }
+}
+
 /* ---- This week's teaching package (update these 4 lines each Sunday) ---- */
 const STW_CURRENT_PACKAGE = {
   slug:   'hebrews-4',
@@ -642,11 +683,11 @@ function playHomeVideo() {
     const res = await fetch('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + STW_UPLOADS + '&maxResults=10&key=' + STW_API_KEY);
     const data = await res.json();
     if (data.items) {
-      // Find first non-short video (shorts have #shorts in title or very short descriptions)
-      const video = data.items.find(function(item) {
-        const t = item.snippet.title || '';
-        return !/#shorts?/i.test(t);
-      }) || data.items[0];
+      /* Title matching for "#shorts" never worked on this channel — it does not
+         tag Shorts that way. Ask the API for real dimensions and duration
+         instead: a Short is vertical AND <= 3 minutes. Portrait long-form
+         teachings (the channel streams plenty) must still qualify. */
+      const video = await stwPickLongForm(data.items);
 
       const s = video.snippet;
       homeVideoId = s.resourceId.videoId;
