@@ -27,6 +27,7 @@ CHANNEL   = "https://www.youtube.com/@weStayTheWay"
 # Per-package overrides. video: "" means no video on file -> branded fallback.
 # --------------------------------------------------------------------------
 PKG = {
+  "rejoicing":               {"video":"_0GeyuzC3aw", "date":"Sep 13, 2026", "base":""},
   "hebrews-4":               {"video":"WJSYGNo8PsI", "date":"Aug 16, 2026", "base":""},
   "7-marriages-god-blessed": {"video":"Z1HXjCnIHME", "date":"Jul 5, 2026",  "base":""},
   "7-pillars-disobedience":  {"video":"",            "date":"Jun 2026",     "base":""},
@@ -254,13 +255,13 @@ def build(slug, files):
 <meta property="og:type" content="website" />
 <meta property="og:title" content="{esc(title)} — StayTheWay Ministry" />
 <meta property="og:description" content="{esc(desc)}" />
-<meta property="og:image" content="{('https://i.ytimg.com/vi/'+vid+'/maxresdefault.jpg') if vid else OG_IMAGE}" />
+<meta property="og:image" content="{('https://i.ytimg.com/vi/'+vid+'/'+THUMBS.get(vid,'sddefault')+'.jpg') if vid else OG_IMAGE}" />
 <meta property="og:url" content="https://staytheway.com/teachings/{slug}/" />
 <meta property="og:site_name" content="StayTheWay" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{esc(title)} — StayTheWay Ministry" />
 <meta name="twitter:description" content="{esc(desc)}" />
-<meta name="twitter:image" content="{('https://i.ytimg.com/vi/'+vid+'/maxresdefault.jpg') if vid else OG_IMAGE}" />
+<meta name="twitter:image" content="{('https://i.ytimg.com/vi/'+vid+'/'+THUMBS.get(vid,'sddefault')+'.jpg') if vid else OG_IMAGE}" />
 <link rel="preconnect" href="https://i.ytimg.com" />
 <link rel="stylesheet" href="{CSS_URL}" />
 </head>

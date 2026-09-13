@@ -1,5 +1,5 @@
-import json, io, urllib.request
-VIDS = ["WJSYGNo8PsI","Z1HXjCnIHME","Gc9voD8b5Kc","Dalvq22ne-A","-wlqh0TACQE",
+import json, io, urllib.request, os
+VIDS = ["_0GeyuzC3aw","WJSYGNo8PsI","Z1HXjCnIHME","Gc9voD8b5Kc","Dalvq22ne-A","-wlqh0TACQE",
         "TYA7QJhNuPM","PIEFRG69j0o","K27KAOfVxsw","T1SUiAvmEjE","XuLetJBP554","AH59MP-kHzE"]
 def ok(url):
     try:
@@ -16,4 +16,4 @@ for v in VIDS:
             best[v]=kind; print(f"{v:14} -> {kind}"); break
     else:
         best[v]="hqdefault"; print(f"{v:14} -> hqdefault (unverified)")
-io.open("/private/tmp/claude-501/-Users-jcwa1/f0360b7c-f453-4538-8d2b-3ee07808705c/scratchpad/build/thumbs.json","w").write(json.dumps(best,indent=1))
+io.open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"thumbs.json"),"w").write(json.dumps(best,indent=1))

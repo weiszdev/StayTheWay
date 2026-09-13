@@ -42,19 +42,19 @@
     </div>
 
     <!-- FEATURED: Latest Teaching -->
-    <a href="<?php echo esc_url(home_url('/teachings/hebrews-4/')); ?>" style="display:block;text-decoration:none;color:inherit;background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(37,99,235,0.02));border:1px solid rgba(37,99,235,0.2);border-radius:14px;padding:28px 32px;margin-bottom:24px;transition:border-color .3s,transform .3s" onmouseover="this.style.borderColor='#2563eb';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(37,99,235,0.2)';this.style.transform='none'">
+    <a href="<?php echo esc_url(home_url('/teachings/rejoicing/')); ?>" style="display:block;text-decoration:none;color:inherit;background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(37,99,235,0.02));border:1px solid rgba(37,99,235,0.2);border-radius:14px;padding:28px 32px;margin-bottom:24px;transition:border-color .3s,transform .3s" onmouseover="this.style.borderColor='#2563eb';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(37,99,235,0.2)';this.style.transform='none'">
       <div style="display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap">
       <div style="flex:0 0 300px;max-width:100%;position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:#0b1730;border:1px solid rgba(37,99,235,0.3)">
-        <img src="https://i.ytimg.com/vi/WJSYGNo8PsI/maxresdefault.jpg" alt="Hebrews 4 teaching" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+        <img src="https://i.ytimg.com/vi/_0GeyuzC3aw/sddefault.jpg" alt="Rejoicing on Every Side teaching" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
         <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:rgba(37,99,235,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 26px rgba(0,0,0,.5)"><span style="width:0;height:0;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fff;margin-left:3px"></span></span>
       </div>
       <div style="flex:1 1 260px;min-width:0">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
         <span style="font-size:.7rem;font-weight:700;color:#fff;background:#2563eb;padding:3px 10px;border-radius:100px;letter-spacing:.06em;text-transform:uppercase">New</span>
-        <span style="font-size:.75rem;font-weight:600;color:#2563eb;letter-spacing:.06em;text-transform:uppercase">Aug 16, 2026</span>
+        <span style="font-size:.75rem;font-weight:600;color:#2563eb;letter-spacing:.06em;text-transform:uppercase">Sep 13, 2026</span>
       </div>
-      <h3 style="color:#fff;font-size:1.3rem;margin-bottom:6px">Hebrews 4 &mdash; The Rest, The Word, The High Priest</h3>
-      <p style="color:#a3a3a3;font-size:.9rem;margin-bottom:8px">A promise still standing, a warning still sounding, a Word still cutting to the thoughts and intents of the heart &mdash; and a throne of grace still open.</p>
+      <h3 style="color:#fff;font-size:1.3rem;margin-bottom:6px">Rejoicing on Every Side &mdash; The Reset</h3>
+      <p style="color:#a3a3a3;font-size:.9rem;margin-bottom:8px">Hear the Father, name the drain, and let God&rsquo;s goodness drop on the wilderness &mdash; until the little hills rejoice on every side.</p>
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <span style="font-size:.7rem;font-weight:600;padding:3px 10px;border-radius:100px;background:rgba(37,99,235,0.1);color:#60a5fa;letter-spacing:.04em;text-transform:uppercase">Quiz</span>
         <span style="font-size:.7rem;font-weight:600;padding:3px 10px;border-radius:100px;background:rgba(37,99,235,0.1);color:#60a5fa;letter-spacing:.04em;text-transform:uppercase">Bingo</span>
@@ -80,6 +80,10 @@
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:32px">
+      <a href="<?php echo esc_url(home_url('/teachings/rejoicing/')); ?>" class="link-card" style="flex-direction:column;align-items:flex-start;gap:6px;padding:16px 18px">
+        <span style="font-size:.7rem;font-weight:600;color:#2563eb;letter-spacing:.06em;text-transform:uppercase">Sep 13, 2026</span>
+        <span class="lc-text" style="font-size:.88rem">Rejoicing on Every Side</span>
+      </a>
       <a href="<?php echo esc_url(home_url('/teachings/hebrews-4/')); ?>" class="link-card" style="flex-direction:column;align-items:flex-start;gap:6px;padding:16px 18px">
         <span style="font-size:.7rem;font-weight:600;color:#2563eb;letter-spacing:.06em;text-transform:uppercase">Aug 16, 2026</span>
         <span class="lc-text" style="font-size:.88rem">Hebrews 4</span>

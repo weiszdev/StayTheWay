@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kids Activity — Rejoicing on Every Side</title>
+<meta name="description" content="Color the scenes from Psalm 65, trace the verse, and draw your prayer — a Bible activity page for kids!" />
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kids Activity Page — StayTheWay Kids">
+<meta property="og:description" content="Finger-paint the little hills, trace Psalm 65:12, and draw your prayer! Interactive Bible activities for kids.">
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<meta property="og:url" content="https://staytheway.com/teachings/rejoicing/kids-activity.html">
+<meta property="og:site_name" content="StayTheWay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kids Activity Page — StayTheWay Kids">
+<meta name="twitter:description" content="Finger-paint the little hills, trace Psalm 65:12, and draw your prayer! Interactive Bible activities for kids.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<style>
+  :root {
+    --navy: #000014; --navy-2: #06112B; --blue: #1E9BFF; --sky: #00BFFF;
+    --chrome: #DCDCDC; --white: #FFFFFF;
+    --yellow: #FFD93D; --green: #3AC47B;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width: 580px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header { text-align: center; padding-bottom: 1rem; border-bottom: 3px solid var(--yellow); position: relative; }
+  header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px; background: var(--white); }
+  header .kicker { color: var(--yellow); letter-spacing: 0.3em; font-weight: 900; font-size: 0.75rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white); margin: 0.3rem 0; font-size: clamp(1.5rem, 6vw, 2rem); }
+  header .emoji { font-size: 2rem; margin-top: 0.3rem; }
+
+  .section { background: var(--navy-2); border: 2px solid var(--blue); border-radius: 12px;
+    padding: 1.2rem; margin: 1.25rem 0; }
+  .section h2 { color: var(--yellow); font-size: 1.1rem; margin: 0 0 0.75rem; text-align: center; }
+  .section p { font-size: 0.95rem; line-height: 1.5; margin: 0.5rem 0; text-align: center; }
+
+  /* Color the Story */
+  .words-grid { display: flex; justify-content: center; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
+  .word-box {
+    width: 78px; height: 78px; border: 3px solid var(--chrome); border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s; font-size: 0.7rem; font-weight: 700;
+    text-align: center; padding: 0.2rem; line-height: 1.2; color: var(--white);
+    background: var(--navy); text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  }
+  .word-box .w-icon { font-size: 1.4rem; margin-bottom: 0.15rem; }
+  .word-box:active { transform: scale(0.95); }
+
+  .color-picker { display: flex; justify-content: center; gap: 0.4rem; margin: 0.75rem 0; flex-wrap: wrap; }
+  .color-dot {
+    width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+    border: 3px solid transparent; transition: transform 0.1s;
+  }
+  .color-dot:hover { transform: scale(1.15); }
+  .color-dot.selected { border-color: var(--white); transform: scale(1.15); }
+
+  /* Canvases */
+  .scene-label { color: var(--sky); font-size: 0.85rem; font-weight: 700; text-align: center; margin: 0.75rem 0 0.25rem; }
+  .canvas-wrap { background: var(--white); border-radius: 8px; padding: 0.5rem; margin: 0.4rem 0; }
+  canvas { display: block; width: 100%; height: auto; border-radius: 6px; touch-action: none; }
+  .trace-tools { display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.5rem; flex-wrap: wrap; }
+  .trace-btn { background: var(--yellow); color: var(--navy); border: none; padding: 0.6rem 1.1rem;
+    font-weight: 900; font-size: 0.85rem; border-radius: 8px; cursor: pointer; min-height: 44px; font-family: inherit; }
+  .trace-btn.erase { background: #E0516C; color: var(--white); }
+  .trace-btn.print-btn { background: var(--green); color: var(--white); }
+
+  .pen-colors { display: flex; justify-content: center; gap: 0.35rem; margin: 0.6rem 0; flex-wrap: wrap; }
+  .pen-dot { width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    border: 3px solid transparent; }
+  .pen-dot.selected { border-color: var(--white); }
+
+  footer { margin-top: 2rem; text-align: center; font-size: 0.85rem;
+    border-top: 1px solid rgba(255,217,61,0.3); padding-top: 1rem; }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+  footer .back { display: block; margin-bottom: 0.6rem; }
+
+  @media print {
+    html, body { background: white; color: black; }
+    .wrap { max-width: 100%; padding: 0; }
+    header, footer, .color-picker, .trace-tools, .pen-colors, .no-print { display: none !important; }
+    .section { border: 2px solid #ccc; break-inside: avoid; background: white; }
+    .section h2, .scene-label { color: black; }
+    .word-box { border-color: #999; color: black; text-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY KIDS</div>
+    <h1>Activity Page!</h1>
+    <div class="emoji">⛰️🎨📖</div>
+  </header>
+
+  <!-- Activity 1: Color the Big Ideas -->
+  <div class="section">
+    <h2>🎨 Color the Big Ideas!</h2>
+    <p>5 big ideas from today! Pick a color, then tap each box to color it in!</p>
+    <div class="color-picker" id="color-picker"></div>
+    <div class="words-grid" id="words-grid"></div>
+  </div>
+
+  <!-- Activity 2: Finger-Paint the Scenes -->
+  <div class="section">
+    <h2>🖍️ Finger-Paint the Scenes!</h2>
+    <p>Pick a crayon color, then use your finger to color each picture!</p>
+    <div class="pen-colors" id="scene-pen-colors"></div>
+
+    <div class="scene-label">1. Listening to Father God</div>
+    <div class="canvas-wrap"><canvas id="scene1" data-ratio="0.5"></canvas></div>
+
+    <div class="scene-label">2. Charge Up With God's Word</div>
+    <div class="canvas-wrap"><canvas id="scene2" data-ratio="0.5"></canvas></div>
+
+    <div class="scene-label">3. Talk to God Morning, Noon &amp; Night</div>
+    <div class="canvas-wrap"><canvas id="scene3" data-ratio="0.5"></canvas></div>
+
+    <div class="scene-label">4. God's Goodness Drops on the Dry Wilderness</div>
+    <div class="canvas-wrap"><canvas id="scene4" data-ratio="0.5"></canvas></div>
+
+    <div class="scene-label">5. The Little Hills Rejoice on Every Side!</div>
+    <div class="canvas-wrap"><canvas id="scene5" data-ratio="0.5"></canvas></div>
+
+    <div class="trace-tools">
+      <button class="trace-btn erase" onclick="clearAllScenes()">ERASE ALL</button>
+      <button class="trace-btn print-btn" onclick="window.print()">PRINT</button>
+    </div>
+  </div>
+
+  <!-- Activity 3: Trace the Verse -->
+  <div class="section">
+    <h2>✏️ Trace the Verse!</h2>
+    <p>Use your finger or mouse to trace the key verse:</p>
+    <div class="canvas-wrap"><canvas id="trace-canvas" data-ratio="0.36"></canvas></div>
+    <div class="pen-colors" id="pen-colors"></div>
+    <div class="trace-tools">
+      <button class="trace-btn erase" onclick="clearCanvas('trace-canvas')">ERASE</button>
+    </div>
+  </div>
+
+  <!-- Activity 4: Draw Your Prayer -->
+  <div class="section">
+    <h2>🙏 Draw a Dry Place for God to Fill!</h2>
+    <p>Is something making you sad, grumpy, or worried? Draw it here. Then pray and ask God to fill it with His joy!</p>
+    <div class="canvas-wrap"><canvas id="prayer-canvas" data-ratio="0.6"></canvas></div>
+    <div class="pen-colors" id="prayer-pen-colors"></div>
+    <div class="trace-tools">
+      <button class="trace-btn erase" onclick="clearCanvas('prayer-canvas')">ERASE</button>
+      <button class="trace-btn print-btn" onclick="window.print()">PRINT</button>
+    </div>
+  </div>
+
+  <footer>
+    <a class="back" href="/teachings/rejoicing/">&larr; Back to the teaching</a>
+    <div>StayTheWay Kids &bull; <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+  // ===== Color the Big Ideas =====
+  var WORD_DATA = [
+    {icon: "👂", label: "Hear the Father"},
+    {icon: "🔋", label: "Charge Up"},
+    {icon: "📖", label: "God's Word"},
+    {icon: "🏜️", label: "Dry Places"},
+    {icon: "⛰️", label: "Hills Rejoice"}
+  ];
+  var COLORS = ["#E0516C","#FF8C42","#FFD93D","#3AC47B","#1478F0","#B07CD8","#F4B6C9","#8B5A2B"];
+  var selectedColor = COLORS[0];
+
+  var pickerEl = document.getElementById("color-picker");
+  COLORS.forEach(function(c) {
+    var dot = document.createElement("div");
+    dot.className = "color-dot" + (c === selectedColor ? " selected" : "");
+    dot.style.background = c;
+    dot.addEventListener("click", function() {
+      selectedColor = c;
+      pickerEl.querySelectorAll(".color-dot").forEach(function(d) { d.classList.remove("selected"); });
+      dot.classList.add("selected");
+    });
+    pickerEl.appendChild(dot);
+  });
+
+  var wordsEl = document.getElementById("words-grid");
+  WORD_DATA.forEach(function(w) {
+    var div = document.createElement("div");
+    div.className = "word-box";
+    div.innerHTML = '<span class="w-icon">' + w.icon + '</span>' + w.label;
+    div.addEventListener("click", function() {
+      div.style.background = selectedColor;
+      div.style.borderColor = selectedColor;
+    });
+    wordsEl.appendChild(div);
+  });
+
+  // ===== Line-art helpers (all coordinates are fractions of canvas size) =====
+  var LINE = "#BBBBBB";
+  function art(ctx, w, h) {
+    var s = Math.min(w, h * 2);
+    ctx.strokeStyle = LINE; ctx.fillStyle = LINE;
+    ctx.lineWidth = Math.max(2, s * 0.005);
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    return {
+      line: function(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1*w, y1*h); ctx.lineTo(x2*w, y2*h); ctx.stroke(); },
+      circle: function(x, y, r) { ctx.beginPath(); ctx.arc(x*w, y*h, r*h, 0, Math.PI*2); ctx.stroke(); },
+      dot: function(x, y, r) { ctx.beginPath(); ctx.arc(x*w, y*h, r*h, 0, Math.PI*2); ctx.fill(); },
+      arc: function(x, y, r, a1, a2) { ctx.beginPath(); ctx.arc(x*w, y*h, r*h, a1, a2); ctx.stroke(); },
+      rect: function(x, y, rw, rh) { ctx.beginPath(); ctx.rect(x*w, y*h, rw*w, rh*h); ctx.stroke(); },
+      heart: function(x, y, sz) {
+        var cx = x*w, cy = y*h, k = sz*h;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy + k*0.9);
+        ctx.bezierCurveTo(cx - k*1.4, cy + k*0.1, cx - k*0.8, cy - k*1.0, cx, cy - k*0.35);
+        ctx.bezierCurveTo(cx + k*0.8, cy - k*1.0, cx + k*1.4, cy + k*0.1, cx, cy + k*0.9);
+        ctx.stroke();
+      },
+      drop: function(x, y, sz) {
+        var cx = x*w, cy = y*h, k = sz*h;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - k);
+        ctx.quadraticCurveTo(cx + k*0.75, cy + k*0.1, cx, cy + k*0.55);
+        ctx.quadraticCurveTo(cx - k*0.75, cy + k*0.1, cx, cy - k);
+        ctx.stroke();
+      },
+      text: function(str, x, y, size) {
+        ctx.font = "bold " + Math.round(size*h) + "px 'Helvetica Neue', Arial, sans-serif";
+        ctx.textAlign = "center"; ctx.fillStyle = "#CCCCCC";
+        ctx.fillText(str, x*w, y*h); ctx.fillStyle = LINE;
+      },
+      rays: function(x, y, r1, r2, from, to, n) {
+        for (var i = 0; i <= n; i++) {
+          var a = from + (to - from) * i / n;
+          ctx.beginPath();
+          ctx.moveTo(x*w + Math.cos(a)*r1*h, y*h + Math.sin(a)*r1*h);
+          ctx.lineTo(x*w + Math.cos(a)*r2*h, y*h + Math.sin(a)*r2*h);
+          ctx.stroke();
+        }
+      },
+      hill: function(x1, x2, peakY, baseY) {
+        ctx.beginPath();
+        ctx.moveTo(x1*w, baseY*h);
+        ctx.quadraticCurveTo((x1+x2)/2*w, (2*peakY - baseY)*h, x2*w, baseY*h);
+        ctx.stroke();
+      },
+      ctx: ctx, w: w, h: h
+    };
+  }
+
+  function person(a, x, headY, r, bodyLen, armsUp) {
+    a.circle(x, headY, r);
+    var neck = headY + r, hip = neck + bodyLen, foot = hip + bodyLen * 0.8;
+    a.line(x, neck, x, hip);
+    a.line(x, hip, x - r*0.45, foot); a.line(x, hip, x + r*0.45, foot);
+    var sh = neck + bodyLen * 0.25;
+    if (armsUp) { a.line(x, sh, x - r*0.6, sh - bodyLen*0.5); a.line(x, sh, x + r*0.6, sh - bodyLen*0.5); }
+    else { a.line(x, sh, x - r*0.55, sh + bodyLen*0.45); a.line(x, sh, x + r*0.55, sh + bodyLen*0.45); }
+  }
+
+  var sceneDrawFunctions = {
+    scene1: function(ctx, w, h) {
+      // Father God speaking, a child listening
+      var a = art(ctx, w, h);
+      a.line(0.03, 0.92, 0.97, 0.92);
+      // Big figure (left) with arms open
+      a.circle(0.28, 0.24, 0.1);
+      a.line(0.28, 0.34, 0.28, 0.64);
+      a.line(0.28, 0.64, 0.24, 0.92); a.line(0.28, 0.64, 0.32, 0.92);
+      a.line(0.28, 0.42, 0.18, 0.52); a.line(0.28, 0.42, 0.38, 0.5);
+      // Child (right), hand cupped at ear
+      a.circle(0.7, 0.5, 0.075);
+      a.line(0.7, 0.575, 0.7, 0.76);
+      a.line(0.7, 0.76, 0.675, 0.92); a.line(0.7, 0.76, 0.725, 0.92);
+      a.line(0.7, 0.63, 0.66, 0.72); a.line(0.7, 0.63, 0.745, 0.54);
+      a.arc(0.655, 0.5, 0.025, Math.PI*0.5, Math.PI*1.5);
+      // Sound waves traveling to the child
+      for (var i = 1; i <= 3; i++) a.arc(0.42, 0.42, 0.06*i, -0.45, 0.45);
+      // Heart between them
+      a.heart(0.5, 0.14, 0.07);
+      a.text("I'M LISTENING!", 0.72, 0.2, 0.07);
+    },
+    scene2: function(ctx, w, h) {
+      // Open Bible plugged into a battery
+      var a = art(ctx, w, h);
+      // Open book (left)
+      var bx = 0.22, by = 0.55;
+      ctx.beginPath();
+      ctx.moveTo(bx*w, (by-0.12)*h);
+      ctx.quadraticCurveTo((bx-0.08)*w, (by-0.2)*h, (bx-0.16)*w, (by-0.12)*h);
+      ctx.lineTo((bx-0.16)*w, (by+0.14)*h);
+      ctx.quadraticCurveTo((bx-0.08)*w, (by+0.06)*h, bx*w, (by+0.14)*h);
+      ctx.moveTo(bx*w, (by-0.12)*h);
+      ctx.quadraticCurveTo((bx+0.08)*w, (by-0.2)*h, (bx+0.16)*w, (by-0.12)*h);
+      ctx.lineTo((bx+0.16)*w, (by+0.14)*h);
+      ctx.quadraticCurveTo((bx+0.08)*w, (by+0.06)*h, bx*w, (by+0.14)*h);
+      ctx.moveTo(bx*w, (by-0.12)*h); ctx.lineTo(bx*w, (by+0.14)*h);
+      ctx.stroke();
+      for (var y = -0.05; y <= 0.07; y += 0.06) {
+        a.line(bx-0.13, by+y, bx-0.03, by+y-0.015);
+        a.line(bx+0.03, by+y-0.015, bx+0.13, by+y);
+      }
+      a.rays(bx, by-0.2, 0.06, 0.16, -Math.PI*0.85, -Math.PI*0.15, 4);
+      // Cord from book to battery
+      ctx.beginPath();
+      ctx.moveTo((bx+0.16)*w, (by+0.05)*h);
+      ctx.bezierCurveTo(0.45*w, 0.95*h, 0.45*w, 0.2*h, 0.56*w, 0.5*h);
+      ctx.stroke();
+      // Battery (right)
+      a.rect(0.56, 0.25, 0.32, 0.5);
+      a.rect(0.88, 0.4, 0.025, 0.2);
+      for (var i = 0; i < 4; i++) a.rect(0.58 + i*0.075, 0.3, 0.055, 0.4);
+      // Lightning bolt
+      ctx.beginPath();
+      ctx.moveTo(0.74*w, 0.08*h); ctx.lineTo(0.7*w, 0.19*h); ctx.lineTo(0.74*w, 0.19*h); ctx.lineTo(0.71*w, 0.3*h);
+      ctx.stroke();
+      a.text("FULL!", 0.72, 0.9, 0.08);
+    },
+    scene3: function(ctx, w, h) {
+      // Morning, Noon, Night
+      var a = art(ctx, w, h);
+      a.line(0.333, 0.05, 0.333, 0.95); a.line(0.667, 0.05, 0.667, 0.95);
+      // Morning: sunrise on horizon
+      a.line(0.03, 0.72, 0.31, 0.72);
+      a.arc(0.167, 0.72, 0.16, Math.PI, Math.PI*2);
+      a.rays(0.167, 0.72, 0.2, 0.3, Math.PI*1.1, Math.PI*1.9, 4);
+      // Noon: high sun
+      a.line(0.36, 0.72, 0.64, 0.72);
+      a.circle(0.5, 0.35, 0.13);
+      a.rays(0.5, 0.35, 0.17, 0.25, 0, Math.PI*2*7/8, 7);
+      // Night: crescent moon + stars
+      a.line(0.69, 0.72, 0.97, 0.72);
+      var ctx2 = a.ctx;
+      ctx2.beginPath();
+      ctx2.arc(0.83*w, 0.36*h, 0.15*h, Math.PI*0.35, Math.PI*1.65);
+      ctx2.arc(0.87*w, 0.36*h, 0.12*h, Math.PI*1.55, Math.PI*0.45, true);
+      ctx2.closePath(); ctx2.stroke();
+      [[0.92,0.15],[0.74,0.14],[0.94,0.55]].forEach(function(p) {
+        a.line(p[0]-0.018, p[1], p[0]+0.018, p[1]); a.line(p[0], p[1]-0.035, p[0], p[1]+0.035);
+      });
+      a.text("MORNING", 0.167, 0.88, 0.075);
+      a.text("NOON", 0.5, 0.88, 0.075);
+      a.text("NIGHT", 0.833, 0.88, 0.075);
+    },
+    scene4: function(ctx, w, h) {
+      // Clouds dropping goodness on a dry wilderness, little sprouts coming up
+      var a = art(ctx, w, h);
+      [[0.28,0.16],[0.68,0.13]].forEach(function(c) {
+        a.arc(c[0]-0.06, c[1]+0.04, 0.07, Math.PI*0.5, Math.PI*1.5);
+        a.arc(c[0], c[1], 0.1, Math.PI*1.05, Math.PI*1.95);
+        a.arc(c[0]+0.06, c[1]+0.04, 0.07, Math.PI*1.5, Math.PI*0.5);
+        a.line(c[0]-0.06, c[1]+0.11, c[0]+0.06, c[1]+0.11);
+      });
+      [[0.2,0.38],[0.28,0.5],[0.36,0.36],[0.6,0.4],[0.68,0.52],[0.76,0.37],[0.48,0.46]].forEach(function(d) { a.drop(d[0], d[1], 0.045); });
+      // Dry ground (wavy)
+      var c = a.ctx;
+      c.beginPath(); c.moveTo(0.02*w, 0.8*h);
+      for (var x = 0.02; x <= 0.98; x += 0.08) c.quadraticCurveTo((x+0.04)*w, 0.76*h, (x+0.08)*w, 0.8*h);
+      c.stroke();
+      // Cactus
+      a.line(0.1, 0.8, 0.1, 0.5); a.line(0.13, 0.8, 0.13, 0.5); a.arc(0.115, 0.5, 0.03, Math.PI, Math.PI*2);
+      a.line(0.1, 0.66, 0.06, 0.66); a.line(0.06, 0.66, 0.06, 0.58);
+      a.line(0.13, 0.62, 0.17, 0.62); a.line(0.17, 0.62, 0.17, 0.54);
+      // Cracks in the dry ground
+      a.line(0.3, 0.86, 0.34, 0.92); a.line(0.34, 0.92, 0.32, 0.97);
+      a.line(0.84, 0.85, 0.8, 0.93);
+      // Sprouts popping up
+      [0.46, 0.58, 0.7].forEach(function(x) {
+        a.line(x, 0.8, x, 0.68);
+        a.ctx.beginPath(); a.ctx.ellipse((x-0.025)*w, 0.68*h, 0.025*w, 0.02*w, -0.6, 0, Math.PI*2); a.ctx.stroke();
+        a.ctx.beginPath(); a.ctx.ellipse((x+0.025)*w, 0.66*h, 0.025*w, 0.02*w, 0.6, 0, Math.PI*2); a.ctx.stroke();
+      });
+    },
+    scene5: function(ctx, w, h) {
+      // Smiling hills, sheep, corn, music notes
+      var a = art(ctx, w, h);
+      a.line(0.02, 0.92, 0.98, 0.92);
+      a.hill(0.0, 0.42, 0.45, 0.92);
+      a.hill(0.3, 0.72, 0.38, 0.92);
+      a.hill(0.6, 1.0, 0.48, 0.92);
+      // Faces on the hills
+      [[0.21,0.66],[0.51,0.6],[0.8,0.68]].forEach(function(f) {
+        a.dot(f[0]-0.03, f[1], 0.018); a.dot(f[0]+0.03, f[1], 0.018);
+        a.arc(f[0], f[1]+0.03, 0.06, Math.PI*0.2, Math.PI*0.8);
+      });
+      // Sheep on the middle hill
+      [[0.44,0.82],[0.58,0.84]].forEach(function(s) {
+        a.circle(s[0], s[1], 0.045); a.circle(s[0]+0.03, s[1]-0.01, 0.04); a.circle(s[0]-0.03, s[1]-0.01, 0.04);
+        a.circle(s[0]+0.065, s[1]-0.02, 0.025);
+        a.line(s[0]-0.02, s[1]+0.04, s[0]-0.02, s[1]+0.07); a.line(s[0]+0.02, s[1]+0.04, s[0]+0.02, s[1]+0.07);
+      });
+      // Corn stalks (right)
+      [0.9, 0.95].forEach(function(x) {
+        a.line(x, 0.92, x, 0.7);
+        a.ctx.beginPath(); a.ctx.ellipse(x*w, 0.66*h, 0.012*w, 0.05*h, 0, 0, Math.PI*2); a.ctx.stroke();
+        a.line(x, 0.82, x-0.03, 0.76); a.line(x, 0.78, x+0.03, 0.72);
+      });
+      // Music notes in the sky
+      [[0.12,0.2],[0.38,0.12],[0.66,0.2],[0.88,0.12]].forEach(function(n) {
+        a.ctx.beginPath(); a.ctx.ellipse(n[0]*w, (n[1]+0.12)*h, 0.018*w, 0.03*h, -0.4, 0, Math.PI*2); a.ctx.stroke();
+        a.line(n[0]+0.016, n[1]+0.11, n[0]+0.016, n[1]);
+        a.line(n[0]+0.016, n[1], n[0]+0.045, n[1]+0.04);
+      });
+      // Sun peeking
+      a.arc(0.5, 0.0, 0.18, 0, Math.PI);
+    }
+  };
+
+  // ===== Canvas plumbing =====
+  var PEN_COLORS = ["#000000","#E0516C","#FF8C42","#FFD93D","#3AC47B","#1478F0","#B07CD8","#8B5A2B"];
+
+  function sizeCanvas(canvas) {
+    var ratio = parseFloat(canvas.dataset.ratio) || 0.5;
+    var cssW = canvas.getBoundingClientRect().width || 520;
+    canvas.width = Math.round(cssW * 2);
+    canvas.height = Math.round(cssW * 2 * ratio);
+  }
+
+  function makePicker(containerId, onPick) {
+    var container = document.getElementById(containerId);
+    var first = true;
+    PEN_COLORS.forEach(function(c) {
+      var dot = document.createElement("div");
+      dot.className = "pen-dot" + (first ? " selected" : "");
+      first = false;
+      dot.style.background = c;
+      dot.addEventListener("click", function() {
+        onPick(c);
+        container.querySelectorAll(".pen-dot").forEach(function(d) { d.classList.remove("selected"); });
+        dot.classList.add("selected");
+      });
+      container.appendChild(dot);
+    });
+  }
+
+  function attachDrawing(canvas, getColor, widthFrac) {
+    var ctx = canvas.getContext("2d");
+    var drawing = false;
+    function getPos(e) {
+      var r = canvas.getBoundingClientRect();
+      var t = e.touches ? e.touches[0] : e;
+      return { x: (t.clientX - r.left) * (canvas.width / r.width), y: (t.clientY - r.top) * (canvas.height / r.height) };
+    }
+    function start(e) {
+      e.preventDefault(); drawing = true;
+      var p = getPos(e);
+      ctx.strokeStyle = getColor(); ctx.lineWidth = canvas.width * widthFrac;
+      ctx.lineCap = "round"; ctx.lineJoin = "round";
+      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + 0.1, p.y + 0.1); ctx.stroke();
+    }
+    function move(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      var p = getPos(e);
+      ctx.strokeStyle = getColor(); ctx.lineWidth = canvas.width * widthFrac;
+      ctx.lineTo(p.x, p.y); ctx.stroke();
+    }
+    function end() { drawing = false; }
+    canvas.addEventListener("mousedown", start);
+    canvas.addEventListener("mousemove", move);
+    canvas.addEventListener("mouseup", end);
+    canvas.addEventListener("mouseleave", end);
+    canvas.addEventListener("touchstart", start, {passive: false});
+    canvas.addEventListener("touchmove", move, {passive: false});
+    canvas.addEventListener("touchend", end);
+  }
+
+  // Scenes share one crayon color
+  var scenePenColor = PEN_COLORS[0];
+  makePicker("scene-pen-colors", function(c) { scenePenColor = c; });
+
+  function drawScene(id) {
+    var canvas = document.getElementById(id);
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    sceneDrawFunctions[id](ctx, canvas.width, canvas.height);
+  }
+
+  function clearAllScenes() {
+    for (var i = 1; i <= 5; i++) drawScene("scene" + i);
+  }
+
+  for (var i = 1; i <= 5; i++) {
+    var sc = document.getElementById("scene" + i);
+    sizeCanvas(sc);
+    drawScene("scene" + i);
+    attachDrawing(sc, function() { return scenePenColor; }, 0.014);
+  }
+
+  // Trace + prayer canvases
+  function drawVerseText(canvas) {
+    var ctx = canvas.getContext("2d"), w = canvas.width, h = canvas.height;
+    ctx.fillStyle = "#D8D8D8";
+    ctx.textAlign = "center";
+    ctx.font = "bold " + Math.round(h * 0.2) + "px Georgia, serif";
+    ctx.fillText("The little hills rejoice", w / 2, h * 0.36);
+    ctx.fillText("on every side", w / 2, h * 0.64);
+    ctx.font = "italic " + Math.round(h * 0.12) + "px Georgia, serif";
+    ctx.fillText("— Psalm 65:12", w / 2, h * 0.88);
+  }
+
+  function clearCanvas(id) {
+    var canvas = document.getElementById(id);
+    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+    if (id === "trace-canvas") drawVerseText(canvas);
+  }
+
+  var tracePen = PEN_COLORS[0], prayerPen = PEN_COLORS[0];
+  var trace = document.getElementById("trace-canvas");
+  sizeCanvas(trace); drawVerseText(trace);
+  attachDrawing(trace, function() { return tracePen; }, 0.008);
+  makePicker("pen-colors", function(c) { tracePen = c; });
+
+  var prayer = document.getElementById("prayer-canvas");
+  sizeCanvas(prayer);
+  attachDrawing(prayer, function() { return prayerPen; }, 0.01);
+  makePicker("prayer-pen-colors", function(c) { prayerPen = c; });
+</script>
+</body>
+</html>

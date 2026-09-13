@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Take the Quiz — Rejoicing on Every Side</title>
+<meta name="description" content="Short interactive quiz on StayTheWay Ministry's teaching: Rejoicing on Every Side — hear the Father, name the drain, let it drop." />
+<meta property="og:type" content="website">
+<meta property="og:title" content="Teaching Quiz — Rejoicing on Every Side">
+<meta property="og:description" content="8 questions on The Reset: Proverbs 13, Deuteronomy 6, Matthew 4:4, Romans 12:2, and Psalm 65:11–13.">
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<meta property="og:url" content="https://staytheway.com/teachings/rejoicing/quiz.html">
+<meta property="og:site_name" content="StayTheWay">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Teaching Quiz — Rejoicing on Every Side">
+<meta name="twitter:description" content="8 questions on The Reset: Proverbs 13, Deuteronomy 6, Matthew 4:4, Romans 12:2, and Psalm 65:11–13.">
+<style>
+  :root {
+    --navy: #000014;
+    --navy-2: #06112B;
+    --blue: #1E9BFF;
+    --sky: #00BFFF;
+    --chrome: #DCDCDC;
+    --white: #FFFFFF;
+    --green: #3AC47B;
+    --red:   #E0516C;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--navy); color: var(--chrome);
+    font-family: "Helvetica Neue", Arial, sans-serif; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+  header { text-align: center; padding-bottom: 1.25rem;
+    border-bottom: 3px solid var(--blue); position: relative; }
+  header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 3px;
+    background: var(--white); }
+  header .kicker { color: var(--sky); letter-spacing: 0.35em; font-weight: 900;
+    font-size: 0.75rem; margin-bottom: 0.5rem; }
+  header h1 { font-family: Georgia, serif; color: var(--white);
+    margin: 0; font-size: clamp(1.7rem, 6vw, 2.4rem); }
+  header .sub { color: var(--sky); font-style: italic; margin-top: 0.5rem;
+    font-size: clamp(0.9rem, 3vw, 1.05rem); }
+
+  .meta { display: flex; justify-content: space-between; align-items: center;
+    margin: 1.25rem 0 0.75rem; font-size: 0.85rem; color: var(--sky);
+    letter-spacing: 0.15em; text-transform: uppercase; font-weight: 900; }
+  .progress { height: 6px; background: rgba(30,155,255,0.2); border-radius: 3px; overflow: hidden;
+    margin-bottom: 1.5rem; }
+  .progress > div { height: 100%; background: linear-gradient(90deg, var(--blue), var(--sky));
+    width: 0%; transition: width 0.3s ease; }
+
+  .question {
+    background: var(--navy-2); border: 1px solid var(--blue);
+    border-left: 6px solid var(--white);
+    padding: 1.25rem 1.25rem 1.5rem; margin-bottom: 1rem;
+  }
+  .q-tag { display: inline-block; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.15em;
+    color: var(--navy); background: var(--sky); padding: 2px 8px; margin-bottom: 0.7rem; }
+  .q-text { font-family: Georgia, serif; font-size: clamp(1.1rem, 4vw, 1.3rem);
+    color: var(--white); font-weight: 700; margin: 0 0 1.1rem; line-height: 1.35; }
+
+  .options { display: grid; gap: 0.55rem; }
+  .opt {
+    display: block; padding: 0.85rem 1rem; background: rgba(30,155,255,0.07);
+    border: 2px solid rgba(30,155,255,0.45); color: var(--chrome);
+    cursor: pointer; font-size: 1rem; line-height: 1.4;
+    text-align: left; font-family: inherit; width: 100%;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .opt:hover { background: rgba(30,155,255,0.16); }
+  .opt.correct { background: rgba(58,196,123,0.18); border-color: var(--green);
+    color: var(--white); font-weight: 700; }
+  .opt.wrong { background: rgba(224,81,108,0.18); border-color: var(--red); color: var(--white); }
+  .opt[disabled] { cursor: default; }
+
+  .feedback {
+    margin-top: 1rem; padding: 0.85rem 1rem;
+    font-size: 0.95rem; line-height: 1.5;
+    background: var(--navy); border-left: 4px solid var(--sky);
+  }
+  .feedback.correct { border-left-color: var(--green); }
+  .feedback.wrong   { border-left-color: var(--red); }
+  .feedback strong { color: var(--white); }
+
+  .nav { text-align: center; margin-top: 1rem; }
+  .btn {
+    background: var(--blue); color: var(--white); border: 2px solid var(--blue);
+    padding: 0.8rem 1.6rem; font-weight: 900; letter-spacing: 0.08em;
+    font-size: 0.95rem; cursor: pointer; font-family: inherit;
+    border-radius: 4px;
+  }
+  .btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--sky); border-color: var(--sky); }
+
+  .result {
+    text-align: center; padding: 2rem 1.25rem;
+    background: var(--navy-2); border: 1px solid var(--blue); border-left: 6px solid var(--white);
+  }
+  .result h2 { font-family: Georgia, serif; color: var(--white);
+    font-size: clamp(1.8rem, 6vw, 2.5rem); margin: 0 0 0.5rem; }
+  .result .score { font-size: 3rem; font-family: "Arial Black", sans-serif;
+    color: var(--blue); margin: 0.5rem 0; }
+  .result .score small { font-size: 1.2rem; color: var(--chrome); font-weight: 400; }
+  .result p { color: var(--chrome); line-height: 1.5; font-family: Georgia, serif;
+    font-style: italic; }
+  .result .verse { color: var(--sky); font-style: italic; margin-top: 1.25rem;
+    font-family: Georgia, serif; }
+
+  footer { margin-top: 2.5rem; text-align: center; color: var(--chrome);
+    border-top: 1px solid rgba(30,155,255,0.3); padding-top: 1.5rem; font-size: 0.85rem; }
+  footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+  footer .back { display: block; margin-bottom: 0.6rem; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">STAYTHEWAY MINISTRY  &bull;  TAKE THE QUIZ</div>
+    <h1>Rejoicing on Every Side</h1>
+    <div class="sub">The Reset &mdash; let's see what stuck</div>
+  </header>
+
+  <div id="quiz-area">
+    <div class="meta">
+      <span id="counter">Question 1 of 8</span>
+      <span id="score-display">Score 0</span>
+    </div>
+    <div class="progress"><div id="progress-bar"></div></div>
+
+    <div class="question">
+      <div class="q-tag" id="q-tag"></div>
+      <h2 class="q-text" id="q-text"></h2>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback" hidden></div>
+    </div>
+
+    <div class="nav">
+      <button class="btn" id="next-btn" disabled>NEXT QUESTION</button>
+    </div>
+  </div>
+
+  <div id="result-area" hidden>
+    <div class="result">
+      <h2>Well done.</h2>
+      <div class="score" id="final-score">0<small> / 8</small></div>
+      <p id="final-message"></p>
+      <div class="verse">&ldquo;The little hills rejoice on every side.&rdquo;<br/>&mdash; Psalm 65:12 (KJV)</div>
+      <div class="nav" style="margin-top:1.5rem;">
+        <button class="btn ghost" onclick="location.reload()">RETAKE QUIZ</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a class="back" href="/teachings/rejoicing/">&larr; Back to the teaching</a>
+    <div>StayTheWay Ministry  &bull;  <a href="https://staytheway.com">staytheway.com</a></div>
+  </footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    tag: "STEP 1 · HEAR THE FATHER",
+    q: "Proverbs 13:1 — what sets the wise son apart from the scorner?",
+    options: [
+      "He is the smartest one in the room",
+      "He hears his father’s instruction",
+      "He never makes mistakes",
+      "He has memorized the most scripture"
+    ],
+    correct: 1,
+    explain: "Proverbs 13:1 — “A wise son heareth his father’s instruction: but a scorner heareth not rebuke.” The wise son isn’t the smartest. He’s the one who stays close enough to still hear."
+  },
+  {
+    tag: "STEP 1 · HEAR THE FATHER",
+    q: "Deuteronomy 6:7 says to talk of God’s words when you…",
+    options: [
+      "Are gathered for worship on the Sabbath",
+      "Feel spiritual enough",
+      "Sit in your house, walk by the way, lie down, and rise up",
+      "Face a crisis"
+    ],
+    correct: 2,
+    explain: "Deuteronomy 6:7 — Woven through the whole day, not bolted onto one hour of it. Psalm 55:17 and Daniel 6:10 keep the same rhythm: morning, noon, and night."
+  },
+  {
+    tag: "STEP 1 · HEAR THE FATHER",
+    q: "Matthew 4:4 — man shall not live by bread alone, but by…",
+    options: [
+      "Every word that proceedeth out of the mouth of God",
+      "Faith and good works",
+      "The traditions of the elders",
+      "Manna from heaven"
+    ],
+    correct: 0,
+    explain: "Matthew 4:4 (quoting Deuteronomy 8:3) — Food recharges the body. Only the Word reaches the rest of you. You can be stuffed and still be empty."
+  },
+  {
+    tag: "STEP 2 · NAME THE DRAIN",
+    q: "Proverbs 13:12 — what does hope deferred do to the heart?",
+    options: [
+      "Makes it strong",
+      "Makes it sick",
+      "Makes it patient",
+      "Makes it wise"
+    ],
+    correct: 1,
+    explain: "Proverbs 13:12 — “Hope deferred maketh the heart sick: but when the desire cometh, it is a tree of life.” Keep reading: verse 14 calls the law of the wise a fountain of life."
+  },
+  {
+    tag: "STEP 2 · NAME THE DRAIN",
+    q: "Proverbs 17:22 — “A merry heart doeth good like a medicine: but a broken spirit…”",
+    options: [
+      "Heals in time",
+      "Seeketh the Lord",
+      "Drieth the bones",
+      "Walketh alone"
+    ],
+    correct: 2,
+    explain: "Proverbs 17:22 — Mixed-up emotions aren’t “just in your head.” Proverbs 14:30 adds that envy is the rottenness of the bones. Scripture tied the heart to the body long before modern medicine did."
+  },
+  {
+    tag: "STEP 2 · NAME THE DRAIN",
+    q: "Romans 12:2 — how are we transformed?",
+    options: [
+      "By trying harder to feel better",
+      "By the renewing of your mind",
+      "By taking the world’s advice",
+      "By avoiding every hard season"
+    ],
+    correct: 1,
+    explain: "Romans 12:2 — You don’t decorate the crooked path. Emotions need rooted truth that doesn’t shift with the mood. The Word is the regulator."
+  },
+  {
+    tag: "STEP 3 · LET IT DROP",
+    q: "Psalm 65:11–12 — God’s paths drop fatness. Where do they drop?",
+    options: [
+      "Only on the fertile valleys",
+      "On the temple courts",
+      "Upon the pastures of the wilderness",
+      "On people who already have it together"
+    ],
+    correct: 2,
+    explain: "Psalm 65:12 — It lands on the WILDERNESS, not the already-pretty garden. Verse 11 is God’s action first; verse 13 is the result: the land shouts for joy and sings."
+  },
+  {
+    tag: "APPLY IT",
+    q: "Your joy has gone quiet and little complaints are getting loud. Based on this teaching, where does the reset start?",
+    options: [
+      "Wait for your mood to change on its own",
+      "Get back to hearing the Father with little check-ins morning, noon, and night",
+      "Become a different person",
+      "Grit your teeth and push through the feeling"
+    ],
+    correct: 1,
+    explain: "The reset doesn’t start with a mood change. It starts with hearing. Stay plugged in, and His goodness drops on the dry place until the little hills rejoice on every side."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const counter   = document.getElementById("counter");
+const scoreDisp = document.getElementById("score-display");
+const progBar   = document.getElementById("progress-bar");
+const qTag      = document.getElementById("q-tag");
+const qText     = document.getElementById("q-text");
+const optsEl    = document.getElementById("options");
+const feedback  = document.getElementById("feedback");
+const nextBtn   = document.getElementById("next-btn");
+
+function render() {
+  const q = QUESTIONS[current];
+  counter.textContent = `Question ${current + 1} of ${QUESTIONS.length}`;
+  scoreDisp.textContent = `Score ${score}`;
+  progBar.style.width = `${(current / QUESTIONS.length) * 100}%`;
+  qTag.textContent = q.tag;
+  qText.textContent = q.q;
+  optsEl.innerHTML = "";
+  q.options.forEach((text, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "opt";
+    btn.textContent = text;
+    btn.addEventListener("click", () => pick(i, btn));
+    optsEl.appendChild(btn);
+  });
+  feedback.hidden = true; feedback.className = "feedback";
+  nextBtn.disabled = true;
+  nextBtn.textContent = (current === QUESTIONS.length - 1) ? "SEE RESULTS" : "NEXT QUESTION";
+  answered = false;
+}
+
+function pick(i, btn) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const buttons = [...optsEl.querySelectorAll(".opt")];
+  buttons.forEach(b => b.disabled = true);
+  buttons[q.correct].classList.add("correct");
+  if (i === q.correct) {
+    score += 1;
+    feedback.className = "feedback correct";
+    feedback.innerHTML = `<strong>Right.</strong> ${q.explain}`;
+  } else {
+    btn.classList.add("wrong");
+    feedback.className = "feedback wrong";
+    feedback.innerHTML = `<strong>Not quite.</strong> ${q.explain}`;
+  }
+  feedback.hidden = false;
+  scoreDisp.textContent = `Score ${score}`;
+  nextBtn.disabled = false;
+}
+
+nextBtn.addEventListener("click", () => {
+  current += 1;
+  if (current >= QUESTIONS.length) { showResult(); return; }
+  render();
+});
+
+function showResult() {
+  document.getElementById("quiz-area").hidden = true;
+  document.getElementById("result-area").hidden = false;
+  document.getElementById("final-score").innerHTML = `${score}<small> / ${QUESTIONS.length}</small>`;
+  const msg = document.getElementById("final-message");
+  if (score === QUESTIONS.length) {
+    msg.textContent = "Perfect score. Now go hear the Father tomorrow morning, again at noon, and again tonight.";
+  } else if (score >= Math.ceil(QUESTIONS.length * 0.75)) {
+    msg.textContent = "Strong work. Stay plugged in and let His goodness drop on the dry place.";
+  } else if (score >= Math.ceil(QUESTIONS.length * 0.5)) {
+    msg.textContent = "Good start. Read Proverbs 13 and Psalm 65:11–13 again this week, in more than one translation.";
+  } else {
+    msg.textContent = "No condemnation. The wilderness is exactly where His paths drop fatness. Try again.";
+  }
+}
+
+render();
+</script>
+</body>
+</html>
