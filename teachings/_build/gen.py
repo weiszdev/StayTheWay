@@ -50,6 +50,7 @@ RES = {
   "bingo.html":        ("\U0001F3AF", "Bible Bingo",    "Play along live — mark a square every time you hear the word.", ""),
   "quiz.html":         ("\U0001F4D6", "Teaching Quiz",  "See what stuck. Instant feedback on every answer and a final score.", ""),
   "prayer.html":       ("\U0001F64F", "Prayer Request", "Confidential, straight to the prayer team. Double opt-in verification.", ""),
+  "kids/":             ("\U0001F33C", "The Joy Trail",  "Walk the story, learn Psalm 65:12 by heart, then play — the hills bloom as you go.", "kids"),
   "kids-quiz.html":    ("⭐",      "Kids Quiz",      "Swipe to answer — fun true-or-false questions for ages 5–10.", "kids"),
   "kids.html":         ("⭐",      "Kids Quiz",      "Swipe to answer — fun true-or-false questions for ages 5–10.", "kids"),
   "kids-bingo.html":   ("\U0001F3B2", "Kids Bingo",     "A 4×4 emoji board with big buttons made for little hands.", "kids"),
@@ -58,7 +59,7 @@ RES = {
   "kids-game.html":    ("\U0001F579", "Kids Game",      "One more game to play along with the teaching.", "kids"),
 }
 ORDER   = ["bingo.html","quiz.html","prayer.html"]
-K_ORDER = ["kids-quiz.html","kids.html","kids-bingo.html","kids-activity.html","coloring.html","kids-game.html"]
+K_ORDER = ["kids/","kids-quiz.html","kids.html","kids-bingo.html","kids-activity.html","coloring.html","kids-game.html"]
 SKIP    = {"index.html","verified.html","qr-codes.html"}
 
 ENT = [("&mdash;","—"),("&ndash;","–"),("&amp;","&"),("&ldquo;","“"),("&rdquo;","”"),

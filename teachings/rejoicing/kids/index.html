@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Joy Trail — StayTheWay Kids</title>
+<meta name="description" content="Walk the Joy Trail: a story, a Psalm 65:12 memory-verse trainer, and a quiz for kids — from Rejoicing on Every Side." />
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Joy Trail — StayTheWay Kids">
+<meta property="og:description" content="Walk the story, learn Psalm 65:12 by heart, then play. The hills bloom as you go!">
+<meta property="og:image" content="https://res.cloudinary.com/dyq7rnjjw/image/upload/c_fill,w_1200,h_630,g_center,q_auto,f_jpg/v1775094378/IMG_2196_waiddo.png">
+<meta property="og:url" content="https://staytheway.com/teachings/rejoicing/kids/">
+<meta property="og:site_name" content="StayTheWay">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-high:#6FB6E0;
+    --sky-horizon:#FCE1B0;
+    --sand:#E3C994;
+    --meadow:#79B978;
+    --sun-gold:#FFC94A;
+    --sun-core:#FFE08A;
+    --poppy:#F2705A;
+    --ink:#3B2E22;
+    --ink-soft:#6B5A45;
+    --card:#FFFFFF;
+    --card-line:#EEE2C8;
+    --focus:#2E6F9E;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(180deg,var(--sky-high) 0%, #9ED2EC 32%, var(--sky-horizon) 62%, var(--sky-horizon) 100%);
+    font-family:"Nunito",system-ui,sans-serif;
+    color:var(--ink);
+    padding-block:28px 60px;
+  }
+  h1,h2,h3,.display{
+    font-family:"Baloo 2","Nunito",system-ui,sans-serif;
+    text-wrap:balance;
+  }
+  .scene{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .sun{
+    position:absolute;
+    width:min(20vw,120px);
+    height:min(20vw,120px);
+    border-radius:50%;
+    background:radial-gradient(circle at 38% 34%, var(--sun-core), var(--sun-gold) 70%);
+    box-shadow:0 0 60px 10px rgba(255,201,74,.55);
+    left:14%;
+    top:58%;
+    transition:left 1.1s cubic-bezier(.4,0,.2,1), top 1.1s cubic-bezier(.4,0,.2,1);
+  }
+  .hills{position:absolute; left:0; right:0; bottom:-2px; width:100%; height:auto;}
+  .hills.meadow{opacity:0; transition:opacity 1.4s ease;}
+  .flower{transition:opacity 1.4s ease; opacity:0;}
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:600px;
+    margin:0 auto;
+    padding-inline:18px;
+  }
+  header{text-align:center; margin-bottom:18px;}
+  .eyebrow{
+    display:inline-block;
+    font-family:"Baloo 2";
+    font-size:13px;
+    letter-spacing:.14em;
+    font-weight:700;
+    color:#8a5a2e;
+    background:rgba(255,255,255,.6);
+    border:1.5px solid var(--card-line);
+    border-radius:999px;
+    padding:4px 14px;
+    margin-bottom:10px;
+  }
+  h1{font-size:clamp(30px,7vw,42px); margin:0 0 6px; color:var(--ink); font-weight:800;}
+  header p{margin:0; font-size:16px; color:var(--ink-soft); font-weight:700;}
+  nav.trail{
+    display:flex;
+    gap:10px;
+    background:rgba(255,255,255,.55);
+    border:1.5px solid rgba(255,255,255,.8);
+    border-radius:20px;
+    padding:8px;
+    margin:20px 0 22px;
+  }
+  nav.trail button{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    background:transparent;
+    border:none;
+    border-radius:14px;
+    padding:10px 4px 8px;
+    font-family:"Baloo 2";
+    font-size:14px;
+    font-weight:700;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  nav.trail button .ic{width:26px; height:26px; line-height:1;}
+  nav.trail button[aria-pressed="true"]{
+    background:var(--card);
+    color:var(--ink);
+    box-shadow:0 4px 0 var(--card-line);
+  }
+  nav.trail button .done{
+    font-size:11px;
+    color:#3f8a4a;
+    font-weight:800;
+  }
+  nav.trail button:focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+  main{position:relative;}
+  .panel{display:none;}
+  .panel.active{display:block; animation:rise .5s ease;}
+  @keyframes rise{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .card{
+    background:var(--card);
+    border:1.5px solid var(--card-line);
+    border-radius:22px;
+    padding:22px;
+    box-shadow:0 10px 0 rgba(59,46,34,.06);
+    margin-bottom:16px;
+  }
+  .card h2{font-size:22px; margin:0 0 10px; color:var(--ink);}
+  .card p{font-size:16.5px; line-height:1.55; margin:0 0 8px; color:var(--ink);}
+  .story-icon{
+    width:64px; height:64px; margin-bottom:10px;
+  }
+  .story-nav{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:14px;}
+  .dots{display:flex; gap:6px;}
+  .dots span{width:8px; height:8px; border-radius:50%; background:var(--card-line);}
+  .dots span.on{background:var(--sun-gold);}
+  button.btn{
+    font-family:"Baloo 2";
+    font-weight:700;
+    font-size:16px;
+    border:none;
+    border-radius:14px;
+    padding:12px 20px;
+    background:var(--sun-gold);
+    color:#3d2a06;
+    cursor:pointer;
+    box-shadow:0 4px 0 #C89426;
+  }
+  button.btn:active{transform:translateY(3px); box-shadow:0 1px 0 #C89426;}
+  button.btn.ghost{background:transparent; box-shadow:none; color:var(--ink-soft); border:1.5px solid var(--card-line);}
+  button.btn:focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+  button.btn:disabled{opacity:.4; cursor:default; box-shadow:none;}
+  .verse-ref{
+    font-family:"Baloo 2"; font-weight:700; font-size:13px; letter-spacing:.08em;
+    color:#8a5a2e; text-transform:uppercase; margin-bottom:10px; display:block;
+  }
+  .stars{display:flex; gap:6px; margin:2px 0 16px;}
+  .stars .star{font-size:20px; opacity:.25;}
+  .stars .star.lit{opacity:1;}
+  .verse-box{
+    display:flex; flex-wrap:wrap; gap:8px;
+    font-family:"Baloo 2"; font-size:19px; font-weight:700;
+    line-height:1.6; margin-bottom:16px;
+  }
+  .chip{
+    background:#FBF3DE; border:1.5px solid var(--card-line); border-radius:10px;
+    padding:4px 10px; color:var(--ink);
+  }
+  .chip.blank{
+    background:#fff; border:1.5px dashed #C9B98A; color:#a99263; cursor:pointer;
+    letter-spacing:.03em;
+  }
+  .chip.blank:hover{background:#FFF9EA;}
+  .round-label{font-weight:800; font-family:"Baloo 2"; margin-bottom:4px; display:block;}
+  .round-sub{color:var(--ink-soft); font-size:14.5px; margin-bottom:14px;}
+  .scramble-slots{
+    display:flex; flex-wrap:wrap; gap:8px; min-height:52px;
+    padding:10px; background:#FBF3DE; border-radius:14px; margin-bottom:14px;
+    border:1.5px solid var(--card-line);
+  }
+  .scramble-slots .slot{
+    min-width:34px; height:32px; border-bottom:3px solid #C9B98A;
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Baloo 2"; font-weight:700; font-size:15px; color:var(--ink); padding:0 6px;
+  }
+  .scramble-bank{display:flex; flex-wrap:wrap; gap:8px;}
+  .word-btn{
+    font-family:"Baloo 2"; font-weight:700; font-size:15px;
+    background:var(--card); border:1.5px solid var(--card-line); border-radius:10px;
+    padding:7px 12px; cursor:pointer; color:var(--ink);
+  }
+  .word-btn:hover{background:#FFF9EA;}
+  .word-btn.used{visibility:hidden;}
+  .word-btn:focus-visible{outline:3px solid var(--focus); outline-offset:2px;}
+  @keyframes shake{
+    10%,90%{transform:translateX(-2px);} 20%,80%{transform:translateX(3px);}
+    30%,50%,70%{transform:translateX(-5px);} 40%,60%{transform:translateX(5px);}
+  }
+  .shake{animation:shake .5s;}
+  .win-banner{
+    display:none;
+    text-align:center; background:linear-gradient(180deg,#FFF7E0,#FFEFC4);
+    border:1.5px solid var(--card-line); border-radius:18px; padding:22px; margin-top:6px;
+  }
+  .win-banner.show{display:block;}
+  .win-banner h3{margin:6px 0 4px; font-size:22px;}
+  .quiz-progress{display:flex; gap:6px; margin-bottom:16px;}
+  .quiz-progress span{flex:1; height:6px; border-radius:4px; background:var(--card-line);}
+  .quiz-progress span.on{background:var(--sun-gold);}
+  .quiz-progress span.right{background:#79B978;}
+  .quiz-progress span.wrong{background:var(--poppy);}
+  .quiz-choice{
+    display:block; width:100%; text-align:left;
+    font-family:"Nunito"; font-weight:800; font-size:16px;
+    background:#fff; border:1.5px solid var(--card-line); border-radius:14px;
+    padding:13px 16px; margin-bottom:10px; cursor:pointer; color:var(--ink);
+  }
+  .quiz-choice:hover{background:#FFF9EA;}
+  .quiz-choice.correct{background:#E7F5E6; border-color:#79B978;}
+  .quiz-choice.wrong{background:#FBEAE6; border-color:var(--poppy);}
+  .quiz-feedback{font-size:15.5px; font-weight:700; margin:6px 0 4px; min-height:22px;}
+  .quiz-feedback.good{color:#3f8a4a;}
+  .quiz-feedback.meh{color:#a5622f;}
+  details.grownup{
+    background:rgba(255,255,255,.7); border:1.5px solid var(--card-line);
+    border-radius:16px; padding:14px 16px; margin-top:20px; font-size:14.5px; color:var(--ink-soft);
+  }
+  details.grownup summary{
+    font-family:"Baloo 2"; font-weight:700; color:var(--ink); cursor:pointer; font-size:15px;
+  }
+  details.grownup p{line-height:1.55; margin:10px 0 0;}
+  footer{text-align:center; margin-top:22px; font-size:12px; letter-spacing:.1em; color:#8a5a2e; font-weight:700; text-transform:uppercase;}
+  .confetti{position:fixed; top:-10px; z-index:5; border-radius:2px; pointer-events:none;}
+  @media (max-width:420px){
+    .card{padding:18px;}
+    .verse-box{font-size:17px;}
+  }
+</style>
+</head>
+<body>
+<div class="scene" aria-hidden="true">
+  <svg class="hills sand" viewBox="0 0 800 220" preserveAspectRatio="none">
+    <path d="M0,140 C120,90 220,170 340,120 C460,70 560,150 680,110 C740,90 780,100 800,110 L800,220 L0,220 Z" fill="#E3C994"></path>
+    <path d="M0,180 C140,150 260,200 420,170 C560,145 680,190 800,165 L800,220 L0,220 Z" fill="#D8BB80"></path>
+  </svg>
+  <svg class="hills meadow" id="meadowHills" viewBox="0 0 800 220" preserveAspectRatio="none">
+    <path d="M0,140 C120,90 220,170 340,120 C460,70 560,150 680,110 C740,90 780,100 800,110 L800,220 L0,220 Z" fill="#8FC98A"></path>
+    <path d="M0,180 C140,150 260,200 420,170 C560,145 680,190 800,165 L800,220 L0,220 Z" fill="#6FAE6C"></path>
+    <g id="flowers">
+      <circle class="flower" cx="90" cy="176" r="5" fill="#F2705A"></circle>
+      <circle class="flower" cx="150" cy="160" r="5" fill="#FFC94A"></circle>
+      <circle class="flower" cx="260" cy="150" r="5" fill="#F2705A"></circle>
+      <circle class="flower" cx="330" cy="168" r="5" fill="#FFFFFF"></circle>
+      <circle class="flower" cx="420" cy="146" r="5" fill="#FFC94A"></circle>
+      <circle class="flower" cx="500" cy="164" r="5" fill="#F2705A"></circle>
+      <circle class="flower" cx="600" cy="140" r="5" fill="#FFFFFF"></circle>
+      <circle class="flower" cx="690" cy="158" r="5" fill="#FFC94A"></circle>
+      <circle class="flower" cx="740" cy="148" r="5" fill="#F2705A"></circle>
+    </g>
+  </svg>
+  <div class="sun" id="sun"></div>
+</div>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">STAYTHEWAY KIDS</span>
+    <h1>The Joy Trail</h1>
+    <p>Psalm 65 &amp; Proverbs 13 — for kids</p>
+  </header>
+
+  <nav class="trail" role="tablist" aria-label="Trail stops">
+    <button role="tab" id="tab-story" aria-pressed="true" onclick="goTo('story')">
+      <svg class="ic" viewBox="0 0 32 32"><circle cx="16" cy="20" r="7" fill="#FFC94A"/><g stroke="#E39A1F" stroke-width="2.4" stroke-linecap="round"><line x1="16" y1="6" x2="16" y2="10"/><line x1="6" y1="20" x2="9" y2="20"/><line x1="23" y1="20" x2="26" y2="20"/><line x1="9" y1="13" x2="11.2" y2="15.2"/><line x1="23" y1="13" x2="20.8" y2="15.2"/></g><path d="M2 27c4-5 8-5 12-1c4-4 8-4 12 1" fill="none" stroke="#79B978" stroke-width="2.4" stroke-linecap="round"/></svg>
+      Story<span class="done" id="done-story"></span>
+    </button>
+    <button role="tab" id="tab-verse" aria-pressed="false" onclick="goTo('verse')">
+      <svg class="ic" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="#FFC94A"/><g stroke="#E39A1F" stroke-width="2.4" stroke-linecap="round"><line x1="16" y1="2" x2="16" y2="6"/><line x1="16" y1="26" x2="16" y2="30"/><line x1="2" y1="16" x2="6" y2="16"/><line x1="26" y1="16" x2="30" y2="16"/><line x1="6" y1="6" x2="9" y2="9"/><line x1="23" y1="23" x2="26" y2="26"/><line x1="26" y1="6" x2="23" y2="9"/><line x1="9" y1="23" x2="6" y2="26"/></g></svg>
+      Verse<span class="done" id="done-verse"></span>
+    </button>
+    <button role="tab" id="tab-play" aria-pressed="false" onclick="goTo('play')">
+      <svg class="ic" viewBox="0 0 32 32"><circle cx="16" cy="18" r="7" fill="#F2705A"/><path d="M2 27c4-5 8-5 12-1c4-4 8-4 12 1" fill="none" stroke="#8a5a2e" stroke-width="2.4" stroke-linecap="round"/><g stroke="#D9553C" stroke-width="2.2" stroke-linecap="round"><line x1="16" y1="6" x2="16" y2="9"/><line x1="6" y1="18" x2="9" y2="18"/><line x1="23" y1="18" x2="26" y2="18"/></g></svg>
+      Play<span class="done" id="done-play"></span>
+    </button>
+  </nav>
+
+  <main>
+    <!-- STORY PANEL -->
+    <section class="panel active" id="panel-story">
+      <div class="card" id="storyCard">
+        <!-- filled by JS -->
+      </div>
+      <div class="story-nav">
+        <button class="btn ghost" id="storyBack" onclick="storyStep(-1)">Back</button>
+        <div class="dots" id="storyDots"></div>
+        <button class="btn" id="storyNext" onclick="storyStep(1)">Next</button>
+      </div>
+    </section>
+
+    <!-- VERSE PANEL -->
+    <section class="panel" id="panel-verse">
+      <div class="card">
+        <span class="verse-ref">Psalm 65:12 · KJV</span>
+        <div class="stars" id="verseStars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <span class="round-label" id="roundLabel">Round 1: Read It Together</span>
+        <span class="round-sub" id="roundSub">Read the whole verse out loud, then tap Next.</span>
+        <div class="verse-box" id="verseBox"></div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn ghost" id="verseBack" onclick="verseStep(-1)" disabled>Back</button>
+          <button class="btn" id="verseNext" onclick="verseStep(1)">Next Round</button>
+        </div>
+      </div>
+
+      <div class="card" id="scrambleCard" style="display:none;">
+        <span class="round-label">Final Stop: Build It From Your Heart!</span>
+        <span class="round-sub">Tap the words in the right order.</span>
+        <div class="scramble-slots" id="scrambleSlots"></div>
+        <div class="scramble-bank" id="scrambleBank"></div>
+        <div class="win-banner" id="verseWin">
+          <div style="font-size:40px;">🌼🌻🌼</div>
+          <h3>You know it by heart!</h3>
+          <p>Psalm 65:12 — even the dry hills sing for joy. So can you.</p>
+          <button class="btn" onclick="goTo('play')">Go Play &amp; Learn →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLAY PANEL -->
+    <section class="panel" id="panel-play">
+      <div class="card">
+        <div class="quiz-progress" id="quizProgress"></div>
+        <div id="quizArea"></div>
+      </div>
+    </section>
+  </main>
+
+  <details class="grownup">
+    <summary>For Parents &amp; Teachers</summary>
+    <p><strong>Today's big idea:</strong> staying close to God — every day, not just Sunday — is what keeps joy flowing, even in hard "wilderness" seasons. Anchor verse: Psalm 65:11–13, with Proverbs 13:1 on staying near enough to hear the Father's instruction.</p>
+    <p>Walk the trail together: read the Story stops out loud, say the Verse rounds together (little ones can repeat after you), then play the quiz as a family. The hills bloom as your child moves through the trail — a picture of Psalm 65:12.</p>
+  </details>
+
+  <footer><a href="/teachings/rejoicing/" style="display:inline-block;margin-bottom:8px;color:#2E6F9E;text-decoration:none;letter-spacing:.06em;">&larr; Back to the teaching</a><br>StayTheWay · Psalm 65 · Proverbs 13</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var SUN_POS = {
+    story:{left:'14%', top:'58%'},
+    verse:{left:'50%', top:'14%'},
+    play:{left:'82%', top:'56%'}
+  };
+
+  var state = {
+    stage:'story',
+    storyIndex:0,
+    verseRound:0,      // 0..3, then 4 = scramble
+    scrambleDone:false,
+    quizIndex:0,
+    quizScore:0,
+    quizAnswered:false,
+    joy:0
+  };
+
+  try{
+    var saved = JSON.parse(localStorage.getItem('joytrail-progress-v1')||'null');
+    if(saved && typeof saved==='object'){
+      state.joy = saved.joy||0;
+      state.verseRound = saved.verseRound||0;
+      state.scrambleDone = !!saved.scrambleDone;
+      state.quizScore = saved.quizScore||0;
+    }
+  }catch(e){}
+
+  function saveProgress(){
+    try{
+      localStorage.setItem('joytrail-progress-v1', JSON.stringify({
+        joy:state.joy, verseRound:state.verseRound, scrambleDone:state.scrambleDone, quizScore:state.quizScore
+      }));
+    }catch(e){}
+  }
+
+  function addJoy(amount){
+    state.joy = Math.max(0, Math.min(1, state.joy + amount));
+    document.getElementById('meadowHills').style.opacity = state.joy;
+    var flowers = document.querySelectorAll('.flower');
+    flowers.forEach(function(f,i){
+      f.style.opacity = state.joy > (i/flowers.length) ? 1 : 0;
+    });
+    saveProgress();
+  }
+
+  function goTo(stage){
+    state.stage = stage;
+    ['story','verse','play'].forEach(function(s){
+      document.getElementById('panel-'+s).classList.toggle('active', s===stage);
+      document.getElementById('tab-'+s).setAttribute('aria-pressed', s===stage);
+    });
+    var pos = SUN_POS[stage];
+    var sun = document.getElementById('sun');
+    sun.style.left = pos.left;
+    sun.style.top = pos.top;
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  window.goTo = goTo;
+
+  /* ---------------- STORY ---------------- */
+  var storySlides = [
+    {
+      icon:'sun', title:"Any Time, Every Time",
+      text:"Did you know? You can talk to God any time you want — first thing in the morning, at lunchtime, and right before bed."
+    },
+    {
+      icon:'phone', title:"Like a Phone That Needs Charging",
+      text:"A phone with no battery just stops working. Your heart needs charging too — and God's Word is the charger that keeps you going."
+    },
+    {
+      icon:'apple', title:"Breakfast, Lunch, Dinner… and God-Food",
+      text:"You eat food a few times a day so your body has energy. Your heart needs a little bit of God's Word just as often — not just once a week."
+    },
+    {
+      icon:'cloud', title:"When We Forget",
+      text:"When we forget to talk to God, we get grumpy without even noticing. We start seeing yucky things instead of good things."
+    },
+    {
+      icon:'hill', title:"But Watch What Happens…",
+      text:"When we stay close to God, even the dry, dusty places turn green — and every hill sings for joy! That's a promise from Psalm 65:12."
+    },
+    {
+      icon:'book', title:"Let's Learn the Promise!",
+      text:"Ready to learn God's promise by heart, word for word? Let's walk on to the Verse stop and give it a try."
+    }
+  ];
+
+  var ICONS = {
+    sun:'<circle cx="32" cy="32" r="13" fill="#FFC94A"/><g stroke="#E39A1F" stroke-width="4" stroke-linecap="round"><line x1="32" y1="4" x2="32" y2="12"/><line x1="32" y1="52" x2="32" y2="60"/><line x1="4" y1="32" x2="12" y2="32"/><line x1="52" y1="32" x2="60" y2="32"/><line x1="12" y1="12" x2="18" y2="18"/><line x1="46" y1="46" x2="52" y2="52"/><line x1="52" y1="12" x2="46" y2="18"/><line x1="18" y1="46" x2="12" y2="52"/></g>',
+    phone:'<rect x="20" y="6" width="24" height="52" rx="6" fill="#fff" stroke="#3B2E22" stroke-width="3"/><rect x="24" y="14" width="16" height="30" rx="2" fill="#9ED2EC"/><path d="M31 20 L26 32 L31 32 L29 44 L38 28 L32 28 Z" fill="#FFC94A" stroke="#E39A1F" stroke-width="1.5" stroke-linejoin="round"/>',
+    apple:'<path d="M32 16c-2-6-10-6-11 1" fill="none" stroke="#79B978" stroke-width="3" stroke-linecap="round"/><path d="M32 18c-13 0-19 12-19 22 0 11 8 20 15 20 3 0 4-2 4-2s1 2 4 2c7 0 15-9 15-20 0-9-5-17-14-19-2-0.5-4-2-5-3z" fill="#F2705A"/>',
+    cloud:'<ellipse cx="24" cy="34" rx="12" ry="10" fill="#DCEAF3"/><ellipse cx="38" cy="30" rx="15" ry="12" fill="#DCEAF3"/><ellipse cx="46" cy="38" rx="10" ry="8" fill="#DCEAF3"/><g stroke="#9ED2EC" stroke-width="3" stroke-linecap="round"><line x1="24" y1="50" x2="21" y2="56"/><line x1="34" y1="50" x2="31" y2="58"/><line x1="44" y1="50" x2="41" y2="56"/></g>',
+    hill:'<path d="M2 46c10-14 20-14 30-2c8-10 18-10 30 4v10H2z" fill="#8FC98A"/><circle cx="18" cy="42" r="4" fill="#F2705A"/><circle cx="44" cy="46" r="4" fill="#FFC94A"/><circle cx="30" cy="36" r="4" fill="#fff" stroke="#E8DCC3" stroke-width="1.5"/>',
+    book:'<path d="M32 12c-6-4-16-4-22 0v34c6-4 16-4 22 0c6-4 16-4 22 0V12c-6-4-16-4-22 0Z" fill="#fff" stroke="#3B2E22" stroke-width="3" stroke-linejoin="round"/><line x1="32" y1="12" x2="32" y2="46" stroke="#3B2E22" stroke-width="3"/>'
+  };
+
+  function renderStory(){
+    var s = storySlides[state.storyIndex];
+    var card = document.getElementById('storyCard');
+    card.innerHTML =
+      '<svg class="story-icon" viewBox="0 0 64 64">'+ICONS[s.icon]+'</svg>' +
+      '<h2>'+s.title+'</h2><p>'+s.text+'</p>';
+    document.getElementById('storyBack').disabled = state.storyIndex===0;
+    document.getElementById('storyNext').textContent = (state.storyIndex===storySlides.length-1) ? "Let's Go!" : 'Next';
+    var dots = document.getElementById('storyDots');
+    dots.innerHTML = storySlides.map(function(_,i){
+      return '<span class="'+(i===state.storyIndex?'on':'')+'"></span>';
+    }).join('');
+    if(state.storyIndex===storySlides.length-1){
+      addJoy(0.05);
+      document.getElementById('done-story').textContent = '✓';
+    }
+  }
+  window.storyStep = function(dir){
+    var next = state.storyIndex + dir;
+    if(next < 0) return;
+    if(next >= storySlides.length){ goTo('verse'); return; }
+    state.storyIndex = next;
+    renderStory();
+  };
+
+  /* ---------------- VERSE ---------------- */
+  var VERSE_TOKENS = ["They","drop","upon","the","pastures","of","the","wilderness:","and","the","little","hills","rejoice","on","every","side."];
+  // hide priority: content words first, connectors last
+  var HIDE_ORDER = [4,11,12,7,15,1,10,14,0,2,8,13,3,6,9,5];
+  var ROUND_META = [
+    {label:'Round 1: Read It Together', sub:'Read the whole verse out loud, then tap Next.', hideCount:0},
+    {label:'Round 2: A Few Are Hiding', sub:'Say the missing words. Tap a blank if you need a peek.', hideCount:4},
+    {label:'Round 3: Most Are Hiding', sub:'Can you say most of it from your heart?', hideCount:10},
+    {label:'Round 4: Say It All!', sub:'Every word is hidden now — say the whole verse!', hideCount:16}
+  ];
+
+  function hiddenSetForRound(r){
+    var count = ROUND_META[r].hideCount;
+    return new Set(HIDE_ORDER.slice(0, count));
+  }
+
+  function blankFor(word){
+    var trail = word.match(/[:.,;]$/) ? word.slice(-1) : '';
+    var core = trail ? word.slice(0,-1) : word;
+    return core[0] + '_'.repeat(Math.max(1,core.length-1)) + trail;
+  }
+
+  function renderVerseRound(){
+    document.getElementById('scrambleCard').style.display = 'none';
+    document.getElementById('panel-verse').querySelector('.card').style.display = '';
+    var r = state.verseRound;
+    document.getElementById('roundLabel').textContent = ROUND_META[r].label;
+    document.getElementById('roundSub').textContent = ROUND_META[r].sub;
+    var hidden = hiddenSetForRound(r);
+    var box = document.getElementById('verseBox');
+    box.innerHTML = VERSE_TOKENS.map(function(w,i){
+      if(hidden.has(i)){
+        return '<span class="chip blank" data-i="'+i+'" onclick="peekWord(this,\''+encodeURIComponent(w)+'\')">'+blankFor(w)+'</span>';
+      }
+      return '<span class="chip">'+w+'</span>';
+    }).join('');
+    document.getElementById('verseBack').disabled = (r===0);
+    document.getElementById('verseNext').textContent = (r===ROUND_META.length-1) ? 'Try It From Memory →' : 'Next Round';
+    var stars = document.querySelectorAll('#verseStars .star');
+    stars.forEach(function(st,i){ st.classList.toggle('lit', i < r); });
+  }
+  window.peekWord = function(el, encoded){
+    var word = decodeURIComponent(encoded);
+    if(el.dataset.peeked==='1'){
+      el.textContent = blankFor(word);
+      el.dataset.peeked='0';
+    } else {
+      el.textContent = word;
+      el.dataset.peeked='1';
+    }
+  };
+  window.verseStep = function(dir){
+    var next = state.verseRound + dir;
+    if(next < 0) return;
+    if(next >= ROUND_META.length){
+      startScramble();
+      return;
+    }
+    state.verseRound = next;
+    addJoy(0.04);
+    renderVerseRound();
+    saveProgress();
+  };
+
+  var scrambleOrder = [11,3,8,0,15,6,2,13,9,5,1,14,4,7,12,10]; // fixed shuffle of indices 0-15
+  var scrambleState = { nextSlot:0, done:false };
+
+  function startScramble(){
+    document.getElementById('panel-verse').querySelector('.card').style.display = 'none';
+    var card = document.getElementById('scrambleCard');
+    card.style.display = '';
+    scrambleState = {nextSlot:0, done:false};
+    var slots = document.getElementById('scrambleSlots');
+    slots.innerHTML = VERSE_TOKENS.map(function(_,i){ return '<span class="slot" id="slot-'+i+'"></span>'; }).join('');
+    var bank = document.getElementById('scrambleBank');
+    bank.innerHTML = scrambleOrder.map(function(i){
+      return '<button type="button" class="word-btn" id="bankword-'+i+'" onclick="tryWord('+i+')">'+VERSE_TOKENS[i]+'</button>';
+    }).join('');
+    document.getElementById('verseWin').classList.remove('show');
+    document.getElementById('done-verse').textContent = state.scrambleDone ? '✓' : '';
+    if(state.scrambleDone){ finishScrambleUI(); }
+  }
+  window.tryWord = function(i){
+    if(scrambleState.done) return;
+    if(VERSE_TOKENS[i] === VERSE_TOKENS[scrambleState.nextSlot]){   // "the" appears 3x — any matching button counts
+      document.getElementById('slot-'+scrambleState.nextSlot).textContent = VERSE_TOKENS[i];
+      document.getElementById('bankword-'+i).classList.add('used');
+      scrambleState.nextSlot++;
+      addJoy(0.02);
+      if(scrambleState.nextSlot >= VERSE_TOKENS.length){
+        scrambleState.done = true;
+        state.scrambleDone = true;
+        addJoy(0.25);
+        finishScrambleUI();
+        saveProgress();
+      }
+    } else {
+      var btn = document.getElementById('bankword-'+i);
+      btn.classList.add('shake');
+      setTimeout(function(){ btn.classList.remove('shake'); }, 500);
+    }
+  };
+  function finishScrambleUI(){
+    document.getElementById('verseWin').classList.add('show');
+    document.getElementById('done-verse').textContent = '✓';
+    confettiBurst();
+  }
+
+  /* ---------------- PLAY (QUIZ) ---------------- */
+  var QUIZ = [
+    {q:"True or false: we should only talk to God on Sundays.", choices:["True","False"], correct:1,
+      good:"That's right! God loves hearing from you any time — morning, noon, or night.",
+      meh:"Actually, it's false — God loves hearing from you any time, not just Sundays!"},
+    {q:"What happens to a phone when you forget to charge it?", choices:["It gets faster","It turns off","It gets bigger"], correct:1,
+      good:"Yep — it turns off! Just like your heart needs God's Word to stay full of joy.",
+      meh:"It turns off! Just like your heart needs God's Word to stay full of joy."},
+    {q:"In Psalm 65, what do the hills do when God's goodness overflows?", choices:["They hide","They rejoice","They fall down"], correct:1,
+      good:"They rejoice! Psalm 65:12 — even dry hills sing for joy.",
+      meh:"They rejoice! Psalm 65:12 says even dry hills sing for joy."},
+    {q:"True or false: a wise kid listens when a grown-up gives loving correction.", choices:["True","False"], correct:0,
+      good:"True! Proverbs 13:1 — that's what makes a son or daughter wise.",
+      meh:"It's true — Proverbs 13:1 says a wise kid listens to loving correction."},
+    {q:"What can turn a dry, dusty day into a joyful one?", choices:["A new toy","Staying close to God","Ignoring the problem"], correct:1,
+      good:"Staying close to God! That's the whole Joy Trail promise.",
+      meh:"Staying close to God — that's the whole Joy Trail promise!"}
+  ];
+
+  function renderQuizProgress(){
+    var wrap = document.getElementById('quizProgress');
+    wrap.innerHTML = QUIZ.map(function(_,i){
+      var cls = '';
+      if(i < state.quizIndex) cls = (quizResults[i] ? 'right' : 'wrong');
+      else if(i === state.quizIndex) cls = 'on';
+      return '<span class="'+cls+'"></span>';
+    }).join('');
+  }
+  var quizResults = [];
+
+  function renderQuiz(){
+    var area = document.getElementById('quizArea');
+    if(state.quizIndex >= QUIZ.length){
+      var correctCount = quizResults.filter(Boolean).length;
+      area.innerHTML =
+        '<div style="text-align:center;">' +
+        '<div style="font-size:40px;">'+'☀️'.repeat(correctCount)+'🌤️'.repeat(QUIZ.length-correctCount)+'</div>' +
+        '<h2>'+correctCount+' out of '+QUIZ.length+' sunbeams!</h2>' +
+        '<p>However many you got, you walked the whole Joy Trail today. Great job staying close!</p>' +
+        '<button class="btn" onclick="restartQuiz()">Play Again</button>' +
+        '</div>';
+      addJoy(0.2);
+      document.getElementById('done-play').textContent = '✓';
+      saveProgress();
+      renderQuizProgress();
+      return;
+    }
+    var item = QUIZ[state.quizIndex];
+    state.quizAnswered = false;
+    area.innerHTML =
+      '<h2 style="font-size:19px;">'+item.q+'</h2>' +
+      '<div id="choices"></div>' +
+      '<p class="quiz-feedback" id="feedback"></p>' +
+      '<button class="btn" id="quizNext" style="display:none;" onclick="nextQuiz()">Next</button>';
+    var choicesEl = document.getElementById('choices');
+    choicesEl.innerHTML = item.choices.map(function(c,i){
+      return '<button type="button" class="quiz-choice" data-i="'+i+'" onclick="answerQuiz('+i+')">'+c+'</button>';
+    }).join('');
+    renderQuizProgress();
+  }
+  window.answerQuiz = function(i){
+    if(state.quizAnswered) return;
+    state.quizAnswered = true;
+    var item = QUIZ[state.quizIndex];
+    var isRight = (i === item.correct);
+    quizResults[state.quizIndex] = isRight;
+    var buttons = document.querySelectorAll('#choices .quiz-choice');
+    buttons.forEach(function(b,bi){
+      if(bi===item.correct) b.classList.add('correct');
+      if(bi===i && !isRight) b.classList.add('wrong');
+    });
+    var fb = document.getElementById('feedback');
+    fb.textContent = isRight ? item.good : item.meh;
+    fb.className = 'quiz-feedback ' + (isRight ? 'good':'meh');
+    document.getElementById('quizNext').style.display = '';
+    renderQuizProgress();
+  };
+  window.nextQuiz = function(){
+    state.quizIndex++;
+    renderQuiz();
+  };
+  window.restartQuiz = function(){
+    state.quizIndex = 0;
+    quizResults = [];
+    renderQuiz();
+  };
+
+  /* ---------------- CONFETTI ---------------- */
+  function confettiBurst(){
+    var colors = ['#FFC94A','#F2705A','#79B978','#6FB6E0','#FFFFFF'];
+    for(var i=0;i<28;i++){
+      (function(){
+        var el = document.createElement('div');
+        el.className = 'confetti';
+        var size = 6 + Math.random()*6;
+        el.style.width = size+'px';
+        el.style.height = (size*0.6)+'px';
+        el.style.left = (Math.random()*100)+'vw';
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.transform = 'rotate('+(Math.random()*360)+'deg)';
+        document.body.appendChild(el);
+        var duration = 1800 + Math.random()*1200;
+        var drift = (Math.random()*160-80);
+        el.animate([
+          {transform:el.style.transform+' translate(0,0)', opacity:1},
+          {transform:'rotate('+(Math.random()*720-360)+'deg) translate('+drift+'px, 100vh)', opacity:0.9}
+        ], {duration:duration, easing:'ease-in'}).onfinish = function(){ el.remove(); };
+      })();
+    }
+  }
+
+  /* ---------------- BOOT ---------------- */
+  function boot(){
+    document.getElementById('meadowHills').style.opacity = state.joy;
+    var flowers = document.querySelectorAll('.flower');
+    flowers.forEach(function(f,i){ f.style.opacity = state.joy > (i/flowers.length) ? 1 : 0; });
+    renderStory();
+    renderVerseRound();
+    renderQuiz();
+    goTo('story');
+  }
+
+  if(window.claude && window.claude.hot){
+    window.claude.hot.snapshot(function(){ return {state:state, quizResults:quizResults}; });
+    if(window.claude.hot.ready){
+      window.claude.hot.ready(function(data){
+        if(data && data.state){ state = data.state; quizResults = data.quizResults||[]; }
+        boot();
+      });
+    } else { boot(); }
+  } else {
+    boot();
+  }
+})();
+</script>
+</body>
+</html>

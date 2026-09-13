@@ -27,7 +27,7 @@ rsh() { ssh -i "$SSH_KEY" -p "$SSH_PORT" -o ConnectTimeout=20 "${SSH_USER}@${SSH
 cmd_status() {
   echo "=== Build status — $(date '+%Y-%m-%d %H:%M:%S') ==="
   cd "$ROOT"
-  for f in "${PAGES[@]}" qr/qr-landing.png qr/qr-prayer.png qr/qr-bingo.png qr/qr-quiz.png \
+  for f in "${PAGES[@]}" kids/index.html qr/qr-landing.png qr/qr-prayer.png qr/qr-bingo.png qr/qr-quiz.png \
            qr/qr-kids.png qr/qr-subscribe.png qr/qr-podcast.png \
            REJOICING_MASTER_PROMPTS.md youtube-description.md kids-teacher-guide.md kids-worship-song.md \
            slides/StayTheWay_The_Reset_VERT_18-slide.pptx slides/Rejoicing-on-Every-Side_27-slide.pptx \
@@ -46,6 +46,9 @@ cmd_deploy() {
   rsh "mkdir -p '${REMOTE_DIR}/qr'"
   scp -i "$SSH_KEY" -P "$SSH_PORT" "${PAGES[@]}" "${SSH_USER}@${SSH_HOST}:${REMOTE_DIR}/"
   scp -i "$SSH_KEY" -P "$SSH_PORT" qr/*.png qr/*.svg "${SSH_USER}@${SSH_HOST}:${REMOTE_DIR}/qr/"
+  # The Joy Trail lives in its own folder — never add kids/index.html to PAGES (flat scp would overwrite the landing page)
+  rsh "mkdir -p '${REMOTE_DIR}/kids'"
+  scp -i "$SSH_KEY" -P "$SSH_PORT" kids/index.html "${SSH_USER}@${SSH_HOST}:${REMOTE_DIR}/kids/"
 
   echo "=== .htaccess rewrite (idempotent, backs up first) ==="
   rsh bash -s -- "$SLUG" "$DOCROOT" <<'REMOTE'
@@ -71,7 +74,7 @@ REMOTE
 cmd_verify() {
   echo "=== Verifying live URLs (cache-busted) ==="
   local cb; cb=$(date +%s); local fail=0
-  for p in "" "${PAGES[@]:1}" qr/qr-landing.png; do
+  for p in "" "${PAGES[@]:1}" kids/ qr/qr-landing.png; do
     local url="${SITE}/${p}"
     local out; out=$(curl -s -o /dev/null -w "%{http_code} %{size_download}" "${url}?cb=${cb}")
     printf "  %-8s %s\n" "$out" "$url"

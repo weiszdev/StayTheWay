@@ -106,6 +106,7 @@ WordPress edits done by hand this week (backups `*.bak-rejoicing` on the server)
 | QR code set | ✅ Live — `qr-codes.html` + `qr/*.png|svg` (7 codes) |
 | Kids version (bingo/quiz/activity) | ✅ Live — `kids-quiz.html`, `kids-bingo.html`, `kids-activity.html` |
 | Kids teacher guide + kids song | ✅ `kids-teacher-guide.md`, `kids-worship-song.md` |
+| The Joy Trail (kids story + Psalm 65:12 verse trainer + quiz) | ✅ Live — `kids/index.html` (from `PUSH_joy-trail_2026-09-13.md`) |
 | Site set to THIS WEEK | ✅ nav, /teachings/ featured, homepage band |
 | Notion session log archived | ✅ [Session Log — StayTheWay Rejoicing on Every Side (2026.09.13)](https://app.notion.com/p/3da7fe8317af81da9190f146c4292289) |
 
