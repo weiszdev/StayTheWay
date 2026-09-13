@@ -1,0 +1,17 @@
+# StayTheWay share cards (/stw-teachings/_og/)
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /stw-teachings/_og/
+RewriteRule ^card/(.+)\.jpg$ card.php?p=$1 [L]
+RewriteRule ^(lib\.php|README\.md|stw-teachings\.htaccess)$ - [F,L]
+RewriteRule ^cache/ - [F,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+<Files "card.php">
+  Header unset Pragma
+  Header set Cache-Control "public, max-age=604800"
+</Files>
+</IfModule>
