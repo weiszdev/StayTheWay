@@ -76,51 +76,44 @@ under MASTER EXECUTION HUB.
 
 ## (C) Terminal Deploy Steps
 
-Run from `~/StayTheWay/teachings/rejoicing/` on the Mac (`$HOME=/Users/jcwa1`):
+Deployed 2026-09-13 with the helper (real SiteGround details are baked in):
 
 ```bash
-# 1. Confirm deliverables are all present
-ls -la ~/StayTheWay/teachings/rejoicing/
-
-# 2. If deploying the finished HTML page(s) to the live site (SiteGround/WordPress path)
-scp ~/StayTheWay/teachings/rejoicing/*.html <SITEGROUND_USER>@<SITEGROUND_HOST>:~/public_html/teachings/rejoicing/
-# then flush LiteSpeed cache from wp-admin (or your usual cache-purge command)
-
-# 3. If deploying via the GitHub Pages teaching hub instead
-cd ~/StayTheWay
-git add teachings/rejoicing/
-git commit -m "Add Rejoicing on Every Side teaching (Psalm 65 / Proverbs 13)"
-git push origin main
-
-# 4. Tag today's build (matches the romans-8-sunday-YYYY-MM-DD pattern)
-git tag rejoicing-sunday-2026-09-13
-git push origin rejoicing-sunday-2026-09-13
+cd ~/StayTheWay/teachings/rejoicing
+./sunday-buildout.sh status    # file checklist
+./sunday-buildout.sh deploy    # scp package + qr/ to stw-teachings/rejoicing, add .htaccess rewrite (idempotent)
+./sunday-buildout.sh verify    # curl every live URL, cache-busted
+./sunday-buildout.sh commit    # git add/commit/push + tag rejoicing-sunday-2026-09-13
 ```
 
-`<SITEGROUND_USER>` / `<SITEGROUND_HOST>` are placeholders — swap in your real SSH credentials before running. Say the word and I'll also write a `sunday-buildout.sh` helper (status / deploy / commit / all subcommands) matching the one built for the Romans 8 buildout, once the HTML deliverables below exist to check against.
+WordPress edits done by hand this week (backups `*.bak-rejoicing` on the server):
+`header.php` THIS WEEK link (desktop + mobile) · `page-teachings.php` featured + recent card ·
+`public_html/index.html` `STW_CURRENT_PACKAGE`. Git: commit `fe10dcd`, tag `rejoicing-sunday-2026-09-13`.
 
 ---
 
-## (D) Build Status Table
+## (D) Build Status Table — updated 2026-09-13
 
 | Deliverable | Status |
 |---|---|
-| Teaching outline (3 steps, scripture-checked) | ✅ Built |
-| Vertical (9:16) teaching script | ✅ Built |
-| PPTX slide deck (27 slides, camera-safe) | ✅ Built |
-| Mobile teaching HTML page | ⬜ Not started |
-| Interactive quiz (HTML) | ⬜ Not started |
-| Bingo card | ⬜ Not started |
-| Prayer card | ⬜ Not started |
-| QR code set | ⬜ Not started |
-| Kids version (bingo/quiz/activity) | ⬜ Not started |
-| Notion session log archived | ⬜ Not started |
+| Teaching outline (3 steps, scripture-checked) | ✅ Built (script `.md` not on this Mac — see E) |
+| Vertical (9:16) teaching script | ✅ Built (same file) |
+| PPTX slide decks | ✅ `slides/` — 18-slide "The Reset" (as taught) + 27-slide |
+| Mobile teaching HTML page | ✅ Live — `index.html` (generated) |
+| Interactive quiz (HTML) | ✅ Live — `quiz.html`, 8 questions |
+| Bingo card | ✅ Live — `bingo.html` |
+| Prayer card | ✅ Live — `prayer.html` (topic `rejoicing`, gospel section) |
+| QR code set | ✅ Live — `qr-codes.html` + `qr/*.png|svg` (7 codes) |
+| Kids version (bingo/quiz/activity) | ✅ Live — `kids-quiz.html`, `kids-bingo.html`, `kids-activity.html` |
+| Kids teacher guide + kids song | ✅ `kids-teacher-guide.md`, `kids-worship-song.md` |
+| Site set to THIS WEEK | ✅ nav, /teachings/ featured, homepage band |
+| Notion session log archived | ✅ [Session Log — StayTheWay Rejoicing on Every Side (2026.09.13)](https://app.notion.com/p/3da7fe8317af81da9190f146c4292289) |
 
 ---
 
 ## (E) Next Actions
 
-- Decide whether this Sunday's package needs the full 10-deliverable treatment (like Romans 7–8 and Be Still) or just the teaching + deck.
-- If the full package: build the HTML teaching page, quiz, bingo, prayer card, and QR set next.
-- Fill in real SiteGround/GitHub deploy details above once ready to push live.
-- After deploy, log this session to Notion under MASTER EXECUTION HUB (Session Log — StayTheWay Rejoicing on Every Side, 2026.09.13) for continuity.
+- Flush SiteGround Dynamic Cache (Site Tools → Speed → Caching) so the homepage band shows Rejoicing to visitors.
+- Paste the block in `youtube-description.md` into both YouTube cuts.
+- Save `Sunday-Reset-Rejoicing-on-Every-Side.md` into this folder if it exists elsewhere.
+- Once YouTube generates a maxres thumbnail, rerun `probe_thumbs.py` + `gen.py` and redeploy `index.html`.
